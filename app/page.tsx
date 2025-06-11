@@ -536,7 +536,7 @@ export default function Home() {
                 </li>
               </ul>
               <Link 
-                href="/credit-score-main/score"
+                href="https://docs.google.com/forms/d/1Zrx1W0aMlhayhLaEnKpCuUDdU30MsUCQU5orwv5UjFQ/edit"
                 className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors shadow-lg mb-0"
               >
                 List Now
@@ -585,7 +585,7 @@ export default function Home() {
                 </li>
               </ul>
               <Link 
-                href="/credit-score-main/score"
+                href="https://docs.google.com/forms/d/1Zrx1W0aMlhayhLaEnKpCuUDdU30MsUCQU5orwv5UjFQ/edit"
                 className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-lg text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors shadow-lg"
               >
                 List Now
