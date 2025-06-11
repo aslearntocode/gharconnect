@@ -8,24 +8,14 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import Header from '@/components/Header';
-import { creditCards } from '@/app/data/creditCards';
-import { UserFeedback } from '@/app/data/creditCards';
 
 export default function ProfilePage() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [userReviews, setUserReviews] = useState<UserFeedback[]>([]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      if (currentUser) {
-        // Find all reviews by this user
-        const reviews = creditCards.flatMap(card => 
-          card.feedback.filter(review => review.userId === currentUser.uid)
-        );
-        setUserReviews(reviews);
-      }
       setLoading(false);
     });
 
@@ -89,42 +79,6 @@ export default function ProfilePage() {
               <div className="space-y-6">
                 <div className="grid grid-cols-1 gap-4">
                   <ProfileEdit />
-                </div>
-
-                {/* User Reviews Section */}
-                <div className="mt-8">
-                  <h3 className="text-xl font-semibold mb-4">Your Reviews</h3>
-                  {userReviews.length === 0 ? (
-                    <p className="text-gray-600">You haven't reviewed any credit cards yet.</p>
-                  ) : (
-                    <div className="space-y-4">
-                      {userReviews.map((review, index) => (
-                        <div key={index} className="border rounded-lg p-4">
-                          <div className="flex justify-between items-start">
-                            <div>
-                              <Link 
-                                href={`/credit/${review.cardId}`}
-                                className="text-blue-600 hover:text-blue-800 font-medium"
-                              >
-                                {review.cardName}
-                              </Link>
-                              <div className="flex items-center mt-1">
-                                <span className="text-yellow-500">
-                                  {'★'.repeat(Math.floor(review.rating))}
-                                  {'☆'.repeat(10 - Math.floor(review.rating))}
-                                </span>
-                                <span className="ml-2 text-gray-600">{review.rating}/10</span>
-                              </div>
-                            </div>
-                            <span className="text-sm text-gray-500">
-                              {new Date(review.date).toLocaleDateString()}
-                            </span>
-                          </div>
-                          <p className="mt-2 text-gray-700">{review.comment}</p>
-                        </div>
-                      ))}
-                    </div>
-                  )}
                 </div>
                 
                 <div className="flex justify-end space-x-4 mt-6">

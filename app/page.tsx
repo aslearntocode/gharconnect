@@ -21,16 +21,6 @@ interface AllocationItem {
   value: number;
 }
 
-interface CreditCardSlide {
-  type: 'credit-cards' | 'loans';
-  images: string[];
-  title: string;
-  subtitle: string;
-  description: string;
-}
-
-type SlideData = CreditCardSlide;
-
 interface ReportData {
   created_at: string;
   report_analysis: {
@@ -137,39 +127,6 @@ export default function Home() {
       text: 'I was skeptical at first, but the app proved me wrong. No unwanted calls, no data sharing, and most importantly, it helped me find a card with great rewards for my business expenses.'
     }
   ]
-
-  // Update slider data to include both credit cards and loans
-  const sliderData: CreditCardSlide[] = [
-    {
-      type: 'credit-cards',
-      images: [
-        '/credit-cards/idfc/Mayura-Card-revised-29-Nov.png',
-        '/credit-cards/idfc/Select-New-Card_Front.png',
-        '/credit-cards/idfc/Ashva-Card-revised-27-Nov.png'
-      ],
-      title: 'Find The Best',
-      subtitle: 'Credit Cards in India',
-      description: 'Compare and find the best credit cards in India from multiple banks. Get detailed comparisons of rewards, benefits, and features to choose the perfect card for your lifestyle.'
-    },
-    {
-      type: 'loans',
-      images: [
-        '/loan.png',
-        '/loan.png',
-        '/loan.png'
-      ],
-      title: 'Meet Your Needs',
-      subtitle: 'via Instant Loans',
-      description: 'Compare and find the best loans in India from multiple Banks and NBFCs. Get detailed comparisons of interest rates, EMI options, and features to choose the perfect loan for your needs.'
-    }
-  ];
-
-  // Card links for featured cards in hero section
-  const cardLinks = [
-    '/credit/idfc-mayura-metal',
-    '/credit/idfc-first-select',
-    '/credit/idfc-first-ashva',
-  ];
 
   useEffect(() => {
     const checkMobile = () => {
@@ -315,22 +272,6 @@ export default function Home() {
   // Debug log for render
   console.log("Render state:", { user: !!user, latestReport })
 
-  // Add slider effect
-  useEffect(() => {
-    let interval: NodeJS.Timeout | undefined;
-    if (isAutoPlaying) {
-      const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 768;
-      interval = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % sliderData.length);
-      }, 10000); // Changed to 10 seconds (10000ms) for both mobile and desktop
-    }
-    return () => {
-      if (interval) {
-        clearInterval(interval);
-      }
-    };
-  }, [isAutoPlaying]);
-
   useEffect(() => {
     if (user) {
       // Pre-fill form data when user is logged in
@@ -360,17 +301,6 @@ export default function Home() {
 
   const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!touchMoved) return
-
-    const diff = touchStart - touchEnd
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        // Swipe left
-        setCurrentSlide((prev) => (prev + 1) % sliderData.length)
-      } else {
-        // Swipe right
-        setCurrentSlide((prev) => (prev - 1 + sliderData.length) % sliderData.length)
-      }
-    }
   }
 
   const handleCardClick = (e: React.MouseEvent) => {
@@ -404,61 +334,6 @@ export default function Home() {
     // Implement search functionality
     setIsSearching(false)
   }
-
-  const MobileCarousel = () => {
-    return (
-      <div className="md:hidden px-4">
-        <div className="mt-6 mb-2 flex justify-center">
-          <span className="text-sm font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent tracking-tight">
-            Our Featured Cards
-          </span>
-        </div>
-        <div className="relative w-full h-[200px] flex items-center">
-          <div className="relative w-full h-full">
-            <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-              {sliderData[currentSlide].type === 'credit-cards' ? (
-                <Link 
-                  href={cardLinks[currentSlide % cardLinks.length]}
-                  className="block"
-                  aria-label={`View details for card ${currentSlide + 1}`}
-                >
-                  <Image
-                    src={sliderData[currentSlide].images[currentSlide % sliderData[currentSlide].images.length]}
-                    width={240}
-                    height={150}
-                    alt={`Credit Card ${currentSlide + 1}`}
-                    className="rounded-2xl shadow-2xl mx-auto"
-                  />
-                </Link>
-              ) : (
-                <div className="block">
-                  <Image
-                    src={sliderData[currentSlide].images[currentSlide % sliderData[currentSlide].images.length]}
-                    width={240}
-                    height={150}
-                    alt={`Loan ${currentSlide + 1}`}
-                    className="rounded-2xl shadow-2xl mx-auto w-[240px] h-[150px] object-contain"
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-          {/* Carousel Indicators */}
-          <div className="absolute bottom-2 left-0 right-0 flex justify-center gap-2">
-            {sliderData.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlide(index)}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  index === currentSlide ? 'bg-blue-600' : 'bg-gray-300'
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   // Notification carousel messages
   const notificationMessages = [
@@ -516,23 +391,6 @@ export default function Home() {
                 We respect your privacy — no calls, no data sharing, unless you request it. &nbsp;&nbsp;&nbsp;
               </span>
             </span>
-            <span className="mx-4 flex items-center">
-              <svg className="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="text-base md:text-lg font-medium">
-                Apply through us and get INR 100-5000 reward on successful application! &nbsp;&nbsp;&nbsp;
-              </span>
-            </span>
-            {/* Third message - new */}
-            <span className="mx-4 flex items-center">
-              <svg className="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-              <span className="text-base md:text-lg font-medium">
-                Explore freely! There is no hidden subscription fee, walk away if you find one. &nbsp;&nbsp;&nbsp;
-              </span>
-            </span>
             {/* Second set */}
             <span className="mx-4 flex items-center">
               <svg className="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -542,15 +400,6 @@ export default function Home() {
                 We respect your privacy — no calls, no data sharing, unless you request it. &nbsp;&nbsp;&nbsp;
               </span>
             </span>
-            {/* Third message - new */}
-            <span className="mx-4 flex items-center">
-              <svg className="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-              <span className="text-base md:text-lg font-medium">
-                Explore freely! There is no hidden subscription fee, walk away if you find one. &nbsp;&nbsp;&nbsp;
-              </span>
-            </span>
             {/* Third set */}
             <span className="mx-4 flex items-center">
               <svg className="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -558,15 +407,6 @@ export default function Home() {
               </svg>
               <span className="text-base md:text-lg font-medium">
                 We respect your privacy — no calls, no data sharing, unless you request it. &nbsp;&nbsp;&nbsp;
-              </span>
-            </span>
-            {/* Third message - new */}
-            <span className="mx-4 flex items-center">
-              <svg className="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-              <span className="text-base md:text-lg font-medium">
-                Explore freely! There is no hidden subscription fee, walk away if you find one. &nbsp;&nbsp;&nbsp;
               </span>
             </span>
           </div>
@@ -580,105 +420,38 @@ export default function Home() {
             {/* Left Content */}
             <div>
               <h1 className="text-[32px] md:text-[48px] leading-tight font-bold mb-6 text-center md:text-left">
-                <span className="text-black">{currentSlide === 0 ? 'Find Your Next Rental Apartment' : 'Quickly Find the Services You Need'}</span>
+                <span className="text-black">Welcome to GharConnect</span>
               </h1>
               <p className="text-lg text-gray-600 mb-4 md:mb-8">
-                {currentSlide === 0
-                  ? 'Browse available apartments, compare features, and find your perfect home.'
-                  : 'Discover trusted local services for your home, from laundry to repairs and more.'}
+                Your one-stop platform for renting, selling, services, and delivery in your society. Explore all the services available in your society.
               </p>
             </div>
-
-            {/* Right Content - Buttons */}
-            <div className="flex flex-col gap-4">
-              {(sliderData[currentSlide].type as 'credit-cards' | 'loans') === 'credit-cards' ? (
-                <div className="grid grid-cols-2 gap-2 md:gap-4">
-                  <Link href="/rent/t1" className="col-span-1">
-                    <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-3 h-12 md:h-14 text-sm gap-2 flex items-center cursor-pointer">
-                      <span className="font-bold text-[#4F46E5] text-xs md:text-sm">T1</span>
-                    </div>
-                  </Link>
-                  <Link href="/rent/t2" className="col-span-1">
-                    <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-3 h-12 md:h-14 text-sm gap-2 flex items-center cursor-pointer">
-                      <span className="font-bold text-[#4F46E5] text-xs md:text-sm">T2</span>
-                    </div>
-                  </Link>
-                  <Link href="/rent/t3" className="col-span-1">
-                    <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-3 h-12 md:h-14 text-sm gap-2 flex items-center cursor-pointer">
-                      <span className="font-bold text-[#4F46E5] text-xs md:text-sm">T3</span>
-                    </div>
-                  </Link>
-                  <Link href="/rent/t4" className="col-span-1">
-                    <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-3 h-12 md:h-14 text-sm gap-2 flex items-center cursor-pointer">
-                      <span className="font-bold text-[#4F46E5] text-xs md:text-sm">T4</span>
-                    </div>
-                  </Link>
-                  <Link href="/rent/t5" className="col-span-1">
-                    <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-3 h-12 md:h-14 text-sm gap-2 flex items-center cursor-pointer">
-                      <span className="font-bold text-[#4F46E5] text-xs md:text-sm">T5</span>
-                    </div>
-                  </Link>
-                  <Link href="/rent/t6" className="col-span-1">
-                    <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-3 h-12 md:h-14 text-sm gap-2 flex items-center cursor-pointer">
-                      <span className="font-bold text-[#4F46E5] text-xs md:text-sm">T6</span>
-                    </div>
-                  </Link>
+            {/* Right Content - Main Offerings */}
+            <div className="grid grid-cols-2 gap-4">
+              <Link href="/rent/" className="col-span-1">
+                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-4 h-24 flex flex-col items-center justify-center cursor-pointer">
+                  <FiHome className="w-8 h-8 text-blue-600 mb-2" />
+                  <span className="font-bold text-[#4F46E5] text-base">Rent</span>
                 </div>
-              ) : (
-                <div className="grid grid-cols-2 gap-2 md:gap-4">
-                  <Link href="/services/laundry" className="col-span-1">
-                    <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-3 h-12 md:h-14 text-sm gap-2 flex items-center cursor-pointer">
-                      <FiDroplet className="w-4 h-4 md:w-4 md:h-4 text-[#4F46E5]" />
-                      <span className="font-bold text-[#4F46E5] text-xs md:text-sm">Laundry</span>
-                    </div>
-                  </Link>
-                  <Link href="/services/carpenter" className="col-span-1">
-                    <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-3 h-12 md:h-14 text-sm gap-2 flex items-center cursor-pointer">
-                      <FiTool className="w-4 h-4 md:w-4 md:h-4 text-yellow-600" />
-                      <span className="font-bold text-[#4F46E5] text-xs md:text-sm">Carpenter</span>
-                    </div>
-                  </Link>
-                  <Link href="/services/plumber" className="col-span-1">
-                    <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-3 h-12 md:h-14 text-sm gap-2 flex items-center cursor-pointer">
-                      <FiTool className="w-4 h-4 md:w-4 md:h-4 text-blue-600" />
-                      <span className="font-bold text-[#4F46E5] text-xs md:text-sm">Plumber</span>
-                    </div>
-                  </Link>
-                  <Link href="/services/electrician" className="col-span-1">
-                    <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-3 h-12 md:h-14 text-sm gap-2 flex items-center cursor-pointer">
-                      <FiZap className="w-4 h-4 md:w-4 md:h-4 text-yellow-500" />
-                      <span className="font-bold text-[#4F46E5] text-xs md:text-sm">Electrician</span>
-                    </div>
-                  </Link>
-                  <Link href="/services/cleaning" className="col-span-1">
-                    <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-3 h-12 md:h-14 text-sm gap-2 flex items-center cursor-pointer">
-                      <FiHome className="w-4 h-4 md:w-4 md:h-4 text-green-600" />
-                      <span className="font-bold text-[#4F46E5] text-xs md:text-sm">Cleaning</span>
-                    </div>
-                  </Link>
-                  <Link href="/services/painter" className="col-span-1">
-                    <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-3 h-12 md:h-14 text-sm gap-2 flex items-center cursor-pointer">
-                      <FiEdit className="w-4 h-4 md:w-4 md:h-4 text-pink-500" />
-                      <span className="font-bold text-[#4F46E5] text-xs md:text-sm">Painter</span>
-                    </div>
-                  </Link>
+              </Link>
+              <Link href="/sell/" className="col-span-1">
+                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-4 h-24 flex flex-col items-center justify-center cursor-pointer">
+                  <FiDollarSign className="w-8 h-8 text-green-600 mb-2" />
+                  <span className="font-bold text-[#4F46E5] text-base">Sell</span>
                 </div>
-              )}
-              {/* Carousel Navigation Dots */}
-              <div className="flex justify-center items-center gap-2 mt-4">
-                {sliderData.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentSlide(index)}
-                    className={`w-2 h-2 md:w-3 md:h-3 rounded-full transition-all duration-300 ${
-                      index === currentSlide 
-                        ? 'bg-[#4F46E5] scale-125' 
-                        : 'bg-gray-300 hover:bg-gray-400'
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
-              </div>
+              </Link>
+              <Link href="/services/" className="col-span-1">
+                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-4 h-24 flex flex-col items-center justify-center cursor-pointer">
+                  <FiTool className="w-8 h-8 text-yellow-600 mb-2" />
+                  <span className="font-bold text-[#4F46E5] text-base">Services</span>
+                </div>
+              </Link>
+              <Link href="/delivery/" className="col-span-1">
+                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-4 h-24 flex flex-col items-center justify-center cursor-pointer">
+                  <FiTruck className="w-8 h-8 text-indigo-600 mb-2" />
+                  <span className="font-bold text-[#4F46E5] text-base">Delivery</span>
+                </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -921,7 +694,6 @@ export default function Home() {
         </div>
       </div>
 
-
       {/* Delivery Categories Section */}
       <div className="bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -933,32 +705,126 @@ export default function Home() {
                 <span className="text-6xl mb-4">🥛</span>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Dairy</h3>
                 <p className="text-gray-600 text-center">Fresh milk, cheese, butter, and more</p>
-                      </div>
+              </div>
             </Link>
             <Link href="/delivery/meat" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
                 <span className="text-6xl mb-4">🍗</span>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Meat</h3>
                 <p className="text-gray-600 text-center">Quality meat and poultry, hygienically packed</p>
-                      </div>
+              </div>
             </Link>
             <Link href="/delivery/vegetables" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
                 <span className="text-6xl mb-4">🥦</span>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Vegetables</h3>
                 <p className="text-gray-600 text-center">Farm-fresh vegetables delivered daily</p>
-                    </div>
+              </div>
             </Link>
             <Link href="/delivery/fruits" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
                 <span className="text-6xl mb-4">🍎</span>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Fruits</h3>
                 <p className="text-gray-600 text-center">Seasonal and exotic fruits, handpicked for you</p>
-                  </div>
+              </div>
             </Link>
-                </div>
-            </div>
           </div>
+        </div>
+      </div>
+
+      {/* Services Categories Section */}
+      <div className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-4">Services Categories</h2>
+          <p className="text-lg text-gray-600 text-center mb-12">Book trusted home and personal services</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Link href="/services/laundry" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
+                <FiDroplet className="w-12 h-12 mb-4 text-blue-500" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Laundry</h3>
+                <p className="text-gray-600 text-center">Professional laundry and dry cleaning</p>
+              </div>
+            </Link>
+            <Link href="/services/carpenter" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
+                <FiTool className="w-12 h-12 mb-4 text-yellow-600" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Carpenter</h3>
+                <p className="text-gray-600 text-center">Woodwork, repairs, and furniture</p>
+              </div>
+            </Link>
+            <Link href="/services/plumber" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
+                <FiTool className="w-12 h-12 mb-4 text-blue-600" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Plumber</h3>
+                <p className="text-gray-600 text-center">Leak repairs, fittings, and more</p>
+              </div>
+            </Link>
+            <Link href="/services/electrician" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
+                <FiZap className="w-12 h-12 mb-4 text-yellow-500" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Electrician</h3>
+                <p className="text-gray-600 text-center">Wiring, repairs, and installations</p>
+              </div>
+            </Link>
+            <Link href="/services/cleaning" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
+                <FiHome className="w-12 h-12 mb-4 text-green-600" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Cleaning</h3>
+                <p className="text-gray-600 text-center">Home and office cleaning</p>
+              </div>
+            </Link>
+            <Link href="/services/painter" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
+                <FiEdit className="w-12 h-12 mb-4 text-pink-500" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Painter</h3>
+                <p className="text-gray-600 text-center">Wall painting and touch-ups</p>
+              </div>
+            </Link>
+            <Link href="/services/gardener" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
+                <FiHome className="w-12 h-12 mb-4 text-green-600" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Gardener</h3>
+                <p className="text-gray-600 text-center">Garden care and landscaping</p>
+              </div>
+            </Link>
+            <Link href="/services/ac-service" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
+                <FiZap className="w-12 h-12 mb-4 text-blue-500" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">AC Service</h3>
+                <p className="text-gray-600 text-center">AC repair and maintenance</p>
+              </div>
+            </Link>
+            <Link href="/services/pest-control" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
+                <FiTool className="w-12 h-12 mb-4 text-red-500" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Pest Control</h3>
+                <p className="text-gray-600 text-center">Termite, rodent, and pest removal</p>
+              </div>
+            </Link>
+            <Link href="/services/physical-training" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
+                <FiTrendingUp className="w-12 h-12 mb-4 text-indigo-500" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Physical Training</h3>
+                <p className="text-gray-600 text-center">Personal and group training</p>
+              </div>
+            </Link>
+            <Link href="/services/yoga" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
+                <FiAward className="w-12 h-12 mb-4 text-green-500" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Yoga</h3>
+                <p className="text-gray-600 text-center">Yoga classes and workshops</p>
+              </div>
+            </Link>
+            <Link href="/services/kids-classes" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-8 flex flex-col items-center">
+                <FiBookOpen className="w-12 h-12 mb-4 text-orange-500" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">Kids Classes</h3>
+                <p className="text-gray-600 text-center">Learning and fun for kids</p>
+              </div>
+            </Link>
+          </div>
+        </div>
+      </div>
     </main>
   )
 }
