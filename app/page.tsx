@@ -26,6 +26,12 @@ const societies = [
     description: 'A peaceful society in Sewri.',
     image: '/at.png',
   },
+  {
+    name: 'Dosti Flamiingo, Sewri',
+    href: '/ashok-towers-sewri',
+    description: 'A peaceful society in Sewri.',
+    image: '/at.png',
+  },
   // Add more societies as needed, with or without image
 ];
 
