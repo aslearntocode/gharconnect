@@ -1,9 +1,19 @@
 import './cb-parel/globals.css';
+import type { Metadata } from 'next';
+<link rel="icon" href="/GC.png" />
 
-export const metadata = {
-  title: 'GharConnect',
-  description: 'Your one-stop platform for societies',
-};
+export const metadata: Metadata = {
+  title: 'GharConnect - Connect with Your Neighbors | Find Apartments & Local Services',
+  description: 'Connect with your neighbors, find apartments for rent or sale, and discover local services in your community. Join GharConnect to make your society living better and more convenient.',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black',
+  },
+  icons: {
+    apple: '/icons/icon-192x192.png',
+  },
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
