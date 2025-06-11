@@ -537,21 +537,15 @@ export default function Home() {
               </ul>
               <Link 
                 href="https://docs.google.com/forms/d/1Zrx1W0aMlhayhLaEnKpCuUDdU30MsUCQU5orwv5UjFQ/edit"
-                className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors shadow-lg mb-0"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors shadow-lg"
               >
                 List Now
                 <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
               </Link>
-              <div className="w-full flex justify-center">
-                <img 
-                  src="/Credit-Score-Analysis.png" 
-                  alt="Credit Score Meter" 
-                  className="w-full max-w-xs rounded-2xl shadow-lg object-contain"
-                  style={{ maxHeight: 220 }}
-                />
-              </div>
             </div>
           </div>
           {/* Desktop layout (unchanged) */}
@@ -586,7 +580,9 @@ export default function Home() {
               </ul>
               <Link 
                 href="https://docs.google.com/forms/d/1Zrx1W0aMlhayhLaEnKpCuUDdU30MsUCQU5orwv5UjFQ/edit"
-                className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-semibold rounded-lg text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors shadow-lg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-semibold rounded-lg text-white bg-[#4F46E5] hover:bg-[#4338CA] transition-colors shadow-lg"
               >
                 List Now
                 <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
