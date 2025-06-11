@@ -50,14 +50,18 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
           .eq('user_id', currentUser.uid)
           .single();
 
-        if (profileError) {
-          console.error('Error fetching profile:', profileError);
+        // Supabase returns an empty error object if no row is found, not a real error
+        if (profileError && (profileError.message || profileError.code)) {
+          console.error('Error fetching profile:', profileError, profileData);
+          setError('Could not fetch profile.');
           return;
         }
 
-        if (profileData) {
-          setProfile(profileData);
+        if (!profileData) {
+          setError('No profile found. Please complete your profile.');
+          return;
         }
+        setProfile(profileData);
 
         // Fetch recent reviews
         const { data: reviewsData, error: reviewsError } = await supabase
@@ -174,7 +178,7 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  href="/profile"
+                  href="/cb-parel/profile"
                   className={`${
                     active ? 'bg-blue-500 text-white' : 'text-gray-100'
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -186,7 +190,7 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  href="/my-reviews"
+                  href="/cb-parel/my-reviews"
                   className={`${
                     active ? 'bg-blue-500 text-white' : 'text-gray-100'
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}

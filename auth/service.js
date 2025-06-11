@@ -12,5 +12,5 @@ async function logout() {
   await auth.signOut(); // If using a third-party auth service
   
   // Redirect to login page
-  window.location.href = '/login';
+  window.location.href = '/cb-parel/login';
 } 

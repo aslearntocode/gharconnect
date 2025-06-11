@@ -14,7 +14,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
-        router.push('/login')
+        router.push('/cb-parel/login')
       }
     })
 
@@ -32,7 +32,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     const interval = setInterval(() => {
       if (Date.now() - lastActivity >= TIMEOUT_DURATION) {
         signOut(auth)
-        router.push('/login')
+        router.push('/cb-parel/login')
       }
     }, 1000) // Check every second
 
