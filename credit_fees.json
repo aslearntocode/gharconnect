@@ -1,0 +1,499 @@
+[
+    {
+      "card_name":"HDFC Infinia",
+      "joining_fee":12500,
+      "annual_fee":12500,
+      "annual_fee_waiver_criteria":800000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC Regalia",
+      "joining_fee":2500,
+      "annual_fee":2500,
+      "annual_fee_waiver_criteria":300000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC Diners Club Black",
+      "joining_fee":10000,
+      "annual_fee":10000,
+      "annual_fee_waiver_criteria":500000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC Bank Regalia Marriott Bonvoy Credit Card",
+      "joining_fee":3000,
+      "annual_fee":3000,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC Regalia Credit Card",
+      "joining_fee":2500,
+      "annual_fee":2500,
+      "annual_fee_waiver_criteria":400000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC Tata Neu Infinity Credit Card",
+      "joining_fee":1499,
+      "annual_fee":1499,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC Tata Neu Plus Credit Card",
+      "joining_fee":499,
+      "annual_fee":499,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC UPI RuPay Credit Card",
+      "joining_fee":99,
+      "annual_fee":99,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC PIXEL Play Credit Card",
+      "joining_fee":500,
+      "annual_fee":500,
+      "annual_fee_waiver_criteria":100000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC Millennia Plus Credit Card",
+      "joining_fee":1000,
+      "annual_fee":1000,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC MoneyBack+ Credit Card",
+      "joining_fee":500,
+      "annual_fee":500,
+      "annual_fee_waiver_criteria":50000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC Swiggy Credit Card",
+      "joining_fee":500,
+      "annual_fee":500,
+      "annual_fee_waiver_criteria":200000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC IndiGo 6E Rewards Credit Card",
+      "joining_fee":500,
+      "annual_fee":500,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HDFC IndiGo 6E Rewards XL Credit Card",
+      "joining_fee":1500,
+      "annual_fee":1500,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"ICICI Emeralde Credit Card",
+      "joining_fee":12000,
+      "annual_fee":12000,
+      "annual_fee_waiver_criteria":1500000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"ICICI Emeralde Private Metal Credit Card",
+      "joining_fee":12500,
+      "annual_fee":12500,
+      "annual_fee_waiver_criteria":1000000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"ICICI Bank Times Black Credit Card",
+      "joining_fee":20000,
+      "annual_fee":20000,
+      "annual_fee_waiver_criteria":2500000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"ICICI Amazon Pay Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"ICICI Coral RuPay Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"ICICI Sapphiro Credit Card",
+      "joining_fee":6500,
+      "annual_fee":3500,
+      "annual_fee_waiver_criteria":600000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"SBI IRCTC Credit Card",
+      "joining_fee":500,
+      "annual_fee":500,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"SBI BPCL Credit Card",
+      "joining_fee":499,
+      "annual_fee":499,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"SBI Simply Save Credit Card",
+      "joining_fee":499,
+      "annual_fee":499,
+      "annual_fee_waiver_criteria":100000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"SBI Cashback Credit Card",
+      "joining_fee":999,
+      "annual_fee":999,
+      "annual_fee_waiver_criteria":200000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"SBI Sky Miles Credit Card",
+      "joining_fee":1499,
+      "annual_fee":1499,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"OneCard",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"Slice Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"Uni Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"Axis Airtel Credit Card",
+      "joining_fee":500,
+      "annual_fee":500,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"Axis Fibe Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"Axis IOCL Credit Card",
+      "joining_fee":500,
+      "annual_fee":500,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"Axis Bank Primus Credit Card",
+      "joining_fee":500000,
+      "annual_fee":300000,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"Axis Bank Privilege Credit Card",
+      "joining_fee":1500,
+      "annual_fee":1500,
+      "annual_fee_waiver_criteria":500000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"Axis Bank My Zone Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"AXIS Magnus",
+      "joining_fee":12500,
+      "annual_fee":12500,
+      "annual_fee_waiver_criteria":700000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"YES Bank PaisaSave Credit Card",
+      "joining_fee":499,
+      "annual_fee":499,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"Kiwi Credit Card with Neon Membership",
+      "joining_fee":999,
+      "annual_fee":999,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"Edge CSB RuPay Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"AU Bank InstaPay Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"HSBC Taj Credit Card",
+      "joining_fee":110000,
+      "annual_fee":110000,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"American Express Centurion Credit Card",
+      "joining_fee":700000,
+      "annual_fee":275000,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"American Express Platinum Card",
+      "joining_fee":66000,
+      "annual_fee":66000,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"American Express Platinum Reserve Credit Card",
+      "joining_fee":10000,
+      "annual_fee":10000,
+      "annual_fee_waiver_criteria":1000000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"AU Zenith+ Credit Card (Metal)",
+      "joining_fee":4999,
+      "annual_fee":4999,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"AU Vetta Credit Card",
+      "joining_fee":2999,
+      "annual_fee":2999,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"AU Spont Credit Card",
+      "joining_fee":299,
+      "annual_fee":299,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"AU Ultra+ Credit Card",
+      "joining_fee":499,
+      "annual_fee":499,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"Slice Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"Uni Gold Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"Kiwi Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"IDFC FIRST Wealth Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"IDFC FIRST Classic Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"IDFC FIRST Select Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"IDFC FIRST WOW! Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"IDFC FIRST SWYP Credit Card",
+      "joining_fee":499,
+      "annual_fee":499,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"IDFC FIRST Ashva Credit Card",
+      "joining_fee":2999,
+      "annual_fee":2999,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"IDFC FIRST Mayura Credit Card",
+      "joining_fee":5999,
+      "annual_fee":5999,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"IDFC FIRST HPCL Power Credit Card",
+      "joining_fee":199,
+      "annual_fee":199,
+      "annual_fee_waiver_criteria":50000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"IDFC FIRST HPCL+ Power Credit Card",
+      "joining_fee":499,
+      "annual_fee":499,
+      "annual_fee_waiver_criteria":150000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"IDFC FIRST Millennia Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"Jupiter Edge CSB Bank RuPay Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"IndusInd Avios Visa Infinite Credit Card",
+      "joining_fee":10000,
+      "annual_fee":5000,
+      "annual_fee_waiver_criteria":200000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"IndusInd Platinum RuPay Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"IndusInd Poonawalla Fincorp eLITE RuPay Platinum Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"IndusInd Pinnacle World Credit Card",
+      "joining_fee":14999,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"Bank of Baroda Tiara Credit Card",
+      "joining_fee":2499,
+      "annual_fee":2499,
+      "annual_fee_waiver_criteria":250000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"Bank of Baroda Prime Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"HSBC Premier Credit Card",
+      "joining_fee":12000,
+      "annual_fee":20000,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HSBC Live+ Credit Card",
+      "joining_fee":999,
+      "annual_fee":999,
+      "annual_fee_waiver_criteria":350000,
+      "is_lifetime_free":0
+    },
+    {
+      "card_name":"HSBC Platinum Credit Card",
+      "joining_fee":0,
+      "annual_fee":0,
+      "annual_fee_waiver_criteria":0,
+      "is_lifetime_free":1
+    },
+    {
+      "card_name":"HSBC TravelOne Credit Card",
+      "joining_fee":4999,
+      "annual_fee":4999,
+      "annual_fee_waiver_criteria":800000,
+      "is_lifetime_free":0
+    }
+  ]

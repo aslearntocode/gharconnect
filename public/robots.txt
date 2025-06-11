@@ -1,0 +1,35 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://financialhealth.co.in/sitemap.xml
+
+# Disallow crawling of private or admin areas
+Disallow: /api/
+Disallow: /_next/
+Disallow: /static/
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+
+# Allow crawling of important pages
+Allow: /credit
+Allow: /credit?category=fintech
+Allow: /credit?category=ultra-premium
+Allow: /credit?category=lifestyle
+Allow: /credit?category=hotels
+Allow: /credit?category=premium
+Allow: /credit?category=cash-back
+Allow: /credit?category=fuel
+Allow: /credit?category=lifetime-free
+Allow: /credit?category=upi
+Allow: /credit?category=domestic-lounge
+Allow: /credit?category=international-lounge
+Allow: /credit?category=airlines
+Allow: /credit?category=secured-credit-card
+Allow: /credit-score
+Allow: /credit-vs-loan-assessment
+Allow: /learning-center
+Allow: /about
+Allow: /faq 

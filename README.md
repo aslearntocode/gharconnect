@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Yes Bank Credit Card Scraper
 
-## Getting Started
+This script scrapes credit card information from Yes Bank's website and stores it in a Supabase database.
 
-First, run the development server:
+## Setup
 
+1. Install the required dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pip install -r requirements.txt
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Create a Supabase project and get your project URL and API key.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Create a `.env` file in the project root and add your Supabase credentials:
+```
+SUPABASE_URL=your_supabase_url_here
+SUPABASE_KEY=your_supabase_key_here
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Usage
 
-## Learn More
+Run the script:
+```bash
+python yes_bank_scraper.py
+```
 
-To learn more about Next.js, take a look at the following resources:
+The script will:
+1. Scrape credit card information from Yes Bank's website
+2. Create a `credit_cards` table in your Supabase database if it doesn't exist
+3. Store the scraped data in the table
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Data Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The script stores the following information for each credit card:
+- Card name
+- Card image URL
+- Features list
+- Benefits list
 
-## Deploy on Vercel
+## Note
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Make sure you have proper permissions to scrape the website and comply with Yes Bank's terms of service.

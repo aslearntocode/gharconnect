@@ -1,0 +1,355 @@
+[
+  {
+    "id": "icici-sample-card",
+    "name": "ICICI Sample Credit Card",
+    "bank": "ICICI",
+    "image": "/credit-cards/ICICI-Sample.png",
+    "apr": "42% p.a.",
+    "annualFee": "₹500",
+    "joiningFee": "₹1,000",
+    "rewards": "Earn 2.5% Reward Points on international spends\nEarn 2% Reward Points on domestic spends",
+    "rupay": true,
+    "features": [
+      "Universal Cashback",
+      "Fuel Surcharge Waiver",
+      "EMI Options"
+    ],
+    "feedback": [
+      {
+        "comment": "Excellent customer service and benefits",
+        "rating": 5.095157556661349,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Excellent customer service and benefits",
+        "rating": 6.956165018417666,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Decent cashback but customer service needs improvement",
+        "rating": 7.026895942758657,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Great rewards program, totally worth it!",
+        "rating": 7.30437256430114,
+        "date": "2025-04-22"
+      }
+    ],
+    "additionalDetails": {
+      "rewardsProgram": "Flat 2% cashback on all spends, credited monthly",
+      "welcomeBonus": "₹1,000 cashback on spending ₹25,000 in first 30 days",
+      "milestoneBenefits": [
+        "Annual fee waiver on spending ₹3,00,000 in a year"
+      ],
+      "airportLounge": "2 complimentary domestic lounge visits per quarter",
+      "fuelSurcharge": "Complete fuel surcharge waiver at all fuel stations",
+      "insuranceCover": [
+        "Purchase protection up to ₹1 lakh",
+        "Card fraud protection"
+      ],
+      "movieBenefits": "25% off on movie tickets up to ₹100 per ticket",
+      "diningPrivileges": [
+        "10% cashback at restaurants up to ₹200 per transaction",
+        "5% extra cashback at food delivery"
+      ],
+      "minimumSpend": "₹10,000 per month",
+      "paymentDueDays": "15 days",
+      "creditLimit": "Up to ₹3,00,000",
+      "domesticTransactionFee": "Nil",
+      "internationalTransactionFee": "3.5% + GST",
+      "interestRate": "3.75% per month",
+      "emiOptions": "Available on purchases above ₹5,000"
+    }
+  },
+  {
+    "id": "hdfc-sample-card",
+    "name": "HDFC Sample Credit Card",
+    "bank": "HDFC",
+    "image": "/credit-cards/HDFC-Sample.png",
+    "apr": "42% p.a.",
+    "annualFee": "₹500",
+    "joiningFee": "₹1,000",
+    "rewards": "Earn 2.5% Reward Points on international spends\nEarn 2% Reward Points on domestic spends",
+    "rupay": true,
+    "features": [
+      "Universal Cashback",
+      "Fuel Surcharge Waiver",
+      "EMI Options"
+    ],
+    "feedback": [
+      {
+        "comment": "Decent cashback but customer service needs improvement",
+        "rating": 6.039991841428712,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Excellent customer service and benefits",
+        "rating": 6.181390907215363,
+        "date": "2025-04-22"
+      }
+    ],
+    "additionalDetails": {
+      "rewardsProgram": "Flat 2% cashback on all spends, credited monthly",
+      "welcomeBonus": "₹1,000 cashback on spending ₹25,000 in first 30 days",
+      "milestoneBenefits": [
+        "Annual fee waiver on spending ₹3,00,000 in a year"
+      ],
+      "airportLounge": "2 complimentary domestic lounge visits per quarter",
+      "fuelSurcharge": "Complete fuel surcharge waiver at all fuel stations",
+      "insuranceCover": [
+        "Purchase protection up to ₹1 lakh",
+        "Card fraud protection"
+      ],
+      "movieBenefits": "25% off on movie tickets up to ₹100 per ticket",
+      "diningPrivileges": [
+        "10% cashback at restaurants up to ₹200 per transaction",
+        "5% extra cashback at food delivery"
+      ],
+      "minimumSpend": "₹10,000 per month",
+      "paymentDueDays": "15 days",
+      "creditLimit": "Up to ₹3,00,000",
+      "domesticTransactionFee": "Nil",
+      "internationalTransactionFee": "3.5% + GST",
+      "interestRate": "3.75% per month",
+      "emiOptions": "Available on purchases above ₹5,000"
+    }
+  },
+  {
+    "id": "axis-sample-card",
+    "name": "Axis Sample Credit Card",
+    "bank": "Axis",
+    "image": "/credit-cards/Axis-Sample.png",
+    "apr": "42% p.a.",
+    "annualFee": "₹500",
+    "joiningFee": "₹1,000",
+    "rewards": "Earn 2.5% Reward Points on international spends\nEarn 2% Reward Points on domestic spends",
+    "rupay": false,
+    "features": [
+      "Universal Cashback",
+      "Fuel Surcharge Waiver",
+      "EMI Options"
+    ],
+    "feedback": [
+      {
+        "comment": "Processing time for cashback is too long",
+        "rating": 8.190885684119872,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Great rewards program, totally worth it!",
+        "rating": 6.880372202538243,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Decent cashback but customer service needs improvement",
+        "rating": 7.042363245693945,
+        "date": "2025-04-22"
+      }
+    ],
+    "additionalDetails": {
+      "rewardsProgram": "Flat 2% cashback on all spends, credited monthly",
+      "welcomeBonus": "₹1,000 cashback on spending ₹25,000 in first 30 days",
+      "milestoneBenefits": [
+        "Annual fee waiver on spending ₹3,00,000 in a year"
+      ],
+      "airportLounge": "2 complimentary domestic lounge visits per quarter",
+      "fuelSurcharge": "Complete fuel surcharge waiver at all fuel stations",
+      "insuranceCover": [
+        "Purchase protection up to ₹1 lakh",
+        "Card fraud protection"
+      ],
+      "movieBenefits": "25% off on movie tickets up to ₹100 per ticket",
+      "diningPrivileges": [
+        "10% cashback at restaurants up to ₹200 per transaction",
+        "5% extra cashback at food delivery"
+      ],
+      "minimumSpend": "₹10,000 per month",
+      "paymentDueDays": "15 days",
+      "creditLimit": "Up to ₹3,00,000",
+      "domesticTransactionFee": "Nil",
+      "internationalTransactionFee": "3.5% + GST",
+      "interestRate": "3.75% per month",
+      "emiOptions": "Available on purchases above ₹5,000"
+    }
+  },
+  {
+    "id": "sbi-sample-card",
+    "name": "SBI Sample Credit Card",
+    "bank": "SBI",
+    "image": "/credit-cards/SBI-Sample.png",
+    "apr": "42% p.a.",
+    "annualFee": "₹500",
+    "joiningFee": "₹1,000",
+    "rewards": "Earn 2.5% Reward Points on international spends\nEarn 2% Reward Points on domestic spends",
+    "rupay": true,
+    "features": [
+      "Universal Cashback",
+      "Fuel Surcharge Waiver",
+      "EMI Options"
+    ],
+    "feedback": [
+      {
+        "comment": "Good card but high annual fee",
+        "rating": 9.397097209836668,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Excellent customer service and benefits",
+        "rating": 9.559469624361379,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Processing time for cashback is too long",
+        "rating": 5.4339625024292975,
+        "date": "2025-04-22"
+      }
+    ],
+    "additionalDetails": {
+      "rewardsProgram": "Flat 2% cashback on all spends, credited monthly",
+      "welcomeBonus": "₹1,000 cashback on spending ₹25,000 in first 30 days",
+      "milestoneBenefits": [
+        "Annual fee waiver on spending ₹3,00,000 in a year"
+      ],
+      "airportLounge": "2 complimentary domestic lounge visits per quarter",
+      "fuelSurcharge": "Complete fuel surcharge waiver at all fuel stations",
+      "insuranceCover": [
+        "Purchase protection up to ₹1 lakh",
+        "Card fraud protection"
+      ],
+      "movieBenefits": "25% off on movie tickets up to ₹100 per ticket",
+      "diningPrivileges": [
+        "10% cashback at restaurants up to ₹200 per transaction",
+        "5% extra cashback at food delivery"
+      ],
+      "minimumSpend": "₹10,000 per month",
+      "paymentDueDays": "15 days",
+      "creditLimit": "Up to ₹3,00,000",
+      "domesticTransactionFee": "Nil",
+      "internationalTransactionFee": "3.5% + GST",
+      "interestRate": "3.75% per month",
+      "emiOptions": "Available on purchases above ₹5,000"
+    }
+  },
+  {
+    "id": "standard chartered-sample-card",
+    "name": "Standard Chartered Sample Credit Card",
+    "bank": "Standard Chartered",
+    "image": "/credit-cards/Standard Chartered-Sample.png",
+    "apr": "42% p.a.",
+    "annualFee": "₹500",
+    "joiningFee": "₹1,000",
+    "rewards": "Earn 2.5% Reward Points on international spends\nEarn 2% Reward Points on domestic spends",
+    "rupay": false,
+    "features": [
+      "Universal Cashback",
+      "Fuel Surcharge Waiver",
+      "EMI Options"
+    ],
+    "feedback": [
+      {
+        "comment": "Decent cashback but customer service needs improvement",
+        "rating": 6.864832193112041,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Decent cashback but customer service needs improvement",
+        "rating": 9.390526869571586,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Excellent customer service and benefits",
+        "rating": 5.228070796721101,
+        "date": "2025-04-22"
+      }
+    ],
+    "additionalDetails": {
+      "rewardsProgram": "Flat 2% cashback on all spends, credited monthly",
+      "welcomeBonus": "₹1,000 cashback on spending ₹25,000 in first 30 days",
+      "milestoneBenefits": [
+        "Annual fee waiver on spending ₹3,00,000 in a year"
+      ],
+      "airportLounge": "2 complimentary domestic lounge visits per quarter",
+      "fuelSurcharge": "Complete fuel surcharge waiver at all fuel stations",
+      "insuranceCover": [
+        "Purchase protection up to ₹1 lakh",
+        "Card fraud protection"
+      ],
+      "movieBenefits": "25% off on movie tickets up to ₹100 per ticket",
+      "diningPrivileges": [
+        "10% cashback at restaurants up to ₹200 per transaction",
+        "5% extra cashback at food delivery"
+      ],
+      "minimumSpend": "₹10,000 per month",
+      "paymentDueDays": "15 days",
+      "creditLimit": "Up to ₹3,00,000",
+      "domesticTransactionFee": "Nil",
+      "internationalTransactionFee": "3.5% + GST",
+      "interestRate": "3.75% per month",
+      "emiOptions": "Available on purchases above ₹5,000"
+    }
+  },
+  {
+    "id": "idfc-sample-card",
+    "name": "IDFC Sample Credit Card",
+    "bank": "IDFC",
+    "image": "/credit-cards/IDFC-Sample.png",
+    "apr": "42% p.a.",
+    "annualFee": "₹500",
+    "joiningFee": "₹1,000",
+    "rewards": "Earn 2.5% Reward Points on international spends\nEarn 2% Reward Points on domestic spends",
+    "rupay": true,
+    "features": [
+      "Universal Cashback",
+      "Fuel Surcharge Waiver",
+      "EMI Options"
+    ],
+    "feedback": [
+      {
+        "comment": "Excellent customer service and benefits",
+        "rating": 8.502217654920667,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Good card but high annual fee",
+        "rating": 7.971843678249542,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Excellent customer service and benefits",
+        "rating": 7.845107381712656,
+        "date": "2025-04-22"
+      },
+      {
+        "comment": "Decent cashback but customer service needs improvement",
+        "rating": 9.803208651696629,
+        "date": "2025-04-22"
+      }
+    ],
+    "additionalDetails": {
+      "rewardsProgram": "Flat 2% cashback on all spends, credited monthly",
+      "welcomeBonus": "₹1,000 cashback on spending ₹25,000 in first 30 days",
+      "milestoneBenefits": [
+        "Annual fee waiver on spending ₹3,00,000 in a year"
+      ],
+      "airportLounge": "2 complimentary domestic lounge visits per quarter",
+      "fuelSurcharge": "Complete fuel surcharge waiver at all fuel stations",
+      "insuranceCover": [
+        "Purchase protection up to ₹1 lakh",
+        "Card fraud protection"
+      ],
+      "movieBenefits": "25% off on movie tickets up to ₹100 per ticket",
+      "diningPrivileges": [
+        "10% cashback at restaurants up to ₹200 per transaction",
+        "5% extra cashback at food delivery"
+      ],
+      "minimumSpend": "₹10,000 per month",
+      "paymentDueDays": "15 days",
+      "creditLimit": "Up to ₹3,00,000",
+      "domesticTransactionFee": "Nil",
+      "internationalTransactionFee": "3.5% + GST",
+      "interestRate": "3.75% per month",
+      "emiOptions": "Available on purchases above ₹5,000"
+    }
+  }
+]
