@@ -456,6 +456,20 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {/* List Property Button */}
+      <div className="flex justify-center mb-8">
+        <a 
+          href="https://docs.google.com/forms/d/1UYz_V5HNkJwqgvFrBLr79Rr4lsEmJeBXkhV35MeVicM/edit" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white hover:bg-indigo-700 rounded-lg text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+        >
+          Click Here to List Your Property for Rent/Sell
+          <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+          </svg>
+        </a>
+      </div>
 
       {/* IDFC First Bank Offer Banner */}
       <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden">
@@ -730,6 +744,65 @@ export default function Home() {
                 <p className="text-xs md:text-base text-gray-600 text-center">Seasonal and exotic fruits, handpicked for you</p>
               </div>
             </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Property Management Services Section */}
+      <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-12">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="py-12 flex flex-col md:flex-row items-center justify-between gap-8 relative">
+            {/* Sponsored Ad Label */}
+            <div className="absolute top-4 left-4">
+              <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-medium text-white">
+                Sponsored Ad
+              </span>
+            </div>
+            {/* Left Content */}
+            <div className="flex-1 text-center md:text-left">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
+                Property Management Services from Classic Maintenance
+              </h3>
+              <p className="text-lg text-white/90 mb-6 max-w-2xl">
+                Hassle-free solutions for your property: maintenance, repairs, and more.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <a 
+                  href="#" 
+                  className="inline-flex items-center px-6 py-3 bg-white text-indigo-600 hover:bg-indigo-50 rounded-lg text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                >
+                  Click Here
+                  <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+            {/* Right Content - Cards */}
+            <div className="flex-1 grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+              <div className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
+                <span className="text-3xl mb-2">🏚️</span>
+                <h4 className="text-base sm:text-lg font-semibold text-white mb-1">Tenancy Exit Renovation</h4>
+                <p className="text-white/80 text-xs">Restore your property to pristine condition after tenancy.</p>
+              </div>
+              <div className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
+                <span className="text-3xl mb-2">🛠️</span>
+                <h4 className="text-base sm:text-lg font-semibold text-white mb-1">Annual Servicing</h4>
+                <p className="text-white/80 text-xs">Yearly maintenance for appliances and home systems.</p>
+              </div>
+              <div className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
+                <span className="text-3xl mb-2">🔌</span>
+                <h4 className="text-base sm:text-lg font-semibold text-white mb-1">Electronic Repair</h4>
+                <p className="text-white/80 text-xs">Quick fixes for all your electronic devices and appliances.</p>
+              </div>
+              <div className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
+                <span className="text-3xl mb-2">🐜</span>
+                <h4 className="text-base sm:text-lg font-semibold text-white mb-1">Pest Control</h4>
+                <p className="text-white/80 text-xs">Effective solutions for a pest-free property.</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
