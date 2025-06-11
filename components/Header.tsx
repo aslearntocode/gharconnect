@@ -23,9 +23,8 @@ export default function Header() {
   const [user, setUser] = useState<User | null>(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isInvestmentDropdownOpen, setIsInvestmentDropdownOpen] = useState(false)
-  const [isCreditDropdownOpen, setIsCreditDropdownOpen] = useState(false)
+  const [isPropertiesDropdownOpen, setIsPropertiesDropdownOpen] = useState(false)
   const [isCreditScoreDropdownOpen, setIsCreditScoreDropdownOpen] = useState(false)
-  const [isLoansDropdownOpen, setIsLoansDropdownOpen] = useState(false)
   const [isDeliveryDropdownOpen, setIsDeliveryDropdownOpen] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
@@ -181,12 +180,12 @@ export default function Header() {
               <div className="relative" style={{ zIndex: 50 }}>
                 <div className="flex items-center">
                   <button 
-                    onClick={() => setIsCreditDropdownOpen(!isCreditDropdownOpen)}
+                    onClick={() => setIsPropertiesDropdownOpen(!isPropertiesDropdownOpen)}
                     className="text-black hover:text-gray-700 py-2 text-base"
                   >
-                    Rent
+                    Properties
                     <svg
-                      className={`ml-2 h-5 w-5 transform inline-block ${isCreditDropdownOpen ? 'rotate-180' : ''}`}
+                      className={`ml-2 h-5 w-5 transform inline-block ${isPropertiesDropdownOpen ? 'rotate-180' : ''}`}
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 20 20"
                       fill="currentColor"
@@ -202,8 +201,8 @@ export default function Header() {
                 </div>
                 <div 
                   className={`
-                    fixed w-80 bg-white rounded-lg shadow-lg py-4 px-4
-                    ${isCreditDropdownOpen ? 'block' : 'hidden'}
+                    fixed w-48 bg-white rounded-lg shadow-lg py-2
+                    ${isPropertiesDropdownOpen ? 'block' : 'hidden'}
                   `}
                   style={{
                     zIndex: 1000,
@@ -211,174 +210,22 @@ export default function Header() {
                     left: '20rem'
                   }}
                 >
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                    {/* Left column */}
-                    <div className="flex flex-col gap-y-2">
-                      <Link href="/rent/t1" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsCreditDropdownOpen(false)}>
-                        <FiHome className="text-blue-600 w-5 h-5" />
-                        <span>T1</span>
-                      </Link>
-                      <Link href="/rent/t2" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsCreditDropdownOpen(false)}>
-                        <FiHome className="text-blue-600 w-5 h-5" />
-                        <span>T2</span>
-                      </Link>
-                      <Link href="/rent/t3" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsCreditDropdownOpen(false)}>
-                        <FiHome className="text-blue-600 w-5 h-5" />
-                        <span>T3</span>
-                      </Link>
-                    </div>
-                    {/* Right column */}
-                    <div className="flex flex-col gap-y-2">
-                      <Link href="/rent/t4" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsCreditDropdownOpen(false)}>
-                        <FiHome className="text-blue-600 w-5 h-5" />
-                        <span>T4</span>
-                      </Link>
-                      <Link href="/rent/t5" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsCreditDropdownOpen(false)}>
-                        <FiHome className="text-blue-600 w-5 h-5" />
-                        <span>T5</span>
-                      </Link>
-                      <Link href="/rent/t6" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsCreditDropdownOpen(false)}>
-                        <FiHome className="text-blue-600 w-5 h-5" />
-                        <span>T6</span>
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* Commenting out Investments section
-              <div className="relative" style={{ zIndex: 50 }}>
-                <div className="flex items-center">
-                  <button 
-                    onClick={() => setIsInvestmentDropdownOpen(!isInvestmentDropdownOpen)}
-                    className="text-black hover:text-gray-700 py-2 text-lg mr-1"
-                  >
-                    Investments
-                  </button>
-                  <button 
-                    onClick={() => setIsInvestmentDropdownOpen(!isInvestmentDropdownOpen)}
-                    className="p-1"
-                  >
-                    <svg 
-                      width="24" 
-                      height="24" 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      className={`transition-transform duration-200 ${isInvestmentDropdownOpen ? 'rotate-180' : ''}`}
-                    >
-                      <path d="M7 10l5 5 5-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </button>
-                </div>
-                <div 
-                  className={`
-                    fixed w-64 bg-white rounded-lg shadow-lg py-2
-                    ${isInvestmentDropdownOpen ? 'block' : 'hidden'}
-                  `}
-                  style={{
-                    zIndex: 1000,
-                    top: '4rem',
-                    left: '36rem'
-                  }}
-                >
                   <Link 
-                    href="/investment" 
-                    className="flex items-center px-4 py-3 text-black hover:bg-gray-50"
+                    href="/rent" 
+                    className="flex items-center gap-x-3 px-4 py-2 text-base text-black hover:bg-gray-50"
+                    onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
-                    <span className="text-base">Investment Allocation</span>
+                    <FiHome className="text-blue-600 w-5 h-5" />
+                    <span>Rent</span>
                   </Link>
-                  {Boolean(user) && Boolean(hasRecommendationAccess) && (
-                    <button
-                      onClick={handleMutualFundsDashboard}
-                      className="w-full flex items-center px-4 py-3 text-black hover:bg-gray-50"
-                    >
-                      <span className="text-base">MF Dashboard</span>
-                    </button>
-                  )}
-                  {Boolean(user) && Boolean(hasStockAccess) && (
-                    <button
-                      onClick={handleStocksDashboard}
-                      className="w-full flex items-center px-4 py-3 text-black hover:bg-gray-50"
-                    >
-                      <span className="text-base">Stocks Dashboard</span>
-                    </button>
-                  )}
-                  {Boolean(user) && (
-                    <Link 
-                      href="/investment/portfolio-tracker" 
-                      className="flex items-center px-4 py-3 text-black hover:bg-gray-50"
-                    >
-                      <span className="text-base">Existing Portfolio Tracker</span>
-                    </Link>
-                  )}
-                </div>
-              </div>
-              */}
-
-              <div className="relative" style={{ zIndex: 50 }}>
-                <div className="flex items-center">
-                  <button 
-                    onClick={() => setIsLoansDropdownOpen(!isLoansDropdownOpen)}
-                    className="text-black hover:text-gray-700 py-2 text-base"
+                  <Link 
+                    href="/sell" 
+                    className="flex items-center gap-x-3 px-4 py-2 text-base text-black hover:bg-gray-50"
+                    onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
-                    Sell
-                    <svg
-                      className={`ml-2 h-5 w-5 transform inline-block ${isLoansDropdownOpen ? 'rotate-180' : ''}`}
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                  </button>
-                </div>
-                <div 
-                  className={`
-                    fixed w-80 bg-white rounded-lg shadow-lg py-4 px-4
-                    ${isLoansDropdownOpen ? 'block' : 'hidden'}
-                  `}
-                  style={{
-                    zIndex: 1000,
-                    top: '4rem',
-                    left: '24rem'
-                  }}
-                >
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                    {/* Left column */}
-                    <div className="flex flex-col gap-y-2">
-                      <Link href="/sell/t1" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsLoansDropdownOpen(false)}>
-                        <FiHome className="text-blue-600 w-5 h-5" />
-                        <span>T1</span>
-                      </Link>
-                      <Link href="/sell/t2" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsLoansDropdownOpen(false)}>
-                        <FiHome className="text-blue-600 w-5 h-5" />
-                        <span>T2</span>
-                      </Link>
-                      <Link href="/sell/t3" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsLoansDropdownOpen(false)}>
-                        <FiHome className="text-blue-600 w-5 h-5" />
-                        <span>T3</span>
-                      </Link>
-                    </div>
-                    {/* Right column */}
-                    <div className="flex flex-col gap-y-2">
-                      <Link href="/sell/t4" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsLoansDropdownOpen(false)}>
-                        <FiHome className="text-blue-600 w-5 h-5" />
-                        <span>T4</span>
-                      </Link>
-                      <Link href="/sell/t5" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsLoansDropdownOpen(false)}>
-                        <FiHome className="text-blue-600 w-5 h-5" />
-                        <span>T5</span>
-                      </Link>
-                      <Link href="/sell/t6" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsLoansDropdownOpen(false)}>
-                        <FiHome className="text-blue-600 w-5 h-5" />
-                        <span>T6</span>
-                      </Link>
-                    </div>
-                  </div>
+                    <FiHome className="text-blue-600 w-5 h-5" />
+                    <span>Sell</span>
+                  </Link>
                 </div>
               </div>
 
@@ -593,111 +440,27 @@ export default function Header() {
 
             <div className="relative">
               <button 
-                onClick={() => setIsCreditDropdownOpen(isCreditDropdownOpen => !isCreditDropdownOpen)}
+                onClick={() => setIsPropertiesDropdownOpen(isPropertiesDropdownOpen => !isPropertiesDropdownOpen)}
                 className="text-black hover:text-gray-700 flex flex-col items-center"
               >
-                <FiCreditCard className="w-5 h-5 mb-0.5" />
-                <span className="text-base font-semibold mt-1">Rent</span>
+                <FiHome className="w-5 h-5 mb-0.5" />
+                <span className="text-base font-semibold mt-1">Properties</span>
               </button>
-              {isCreditDropdownOpen && (
+              {isPropertiesDropdownOpen && (
                 <div className="absolute bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)' }}>
                   <Link 
-                    href="/rent/t1" 
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditDropdownOpen(false)}
+                    href="/rent"
+                    className="flex items-center px-4 py-2 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
-                    T1
+                    Rent
                   </Link>
                   <Link 
-                    href="/rent/t2" 
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditDropdownOpen(false)}
+                    href="/sell"
+                    className="flex items-center px-4 py-2 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
-                    T2
-                  </Link>
-                  <Link 
-                    href="/rent/t3" 
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditDropdownOpen(false)}
-                  >
-                    T3
-                  </Link>
-                  <Link 
-                    href="/rent/t4" 
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditDropdownOpen(false)}
-                  >
-                    T4
-                  </Link>
-                  <Link 
-                    href="/rent/t5" 
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditDropdownOpen(false)}
-                  >
-                    T5
-                  </Link>
-                  <Link 
-                    href="/rent/t6" 
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditDropdownOpen(false)}
-                  >
-                    T6
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            <div className="relative">
-              <button 
-                onClick={() => setIsLoansDropdownOpen(isLoansDropdownOpen => !isLoansDropdownOpen)}
-                className="text-black hover:text-gray-700 flex flex-col items-center"
-              >
-                <FiDollarSign className="w-5 h-5 mb-0.5" />
-                <span className="text-base font-semibold mt-1">Sell</span>
-              </button>
-              {isLoansDropdownOpen && (
-                <div className="absolute bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)' }}>
-                  <Link 
-                    href="/sell/t1" 
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsLoansDropdownOpen(false)}
-                  >
-                    T1
-                  </Link>
-                  <Link 
-                    href="/sell/t2" 
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsLoansDropdownOpen(false)}
-                  >
-                    T2
-                  </Link>
-                  <Link 
-                    href="/sell/t3" 
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsLoansDropdownOpen(false)}
-                  >
-                    T3
-                  </Link>
-                  <Link 
-                    href="/sell/t4" 
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsLoansDropdownOpen(false)}
-                  >
-                    T4
-                  </Link>
-                  <Link 
-                    href="/sell/t5" 
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsLoansDropdownOpen(false)}
-                  >
-                    T5
-                  </Link>
-                  <Link 
-                    href="/sell/t6" 
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsLoansDropdownOpen(false)}
-                  >
-                    T6
+                    Sell
                   </Link>
                 </div>
               )}

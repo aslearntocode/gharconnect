@@ -429,27 +429,27 @@ export default function Home() {
             {/* Right Content - Main Offerings */}
             <div className="grid grid-cols-2 gap-4">
               <Link href="/rent/" className="col-span-1">
-                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-4 h-24 flex flex-col items-center justify-center cursor-pointer">
-                  <FiHome className="w-8 h-8 text-blue-600 mb-2" />
-                  <span className="font-bold text-[#4F46E5] text-base">Rent</span>
+                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
+                  <FiHome className="w-5 h-5 md:w-8 md:h-8 text-blue-600 mb-1 md:mb-2" />
+                  <span className="font-bold text-[#4F46E5] text-xs md:text-base">Rent</span>
                 </div>
               </Link>
               <Link href="/sell/" className="col-span-1">
-                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-4 h-24 flex flex-col items-center justify-center cursor-pointer">
-                  <FiDollarSign className="w-8 h-8 text-green-600 mb-2" />
-                  <span className="font-bold text-[#4F46E5] text-base">Sell</span>
+                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
+                  <FiDollarSign className="w-5 h-5 md:w-8 md:h-8 text-green-600 mb-1 md:mb-2" />
+                  <span className="font-bold text-[#4F46E5] text-xs md:text-base">Sell</span>
                 </div>
               </Link>
               <Link href="/services/" className="col-span-1">
-                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-4 h-24 flex flex-col items-center justify-center cursor-pointer">
-                  <FiTool className="w-8 h-8 text-yellow-600 mb-2" />
-                  <span className="font-bold text-[#4F46E5] text-base">Services</span>
+                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
+                  <FiTool className="w-5 h-5 md:w-8 md:h-8 text-yellow-600 mb-1 md:mb-2" />
+                  <span className="font-bold text-[#4F46E5] text-xs md:text-base">Services</span>
                 </div>
               </Link>
               <Link href="/delivery/" className="col-span-1">
-                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-4 h-24 flex flex-col items-center justify-center cursor-pointer">
-                  <FiTruck className="w-8 h-8 text-indigo-600 mb-2" />
-                  <span className="font-bold text-[#4F46E5] text-base">Delivery</span>
+                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
+                  <FiTruck className="w-5 h-5 md:w-8 md:h-8 text-indigo-600 mb-1 md:mb-2" />
+                  <span className="font-bold text-[#4F46E5] text-xs md:text-base">Delivery</span>
                 </div>
               </Link>
             </div>
@@ -464,15 +464,15 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="py-8 flex items-center justify-center relative">
             {/* Main content */}
-            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
-              <div className="text-center md:text-left">
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 w-full">
+              <div className="text-center md:text-left flex-1">
                 <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs md:text-sm font-medium mb-2">
                   Travel Vlogs
                 </span>
                 <h3 className="text-base md:text-xl lg:text-2xl font-bold">
                   Explore, Share, and Relive Adventures from Around the World!
                 </h3>
-                <p className="mt-2 text-white/90 max-w-2xl">
+                <p className="mt-2 text-white/90">
                   Dive into exciting travel stories, breathtaking destinations, and hidden gems. Share your travel experiences and inspire others to embark on their next adventure. Whether you love mountains, beaches, or the road less traveled - this is your space to connect with fellow travellers in your society
                 </p>
               </div>
@@ -613,6 +613,12 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="py-12 flex flex-col md:flex-row items-center justify-between gap-8 relative">
+            {/* Sponsored Ad Label */}
+            <div className="absolute top-4 left-4">
+              <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-medium text-white">
+                Sponsored Ad
+              </span>
+            </div>
             {/* Left Content */}
             <div className="flex-1 text-center md:text-left">
               <span className="inline-block px-3 py-1 bg-indigo-400/20 rounded-full text-sm font-medium mb-4">

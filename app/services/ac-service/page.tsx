@@ -1,8 +1,16 @@
 'use client';
 
 import Header from '@/components/Header';
-import { FiSearch, FiZap, FiPhone } from 'react-icons/fi';
+import { FiSearch } from 'react-icons/fi';
 import { acServiceServices } from '@/app/data/services/acservice';
+import { VendorCard } from '@/components/VendorCard';
+
+// Group services by name to show as vendors
+const vendors = Array.from(new Set(acServiceServices.map(p => p.name))).map(name => ({
+  name: name,
+  services: acServiceServices.filter(p => p.name === name),
+  mobile: acServiceServices.find(p => p.name === name)?.mobile || '+91 98765 43210'
+}));
 
 export default function ACServicePage() {
   return (
@@ -28,24 +36,13 @@ export default function ACServicePage() {
       </div>
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {acServiceServices && acServiceServices.map((service) => (
-              <div key={service.id} className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 flex items-center gap-4">
-                <FiZap className="text-4xl text-blue-500 flex-shrink-0" />
-                <div className="flex-1">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1">{service.name}</h2>
-                  <p className="text-gray-600 text-sm mb-2">{service.description}</p>
-                  <a href={`tel:${service.mobile}`} className="flex items-center text-blue-600 text-sm font-medium hover:text-blue-800 mb-2">
-                    <FiPhone className="w-4 h-4 mr-1" />
-                    {service.mobile}
-                  </a>
-                  <div className="flex items-center gap-4 mb-1">
-                    <span className="text-blue-600 font-bold text-base">₹{service.price}</span>
-                    <span className="text-gray-500 text-sm">{service.duration}</span>
-                  </div>
-                  <span className="inline-block bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full w-max">{service.category}</span>
-                </div>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {vendors.map((vendor, index) => (
+              <VendorCard
+                key={index}
+                vendor={vendor}
+                type="service"
+              />
             ))}
           </div>
         </div>
