@@ -1,8 +1,9 @@
 'use client';
 
 import Header from '@/components/Header';
-import { FiSearch, FiTool, FiPhone } from 'react-icons/fi';
+import { FiSearch } from 'react-icons/fi';
 import { pestControlServices } from '@/app/data/services/pest-control';
+import { VendorCard } from '@/components/VendorCard';
 
 export default function PestControlPage() {
   return (
@@ -30,22 +31,15 @@ export default function PestControlPage() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pestControlServices && pestControlServices.map((service) => (
-              <div key={service.id} className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 flex items-center gap-4">
-                <FiTool className="text-4xl text-red-500 flex-shrink-0" />
-                <div className="flex-1">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1">{service.name}</h2>
-                  <p className="text-gray-600 text-sm mb-2">{service.description}</p>
-                  <a href={`tel:${service.mobile}`} className="flex items-center text-blue-600 text-sm font-medium hover:text-blue-800 mb-2">
-                    <FiPhone className="w-4 h-4 mr-1" />
-                    {service.mobile}
-                  </a>
-                  <div className="flex items-center gap-4 mb-1">
-                    <span className="text-blue-600 font-bold text-base">₹{service.price}</span>
-                    <span className="text-gray-500 text-sm">{service.duration}</span>
-                  </div>
-                  <span className="inline-block bg-red-100 text-red-700 text-xs px-3 py-1 rounded-full w-max">{service.category}</span>
-                </div>
-              </div>
+              <VendorCard
+                key={service.id}
+                vendor={{
+                  name: service.name,
+                  services: [service],
+                  mobile: service.mobile
+                }}
+                type="service"
+              />
             ))}
           </div>
         </div>

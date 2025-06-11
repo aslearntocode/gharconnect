@@ -28,21 +28,15 @@ import {
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { supabase } from '@/lib/supabase'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { auth } from '@/lib/firebase'
 
 const profileSchema = z.object({
-  mobile: z.string().regex(/^\d{10}$/, "Please enter a valid 10-digit mobile number"),
-  income_range: z.enum([
-    "0-5L", "5L-10L", "10L-15L", "15L-25L", "25L+"
-  ], {
-    required_error: "Please select an income range",
-  }),
-  employment_category: z.enum([
-    "Salaried", "Self-Employed", "Business Owner", "Retired", "Student"
-  ], {
-    required_error: "Please select an employment category",
-  }),
+  society_name: z.string().min(1, "Society name is required"),
+  building_name: z.string().min(1, "Building name is required"),
+  apartment_number: z.string().min(1, "Apartment number is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().optional(),
 })
 
 type ProfileFormValues = z.infer<typeof profileSchema>
@@ -50,13 +44,17 @@ type ProfileFormValues = z.infer<typeof profileSchema>
 export function ProfileEdit() {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const supabase = createClientComponentClient()
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
-      mobile: "",
-      income_range: undefined,
-      employment_category: undefined,
+      society_name: "",
+      building_name: "",
+      apartment_number: "",
+      email: "",
+      phone: "",
     },
   })
 
@@ -64,59 +62,82 @@ export function ProfileEdit() {
     const fetchProfile = async () => {
       try {
         const currentUser = auth.currentUser;
-        if (!currentUser) return;
+        if (!currentUser) {
+          setError("No user found. Please try logging in again.");
+          return;
+        }
 
         const { data: profile, error } = await supabase
-          .from('profiles')
-          .select('mobile, income_range, employment_category')
-          .eq('id', currentUser.uid)
+          .from('user_profiles')
+          .select('*')
+          .eq('user_id', currentUser.uid)
           .single();
 
         if (error) {
-          console.error('Error fetching profile:', error);
+          if (error.code === 'PGRST116') {
+            // No rows returned - this is expected for new users
+            return;
+          }
+          console.error('Error fetching profile:', {
+            message: error.message,
+            details: error.details,
+            hint: error.hint,
+            code: error.code
+          });
+          setError('Failed to load profile information');
           return;
         }
 
         if (profile) {
-          console.log('Fetched profile:', profile);
           form.reset({
-            mobile: profile.mobile || "",
-            income_range: profile.income_range as "0-5L" | "5L-10L" | "10L-15L" | "15L-25L" | "25L+" || undefined,
-            employment_category: profile.employment_category as "Salaried" | "Self-Employed" | "Business Owner" | "Retired" | "Student" || undefined,
+            society_name: profile.society_name || "",
+            building_name: profile.building_name || "",
+            apartment_number: profile.apartment_number || "",
+            email: profile.email || "",
+            phone: profile.phone || "",
           });
         }
       } catch (error) {
         console.error('Error fetching profile:', error);
+        setError('Failed to load profile information');
       }
     };
 
     if (isOpen) {
       fetchProfile();
     }
-  }, [isOpen, form]);
+  }, [isOpen, form, supabase]);
 
   const onSubmit = async (data: ProfileFormValues) => {
-    setIsLoading(true)
+    setIsLoading(true);
+    setError(null);
     try {
       const currentUser = auth.currentUser;
-      if (!currentUser) return;
+      if (!currentUser) {
+        throw new Error('No user found. Please try logging in again.');
+      }
 
       const { error } = await supabase
-        .from('profiles')
+        .from('user_profiles')
         .upsert({
-          id: currentUser.uid,
-          mobile: data.mobile,
-          income_range: data.income_range,
-          employment_category: data.employment_category,
+          user_id: currentUser.uid,
+          society_name: data.society_name,
+          building_name: data.building_name,
+          apartment_number: data.apartment_number,
+          email: data.email,
+          phone: data.phone || null,
           updated_at: new Date().toISOString(),
-        })
+        });
 
-      if (error) throw error
-      setIsOpen(false)
+      if (error) {
+        throw new Error(error.message);
+      }
+      setIsOpen(false);
     } catch (error) {
-      console.error("Error updating profile:", error)
+      console.error("Error updating profile:", error);
+      setError(error instanceof Error ? error.message : 'An error occurred while saving your profile');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   }
 
@@ -131,16 +152,21 @@ export function ProfileEdit() {
         <DialogHeader>
           <DialogTitle>Edit Profile</DialogTitle>
         </DialogHeader>
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 text-red-500 rounded-md text-sm">
+            {error}
+          </div>
+        )}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name="mobile"
+              name="society_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Mobile Number</FormLabel>
+                  <FormLabel>Society Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="1234567890" {...field} />
+                    <Input placeholder="Enter your society name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -148,56 +174,52 @@ export function ProfileEdit() {
             />
             <FormField
               control={form.control}
-              name="income_range"
+              name="building_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Income Range</FormLabel>
-                  <Select 
-                    onValueChange={field.onChange} 
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select income range" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="0-5L">0-5 Lakhs</SelectItem>
-                      <SelectItem value="5L-10L">5-10 Lakhs</SelectItem>
-                      <SelectItem value="10L-15L">10-15 Lakhs</SelectItem>
-                      <SelectItem value="15L-25L">15-25 Lakhs</SelectItem>
-                      <SelectItem value="25L+">Above 25 Lakhs</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Building Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your building name" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="employment_category"
+              name="apartment_number"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Employment Category</FormLabel>
-                  <Select 
-                    onValueChange={field.onChange} 
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select employment category" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Salaried">Salaried</SelectItem>
-                      <SelectItem value="Self-Employed">Self-Employed</SelectItem>
-                      <SelectItem value="Business Owner">Business Owner</SelectItem>
-                      <SelectItem value="Retired">Retired</SelectItem>
-                      <SelectItem value="Student">Student</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Apartment Number</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Enter your apartment number" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input type="email" placeholder="Enter your email" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone (Optional)</FormLabel>
+                  <FormControl>
+                    <Input type="tel" placeholder="Enter your phone number" {...field} />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}

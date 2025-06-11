@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '@/components/ui/dialog'
 import Image from 'next/image'
+import { FirstTimeLoginForm } from './FirstTimeLoginForm'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 interface LoginModalProps {
   isOpen: boolean
@@ -17,7 +19,38 @@ interface LoginModalProps {
 export default function LoginModal({ isOpen, onClose, redirectPath = '/' }: LoginModalProps) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [isFirstTimeUser, setIsFirstTimeUser] = useState(false)
   const router = useRouter()
+  const supabase = createClientComponentClient()
+
+  const checkIfFirstTimeUser = async (userId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('user_profiles')
+        .select('*')
+        .eq('user_id', userId)
+        .single()
+
+      if (error) {
+        if (error.code === 'PGRST116') {
+          // No rows returned - this is a first-time user
+          return true
+        }
+        console.error('Error checking user profile:', {
+          message: error.message,
+          details: error.details,
+          hint: error.hint,
+          code: error.code
+        })
+        return true
+      }
+
+      return !data
+    } catch (error) {
+      console.error('Error checking user profile:', error)
+      return true
+    }
+  }
 
   const handleGoogleLogin = async () => {
     setError('')
@@ -25,15 +58,19 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/' }: Logi
 
     try {
       const provider = new GoogleAuthProvider()
-      // Set prompt to select_account to force account picker
       provider.setCustomParameters({
         prompt: 'select_account'
       })
       
       const result = await signInWithPopup(auth, provider)
       if (result.user) {
-        onClose()
-        router.push(redirectPath)
+        const isFirstTime = await checkIfFirstTimeUser(result.user.uid)
+        setIsFirstTimeUser(isFirstTime)
+        
+        if (!isFirstTime) {
+          onClose()
+          router.push(redirectPath)
+        }
       }
     } catch (error: any) {
       console.error('Login error:', error)
@@ -41,6 +78,11 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/' }: Logi
     } finally {
       setLoading(false)
     }
+  }
+
+  const handleProfileComplete = () => {
+    onClose()
+    router.push(redirectPath)
   }
 
   // If user is already authenticated, close the modal and redirect
@@ -52,32 +94,23 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/' }: Logi
   }, [onClose, redirectPath, router])
 
   return (
-    isOpen && (
-      <div className="fixed inset-0 z-50 flex items-center justify-center">
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-black/50" aria-hidden="true" />
-        {/* Modal Content */}
-        <div className="relative z-10 w-full max-w-md mx-4 bg-white rounded-2xl shadow-2xl p-8 flex flex-col items-center">
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none"
-            aria-label="Close"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <div className="mb-8 w-full">
-            <div className="text-2xl font-bold text-center text-gray-900">Welcome Back</div>
-            <p className="text-gray-500 text-center mt-2">Sign in to access your account</p>
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>
+            {isFirstTimeUser ? 'Complete Your Profile' : 'Sign in to GharConnect'}
+          </DialogTitle>
+        </DialogHeader>
+
+        {error && (
+          <div className="mb-4 p-3 bg-red-50 text-red-500 rounded-md text-sm">
+            {error}
           </div>
+        )}
 
-          {error && (
-            <div className="mb-6 bg-red-50 text-red-500 p-4 rounded-lg text-sm border border-red-100 w-full">
-              {error}
-            </div>
-          )}
-
+        {isFirstTimeUser ? (
+          <FirstTimeLoginForm onComplete={handleProfileComplete} />
+        ) : (
           <div className="space-y-6 w-full">
             <button
               onClick={handleGoogleLogin}
@@ -109,8 +142,8 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/' }: Logi
               </a>
             </div>
           </div>
-        </div>
-      </div>
-    )
+        )}
+      </DialogContent>
+    </Dialog>
   )
 } 
