@@ -1,23 +1,25 @@
-export interface PlumberService {
-  id: string;
+export interface Service {
   name: string;
   description: string;
-  price: number;
-  duration: string;
-  mobile: string;
-  // image: string;
-  category: 'repair' | 'installation' | 'emergency' | 'maintenance';
+  price: number | string;
+  unit: string;
 }
 
-export const plumberServices: PlumberService[] = [
+export interface Vendor {
+  name: string;
+  services: Service[];
+  mobile: string;
+}
+
+export const vendors: Vendor[] = [
   {
-    id: '1',
-    name: 'Leak Repair',
-    description: 'Fix water leaks and pipe damages',
-    price: 79.99,
-    duration: '2-4 hours',
-    mobile: '9653303552',
-    // image: '/images/services/plumber/leak-repair.jpg',
-    category: 'repair'
+    name: 'Quick Plumbers',
+    services: [{
+      name: 'Leak Fix',
+      description: 'Fixing water leaks',
+      price: 200,
+      unit: 'job'
+    }],
+    mobile: '+91 90000 00007'
   }
 ]; 

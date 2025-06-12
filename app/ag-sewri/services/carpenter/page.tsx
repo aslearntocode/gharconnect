@@ -1,16 +1,9 @@
 'use client';
 
 import Header from '@/components/Header';
-import { FiSearch } from 'react-icons/fi';
-import { carpenterServices } from '@/app/ag-sewri/data/services/carpenter';
+import { vendors } from '@/app/ag-sewri/data/services/carpenter';
 import { VendorCard } from '@/components/VendorCard';
-
-// Group services by brand to show as vendors
-const vendors = Array.from(new Set(carpenterServices.map(p => p.brand))).map(brand => ({
-  name: brand,
-  services: carpenterServices.filter(p => p.brand === brand),
-  mobile: '+91 98765 43210' // This should come from your data
-}));
+import { FiSearch } from 'react-icons/fi';
 
 export default function CarpenterPage() {
   return (
@@ -36,7 +29,7 @@ export default function CarpenterPage() {
       </div>
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {vendors.map((vendor, index) => (
               <VendorCard
                 key={index}

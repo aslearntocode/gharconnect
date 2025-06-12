@@ -1,3 +1,29 @@
+export interface Product {
+  name: string;
+  description: string;
+  price: number | string;
+  unit: string;
+}
+
+export interface Vendor {
+  name: string;
+  products: Product[];
+  mobile: string;
+}
+
+export const vendors: Vendor[] = [
+  {
+    name: 'Meat Mart',
+    products: [{
+      name: 'Chicken Breast',
+      description: 'Fresh chicken breast',
+      price: 250,
+      unit: 'kg'
+    }],
+    mobile: '+91 90000 00002'
+  }
+];
+
 export interface MeatProduct {
   id: string;
   name: string;

@@ -440,13 +440,13 @@ export default function Home() {
                   <span className="font-bold text-[#4F46E5] text-xs md:text-base">Sell</span>
                 </div>
               </Link>
-              <Link href="/cb-parel/services/" className="col-span-1">
+              <Link href="#" className="col-span-1" onClick={e => { e.preventDefault(); document.getElementById('services-categories')?.scrollIntoView({ behavior: 'smooth' }); }}>
                 <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
                   <FiTool className="w-5 h-5 md:w-8 md:h-8 text-yellow-600 mb-1 md:mb-2" />
                   <span className="font-bold text-[#4F46E5] text-xs md:text-base">Services</span>
                 </div>
               </Link>
-              <Link href="/cb-parel/delivery/" className="col-span-1">
+              <Link href="#" className="col-span-1" onClick={e => { e.preventDefault(); document.getElementById('delivery-categories')?.scrollIntoView({ behavior: 'smooth' }); }}>
                 <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
                   <FiTruck className="w-5 h-5 md:w-8 md:h-8 text-indigo-600 mb-1 md:mb-2" />
                   <span className="font-bold text-[#4F46E5] text-xs md:text-base">Delivery</span>
@@ -711,7 +711,7 @@ export default function Home() {
       </div>
 
       {/* Delivery Categories Section */}
-      <div className="bg-gray-50 py-16">
+      <div id="delivery-categories" className="bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-4">Delivery Categories</h2>
           <p className="text-lg text-gray-600 text-center mb-12">Order fresh essentials delivered to your door</p>
@@ -808,7 +808,7 @@ export default function Home() {
       </div>
 
       {/* Services Categories Section */}
-      <div className="bg-white py-16">
+      <div id="services-categories" className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl font-bold text-center mb-4">Services Categories</h2>
           <p className="text-lg text-gray-600 text-center mb-12">Book trusted home and personal services</p>

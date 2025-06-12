@@ -1,23 +1,25 @@
-export interface ElectricianService {
-  id: string;
+export interface Service {
   name: string;
   description: string;
-  price: number;
-  duration: string;
-  mobile: string;
-  // image: string;
-  category: 'repair' | 'installation' | 'emergency' | 'maintenance';
+  price: number | string;
+  unit: string;
 }
 
-export const electricianServices: ElectricianService[] = [
+export interface Vendor {
+  name: string;
+  services: Service[];
+  mobile: string;
+}
+
+export const vendors: Vendor[] = [
   {
-    id: 'muuna_electrician',
-    name: 'Munna Electrician',
-    description: 'Fix electrical issues and power problems',
-    price: 1000,
-    duration: '1 hour',
-    mobile: '9653303552',
-    // image: '/images/services/electrician/repair.jpg',
-    category: 'repair'
+    name: 'Bright Sparks',
+    services: [{
+      name: 'Fan Installation',
+      description: 'Ceiling fan installation',
+      price: 150,
+      unit: 'job'
+    }],
+    mobile: '+91 90000 00008'
   }
 ]; 

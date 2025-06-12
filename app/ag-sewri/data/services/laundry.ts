@@ -1,3 +1,16 @@
+export interface Service {
+  name: string;
+  description: string;
+  price: number | string;
+  unit: string;
+}
+
+export interface Vendor {
+  name: string;
+  services: Service[];
+  mobile: string;
+}
+
 export interface LaundryService {
   id: string;
   name: string;
@@ -12,6 +25,19 @@ export interface LaundryService {
   brand: string;
   inStock: boolean;
 }
+
+export const vendors: Vendor[] = [
+  {
+    name: 'Laundry Express',
+    services: [{
+      name: 'Wash & Fold',
+      description: 'Clothes washed and folded',
+      price: 20,
+      unit: 'kg'
+    }],
+    mobile: '+91 90000 00005'
+  }
+];
 
 export const laundryServices: LaundryService[] = [
   {

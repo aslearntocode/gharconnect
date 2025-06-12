@@ -1,9 +1,9 @@
 'use client';
 
 import Header from '@/components/Header';
-import { FiSearch, FiTool } from 'react-icons/fi';
-import { plumberServices } from '@/app/cb-parel/data/services/plumber';
+import { vendors } from '@/app/cb-parel/data/services/plumber';
 import { VendorCard } from '@/components/VendorCard';
+import { FiSearch } from 'react-icons/fi';
 
 export default function PlumberPage() {
   return (
@@ -30,14 +30,10 @@ export default function PlumberPage() {
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {plumberServices.map((service) => (
+            {vendors.map((vendor, index) => (
               <VendorCard
-                key={service.id}
-                vendor={{
-                  name: service.name,
-                  services: [service],
-                  mobile: service.mobile
-                }}
+                key={index}
+                vendor={vendor}
                 type="service"
               />
             ))}

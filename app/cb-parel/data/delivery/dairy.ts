@@ -1,3 +1,29 @@
+export interface Product {
+  name: string;
+  description: string;
+  price: number | string;
+  unit: string;
+}
+
+export interface Vendor {
+  name: string;
+  products: Product[];
+  mobile: string;
+}
+
+export const vendors: Vendor[] = [
+  {
+    name: 'Dairy Fresh',
+    products: [{
+      name: 'Cow Milk',
+      description: 'Fresh cow milk delivered daily',
+      price: 60,
+      unit: 'litre'
+    }],
+    mobile: '+91 90000 00001'
+  }
+];
+
 export interface DairyProduct {
   id: string;
   name: string;
