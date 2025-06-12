@@ -22,12 +22,20 @@ const supabaseClient = createClient(
 export default function Header() {
   const [user, setUser] = useState<User | null>(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isInvestmentDropdownOpen, setIsInvestmentDropdownOpen] = useState(false)
   const [isPropertiesDropdownOpen, setIsPropertiesDropdownOpen] = useState(false)
   const [isCreditScoreDropdownOpen, setIsCreditScoreDropdownOpen] = useState(false)
   const [isDeliveryDropdownOpen, setIsDeliveryDropdownOpen] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
+
+  // Extract society from pathname
+  const getSocietyFromPath = () => {
+    const pathParts = pathname.split('/')
+    // Assuming URL structure is /society-name/...
+    return pathParts[1] || 'cb-parel' // Default to cb-parel if no society in path
+  }
+
+  const currentSociety = getSocietyFromPath()
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -68,80 +76,6 @@ export default function Header() {
     };
   }, [isCreditScoreDropdownOpen]);
 
-  const handleMutualFundsDashboard = async (e: React.MouseEvent) => {
-    e.preventDefault()
-    console.log('MF Dashboard clicked')
-
-    if (!user) {
-      console.log('No user, redirecting to login')
-      router.push('/login')
-      return
-    }
-
-    try {
-      // Get the latest recommendation from Supabase
-      const { data, error } = await supabase
-        .from('mutual_fund_recommendations')
-        .select('*')
-        .eq('user_id', user.uid)
-        .order('created_at', { ascending: false })
-        .limit(1)
-
-      console.log('Latest MF recommendation query result:', { data, error })
-
-      if (error) throw error
-
-      if (data && data.length > 0) {
-        const latestRec = data[0]
-        console.log('Found MF recommendation:', latestRec)
-        // Remove localStorage.setItem and just redirect with the ID
-        router.push(`/recommendations/mutual-funds?id=${latestRec.id}`)
-      } else {
-        console.log('No MF recommendations found')
-        router.push('/investment')
-      }
-    } catch (error) {
-      console.error('Error fetching MF recommendations:', error)
-      router.push('/investment')
-    }
-  }
-
-  const handleStocksDashboard = async (e: React.MouseEvent) => {
-    e.preventDefault()
-    console.log('Stocks Dashboard clicked')
-
-    if (!user) {
-      console.log('No user, redirecting to login')
-      router.push('/login')
-      return
-    }
-
-    try {
-      const { data, error } = await supabase
-        .from('stock_recommendations')
-        .select('*')
-        .eq('user_id', user.uid)
-        .order('created_at', { ascending: false })
-        .limit(1)
-
-      console.log('Latest stock recommendation query result:', { data, error })
-
-      if (error) throw error
-
-      if (data && data.length > 0) {
-        const latestRec = data[0]
-        console.log('Found stock recommendation:', latestRec)
-        router.push(`/recommendations/stocks?id=${latestRec.id}`)
-      } else {
-        console.log('No stock recommendations found')
-        router.push('/investment')
-      }
-    } catch (error) {
-      console.error('Error fetching stock recommendations:', error)
-      router.push('/investment')
-    }
-  }
-
   const handleLogout = async () => {
     try {
       await signOut(auth)
@@ -150,12 +84,6 @@ export default function Header() {
       console.error('Error signing out:', error)
     }
   }
-
-  const navigationItems = [
-    { name: 'Dashboard', href: '/dashboard' },
-    { name: 'Stocks Dashboard', href: '/stocks-dashboard' },
-    { name: 'Existing Portfolio Tracker', href: '/investment/portfolio-tracker' }
-  ]
 
   return (
     <header className="bg-white shadow-md relative" style={{ zIndex: 1000 }}>
@@ -174,7 +102,7 @@ export default function Header() {
             </Link>
             
             <div className="hidden md:flex items-center space-x-8 ml-8">
-              <Link href="/cb-parel" className="text-black hover:text-gray-700 py-2 text-base">
+              <Link href={`/${currentSociety}`} className="text-black hover:text-gray-700 py-2 text-base">
                 Home
               </Link>
               <div className="relative" style={{ zIndex: 50 }}>
@@ -211,7 +139,7 @@ export default function Header() {
                   }}
                 >
                   <Link 
-                    href="/cb-parel/rent" 
+                    href={`/${currentSociety}/rent`}
                     className="flex items-center gap-x-3 px-4 py-2 text-base text-black hover:bg-gray-50"
                     onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
@@ -219,7 +147,7 @@ export default function Header() {
                     <span>Rent</span>
                   </Link>
                   <Link 
-                    href="/cb-parel/sell" 
+                    href={`/${currentSociety}/sell`}
                     className="flex items-center gap-x-3 px-4 py-2 text-base text-black hover:bg-gray-50"
                     onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
@@ -263,7 +191,7 @@ export default function Header() {
                 >
                   <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                     <Link 
-                      href="/cb-parel/services/laundry" 
+                      href={`/${currentSociety}/services/laundry`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
@@ -271,7 +199,7 @@ export default function Header() {
                       <span>Laundry</span>
                     </Link>
                     <Link 
-                      href="/cb-parel/services/carpenter" 
+                      href={`/${currentSociety}/services/carpenter`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
@@ -279,7 +207,7 @@ export default function Header() {
                       <span>Carpenter</span>
                     </Link>
                     <Link 
-                      href="/cb-parel/services/plumber" 
+                      href={`/${currentSociety}/services/plumber`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
@@ -287,7 +215,7 @@ export default function Header() {
                       <span>Plumber</span>
                     </Link>
                     <Link 
-                      href="/cb-parel/services/electrician" 
+                      href={`/${currentSociety}/services/electrician`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
@@ -295,7 +223,7 @@ export default function Header() {
                       <span>Electrician</span>
                     </Link>
                     <Link 
-                      href="/cb-parel/services/cleaning" 
+                      href={`/${currentSociety}/services/cleaning`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
@@ -303,7 +231,7 @@ export default function Header() {
                       <span>Cleaning</span>
                     </Link>
                     <Link 
-                      href="/cb-parel/services/painter" 
+                      href={`/${currentSociety}/services/painter`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
@@ -311,7 +239,7 @@ export default function Header() {
                       <span>Painter</span>
                     </Link>
                     <Link 
-                      href="/cb-parel/services/gardener" 
+                      href={`/${currentSociety}/services/gardener`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
@@ -319,7 +247,7 @@ export default function Header() {
                       <span>Gardener</span>
                     </Link>
                     <Link 
-                      href="/cb-parel/services/ac-service" 
+                      href={`/${currentSociety}/services/ac-service`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
@@ -327,7 +255,7 @@ export default function Header() {
                       <span>AC Service</span>
                     </Link>
                     <Link 
-                      href="/cb-parel/services/pest-control" 
+                      href={`/${currentSociety}/services/pest-control`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
@@ -335,7 +263,7 @@ export default function Header() {
                       <span>Pest Control</span>
                     </Link>
                     <Link 
-                      href="/cb-parel/services/physical-training" 
+                      href={`/${currentSociety}/services/physical-training`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
@@ -343,7 +271,7 @@ export default function Header() {
                       <span>Physical Training</span>
                     </Link>
                     <Link 
-                      href="/cb-parel/services/yoga" 
+                      href={`/${currentSociety}/services/yoga`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
@@ -351,7 +279,7 @@ export default function Header() {
                       <span>Yoga</span>
                     </Link>
                     <Link 
-                      href="/cb-parel/services/kids-classes" 
+                      href={`/${currentSociety}/services/kids-classes`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
@@ -396,19 +324,19 @@ export default function Header() {
                   }}
                 >
                   <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                    <Link href="/cb-parel/delivery/dairy" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                    <Link href={`/${currentSociety}/delivery/dairy`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
                       <FiTruck className="w-5 h-5 text-blue-500" />
                       <span>Dairy</span>
                     </Link>
-                    <Link href="/cb-parel/delivery/meat" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                    <Link href={`/${currentSociety}/delivery/meat`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
                       <FiTruck className="w-5 h-5 text-red-500" />
                       <span>Meat</span>
                     </Link>
-                    <Link href="/cb-parel/delivery/vegetables" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                    <Link href={`/${currentSociety}/delivery/vegetables`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
                       <FiTruck className="w-5 h-5 text-green-500" />
                       <span>Vegetables</span>
                     </Link>
-                    <Link href="/cb-parel/delivery/fruits" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                    <Link href={`/${currentSociety}/delivery/fruits`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
                       <FiTruck className="w-5 h-5 text-orange-500" />
                       <span>Fruits</span>
                     </Link>
@@ -422,7 +350,7 @@ export default function Header() {
             {user ? (
               <ProfileDropdown user={user} />
             ) : (
-              <Link href="/cb-parel/login" className="text-black hover:text-gray-700 whitespace-nowrap">
+              <Link href={`/${currentSociety}/login`} className="text-black hover:text-gray-700 whitespace-nowrap">
                 <Button variant="ghost" className="text-base py-2">
                   Log in
                 </Button>
@@ -433,7 +361,7 @@ export default function Header() {
 
         <div className="md:hidden py-2 w-full bg-white fixed bottom-0 left-0 border-t border-gray-200 shadow-lg" style={{ position: 'fixed', bottom: 0, zIndex: 9999 }}>
           <div className="flex justify-around items-center px-1 pb-6">
-            <Link href="/cb-parel" className="text-black hover:text-gray-700 flex flex-col items-center">
+            <Link href={`/${currentSociety}`} className="text-black hover:text-gray-700 flex flex-col items-center">
               <FiHome className="w-5 h-5 mb-0.5" />
               <span className="text-base font-semibold mt-1">Home</span>
             </Link>
@@ -449,14 +377,14 @@ export default function Header() {
               {isPropertiesDropdownOpen && (
                 <div className="absolute bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)' }}>
                   <Link 
-                    href="/cb-parel/rent"
+                    href={`/${currentSociety}/rent`}
                     className="flex items-center px-4 py-2 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
                     Rent
                   </Link>
                   <Link 
-                    href="/cb-parel/sell"
+                    href={`/${currentSociety}/sell`}
                     className="flex items-center px-4 py-2 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
@@ -476,16 +404,16 @@ export default function Header() {
               </button>
               {isDeliveryDropdownOpen && (
                 <div className="absolute bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)' }}>
-                  <Link href="/cb-parel/delivery/dairy" className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                  <Link href={`/${currentSociety}/delivery/dairy`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
                     Dairy
                   </Link>
-                  <Link href="/cb-parel/delivery/meat" className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                  <Link href={`/${currentSociety}/delivery/meat`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
                     Meat
                   </Link>
-                  <Link href="/cb-parel/delivery/vegetables" className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                  <Link href={`/${currentSociety}/delivery/vegetables`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
                     Vegetables
                   </Link>
-                  <Link href="/cb-parel/delivery/fruits" className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                  <Link href={`/${currentSociety}/delivery/fruits`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
                     Fruits
                   </Link>
                 </div>
@@ -503,84 +431,84 @@ export default function Header() {
               {isCreditScoreDropdownOpen && (
                 <div className="absolute bottom-full mb-2 w-64 bg-white rounded-lg shadow-lg py-2" style={{ right: 0, maxWidth: '90vw' }}>
                   <Link 
-                    href="/cb-parel/services/laundry" 
+                    href={`/${currentSociety}/services/laundry`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Laundry
                   </Link>
                   <Link 
-                    href="/cb-parel/services/carpenter" 
+                    href={`/${currentSociety}/services/carpenter`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Carpenter
                   </Link>
                   <Link 
-                    href="/cb-parel/services/plumber" 
+                    href={`/${currentSociety}/services/plumber`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Plumber
                   </Link>
                   <Link 
-                    href="/cb-parel/services/electrician" 
+                    href={`/${currentSociety}/services/electrician`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Electrician
                   </Link>
                   <Link 
-                    href="/cb-parel/services/cleaning" 
+                    href={`/${currentSociety}/services/cleaning`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Cleaning
                   </Link>
                   <Link 
-                    href="/cb-parel/services/painter" 
+                    href={`/${currentSociety}/services/painter`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Painter
                   </Link>
                   <Link 
-                    href="/cb-parel/services/gardener" 
+                    href={`/${currentSociety}/services/gardener`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Gardener
                   </Link>
                   <Link 
-                    href="/cb-parel/services/ac-service" 
+                    href={`/${currentSociety}/services/ac-service`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     AC Service
                   </Link>
                   <Link 
-                    href="/cb-parel/services/pest-control" 
+                    href={`/${currentSociety}/services/pest-control`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Pest Control
                   </Link>
                   <Link 
-                    href="/cb-parel/services/physical-training" 
+                    href={`/${currentSociety}/services/physical-training`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Physical Training
                   </Link>
                   <Link 
-                    href="/cb-parel/services/yoga" 
+                    href={`/${currentSociety}/services/yoga`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Yoga
                   </Link>
                   <Link 
-                    href="/cb-parel/services/kids-classes" 
+                    href={`/${currentSociety}/services/kids-classes`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >

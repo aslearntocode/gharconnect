@@ -10,7 +10,7 @@ const societies = [
   },
   {
     name: 'Ashok Gardens, Sewri',
-    href: '/ashok-gardens-sewri',
+    href: '/ag-sewri',
     description: 'A vibrant community in the heart of Sewri.',
     image: '/ag.png',
   },
@@ -22,19 +22,19 @@ const societies = [
   },
   {
     name: 'Ashok Towers, Sewri',
-    href: '/ashok-towers-sewri',
+    href: '/at-sewri',
     description: 'A peaceful society in Sewri.',
     image: '/at.png',
   },
   {
     name: 'Dosti Flamingo, Sewri',
-    href: '/dosti-flamingo-sewri',
+    href: '/df-sewri',
     description: 'A peaceful society in Sewri.',
     image: '/df.png',
   },
   {
     name: 'Ruparel Ariana, Bhoiwada',
-    href: '/ruparel-ariana-bhoiwada',
+    href: '/ra-bhoiwada',
     description: 'A peaceful society in Bhoiwada.',
     image: '/ra.png',
   },
