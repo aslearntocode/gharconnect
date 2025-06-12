@@ -1,5 +1,28 @@
 import Link from 'next/link';
 import SocietyImage from '@/components/SocietyImage';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'GharConnect - Society Connect Platform',
+  description: 'Connect with your society members, manage amenities, and stay updated with your community. Join GharConnect for seamless society management.',
+  keywords: 'society management, community platform, residential complex, society amenities, Mumbai societies',
+  openGraph: {
+    title: 'GharConnect - Society Connect Platform',
+    description: 'Connect with your society members, manage amenities, and stay updated with your community.',
+    type: 'website',
+    locale: 'en_IN',
+    siteName: 'GharConnect',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GharConnect - Society Connect Platform',
+    description: 'Connect with your society members, manage amenities, and stay updated with your community.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  }
+};
 
 const societies = [
   {
@@ -51,38 +74,38 @@ export default function SocietiesPage() {
       {/* Simple, distinct header for societies selection */}
       <header className="w-full bg-white shadow-sm py-4 px-6 flex items-center justify-center mb-8">
         <div className="flex items-center gap-2">
-          <span className="text-2xl font-extrabold text-indigo-700 tracking-tight">GharConnect</span>
+          <h1 className="text-2xl font-extrabold text-indigo-700 tracking-tight">GharConnect</h1>
           <span className="ml-2 text-sm text-gray-400 font-medium hidden sm:inline">Society Platform</span>
         </div>
       </header>
       <main className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-blue-100 py-16 px-4 -mt-8">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-extrabold text-center mb-10 text-gray-900 tracking-tight drop-shadow-sm">Select Your Society</h1>
+          <h2 className="text-4xl font-extrabold text-center mb-10 text-gray-900 tracking-tight drop-shadow-sm">Select Your Society</h2>
           {/* First 5 societies */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+          <section aria-label="Featured Societies" className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
             {first5.map((society) => (
               <Link key={society.name} href={society.href} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
-                <div className="bg-gradient-to-br from-white via-indigo-50 to-blue-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col items-center cursor-pointer border border-gray-200 group-hover:border-indigo-500 group-hover:scale-[1.03] group-hover:ring-2 group-hover:ring-indigo-200 h-48 min-h-[10rem] max-h-56 justify-between">
+                <article className="bg-gradient-to-br from-white via-indigo-50 to-blue-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col items-center cursor-pointer border border-gray-200 group-hover:border-indigo-500 group-hover:scale-[1.03] group-hover:ring-2 group-hover:ring-indigo-200 h-48 min-h-[10rem] max-h-56 justify-between">
                   {society.image ? (
                     <SocietyImage
                       src={society.image}
-                      alt={society.name}
+                      alt={`${society.name} - ${society.description}`}
                       className="w-16 h-16 object-cover rounded-2xl mb-2 border border-gray-100 shadow-lg group-hover:ring-2 group-hover:ring-indigo-300 transition-all duration-300 bg-gray-100"
                     />
                   ) : (
-                    <div className="w-16 h-16 flex items-center justify-center rounded-2xl mb-2 bg-gray-100 text-gray-400 text-2xl font-bold border border-gray-100 shadow-lg">
+                    <div className="w-16 h-16 flex items-center justify-center rounded-2xl mb-2 bg-gray-100 text-gray-400 text-2xl font-bold border border-gray-100 shadow-lg" aria-label="No image available">
                       ?
                     </div>
                   )}
-                  <h2 className="text-lg font-extrabold font-sans text-gray-900 mb-1 group-hover:text-indigo-700 transition-colors text-center drop-shadow-sm flex-1 flex items-center justify-center">{society.name}</h2>
+                  <h3 className="text-lg font-extrabold font-sans text-gray-900 mb-1 group-hover:text-indigo-700 transition-colors text-center drop-shadow-sm flex-1 flex items-center justify-center">{society.name}</h3>
                   <p className="text-gray-600 text-center text-xs flex-1 flex items-center justify-center font-medium">{society.description}</p>
-                </div>
+                </article>
               </Link>
             ))}
-          </div>
+          </section>
 
           {/* thedivinehands.com Banner */}
-          <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden rounded-2xl shadow-xl mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
+          <section aria-label="Sponsored Advertisement" className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden rounded-2xl shadow-xl mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
             <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -119,7 +142,7 @@ export default function SocietiesPage() {
                   </div>
                 </div>
                 {/* Right Content - Categories */}
-                <div className="flex-1 grid grid-cols-2 sm:grid-cols-2 gap-4">
+                <div className="hidden md:grid flex-1 grid-cols-2 sm:grid-cols-2 gap-4">
                   <a href="https://www.thedivinehands.com/whole-foods/categories/healthy-treats" target="_blank" rel="noopener noreferrer" className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
                     <div className="flex flex-col items-center gap-3 mb-2">
                       <div className="w-10 h-10 bg-indigo-400/20 rounded-lg flex items-center justify-center">
@@ -172,30 +195,30 @@ export default function SocietiesPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </section>
           {/* Rest of the societies */}
           {rest.length > 0 && (
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-8">
+            <section aria-label="More Societies" className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-8">
               {rest.map((society) => (
                 <Link key={society.name} href={society.href} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
-                  <div className="bg-gradient-to-br from-white via-indigo-50 to-blue-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col items-center cursor-pointer border border-gray-200 group-hover:border-indigo-500 group-hover:scale-[1.03] group-hover:ring-2 group-hover:ring-indigo-200 h-48 min-h-[10rem] max-h-56 justify-between">
+                  <article className="bg-gradient-to-br from-white via-indigo-50 to-blue-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col items-center cursor-pointer border border-gray-200 group-hover:border-indigo-500 group-hover:scale-[1.03] group-hover:ring-2 group-hover:ring-indigo-200 h-48 min-h-[10rem] max-h-56 justify-between">
                     {society.image ? (
                       <SocietyImage
                         src={society.image}
-                        alt={society.name}
+                        alt={`${society.name} - ${society.description}`}
                         className="w-16 h-16 object-cover rounded-2xl mb-2 border border-gray-100 shadow-lg group-hover:ring-2 group-hover:ring-indigo-300 transition-all duration-300 bg-gray-100"
                       />
                     ) : (
-                      <div className="w-16 h-16 flex items-center justify-center rounded-2xl mb-2 bg-gray-100 text-gray-400 text-2xl font-bold border border-gray-100 shadow-lg">
+                      <div className="w-16 h-16 flex items-center justify-center rounded-2xl mb-2 bg-gray-100 text-gray-400 text-2xl font-bold border border-gray-100 shadow-lg" aria-label="No image available">
                         ?
                       </div>
                     )}
-                    <h2 className="text-lg font-extrabold font-sans text-gray-900 mb-1 group-hover:text-indigo-700 transition-colors text-center drop-shadow-sm flex-1 flex items-center justify-center">{society.name}</h2>
+                    <h3 className="text-lg font-extrabold font-sans text-gray-900 mb-1 group-hover:text-indigo-700 transition-colors text-center drop-shadow-sm flex-1 flex items-center justify-center">{society.name}</h3>
                     <p className="text-gray-600 text-center text-xs flex-1 flex items-center justify-center font-medium">{society.description}</p>
-                  </div>
+                  </article>
                 </Link>
               ))}
-            </div>
+            </section>
           )}
         </div>
       </main>
