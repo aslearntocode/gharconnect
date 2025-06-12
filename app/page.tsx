@@ -29,12 +29,21 @@ export default function SocietiesPage() {
   return (
     <>
       {/* Simple, distinct header for societies selection */}
-      <header className="w-full bg-white shadow-sm py-4 px-6 flex items-center justify-center mb-8">
+      <header className="w-full bg-white shadow-sm py-4 px-6 flex items-center justify-center mb-4">
         <div className="flex items-center gap-2">
           <h1 className="text-2xl font-extrabold text-indigo-700 tracking-tight">GharConnect</h1>
-          <span className="ml-2 text-sm text-gray-400 font-medium hidden sm:inline">Society Platform</span>
+          <span className="ml-2 text-sm text-gray-400 font-medium hidden sm:inline">Community Platform</span>
         </div>
       </header>
+      {/* Website Description */}
+      <div className="w-full flex justify-center mb-6 px-4">
+        <p className="max-w-6xl text-center text-gray-600 text-sm md:text-lg leading-relaxed">
+        Looking to rent or sell your property? Searching for your next rental or dream home?
+        Need trusted service providers or local delivery options within your society?
+        Or just curious about your neighbors' recent travel experiences to plan your next vacation?
+        Whatever you're looking for — gharconnect.in helps you stay connected, informed, and empowered within your residential community.
+        </p>
+      </div>
       <SocietiesClient />
     </>
   );

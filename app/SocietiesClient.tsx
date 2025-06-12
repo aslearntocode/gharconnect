@@ -70,11 +70,34 @@ export default function SocietiesClient() {
           </svg>
         </div>
       </div>
-      <main className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-blue-100 py-16 px-4 -mt-8">
+      {/* Mobile: All societies in a single 2-column grid */}
+      <main className="min-h-screen md:min-h-0 bg-gradient-to-br from-indigo-50 via-white to-blue-100 py-8 md:py-12 lg:py-16 px-4 -mt-8">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-extrabold text-center mb-10 text-gray-900 tracking-tight drop-shadow-sm">Select Your Society</h2>
-          {/* First 5 societies */}
-          <section aria-label="Featured Societies" className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
+          {/* Mobile grid: show all societies in 2 columns */}
+          <section className="grid grid-cols-2 gap-4 mb-8 block md:hidden">
+            {filteredSocieties.map((society) => (
+              <Link key={society.name} href={society.href} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
+                <article className="bg-gradient-to-br from-white via-indigo-50 to-blue-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col items-center cursor-pointer border border-gray-200 group-hover:border-indigo-500 group-hover:scale-[1.03] group-hover:ring-2 group-hover:ring-indigo-200 h-48 min-h-[10rem] max-h-56 justify-between">
+                  {society.image ? (
+                    <SocietyImage
+                      src={society.image}
+                      alt={`${society.name} - ${society.description}`}
+                      className="w-16 h-16 object-cover rounded-2xl mb-2 border border-gray-100 shadow-lg group-hover:ring-2 group-hover:ring-indigo-300 transition-all duration-300 bg-gray-100"
+                    />
+                  ) : (
+                    <div className="w-16 h-16 flex items-center justify-center rounded-2xl mb-2 bg-gray-100 text-gray-400 text-2xl font-bold border border-gray-100 shadow-lg" aria-label="No image available">
+                      ?
+                    </div>
+                  )}
+                  <h3 className="text-lg font-extrabold font-sans text-gray-900 mb-1 group-hover:text-indigo-700 transition-colors text-center drop-shadow-sm flex-1 flex items-center justify-center">{society.name}</h3>
+                  <p className="text-gray-600 text-center text-xs flex-1 flex items-center justify-center font-medium">{society.description}</p>
+                </article>
+              </Link>
+            ))}
+          </section>
+          {/* Desktop: keep the current split and layout */}
+          <section aria-label="Featured Societies" className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8 hidden md:grid">
             {first5.map((society) => (
               <Link key={society.name} href={society.href} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
                 <article className="bg-gradient-to-br from-white via-indigo-50 to-blue-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col items-center cursor-pointer border border-gray-200 group-hover:border-indigo-500 group-hover:scale-[1.03] group-hover:ring-2 group-hover:ring-indigo-200 h-48 min-h-[10rem] max-h-56 justify-between">
@@ -97,7 +120,7 @@ export default function SocietiesClient() {
           </section>
           {/* Rest of the societies */}
           {rest.length > 0 && (
-            <section aria-label="More Societies" className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-8">
+            <section aria-label="More Societies" className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-8 mb-8 md:mb-4 hidden md:grid">
               {rest.map((society) => (
                 <Link key={society.name} href={society.href} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
                   <article className="bg-gradient-to-br from-white via-indigo-50 to-blue-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col items-center cursor-pointer border border-gray-200 group-hover:border-indigo-500 group-hover:scale-[1.03] group-hover:ring-2 group-hover:ring-indigo-200 h-48 min-h-[10rem] max-h-56 justify-between">
