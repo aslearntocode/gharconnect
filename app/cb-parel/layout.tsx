@@ -36,7 +36,7 @@ export default function RootLayout({
         <meta property="og:description" content="Connect with neighbors, find apartments, and discover local services. Make your society living better with GharConnect." />
         <meta property="og:image" content="/preview-image.png" />
         <meta property="og:url" content="https://gharconnect.in/" />
-        <link rel="icon" href="/GC.png" type="image/png" />
+        <link rel="icon" href="/GC_Logo.png" type="image/png" />
       </head>
       <body className="min-h-screen">
         <main>

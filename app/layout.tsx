@@ -1,6 +1,6 @@
 import './cb-parel/globals.css';
 import type { Metadata } from 'next';
-<link rel="icon" href="/GC.png" />
+<link rel="icon" href="/GC_Logo.png" />
 
 export const metadata: Metadata = {
   title: 'GharConnect - Connect with Your Neighbors | Find Apartments & Local Services',
