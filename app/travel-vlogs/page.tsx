@@ -4,7 +4,16 @@ import { useState } from 'react'
 import Header from '@/components/Header'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { articles, getArticleLink } from '@/app/data/travel-vlogs'
+
+type Article = {
+  id: string
+  title: string
+  description: string
+  category: string
+  readTime: string
+  link: string
+  author?: string
+}
 
 function LearningCenter() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
@@ -20,6 +29,43 @@ function LearningCenter() {
   }
 
   const currentSociety = getSocietyFromPath()
+  
+  const articles: Article[] = [
+    {
+      id: '1',
+      title: 'USA Travel Vlog',
+      description: 'Explore the best places to visit in the USA and plan your next trip.',
+      category: 'USA',
+      readTime: '10 min read',
+      link: `/${currentSociety}/travel-vlogs/usa`
+    },
+    {
+      id: '2',
+      title: 'My Travel to Ayra Farms',
+      description: 'Explore the best places to visit in Ayra Farma and plan your next trip.',
+      category: 'Within-India',
+      readTime: '8 min read',
+      author: 'Aryan',
+      link: `/${currentSociety}/travel-vlogs/within-India/ayra-farms`
+    },
+    {
+      id: '3',
+      title: 'My Travel to Spain',
+      description: 'Explore the best places to visit in Spain and plan your next trip.',
+      category: 'Europe',
+      readTime: '10 min read',
+      link: `/${currentSociety}/travel-vlogs/europe/spain`
+    },
+    {
+      id: '4',
+      title: 'My 15 Days Itinerary to Tanzania',
+      description: 'Explore the best places to visit in Tanzania and plan your next trip.',
+      category: 'Africa',
+      readTime: '15 min read',
+      author: 'Aryan',
+      link: `/${currentSociety}/travel-vlogs/africa/aryan/tanzania`
+    }
+  ]
   
   // Get unique categories from articles
   const uniqueCategories = Array.from(new Set(articles.map(article => article.category)));
@@ -161,7 +207,7 @@ function LearningCenter() {
             <div className="flex-1">
               <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
                 {filteredArticles.map(article => (
-                  <Link href={getArticleLink(currentSociety, article.id, article.category)} key={article.id}>
+                  <Link href={article.link} key={article.id}>
                     <div className="bg-white border rounded-xl p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full flex flex-col">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-3">

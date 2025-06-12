@@ -33,9 +33,6 @@ export default function Footer() {
               <li>
                 <Link href="/cb-parel/faq" className="hover:text-white/90">FAQ</Link>
               </li>
-              <li>
-                <Link href="/cb-parel/travel-vlogs" className="hover:text-white/90">Travel Vlogs</Link>
-              </li>
             </ul>
           </div>
 

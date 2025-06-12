@@ -373,6 +373,20 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-white">
+      {/* Back to All Societies Button */}
+      <div className="w-full bg-gray-50 border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Link 
+            href="/" 
+            className="inline-flex items-center py-2 text-sm text-gray-600 hover:text-indigo-600 transition-colors"
+          >
+            <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to All Societies
+          </Link>
+        </div>
+      </div>
       <Header />
       {/* Floating Info Cards */}
       <div className="fixed right-4 top-52 md:top-44 z-50 flex flex-col gap-4">
