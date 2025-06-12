@@ -82,11 +82,11 @@ export default function SocietiesPage() {
           </div>
 
           {/* thedivinehands.com Banner */}
-          <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden rounded-2xl shadow-xl mb-12">
+          <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden rounded-2xl shadow-xl mb-12 -mx-4 sm:-mx-6 lg:-mx-8">
             <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-              <div className="py-12 flex flex-col md:flex-row items-center justify-between gap-8 relative">
+              <div className="py-8 flex flex-col md:flex-row items-center justify-between gap-6 relative">
                 {/* Sponsored Ad Label */}
                 <div className="absolute top-4 left-4">
                   <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-medium text-white">
