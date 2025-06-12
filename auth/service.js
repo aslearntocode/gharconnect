@@ -11,6 +11,10 @@ async function logout() {
   // Additional cleanup if needed
   await auth.signOut(); // If using a third-party auth service
   
+  // Get current path to determine society
+  const path = window.location.pathname;
+  const society = path.startsWith('/ag-sewri') ? 'ag-sewri' : 'cb-parel';
+  
   // Redirect to login page
-  window.location.href = '/cb-parel/login';
+  window.location.href = `/${society}/login`;
 } 

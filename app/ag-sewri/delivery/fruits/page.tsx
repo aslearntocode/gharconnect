@@ -2,15 +2,8 @@
 
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { fruitProducts } from '@/app/ag-sewri/data/delivery/fruits';
+import { vendors } from '@/app/ag-sewri/data/delivery/fruits';
 import { VendorCard } from '@/components/VendorCard';
-
-// Group products by brand to show as vendors
-const vendors = Array.from(new Set(fruitProducts.map(p => p.brand))).map(brand => ({
-  name: brand,
-  products: fruitProducts.filter(p => p.brand === brand),
-  mobile: '+91 98765 43210' // This should come from your data
-}));
 
 export default function FruitsPage() {
   return (

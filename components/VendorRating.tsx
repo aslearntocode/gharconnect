@@ -61,7 +61,9 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
     try {
       const currentUser = auth.currentUser
       if (!currentUser) {
-        throw new Error('You must be logged in to rate a vendor')
+        setError('Please log in to rate this vendor')
+        setIsLoading(false)
+        return
       }
 
       // First check if user has already rated this vendor

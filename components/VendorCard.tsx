@@ -69,6 +69,13 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const items = vendor.services || vendor.products || [];
   const itemType = vendor.services ? 'services' : 'products';
 
+  const formatPrice = (price: number | string, unit: string) => {
+    if (typeof price === 'string') {
+      return `${price}/${unit}`;
+    }
+    return `₹${price.toFixed(2)}/${unit}`;
+  };
+
   return (
     <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
       <div className="p-4">
@@ -133,13 +140,13 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
                     item.services.map((service: any, idx: number) => (
                       <div key={idx} className="flex justify-between items-center text-sm">
                         <span className="text-gray-600">{service.type}</span>
-                        <span className="text-gray-900 font-medium">₹{service.price.toFixed(2)}/{service.unit}</span>
+                        <span className="text-gray-900 font-medium">{formatPrice(service.price, service.unit)}</span>
                       </div>
                     ))
                   ) : (
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-gray-600">{item.description}</span>
-                      <span className="text-gray-900 font-medium">₹{item.price.toFixed(2)}/{item.unit}</span>
+                      <span className="text-gray-900 font-medium">{formatPrice(item.price, item.unit)}</span>
                     </div>
                   )}
                 </div>
