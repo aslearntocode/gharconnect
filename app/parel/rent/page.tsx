@@ -147,7 +147,9 @@ export default function RentPage() {
                     <td className="px-4 py-3">{apt.availableFrom || '-'}</td>
                     <td className="px-4 py-3">{apt.status === 'available' ? 'Y' : 'N'}</td>
                     <td className="px-4 py-3">
-                      <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-semibold text-sm">Contact</button>
+                      <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs text-left inline-block">
+                        <span>Contact Us at<br />+91 9321314553</span>
+                      </button>
                     </td>
                   </tr>
                   {expandedIdx === idx && (
@@ -225,7 +227,9 @@ export default function RentPage() {
                       <div className="text-gray-500">In Market</div>
                       <div>{apt.status === 'available' ? 'Y' : 'N'}</div>
                     </div>
-                    <button className="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-semibold text-sm w-full">Contact</button>
+                    <button className="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs text-left inline-block">
+                      <span>Contact GC at +91 9321314553</span>
+                    </button>
                   </div>
                   {expandedMobileIdx === idx && (
                     <div className="bg-gray-50 rounded-b-xl px-4 py-4">
