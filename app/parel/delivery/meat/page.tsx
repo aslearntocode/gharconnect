@@ -2,23 +2,32 @@
 
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { vendors } from '@/app/ag-sewri/data/services/yoga';
+import { meatProducts } from '@/app/parel/data/delivery/meat';
 import { VendorCard } from '@/components/VendorCard';
 
-export default function YogaPage() {
+// Group products by brand to show as vendors
+const vendors = Array.from(new Set(meatProducts.map(p => p.brand))).map(brand => ({
+  name: brand,
+  products: meatProducts.filter(p => p.brand === brand),
+  mobile: '+91 98765 43210' // This should come from your data
+}));
+
+export default function MeatPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
+      {/* Blue Banner */}
       <div className="relative">
         <div className="w-full h-32 bg-blue-600 flex items-center justify-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white">Yoga Services</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-white">Meat Vendors</h1>
         </div>
+        {/* Filter/Search Bar */}
         <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-7 w-full max-w-2xl z-10">
           <div className="bg-white rounded-2xl shadow-lg flex items-center px-4 py-3 gap-2">
             <FiSearch className="text-gray-400 w-5 h-5" />
             <input
               type="text"
-              placeholder="Search for yoga services..."
+              placeholder="Search for meat vendors..."
               className="flex-1 outline-none bg-transparent text-gray-700 text-base"
               disabled
             />
@@ -32,7 +41,7 @@ export default function YogaPage() {
               <VendorCard
                 key={index}
                 vendor={vendor}
-                type="service"
+                type="delivery"
               />
             ))}
           </div>

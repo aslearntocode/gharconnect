@@ -90,12 +90,12 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-1 sm:px-2 lg:px-2">
         <div className="flex justify-between h-16 items-center w-full">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center">
+            <Link href={`/${currentSociety}`} className="flex items-center">
               <Image 
-                src="/GC.png" 
+                src="/GC_Logo.png" 
                 alt="Brand Logo" 
-                height={40} 
-                width={40} 
+                height={56} 
+                width={56} 
                 className="h-6 w-auto" 
                 priority
               />

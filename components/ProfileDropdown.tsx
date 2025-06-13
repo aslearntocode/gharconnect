@@ -178,7 +178,7 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  href="/cb-parel/profile"
+                  href="/parel/profile"
                   className={`${
                     active ? 'bg-blue-500 text-white' : 'text-gray-100'
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -190,7 +190,7 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  href="/cb-parel/my-reviews"
+                  href="/parel/my-reviews"
                   className={`${
                     active ? 'bg-blue-500 text-white' : 'text-gray-100'
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}

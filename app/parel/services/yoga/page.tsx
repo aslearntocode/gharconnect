@@ -2,7 +2,7 @@
 
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { vendors } from '@/app/ag-sewri/data/services/yoga';
+import { vendors } from '@/app/parel/data/services/yoga';
 import { VendorCard } from '@/components/VendorCard';
 
 export default function YogaPage() {

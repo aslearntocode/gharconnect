@@ -1,56 +1,27 @@
-export interface YogaService {
-  id: string;
+export interface Product {
   name: string;
   description: string;
-  services: {
-    type: string;
-    price: number;
-    unit: string;
-  }[];
-  image: string;
-  category: 'hatha' | 'vinyasa' | 'kids' | 'other';
-  brand: string;
-  inStock: boolean;
+  price: number | string;
+  unit: string;
 }
 
-export const yogaServices: YogaService[] = [
+export interface Vendor {
+  name: string;
+  products: Product[];
+  mobile: string;
+  photo: string;
+}
+
+export const vendors: Vendor[] = [
   {
-    id: 'hatha-1',
-    name: 'Hatha Yoga',
-    description: 'Traditional Hatha Yoga classes for all levels.',
-    services: [
-      { type: 'Single Class', price: 12.99, unit: 'class' },
-      { type: 'Monthly Pass', price: 89.99, unit: 'month' }
-    ],
-    image: '/images/services/hatha-yoga.jpg',
-    category: 'hatha',
-    brand: 'Yoga Bliss',
-    inStock: true
-  },
-  {
-    id: 'vinyasa-1',
-    name: 'Vinyasa Yoga',
-    description: 'Dynamic Vinyasa flow classes.',
-    services: [
-      { type: 'Single Class', price: 14.99, unit: 'class' },
-      { type: 'Monthly Pass', price: 99.99, unit: 'month' }
-    ],
-    image: '/images/services/vinyasa-yoga.jpg',
-    category: 'vinyasa',
-    brand: 'Yoga Bliss',
-    inStock: true
-  },
-  {
-    id: 'kids-1',
-    name: 'Kids Yoga',
-    description: 'Fun and engaging yoga classes for children.',
-    services: [
-      { type: 'Single Class', price: 9.99, unit: 'class' },
-      { type: 'Monthly Pass', price: 69.99, unit: 'month' }
-    ],
-    image: '/images/services/kids-yoga.jpg',
-    category: 'kids',
-    brand: 'Yoga Kids',
-    inStock: true
+    name: 'Padma Yoga', // Replace with the actual name
+    products: [{
+      name: 'Yoga Class', // Replace with the actual product/service name
+      description: 'Yoga Individual and Group Classes for all levels', // Replace with actual description
+      price: 'Call for price', // Or a number if you have a fixed price
+      unit: 'session' // Or 'class', etc.
+    }],
+    mobile: '+91 9833564799', // Replace with the actual mobile number
+    photo: '/images/vendors/yoga-vendor.jpg' // Replace with the actual photo path
   }
 ]; 

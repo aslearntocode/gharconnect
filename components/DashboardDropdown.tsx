@@ -9,7 +9,7 @@ export default function DashboardDropdown() {
   const handleSignOut = async () => {
     try {
       await auth.signOut();
-      router.push('/cb-parel/login');
+      router.push('/parel/login');
     } catch (error) {
       console.error('Error signing out:', error);
     }

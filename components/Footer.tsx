@@ -15,7 +15,7 @@ export default function Footer() {
                 <Link href="/about" className="hover:text-white/90">About Us</Link>
               </li> */}
               <li>
-                <Link href="/cb-parel/careers" className="hover:text-white/90">Careers</Link>
+                <Link href="/parel/careers" className="hover:text-white/90">Careers</Link>
               </li>
               {/* <li>
                 <Link href="/privacy" className="hover:text-white/90">Privacy Policy</Link>
@@ -31,7 +31,7 @@ export default function Footer() {
             <h3 className="text-lg font-semibold">Resources</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/cb-parel/faq" className="hover:text-white/90">FAQ</Link>
+                <Link href="/parel/faq" className="hover:text-white/90">FAQ</Link>
               </li>
             </ul>
           </div>

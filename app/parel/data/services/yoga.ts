@@ -1,0 +1,27 @@
+export interface Product {
+  name: string;
+  description: string;
+  price: number | string;
+  unit: string;
+}
+
+export interface Vendor {
+  name: string;
+  products: Product[];
+  mobile: string;
+  photo: string;
+}
+
+export const vendors: Vendor[] = [
+  {
+    name: 'Padma Yoga',
+    products: [{
+      name: 'Yoga Class',
+      description: 'Yoga Individual and Group Classes for all levels',
+      price: 'Call for price',
+      unit: 'session'
+    }],
+    mobile: '+91 9833564799',
+    photo: '/images/vendors/yoga-vendor.jpg'
+  }
+]; 

@@ -442,13 +442,13 @@ export default function Home() {
             </div>
             {/* Right Content - Main Offerings */}
             <div className="grid grid-cols-2 gap-4">
-              <Link href="/ag-sewri/rent/" className="col-span-1">
+              <Link href="/parel/rent/" className="col-span-1">
                 <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
                   <FiHome className="w-5 h-5 md:w-8 md:h-8 text-blue-600 mb-1 md:mb-2" />
                   <span className="font-bold text-[#4F46E5] text-xs md:text-base">Rent</span>
                 </div>
               </Link>
-              <Link href="/ag-sewri/sell/" className="col-span-1">
+              <Link href="/parel/sell/" className="col-span-1">
                 <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
                   <FiDollarSign className="w-5 h-5 md:w-8 md:h-8 text-green-600 mb-1 md:mb-2" />
                   <span className="font-bold text-[#4F46E5] text-xs md:text-base">Sell (Coming Soon)</span>
@@ -519,7 +519,7 @@ export default function Home() {
               </div>
               <div className="flex gap-2 md:gap-3 mt-2">
                 <a 
-                  href="/ag-sewri/travel-vlogs" 
+                  href="/parel/travel-vlogs" 
                   className="inline-flex items-center px-3 py-2 md:px-6 md:py-3 bg-white text-indigo-600 hover:bg-indigo-50 rounded-lg text-xs md:text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 whitespace-nowrap"
                 >
                   Read Vlogs
@@ -743,28 +743,28 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center mb-4">Delivery Categories</h2>
           <p className="text-lg text-gray-600 text-center mb-12">Order fresh essentials delivered to your door</p>
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-            <Link href="/ag-sewri/delivery/dairy" className="block group">
+            <Link href="/parel/delivery/dairy" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
                 <span className="text-4xl md:text-6xl mb-2 md:mb-4">🥛</span>
                 <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Dairy</h3>
                 <p className="text-xs md:text-base text-gray-600 text-center">Fresh milk, cheese, butter, and more</p>
               </div>
             </Link>
-            <Link href="/ag-sewri/delivery/meat" className="block group">
+            <Link href="/parel/delivery/meat" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
                 <span className="text-4xl md:text-6xl mb-2 md:mb-4">🍗</span>
                 <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Meat</h3>
                 <p className="text-xs md:text-base text-gray-600 text-center">Quality meat and poultry, hygienically packed</p>
               </div>
             </Link>
-            <Link href="/ag-sewri/delivery/vegetables" className="block group">
+            <Link href="/parel/delivery/vegetables" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
                 <span className="text-4xl md:text-6xl mb-2 md:mb-4">🥦</span>
                 <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Vegetables</h3>
                 <p className="text-xs md:text-base text-gray-600 text-center">Farm-fresh vegetables delivered daily</p>
               </div>
             </Link>
-            <Link href="/ag-sewri/delivery/fruits" className="block group">
+            <Link href="/parel/delivery/fruits" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
                 <span className="text-4xl md:text-6xl mb-2 md:mb-4">🍎</span>
                 <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Fruits</h3>
@@ -772,161 +772,162 @@ export default function Home() {
               </div>
             </Link>
           </div>
+        </div>
       </div>
-    </div>
 
-    {/* Property Management Services Section */}
-    <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-12">
-      <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-      <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="py-12 flex flex-col md:flex-row items-center justify-between gap-8 relative">
-          {/* Sponsored Ad Label */}
-          <div className="absolute top-4 left-4">
-            <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-medium text-white">
-              Sponsored Ad
-            </span>
-          </div>
-          {/* Left Content */}
-          <div className="flex-1 text-center md:text-left">
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
-              Property Management Services from Classic Maintenance
-            </h3>
-            <p className="text-lg text-white/90 mb-6 max-w-2xl">
-              Hassle-free solutions for your property: maintenance, repairs, and more.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-              <a 
-                href="#" 
-                className="inline-flex items-center px-6 py-3 bg-white text-indigo-600 hover:bg-indigo-50 rounded-lg text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-              >
-                Click Here
-                <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </a>
+      {/* Property Management Services Section */}
+      <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-12">
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="py-12 flex flex-col md:flex-row items-center justify-between gap-8 relative">
+            {/* Sponsored Ad Label */}
+            <div className="absolute top-4 left-4">
+              <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs font-medium text-white">
+                Sponsored Ad
+              </span>
             </div>
-          </div>
-          {/* Right Content - Cards */}
-          <div className="flex-1 grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-            <div className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
-              <span className="text-3xl mb-2">🏚️</span>
-              <h4 className="text-base sm:text-lg font-semibold text-white mb-1">Tenancy Exit Renovation</h4>
-              <p className="text-white/80 text-xs">Restore your property to pristine condition after tenancy.</p>
+            {/* Left Content */}
+            <div className="flex-1 text-center md:text-left">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
+                Property Management Services from Classic Maintenance
+              </h3>
+              <p className="text-lg text-white/90 mb-6 max-w-2xl">
+                Hassle-free solutions for your property: maintenance, repairs, and more.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                <a 
+                  href="#" 
+                  className="inline-flex items-center px-6 py-3 bg-white text-indigo-600 hover:bg-indigo-50 rounded-lg text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+                >
+                  Click Here
+                  <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                  </svg>
+                </a>
+              </div>
             </div>
-            <div className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
-              <span className="text-3xl mb-2">🛠️</span>
-              <h4 className="text-base sm:text-lg font-semibold text-white mb-1">Annual Servicing</h4>
-              <p className="text-white/80 text-xs">Yearly maintenance for appliances and home systems.</p>
-            </div>
-            <div className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
-              <span className="text-3xl mb-2">🔌</span>
-              <h4 className="text-base sm:text-lg font-semibold text-white mb-1">Electronic Repair</h4>
-              <p className="text-white/80 text-xs">Quick fixes for all your electronic devices and appliances.</p>
-            </div>
-            <div className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
-              <span className="text-3xl mb-2">🐜</span>
-              <h4 className="text-base sm:text-lg font-semibold text-white mb-1">Pest Control</h4>
-              <p className="text-white/80 text-xs">Effective solutions for a pest-free property.</p>
+            {/* Right Content - Cards */}
+            <div className="flex-1 grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+              <div className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
+                <span className="text-3xl mb-2">🏚️</span>
+                <h4 className="text-base sm:text-lg font-semibold text-white mb-1">Tenancy Exit Renovation</h4>
+                <p className="text-white/80 text-xs">Restore your property to pristine condition after tenancy.</p>
+              </div>
+              <div className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
+                <span className="text-3xl mb-2">🛠️</span>
+                <h4 className="text-base sm:text-lg font-semibold text-white mb-1">Annual Servicing</h4>
+                <p className="text-white/80 text-xs">Yearly maintenance for appliances and home systems.</p>
+              </div>
+              <div className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
+                <span className="text-3xl mb-2">🔌</span>
+                <h4 className="text-base sm:text-lg font-semibold text-white mb-1">Electronic Repair</h4>
+                <p className="text-white/80 text-xs">Quick fixes for all your electronic devices and appliances.</p>
+              </div>
+              <div className="bg-indigo-400/10 backdrop-blur-sm rounded-xl p-4 flex flex-col items-center border border-indigo-300/20 text-center hover:bg-indigo-400/20 transition">
+                <span className="text-3xl mb-2">🐜</span>
+                <h4 className="text-base sm:text-lg font-semibold text-white mb-1">Pest Control</h4>
+                <p className="text-white/80 text-xs">Effective solutions for a pest-free property.</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    {/* Services Categories Section */}
-    <div id="services-categories" className="bg-white py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center mb-4">Services Categories</h2>
-        <p className="text-lg text-gray-600 text-center mb-12">Book trusted home and personal services</p>
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-          <Link href="/ag-sewri/services/laundry" className="block group">
-            <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-              <FiDroplet className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-blue-500" />
-              <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Laundry</h3>
-              <p className="text-xs md:text-base text-gray-600 text-center">Professional laundry and dry cleaning</p>
-            </div>
-          </Link>
-          <Link href="/ag-sewri/services/carpenter" className="block group">
-            <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-              <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-yellow-600" />
-              <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Carpenter</h3>
-              <p className="text-xs md:text-base text-gray-600 text-center">Woodwork, repairs, and furniture</p>
-            </div>
-          </Link>
-          <Link href="/ag-sewri/services/plumber" className="block group">
-            <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-              <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-blue-600" />
-              <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Plumber</h3>
-              <p className="text-xs md:text-base text-gray-600 text-center">Leak repairs, fittings, and more</p>
-            </div>
-          </Link>
-          <Link href="/ag-sewri/services/electrician" className="block group">
-            <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-              <FiZap className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-yellow-500" />
-              <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Electrician</h3>
-              <p className="text-xs md:text-base text-gray-600 text-center">Wiring, repairs, and installations</p>
-            </div>
-          </Link>
-          <Link href="/ag-sewri/services/cleaning" className="block group">
-            <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-              <FiHome className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-green-600" />
-              <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Cleaning</h3>
-              <p className="text-xs md:text-base text-gray-600 text-center">Home and office cleaning</p>
-            </div>
-          </Link>
-          <Link href="/ag-sewri/services/painter" className="block group">
-            <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-              <FiEdit className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-pink-500" />
-              <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Painter</h3>
-              <p className="text-xs md:text-base text-gray-600 text-center">Wall painting and touch-ups</p>
-            </div>
-          </Link>
-          <Link href="/ag-sewri/services/gardener" className="block group">
-            <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-              <FiHome className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-green-600" />
-              <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Gardener</h3>
-              <p className="text-xs md:text-base text-gray-600 text-center">Garden care and landscaping</p>
-            </div>
-          </Link>
-          <Link href="/ag-sewri/services/ac-service" className="block group">
-            <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-              <FiZap className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-blue-500" />
-              <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">AC Service</h3>
-              <p className="text-xs md:text-base text-gray-600 text-center">AC repair and maintenance</p>
-            </div>
-          </Link>
-          <Link href="/ag-sewri/services/pest-control" className="block group">
-            <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-              <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
-              <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Pest Control</h3>
-              <p className="text-xs md:text-base text-gray-600 text-center">Termite, rats, and pest removal</p>
-            </div>
-          </Link>
-          <Link href="/ag-sewri/services/physical-training" className="block group">
-            <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-              <FiTrendingUp className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-indigo-500" />
-              <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Physical Training</h3>
-              <p className="text-xs md:text-base text-gray-600 text-center">Personal and group training</p>
-            </div>
-          </Link>
-          <Link href="/ag-sewri/services/yoga" className="block group">
-            <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-              <FiAward className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-green-500" />
-              <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Yoga</h3>
-              <p className="text-xs md:text-base text-gray-600 text-center">Yoga classes and workshops</p>
-            </div>
-          </Link>
-          <Link href="/ag-sewri/services/kids-classes" className="block group">
-            <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-              <FiBookOpen className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-orange-500" />
-              <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Kids Classes</h3>
-              <p className="text-xs md:text-base text-gray-600 text-center">Learning and fun for kids</p>
-            </div>
-          </Link>
+      {/* Services Categories Section */}
+      <div id="services-categories" className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-4">Services Categories</h2>
+          <p className="text-lg text-gray-600 text-center mb-12">Book trusted home and personal services</p>
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
+            <Link href="/parel/services/laundry" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiDroplet className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-blue-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Laundry</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Professional laundry and dry cleaning</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/carpenter" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-yellow-600" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Carpenter</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Woodwork, repairs, and furniture</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/plumber" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-blue-600" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Plumber</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Leak repairs, fittings, and more</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/electrician" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiZap className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-yellow-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Electrician</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Wiring, repairs, and installations</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/cleaning" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiHome className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-green-600" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Cleaning</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Home and office cleaning</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/painter" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiEdit className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-pink-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Painter</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Wall painting and touch-ups</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/gardener" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiHome className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-green-600" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Gardener</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Garden care and landscaping</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/ac-service" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiZap className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-blue-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">AC Service</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">AC repair and maintenance</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/pest-control" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Pest Control</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Termite, rats, and pest removal</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/physical-training" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiTrendingUp className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-indigo-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Physical Training</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Personal and group training</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/yoga" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiAward className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-green-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Yoga</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Yoga classes and workshops</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/kids-classes" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiBookOpen className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-orange-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Kids Classes</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Learning and fun for kids</p>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
-    </div>
     </main>
   )
 }
+
