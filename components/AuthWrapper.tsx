@@ -14,9 +14,9 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
 
   // Determine the society from the pathname
   const getSocietyFromPath = (path: string) => {
-    if (path.startsWith('/cb-parel')) return 'cb-parel'
+    if (path.startsWith('/parel')) return 'parel'
     if (path.startsWith('/ag-sewri')) return 'ag-sewri'
-    return 'cb-parel' // default to cb-parel
+    return 'parel' // default to parel
   }
 
   useEffect(() => {

@@ -13,7 +13,7 @@ async function logout() {
   
   // Get current path to determine society
   const path = window.location.pathname;
-  const society = path.startsWith('/ag-sewri') ? 'ag-sewri' : 'cb-parel';
+  const society = path.startsWith('/ag-sewri') ? 'ag-sewri' : 'parel';
   
   // Redirect to login page
   window.location.href = `/${society}/login`;

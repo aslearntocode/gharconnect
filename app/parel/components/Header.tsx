@@ -47,7 +47,7 @@ export default function Header() {
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center">
             <Link
-              href="/cb-parel/login"
+              href="/parel/login"
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
             >
               Login
@@ -117,7 +117,7 @@ export default function Header() {
             })}
             <div className="mt-4 px-4">
               <Link
-                href="/cb-parel/login"
+                href="/parel/login"
                 className="block w-full text-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
               >
                 Login

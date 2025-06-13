@@ -38,7 +38,7 @@ export default function ServicesPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Link href="/cb-parel/services/laundry" className="block group">
+            <Link href="/parel/services/laundry" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiDroplet className="text-4xl text-blue-500 flex-shrink-0" />
                 <div>
@@ -47,7 +47,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </Link>
-            <Link href="/cb-parel/services/carpenter" className="block group">
+            <Link href="/parel/services/carpenter" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiTool className="text-4xl text-yellow-600 flex-shrink-0" />
                 <div>
@@ -56,7 +56,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </Link>
-            <Link href="/cb-parel/services/plumber" className="block group">
+            <Link href="/parel/services/plumber" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiTool className="text-4xl text-blue-600 flex-shrink-0" />
                 <div>
@@ -65,7 +65,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </Link>
-            <Link href="/cb-parel/services/electrician" className="block group">
+            <Link href="/parel/services/electrician" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiZap className="text-4xl text-yellow-500 flex-shrink-0" />
                 <div>
@@ -74,7 +74,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </Link>
-            <Link href="/cb-parel/services/cleaning" className="block group">
+            <Link href="/parel/services/cleaning" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiHome className="text-4xl text-green-600 flex-shrink-0" />
                 <div>
@@ -83,7 +83,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </Link>
-            <Link href="/cb-parel/services/painter" className="block group">
+            <Link href="/parel/services/painter" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiEdit className="text-4xl text-pink-500 flex-shrink-0" />
                 <div>
@@ -92,7 +92,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </Link>
-            <Link href="/cb-parel/services/gardener" className="block group">
+            <Link href="/parel/services/gardener" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiHome className="text-4xl text-green-600 flex-shrink-0" />
                 <div>
@@ -101,7 +101,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </Link>
-            <Link href="/cb-parel/services/ac-service" className="block group">
+            <Link href="/parel/services/ac-service" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiZap className="text-4xl text-blue-500 flex-shrink-0" />
                 <div>
@@ -110,7 +110,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </Link>
-            <Link href="/cb-parel/services/pest-control" className="block group">
+            <Link href="/parel/services/pest-control" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiTool className="text-4xl text-red-500 flex-shrink-0" />
                 <div>
@@ -119,7 +119,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </Link>
-            <Link href="/cb-parel/services/physical-training" className="block group">
+            <Link href="/parel/services/physical-training" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiTrendingUp className="text-4xl text-indigo-500 flex-shrink-0" />
                 <div>
@@ -128,7 +128,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </Link>
-            <Link href="/cb-parel/services/yoga" className="block group">
+            <Link href="/parel/services/yoga" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiAward className="text-4xl text-green-500 flex-shrink-0" />
                 <div>
@@ -137,7 +137,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </Link>
-            <Link href="/cb-parel/services/kids-classes" className="block group">
+            <Link href="/parel/services/kids-classes" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiBookOpen className="text-4xl text-orange-500 flex-shrink-0" />
                 <div>

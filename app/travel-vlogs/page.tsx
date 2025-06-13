@@ -25,7 +25,7 @@ function LearningCenter() {
   const getSocietyFromPath = () => {
     const pathParts = pathname.split('/')
     // Assuming URL structure is /society-name/...
-    return pathParts[1] || 'cb-parel' // Default to cb-parel if no society in path
+    return pathParts[1] || 'parel' // Default to parel if no society in path
   }
 
   const currentSociety = getSocietyFromPath()
