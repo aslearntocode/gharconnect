@@ -41,6 +41,19 @@ const societies = [
     description: 'A peaceful society in Bhoiwada.',
     image: '/ra.png',
   },
+  {
+    name: 'Kalpataru Avana, Parel',
+    href: '/parel',
+    description: 'A luxurious society in Parel.',
+    image: '/ka.png',
+  },
+  {
+    name: 'Lodha Venezia, Parel',
+    href: '/parel',
+    description: 'A peaceful society in Parel.',
+    image: '/lv.png',
+  }
+  
   // Add more societies as needed, with or without image
 ];
 

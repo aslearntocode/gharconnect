@@ -32,7 +32,7 @@ export const rentApartments: RentApartmentDetails[] = [
     bedrooms: 2,
     bathrooms: 2,
     balconies: 2,
-    description: 'Well-maintained 2BHK apartment on highest floor available for rent with all modern amenities. Furnished with white goods. Corner flat with 180 degrees view of Parel and Atal Setu',
+    description: 'Well-maintained 2BHK apartment on highest floor available for rent with all modern amenities. Furnished with white goods except Washing Machine and TV. Corner flat with 180 degrees view of Parel and Atal Setu',
     features: [
       'Fully Furnished',
       'Parking Space',
