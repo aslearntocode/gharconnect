@@ -451,7 +451,7 @@ export default function Home() {
               <Link href="/ag-sewri/sell/" className="col-span-1">
                 <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
                   <FiDollarSign className="w-5 h-5 md:w-8 md:h-8 text-green-600 mb-1 md:mb-2" />
-                  <span className="font-bold text-[#4F46E5] text-xs md:text-base">Sell</span>
+                  <span className="font-bold text-[#4F46E5] text-xs md:text-base">Sell (Coming Soon)</span>
                 </div>
               </Link>
               <Link href="#" className="col-span-1" onClick={e => { e.preventDefault(); document.getElementById('services-categories')?.scrollIntoView({ behavior: 'smooth' }); }}>

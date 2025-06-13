@@ -21,7 +21,7 @@ export default function SellPage() {
       {/* Blue Banner */}
       <div className="relative">
         <div className="w-full h-32 bg-blue-600 flex items-center justify-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white">Sell Apartments</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-white">Sell Apartments (Coming Soon)</h1>
         </div>
       </div>
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
