@@ -2,14 +2,8 @@
 
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { physicalTrainingServices } from '@/app/ag-sewri/data/services/physical-training';
+import { vendors } from '@/app/ag-sewri/data/services/physical-training';
 import { VendorCard } from '@/components/VendorCard';
-
-const vendors = Array.from(new Set(physicalTrainingServices.map(p => p.brand))).map(brand => ({
-  name: brand,
-  services: physicalTrainingServices.filter(p => p.brand === brand),
-  mobile: '+91 98765 43210'
-}));
 
 export default function PhysicalTrainingPage() {
   return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { FiChevronDown, FiChevronUp, FiPhone } from 'react-icons/fi';
+import { FiChevronDown, FiChevronUp, FiPhone, FiX } from 'react-icons/fi';
 import { VendorRating } from './VendorRating';
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -16,6 +16,7 @@ interface VendorCardProps {
     services?: any[];
     products?: any[];
     mobile: string;
+    photo?: string;
   };
   type: 'service' | 'delivery';
 }
@@ -25,6 +26,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const [vendorRatings, setVendorRatings] = useState<ServiceRating | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const supabase = createClientComponentClient();
 
   useEffect(() => {
@@ -77,84 +79,118 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
-      <div className="p-4">
-        <div className="flex justify-between items-start mb-2">
-          <h2 className="text-lg font-semibold text-gray-900">
-            {vendor.name}
-          </h2>
-          <VendorRating
-            vendorId={vendor.name}
-            vendorName={vendor.name}
-            vendorType={type}
-            onRatingAdded={() => {
-              // Refresh ratings after a new rating is added
-              window.location.reload();
-            }}
-          />
-        </div>
-        <p className="text-sm text-gray-600 mb-2">
-          {items.length} {itemType} available
-        </p>
-        <a 
-          href={`tel:${vendor.mobile}`}
-          className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3"
-        >
-          {vendor.mobile}
-        </a>
-        {vendorRatings && (
-          <div className="flex items-center gap-1 text-yellow-500 mb-3">
-            <span className="text-sm font-medium">
-              {vendorRatings.rating.toFixed(1)}
-            </span>
-            <span className="text-gray-500 text-xs">
-              ({vendorRatings.count})
-            </span>
+    <>
+      <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
+        {vendor.photo && (
+          <div 
+            className="w-full h-48 overflow-hidden rounded-t-lg cursor-pointer"
+            onClick={() => setIsImageModalOpen(true)}
+          >
+            <img 
+              src={vendor.photo} 
+              alt={vendor.name}
+              className="w-full h-full object-contain"
+            />
           </div>
         )}
-        <button
-          onClick={toggleVendor}
-          className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
-        >
-          {expandedVendor ? (
-            <>
-              <FiChevronUp className="w-4 h-4" />
-              Hide {itemType}
-            </>
-          ) : (
-            <>
-              <FiChevronDown className="w-4 h-4" />
-              View {itemType}
-            </>
+        <div className="p-4">
+          <div className="flex justify-between items-start mb-2">
+            <h2 className="text-lg font-semibold text-gray-900">
+              {vendor.name}
+            </h2>
+            <VendorRating
+              vendorId={vendor.name}
+              vendorName={vendor.name}
+              vendorType={type}
+              onRatingAdded={() => {
+                // Refresh ratings after a new rating is added
+                window.location.reload();
+              }}
+            />
+          </div>
+          <p className="text-sm text-gray-600 mb-2">
+            {items.length} {itemType} available
+          </p>
+          <a 
+            href={`tel:${vendor.mobile}`}
+            className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3"
+          >
+            {vendor.mobile}
+          </a>
+          {vendorRatings && (
+            <div className="flex items-center gap-1 text-yellow-500 mb-3">
+              <span className="text-sm font-medium">
+                {vendorRatings.rating.toFixed(1)}
+              </span>
+              <span className="text-gray-500 text-xs">
+                ({vendorRatings.count})
+              </span>
+            </div>
           )}
-        </button>
-      </div>
-      {expandedVendor && (
-        <div className="border-t border-gray-100 p-4 bg-gray-50">
-          <div className="space-y-4">
-            {items.map((item, index) => (
-              <div key={index} className="border-b border-gray-200 pb-3 last:border-0 last:pb-0">
-                <h3 className="text-sm font-medium text-gray-900 mb-2">{item.name}</h3>
-                <div className="space-y-1">
-                  {item.services ? (
-                    item.services.map((service: any, idx: number) => (
-                      <div key={idx} className="flex justify-between items-center text-sm">
-                        <span className="text-gray-600">{service.type}</span>
-                        <span className="text-gray-900 font-medium">{formatPrice(service.price, service.unit)}</span>
+          <button
+            onClick={toggleVendor}
+            className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+          >
+            {expandedVendor ? (
+              <>
+                <FiChevronUp className="w-4 h-4" />
+                Hide {itemType}
+              </>
+            ) : (
+              <>
+                <FiChevronDown className="w-4 h-4" />
+                View {itemType}
+              </>
+            )}
+          </button>
+        </div>
+        {expandedVendor && (
+          <div className="border-t border-gray-100 p-4 bg-gray-50">
+            <div className="space-y-4">
+              {items.map((item, index) => (
+                <div key={index} className="border-b border-gray-200 pb-3 last:border-0 last:pb-0">
+                  <h3 className="text-sm font-medium text-gray-900 mb-2">{item.name}</h3>
+                  <div className="space-y-1">
+                    {item.services ? (
+                      item.services.map((service: any, idx: number) => (
+                        <div key={idx} className="flex justify-between items-center text-sm">
+                          <span className="text-gray-600">{service.type}</span>
+                          <span className="text-gray-900 font-medium">{formatPrice(service.price, service.unit)}</span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="flex justify-between items-center text-sm">
+                        <span className="text-gray-600">{item.description}</span>
+                        <span className="text-gray-900 font-medium">{formatPrice(item.price, item.unit)}</span>
                       </div>
-                    ))
-                  ) : (
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-gray-600">{item.description}</span>
-                      <span className="text-gray-900 font-medium">{formatPrice(item.price, item.unit)}</span>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Image Modal */}
+      {isImageModalOpen && vendor.photo && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4">
+          <div className="relative max-w-4xl w-full">
+            <img
+              src={vendor.photo}
+              alt={vendor.name}
+              className="w-full h-auto max-h-[80vh] object-contain"
+            />
+            <button
+              onClick={() => setIsImageModalOpen(false)}
+              className="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors"
+              aria-label="Close image"
+            >
+              <FiX size={24} className="text-gray-800" />
+            </button>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 } 
