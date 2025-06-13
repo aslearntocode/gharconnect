@@ -135,7 +135,7 @@ export default function Header() {
                   style={{
                     zIndex: 1000,
                     top: '4rem',
-                    left: '20rem'
+                    left: '16rem'
                   }}
                 >
                   <Link 
@@ -186,7 +186,7 @@ export default function Header() {
                   style={{
                     zIndex: 1000,
                     top: '4rem',
-                    left: '32rem'
+                    left: '24rem'
                   }}
                 >
                   <div className="grid grid-cols-2 gap-x-4 gap-y-2">
@@ -320,7 +320,7 @@ export default function Header() {
                   style={{
                     zIndex: 1000,
                     top: '4rem',
-                    left: '40rem'
+                    left: '32rem'
                   }}
                 >
                   <div className="grid grid-cols-2 gap-x-4 gap-y-2">
