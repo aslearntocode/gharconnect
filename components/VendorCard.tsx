@@ -28,6 +28,8 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [showReviews, setShowReviews] = useState(false);
+  const [reviews, setReviews] = useState<any[]>([]);
   const supabase = createClientComponentClient();
   const router = useRouter();
 
@@ -65,6 +67,34 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
 
     fetchRatings();
   }, [vendor.name, supabase]);
+
+  const fetchReviews = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('reviews')
+        .select('*')
+        .eq('card_id', vendor.name)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching reviews:', error);
+        return;
+      }
+
+      if (data) {
+        setReviews(data);
+      }
+    } catch (err) {
+      console.error('Error in fetchReviews:', err);
+    }
+  };
+
+  const toggleReviews = async () => {
+    if (!showReviews) {
+      await fetchReviews();
+    }
+    setShowReviews(!showReviews);
+  };
 
   const toggleVendor = () => {
     setExpandedVendor(!expandedVendor);
@@ -128,22 +158,42 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
               </span>
             </div>
           )}
-          <button
-            onClick={toggleVendor}
-            className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
-          >
-            {expandedVendor ? (
-              <>
-                <FiChevronUp className="w-4 h-4" />
-                Hide {itemType}
-              </>
-            ) : (
-              <>
-                <FiChevronDown className="w-4 h-4" />
-                View {itemType}
-              </>
+          <div className="flex flex-col gap-2">
+            <button
+              onClick={toggleVendor}
+              className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+            >
+              {expandedVendor ? (
+                <>
+                  <FiChevronUp className="w-4 h-4" />
+                  Hide {itemType}
+                </>
+              ) : (
+                <>
+                  <FiChevronDown className="w-4 h-4" />
+                  View {itemType}
+                </>
+              )}
+            </button>
+            {vendorRatings && vendorRatings.count > 0 && (
+              <button
+                onClick={toggleReviews}
+                className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+              >
+                {showReviews ? (
+                  <>
+                    <FiChevronUp className="w-4 h-4" />
+                    Hide Reviews
+                  </>
+                ) : (
+                  <>
+                    <FiChevronDown className="w-4 h-4" />
+                    Show Reviews
+                  </>
+                )}
+              </button>
             )}
-          </button>
+          </div>
         </div>
         {expandedVendor && (
           <div className="border-t border-gray-100 p-4 bg-gray-50">
@@ -166,6 +216,28 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
                       </div>
                     )}
                   </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        {showReviews && (
+          <div className="border-t border-gray-100 p-4 bg-gray-50">
+            <div className="space-y-4">
+              {reviews.map((review, index) => (
+                <div key={index} className="border-b border-gray-200 pb-3 last:border-0 last:pb-0">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-gray-900">{review.user_name}</span>
+                    <span className="text-sm text-yellow-500 font-medium">{review.rating}/10</span>
+                  </div>
+                  <p className="text-sm text-gray-600">{review.comment}</p>
+                  <p className="text-xs text-gray-500 mt-1">
+                    {new Date(review.created_at).toLocaleDateString('en-IN', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </p>
                 </div>
               ))}
             </div>
