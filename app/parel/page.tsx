@@ -419,9 +419,12 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* Left Content */}
             <div>
-              <h1 className="text-[32px] md:text-[48px] leading-tight font-bold mb-6 text-center md:text-left">
+              <h1 className="text-[32px] md:text-[48px] leading-tight font-bold mb-6 text-center md:text-left flex flex-wrap items-center gap-2 justify-center md:justify-start">
                 <span className="text-black">Welcome to GharConnect </span>
                 <span className="text-indigo-600">@Parel</span>
+                <Link href="/" className="ml-2 text-indigo-600 text-xs md:text-sm font-semibold underline hover:no-underline transition-all">
+                  Click here to go to other areas
+                </Link>
               </h1>
               <p className="text-lg text-gray-600 mb-4 md:mb-8">
                 Your one-stop platform for renting, selling, services, and delivery in your society. Explore all the services available in your society.
