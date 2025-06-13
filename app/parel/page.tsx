@@ -420,7 +420,8 @@ export default function Home() {
             {/* Left Content */}
             <div>
               <h1 className="text-[32px] md:text-[48px] leading-tight font-bold mb-6 text-center md:text-left">
-                <span className="text-black">Welcome to GharConnect</span>
+                <span className="text-black">Welcome to GharConnect </span>
+                <span className="text-indigo-600">@Parel</span>
               </h1>
               <p className="text-lg text-gray-600 mb-4 md:mb-8">
                 Your one-stop platform for renting, selling, services, and delivery in your society. Explore all the services available in your society.
