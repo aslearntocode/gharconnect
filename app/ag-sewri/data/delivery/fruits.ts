@@ -21,5 +21,15 @@ export const vendors: Vendor[] = [
       unit: 'dozen'
     }],
     mobile: '+91 87959 49683'
+  },
+  {
+    name: 'Saldana (Fruits)',
+    products: [{
+      name: 'Fruits',
+      description: 'Fruits',
+      price: 'Call for price',
+      unit: 'kg'
+    }],
+    mobile: '+91 7406470702'
   }
 ]; 

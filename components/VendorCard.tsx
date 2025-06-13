@@ -4,6 +4,7 @@ import { FiChevronDown, FiChevronUp, FiPhone, FiX } from 'react-icons/fi';
 import { VendorRating } from './VendorRating';
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
 
 interface ServiceRating {
   rating: number;
@@ -28,6 +29,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const [error, setError] = useState<string | null>(null);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const supabase = createClientComponentClient();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchRatings = async () => {
@@ -103,8 +105,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
               vendorName={vendor.name}
               vendorType={type}
               onRatingAdded={() => {
-                // Refresh ratings after a new rating is added
-                window.location.reload();
+                router.refresh();
               }}
             />
           </div>
