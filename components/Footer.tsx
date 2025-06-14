@@ -34,7 +34,7 @@ export default function Footer() {
                 <Link href="/parel/faq" className="hover:text-white/90">FAQ</Link>
               </li>
               <li>
-                <Link href="/society/register" className="hover:text-white/90">Register Your Society</Link>
+                <Link href="/parel/" className="hover:text-white/90">Parel Community</Link>
               </li>
             </ul>
           </div>
