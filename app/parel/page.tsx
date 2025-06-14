@@ -574,6 +574,13 @@ export default function Home() {
                 <p className="text-xs md:text-base text-gray-600 text-center">Seasonal and exotic fruits, handpicked for you</p>
               </div>
             </Link>
+            <Link href="/parel/delivery/dry-fruits" className="block group">
+              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <span className="text-4xl md:text-6xl mb-2 md:mb-4">🥜</span>
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Dry Fruits</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Premium quality dry fruits and nuts</p>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
