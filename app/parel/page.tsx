@@ -377,7 +377,7 @@ export default function Home() {
       {/* Notification Bar */}
       <div className="w-full mt-2 mb-4">
         <div className="bg-yellow-100 text-yellow-900 px-4 md:px-0 py-2 text-center font-medium shadow-sm rounded-none md:rounded-md w-full text-lg md:text-lg">
-          We have a rental property available at Crescent Bay from 5th July 2025. Contact us on 9321314553.
+          We have a rental property available at Crescent Bay from 5th July 2025. Contact us at 9321314553.
         </div>
       </div>
       {/* Floating Info Cards */}
