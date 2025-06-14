@@ -1,6 +1,6 @@
 'use client';
 
-import { FiChevronDown, FiChevronUp, FiPhone, FiX } from 'react-icons/fi';
+import { FiChevronDown, FiChevronUp, FiPhone, FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import { VendorRating } from './VendorRating';
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -18,6 +18,7 @@ interface VendorCardProps {
     products?: any[];
     mobile: string;
     photo?: string;
+    photos?: string[];
   };
   type: 'service' | 'delivery';
 }
@@ -28,10 +29,14 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [showReviews, setShowReviews] = useState(false);
   const [reviews, setReviews] = useState<any[]>([]);
   const supabase = createClientComponentClient();
   const router = useRouter();
+
+  // Get all available photos
+  const photos = vendor.photos || (vendor.photo ? [vendor.photo] : []);
 
   useEffect(() => {
     const fetchRatings = async () => {
@@ -100,6 +105,14 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
     setExpandedVendor(!expandedVendor);
   };
 
+  const nextPhoto = () => {
+    setCurrentPhotoIndex((prev) => (prev + 1) % photos.length);
+  };
+
+  const prevPhoto = () => {
+    setCurrentPhotoIndex((prev) => (prev - 1 + photos.length) % photos.length);
+  };
+
   const items = vendor.services || vendor.products || [];
   const itemType = vendor.services ? 'services' : 'products';
 
@@ -113,16 +126,42 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   return (
     <>
       <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
-        {vendor.photo && (
+        {photos.length > 0 && (
           <div 
-            className="w-full h-48 overflow-hidden rounded-t-lg cursor-pointer"
+            className="w-full h-48 overflow-hidden rounded-t-lg cursor-pointer relative"
             onClick={() => setIsImageModalOpen(true)}
           >
             <img 
-              src={vendor.photo} 
+              src={photos[currentPhotoIndex]} 
               alt={vendor.name}
               className="w-full h-full object-contain"
             />
+            {photos.length > 1 && (
+              <>
+                <button 
+                  onClick={(e) => { e.stopPropagation(); prevPhoto(); }}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-1 rounded-full hover:bg-black/70"
+                >
+                  <FiChevronLeft className="w-4 h-4" />
+                </button>
+                <button 
+                  onClick={(e) => { e.stopPropagation(); nextPhoto(); }}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-1 rounded-full hover:bg-black/70"
+                >
+                  <FiChevronRight className="w-4 h-4" />
+                </button>
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                  {photos.map((_, index) => (
+                    <div 
+                      key={index}
+                      className={`w-2 h-2 rounded-full ${
+                        index === currentPhotoIndex ? 'bg-white' : 'bg-white/50'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         )}
         <div className="p-4">
@@ -159,22 +198,22 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
             </div>
           )}
           <div className="flex flex-col gap-2">
-          <button
-            onClick={toggleVendor}
-            className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
-          >
-            {expandedVendor ? (
-              <>
-                <FiChevronUp className="w-4 h-4" />
-                Hide {itemType}
-              </>
-            ) : (
-              <>
-                <FiChevronDown className="w-4 h-4" />
-                View {itemType}
-              </>
-            )}
-          </button>
+            <button
+              onClick={toggleVendor}
+              className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+            >
+              {expandedVendor ? (
+                <>
+                  <FiChevronUp className="w-4 h-4" />
+                  Hide {itemType}
+                </>
+              ) : (
+                <>
+                  <FiChevronDown className="w-4 h-4" />
+                  View {itemType}
+                </>
+              )}
+            </button>
             {vendorRatings && vendorRatings.count > 0 && (
               <button
                 onClick={toggleReviews}
@@ -246,21 +285,48 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
       </div>
 
       {/* Image Modal */}
-      {isImageModalOpen && vendor.photo && (
+      {isImageModalOpen && photos.length > 0 && (
         <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4">
           <div className="relative max-w-4xl w-full">
-            <img
-              src={vendor.photo}
-              alt={vendor.name}
-              className="w-full h-auto max-h-[80vh] object-contain"
-            />
-            <button
-              onClick={() => setIsImageModalOpen(false)}
-              className="absolute top-4 right-4 bg-white rounded-full p-2 hover:bg-gray-100 transition-colors"
-              aria-label="Close image"
-            >
-              <FiX size={24} className="text-gray-800" />
-            </button>
+            <div className="relative">
+              <button
+                onClick={() => setIsImageModalOpen(false)}
+                className="absolute top-4 right-4 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 z-10"
+              >
+                <FiX className="w-6 h-6" />
+              </button>
+              <img
+                src={photos[currentPhotoIndex]}
+                alt={vendor.name}
+                className="w-full h-auto max-h-[80vh] object-contain"
+              />
+              {photos.length > 1 && (
+                <>
+                  <button
+                    onClick={prevPhoto}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
+                  >
+                    <FiChevronLeft className="w-6 h-6" />
+                  </button>
+                  <button
+                    onClick={nextPhoto}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70"
+                  >
+                    <FiChevronRight className="w-6 h-6" />
+                  </button>
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                    {photos.map((_, index) => (
+                      <div
+                        key={index}
+                        className={`w-3 h-3 rounded-full ${
+                          index === currentPhotoIndex ? 'bg-white' : 'bg-white/50'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </div>
       )}

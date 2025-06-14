@@ -9,7 +9,7 @@ export interface Vendor {
   name: string;
   products: Product[];
   mobile: string;
-  photo: string;
+  photos: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -22,6 +22,9 @@ export const vendors: Vendor[] = [
       unit: 'session'
     }],
     mobile: '+91 9833564799',
-    photo: '/images/vendors/yoga-vendor.jpg'
+    photos: [
+      '/images/vendors/Padma_Yoga1.jpeg',
+      '/images/vendors/Padma_Yoga2.jpeg'
+    ]
   }
 ]; 
