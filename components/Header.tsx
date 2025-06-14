@@ -263,6 +263,22 @@ export default function Header() {
                       <span>Pest Control</span>
                     </Link>
                     <Link 
+                      href={`/${currentSociety}/services/laptop-repair`}
+                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                      onClick={() => setIsCreditScoreDropdownOpen(false)}
+                    >
+                      <FiTool className="w-5 h-5 text-red-500" />
+                      <span>Laptop Repair</span>
+                    </Link>
+                    <Link 
+                      href={`/${currentSociety}/services/piegon-net`}
+                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                      onClick={() => setIsCreditScoreDropdownOpen(false)}
+                    >
+                      <FiTool className="w-5 h-5 text-red-500" />
+                      <span>Pigeon Net</span>
+                    </Link>
+                    <Link 
                       href={`/${currentSociety}/services/physical-training`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
