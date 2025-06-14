@@ -32,11 +32,27 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
   const [showReviews, setShowReviews] = useState(false);
   const [reviews, setReviews] = useState<any[]>([]);
+  const [imageError, setImageError] = useState(false);
   const supabase = createClientComponentClient();
   const router = useRouter();
 
   // Get all available photos
   const photos = vendor.photos || (vendor.photo ? [vendor.photo] : []);
+  
+  // Determine the dummy image based on the service type
+  const getDummyImage = () => {
+    if (type === 'service') {
+      // Check if it's a yoga or physical training service based on the vendor name or products
+      const isYoga = vendor.products?.some(p => 
+        p.name.toLowerCase().includes('yoga') || 
+        p.description.toLowerCase().includes('yoga')
+      );
+      return isYoga 
+        ? '/images/dummy/yoga-placeholder.jpg'
+        : '/images/dummy/pt-placeholder.jpg';
+    }
+    return '/images/dummy/delivery-placeholder.jpg';
+  };
 
   useEffect(() => {
     const fetchRatings = async () => {
@@ -126,44 +142,49 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   return (
     <>
       <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
-        {photos.length > 0 && (
-          <div 
-            className="w-full h-48 overflow-hidden rounded-t-lg cursor-pointer relative"
-            onClick={() => setIsImageModalOpen(true)}
-          >
-            <img 
-              src={photos[currentPhotoIndex]} 
-              alt={vendor.name}
-              className="w-full h-full object-contain"
-            />
-            {photos.length > 1 && (
-              <>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); prevPhoto(); }}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-1 rounded-full hover:bg-black/70"
-                >
-                  <FiChevronLeft className="w-4 h-4" />
-                </button>
-                <button 
-                  onClick={(e) => { e.stopPropagation(); nextPhoto(); }}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-1 rounded-full hover:bg-black/70"
-                >
-                  <FiChevronRight className="w-4 h-4" />
-                </button>
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
-                  {photos.map((_, index) => (
-                    <div 
-                      key={index}
-                      className={`w-2 h-2 rounded-full ${
-                        index === currentPhotoIndex ? 'bg-white' : 'bg-white/50'
-                      }`}
-                    />
-                  ))}
-                </div>
-              </>
-            )}
-          </div>
-        )}
+        <div 
+          className="w-full h-48 overflow-hidden rounded-t-lg cursor-pointer relative bg-gray-100 flex items-center justify-center"
+          onClick={() => photos.length > 0 && !imageError && setIsImageModalOpen(true)}
+        >
+          {photos.length > 0 && !imageError ? (
+            <>
+              <img 
+                src={photos[currentPhotoIndex]}
+                alt={vendor.name}
+                className="w-full h-full object-contain"
+                onError={() => setImageError(true)}
+              />
+              {photos.length > 1 && (
+                <>
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); prevPhoto(); }}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-1 rounded-full hover:bg-black/70"
+                  >
+                    <FiChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); nextPhoto(); }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 text-white p-1 rounded-full hover:bg-black/70"
+                  >
+                    <FiChevronRight className="w-4 h-4" />
+                  </button>
+                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                    {photos.map((_, index) => (
+                      <div 
+                        key={index}
+                        className={`w-2 h-2 rounded-full ${
+                          index === currentPhotoIndex ? 'bg-white' : 'bg-white/50'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
+          ) : (
+            <span className="text-gray-500 font-medium">Image not available</span>
+          )}
+        </div>
         <div className="p-4">
           <div className="flex justify-between items-start mb-2">
             <h2 className="text-lg font-semibold text-gray-900">
@@ -285,7 +306,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
       </div>
 
       {/* Image Modal */}
-      {isImageModalOpen && photos.length > 0 && (
+      {isImageModalOpen && photos.length > 0 && !imageError && (
         <div className="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4">
           <div className="relative max-w-4xl w-full">
             <div className="relative">
@@ -299,6 +320,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
                 src={photos[currentPhotoIndex]}
                 alt={vendor.name}
                 className="w-full h-auto max-h-[80vh] object-contain"
+                onError={() => setImageError(true)}
               />
               {photos.length > 1 && (
                 <>

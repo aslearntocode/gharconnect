@@ -23,5 +23,16 @@ export const vendors: Vendor[] = [
     }],
     mobile: '+91 9920458339',
     photo: '/images/vendors/Subodh_PT.jpeg'
+  },
+  {
+    name: 'Ashok',
+    products: [{
+      name: 'Personal Training',
+      description: 'Personal Training Indoor and Outdoor',
+      price: 'Call for price',
+      unit: 'session'
+    }],
+    mobile: '+91 9820886804',
+    photo: '/images/vendors/Ashok_PT.jpeg'
   }
 ];
