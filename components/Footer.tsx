@@ -68,7 +68,7 @@ export default function Footer() {
               </li> */}
               <li>
                 <a 
-                  href="https://www.instagram.com/" 
+                  href="https://www.instagram.com/gharconnect2025/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="hover:text-white/90 flex items-center gap-2"
