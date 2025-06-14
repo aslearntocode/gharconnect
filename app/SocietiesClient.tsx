@@ -6,49 +6,49 @@ import { useState } from 'react';
 
 const societies = [
   {
-    name: 'L&T Crescent Bay, Bhoiwada',
+    name: 'L&T Crescent Bay',
     href: '/parel',
     description: 'A premium residential complex in Parel.',
     image: '/cb.png',
   },
   {
-    name: 'Ashok Gardens, Sewri',
+    name: 'Ashok Gardens',
     href: '/parel',
     description: 'A vibrant community in the heart of Sewri.',
     image: '/ag.png',
   },
   {
-    name: 'Island City Centre (ICC), Bhoiwada',
+    name: 'Island City Centre',
     href: '/parel',
     description: 'Modern living with all amenities in Bhoiwada.',
     image: '/icc.png',
   },
   {
-    name: 'Ashok Towers, Sewri',
+    name: 'Ashok Towers',
     href: '/parel',
     description: 'A peaceful society in Sewri.',
     image: '/at.png',
   },
   {
-    name: 'Dosti Flamingo, Sewri',
+    name: 'Dosti Flamingo',
     href: '/parel',
     description: 'A peaceful society in Sewri.',
     image: '/df.png',
   },
   {
-    name: 'Ruparel Ariana, Bhoiwada',
+    name: 'Ruparel Ariana',
     href: '/parel',
     description: 'A peaceful society in Bhoiwada.',
     image: '/ra.png',
   },
   {
-    name: 'Kalpataru Avana, Parel',
+    name: 'Kalpataru Avana',
     href: '/parel',
     description: 'A luxurious society in Parel.',
     image: '/ka.png',
   },
   {
-    name: 'Lodha Venezia, Parel',
+    name: 'Lodha Venezia',
     href: '/parel',
     description: 'A peaceful society in Parel.',
     image: '/lv.png',
