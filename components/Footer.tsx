@@ -36,6 +36,9 @@ export default function Footer() {
               <li>
                 <Link href="/parel/" className="hover:text-white/90">Parel Community</Link>
               </li>
+              <li>
+                <Link href="/worli/" className="hover:text-white/90">Worli Community</Link>
+              </li>
             </ul>
           </div>
 

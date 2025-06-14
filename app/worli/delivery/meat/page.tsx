@@ -2,7 +2,7 @@
 
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { meatProducts } from '@/app/worli/data/delivery/meat';
+import { meatProducts } from '@/app/parel/data/delivery/meat';
 import { VendorCard } from '@/components/VendorCard';
 
 // Group products by brand to show as vendors

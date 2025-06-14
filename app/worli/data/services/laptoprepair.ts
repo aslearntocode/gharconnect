@@ -13,13 +13,13 @@ export interface Vendor {
 
 export const vendors: Vendor[] = [
   {
-    name: 'Ajay Sharma',
+    name: 'Raees',
     products: [{
-      name: 'Carpentry',
-      description: 'Carpentry services',
+      name: 'Laptop Repair',
+      description: 'Professional laptop repair and maintenance services',
       price: 'Call for price',
-      unit: 'job'
+      unit: 'service'
     }],
-    mobile: '+91 9821314516'
+    mobile: '+91 9930952258'
   }
 ];

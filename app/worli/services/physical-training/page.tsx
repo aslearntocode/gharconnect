@@ -1,8 +1,6 @@
-'use client';
-
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { vendors } from '@/app/worli/data/services/physical-training';
+import { vendors } from '@/app/parel/data/services/physical-training';
 import { VendorCard } from '@/components/VendorCard';
 
 export default function PhysicalTrainingPage() {

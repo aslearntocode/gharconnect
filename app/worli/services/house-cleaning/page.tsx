@@ -2,7 +2,7 @@
 
 import Header from '@/components/Header';
 import { FiSearch, FiHome } from 'react-icons/fi';
-import { houseCleaningServices } from '@/app/worli/data/services/house-cleaning';
+import { houseCleaningServices } from '@/app/parel/data/services/house-cleaning';
 
 export default function HouseCleaningPage() {
   return (

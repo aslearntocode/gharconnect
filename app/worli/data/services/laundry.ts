@@ -32,10 +32,20 @@ export const vendors: Vendor[] = [
     services: [{
       name: 'Wash & Fold',
       description: 'Clothes washed and folded',
-      price: 20,
+      price: 'Call for price',
       unit: 'kg'
     }],
     mobile: '+91 90000 00005'
+  },
+  {
+    name: 'Vijay',
+    services: [{
+      name: 'Wash & Fold',
+      description: 'Clothes washed and folded',
+      price: 'Call for price',
+      unit: 'kg'
+    }],
+    mobile: '+91 7710940252'
   }
 ];
 

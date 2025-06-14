@@ -1,7 +1,7 @@
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
 import Link from 'next/link';
-import { deliveryCategories } from '@/app/worli/data/delivery';
+import { deliveryCategories } from '@/app/parel/data/delivery';
 
 export default function DeliveryPage() {
   return (
@@ -31,7 +31,7 @@ export default function DeliveryPage() {
             {deliveryCategories.map((category) => (
               <Link
                 key={category.id}
-                href={`/ag-sewri/delivery/${category.slug}`}
+                href={`/delivery/${category.slug}`}
                 className="block group"
               >
                 <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">

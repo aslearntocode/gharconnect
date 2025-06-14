@@ -2,7 +2,7 @@
 
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { kidsClassesServices } from '@/app/worli/data/services/kids-classes';
+import { kidsClassesServices } from '@/app/parel/data/services/kids-classes';
 import { VendorCard } from '@/components/VendorCard';
 
 const vendors = Array.from(new Set(kidsClassesServices.map(p => p.brand))).map(brand => ({

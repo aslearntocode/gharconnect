@@ -2,15 +2,14 @@ export interface GardenerService {
   id: string;
   name: string;
   description: string;
-  services: {
-    type: string;
-    price: number;
+  category: 'maintenance' | 'landscaping' | 'plants' | 'other';
+  mobile: string;
+  products: {
+    name: string;
+    description: string;
+    price: number | string;
     unit: string;
   }[];
-  image: string;
-  category: 'maintenance' | 'landscaping' | 'plants' | 'other';
-  brand: string;
-  inStock: boolean;
 }
 
 export const gardenerServices: GardenerService[] = [
@@ -18,14 +17,30 @@ export const gardenerServices: GardenerService[] = [
     id: 'maintenance-1',
     name: 'Ramwishwas',
     description: 'Regular maintenance for your garden, including weeding, pruning, and cleaning.',
-    services: [
-      { type: 'Small Garden', price: 299, unit: 'visit' },
-      { type: 'Medium Garden', price: 499, unit: 'visit' },
-      { type: 'Large Garden', price: 799, unit: 'visit' }
-    ],
-    image: '/images/services/garden-maintenance.jpg',
     category: 'maintenance',
-    brand: 'Green Thumb',
-    inStock: true
+    mobile: '+91 9561295795',
+    products: [
+      {
+        name: 'Wash & Fold',
+        description: 'Basic wash and fold service for garden linens.',
+        price: 'Call for price',
+        unit: 'service'
+      }
+    ]
+  },
+  {
+    id: 'maintenance-2',
+    name: 'Rajesh',
+    description: 'Regular maintenance for your garden, including weeding, pruning, and cleaning.',
+    category: 'maintenance',
+    mobile: '+91 8369550450',
+    products: [
+      {
+        name: 'Wash & Fold',
+        description: 'Basic wash and fold service for garden linens.',
+        price: 'Call for price',
+        unit: 'service'
+      }
+    ]
   }
 ]; 

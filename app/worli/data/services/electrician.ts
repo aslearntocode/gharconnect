@@ -13,13 +13,13 @@ export interface Vendor {
 
 export const vendors: Vendor[] = [
   {
-    name: 'Bright Sparks',
+    name: 'Munna Electrician',
     services: [{
-      name: 'Fan Installation',
-      description: 'Ceiling fan installation',
-      price: 150,
+      name: 'Electrician',
+      description: 'Any electrical work',
+      price: 'Call for price',
       unit: 'job'
     }],
-    mobile: '+91 90000 00008'
+    mobile: '+91 9653303552'
   }
 ]; 

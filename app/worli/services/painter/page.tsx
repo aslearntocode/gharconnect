@@ -2,7 +2,7 @@
 
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { painterServices } from '@/app/worli/data/services/painter';
+import { painterServices } from '@/app/parel/data/services/painter';
 import { VendorCard } from '@/components/VendorCard';
 
 // Group services by brand to show as vendors

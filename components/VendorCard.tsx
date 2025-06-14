@@ -132,11 +132,17 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const items = vendor.services || vendor.products || [];
   const itemType = vendor.services ? 'services' : 'products';
 
-  const formatPrice = (price: number | string, unit: string) => {
+  const formatPrice = (price: number | string | undefined | null, unit: string) => {
+    if (price === undefined || price === null || price === '') {
+      return `N/A${unit ? `/${unit}` : ''}`;
+    }
     if (typeof price === 'string') {
       return `${price}/${unit}`;
     }
-    return `₹${price.toFixed(2)}/${unit}`;
+    if (typeof price === 'number' && !isNaN(price)) {
+      return `₹${price.toFixed(2)}/${unit}`;
+    }
+    return `N/A${unit ? `/${unit}` : ''}`;
   };
 
   return (

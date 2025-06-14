@@ -10,61 +10,96 @@ const societies = [
     href: '/parel',
     description: 'A premium residential complex in Parel.',
     image: '/cb.png',
+    area: 'parel'
   },
   {
     name: 'Ashok Gardens',
     href: '/parel',
     description: 'A vibrant community in the heart of Sewri.',
     image: '/ag.png',
+    area: 'parel'
   },
   {
     name: 'Island City Centre',
     href: '/parel',
     description: 'Modern living with all amenities in Bhoiwada.',
     image: '/icc.png',
+    area: 'parel'
   },
   {
     name: 'Ashok Towers',
     href: '/parel',
     description: 'A peaceful society in Sewri.',
     image: '/at.png',
+    area: 'parel'
   },
   {
     name: 'Dosti Flamingo',
     href: '/parel',
     description: 'A peaceful society in Sewri.',
     image: '/df.png',
+    area: 'parel'
   },
   {
     name: 'Ruparel Ariana',
     href: '/parel',
     description: 'A peaceful society in Bhoiwada.',
     image: '/ra.png',
+    area: 'parel'
   },
   {
     name: 'Kalpataru Avana',
     href: '/parel',
     description: 'A luxurious society in Parel.',
     image: '/ka.png',
+    area: 'parel'
   },
   {
     name: 'Lodha Venezia',
     href: '/parel',
     description: 'A peaceful society in Parel.',
     image: '/lv.png',
+    area: 'parel'
+  },
+  {
+    name: 'Lodha Park',
+    href: '/worli',
+    description: 'Luxurious living in the heart of Worli.',
+    image: '/Lodha_Park.png',
+    area: 'worli'
+  },
+  {
+    name: 'Lodha World One',
+    href: '/worli',
+    description: 'India\'s tallest residential tower in Worli.',
+    image: '/Lodha_World_One.png',
+    area: 'worli'
+  },
+  {
+    name: 'Indiabulls Blu',
+    href: '/worli',
+    description: 'Premium residential complex in Worli.',
+    image: '/Indiabulls.png',
+    area: 'worli'
+  },
+  {
+    name: 'Raheja Imperia',
+    href: '/worli',
+    description: 'Premium residential complex in Worli.',
+    image: '/Raheja_Imperia.png',
+    area: 'worli'
   }
-  
-  // Add more societies as needed, with or without image
 ];
 
 export default function SocietiesClient() {
   const [selectedArea, setSelectedArea] = useState('');
 
   const areas = [
-    { name: 'Parel', value: 'parel' }
+    { name: 'Parel', value: 'parel' },
+    { name: 'Worli', value: 'worli' }
   ];
 
-  const filteredSocieties = selectedArea === '' ? [] : societies;
+  const filteredSocieties = selectedArea === '' ? [] : societies.filter(society => society.area === selectedArea);
   const first5 = filteredSocieties.slice(0, 5);
   const rest = filteredSocieties.slice(5);
 
@@ -96,7 +131,7 @@ export default function SocietiesClient() {
           {selectedArea && (
             <div className="flex justify-center mb-8">
               <Link
-                href="/parel"
+                href={`/${selectedArea}`}
                 className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white hover:bg-indigo-700 rounded-lg text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
                 Explore {areas.find(a => a.value === selectedArea)?.name} Community

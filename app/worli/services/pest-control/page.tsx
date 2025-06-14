@@ -2,7 +2,7 @@
 
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { pestControlServices } from '@/app/worli/data/services/pest-control';
+import { pestControlServices } from '@/app/parel/data/services/pest-control';
 import { VendorCard } from '@/components/VendorCard';
 
 export default function PestControlPage() {
