@@ -115,7 +115,7 @@ export default function ServicesPage() {
                 <FiTool className="text-4xl text-red-500 flex-shrink-0" />
                 <div>
                   <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">Pest Control</h2>
-                  <p className="text-gray-600 text-sm">Termite, rodent, and pest removal</p>
+                  <p className="text-gray-600 text-sm">Termite and pest removal</p>
                 </div>
               </div>
             </Link>
