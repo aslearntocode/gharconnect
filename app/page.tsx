@@ -2,6 +2,7 @@ import Link from 'next/link';
 import SocietyImage from '@/components/SocietyImage';
 import { Metadata } from 'next';
 import SocietiesClient from './SocietiesClient';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'GharConnect - Society Connect Platform',
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
 
 export default function SocietiesPage() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       {/* Simple, distinct header for societies selection */}
       <header className="w-full bg-white shadow-sm py-4 px-6 flex items-center justify-center mb-4">
         <div className="flex items-center gap-2">
@@ -44,7 +45,10 @@ export default function SocietiesPage() {
         Whatever you're looking for — gharconnect.in helps you stay connected, informed, and empowered within your residential community.
         </p>
       </div>
-      <SocietiesClient />
-    </>
+      <div className="flex-grow">
+        <SocietiesClient />
+      </div>
+      <Footer />
+    </div>
   );
 } 
