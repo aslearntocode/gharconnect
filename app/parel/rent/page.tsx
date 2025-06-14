@@ -178,7 +178,7 @@ export default function RentPage() {
                               <span className="font-semibold">Description: </span>
                               <span>{apt.description}</span>
                             </div>
-                            <div>
+                    <div>
                               <span className="font-semibold">Features: </span>
                               <ul className="list-disc list-inside text-sm text-gray-700">
                                 {apt.features && apt.features.length > 0 ? (

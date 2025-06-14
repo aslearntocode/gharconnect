@@ -159,22 +159,22 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
             </div>
           )}
           <div className="flex flex-col gap-2">
-            <button
-              onClick={toggleVendor}
-              className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
-            >
-              {expandedVendor ? (
-                <>
-                  <FiChevronUp className="w-4 h-4" />
-                  Hide {itemType}
-                </>
-              ) : (
-                <>
-                  <FiChevronDown className="w-4 h-4" />
-                  View {itemType}
-                </>
-              )}
-            </button>
+          <button
+            onClick={toggleVendor}
+            className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+          >
+            {expandedVendor ? (
+              <>
+                <FiChevronUp className="w-4 h-4" />
+                Hide {itemType}
+              </>
+            ) : (
+              <>
+                <FiChevronDown className="w-4 h-4" />
+                View {itemType}
+              </>
+            )}
+          </button>
             {vendorRatings && vendorRatings.count > 0 && (
               <button
                 onClick={toggleReviews}
