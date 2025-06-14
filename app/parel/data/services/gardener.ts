@@ -21,8 +21,8 @@ export const gardenerServices: GardenerService[] = [
     mobile: '+91 9561295795',
     products: [
       {
-        name: 'Wash & Fold',
-        description: 'Basic wash and fold service for garden linens.',
+        name: 'Gardening',
+        description: 'Regular maintenance for your garden, including weeding, pruning, and cleaning.',
         price: 'Call for price',
         unit: 'service'
       }
@@ -36,8 +36,8 @@ export const gardenerServices: GardenerService[] = [
     mobile: '+91 8369550450',
     products: [
       {
-        name: 'Wash & Fold',
-        description: 'Basic wash and fold service for garden linens.',
+        name: 'Gardening',
+        description: 'Regular maintenance for your garden, including weeding, pruning, and cleaning.',
         price: 'Call for price',
         unit: 'service'
       }
