@@ -14,6 +14,7 @@ import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { Dialog } from '@headlessui/react'
 import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit } from 'react-icons/fi'
+import DoctorsContainer from "@/components/DoctorsContainer"
 
 
 interface AllocationItem {
@@ -544,39 +545,102 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center mb-4">Delivery Categories</h2>
           <p className="text-lg text-gray-600 text-center mb-12">Order fresh essentials delivered to your door</p>
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-            <Link href="/worli/delivery/dairy" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-                <span className="text-4xl md:text-6xl mb-2 md:mb-4">🥛</span>
-                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Dairy</h3>
-                <p className="text-xs md:text-base text-gray-600 text-center">Fresh milk, cheese, butter, and more</p>
+            <Link href="/worli/services/laundry" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiDroplet className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-blue-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Laundry</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Professional laundry and dry cleaning</p>
               </div>
             </Link>
-            <Link href="/worli/delivery/meat" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-                <span className="text-4xl md:text-6xl mb-2 md:mb-4">🍗</span>
-                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Meat</h3>
-                <p className="text-xs md:text-base text-gray-600 text-center">Quality meat and poultry, hygienically packed</p>
+            <Link href="/worli/services/carpenter" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-yellow-600" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Carpenter</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Woodwork, repairs, and furniture</p>
               </div>
             </Link>
-            <Link href="/worli/delivery/vegetables" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-                <span className="text-4xl md:text-6xl mb-2 md:mb-4">🥦</span>
-                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Vegetables</h3>
-                <p className="text-xs md:text-base text-gray-600 text-center">Farm-fresh vegetables delivered daily</p>
+            <Link href="/worli/services/plumber" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-blue-600" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Plumber</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Leak repairs, fittings, and more</p>
               </div>
             </Link>
-            <Link href="/worli/delivery/fruits" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-                <span className="text-4xl md:text-6xl mb-2 md:mb-4">🍎</span>
-                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Fruits</h3>
-                <p className="text-xs md:text-base text-gray-600 text-center">Seasonal and exotic fruits, handpicked for you</p>
+            <Link href="/worli/services/electrician" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiZap className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-yellow-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Electrician</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Wiring, repairs, and installations</p>
               </div>
             </Link>
-            <Link href="/worli/delivery/dry-fruits" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-                <span className="text-4xl md:text-6xl mb-2 md:mb-4">🥜</span>
-                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Dry Fruits</h3>
-                <p className="text-xs md:text-base text-gray-600 text-center">Premium quality dry fruits and nuts</p>
+            <Link href="/worli/services/cleaning" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiHome className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-green-600" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Cleaning</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Home and office cleaning</p>
+              </div>
+            </Link>
+            <Link href="/worli/services/painter" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiEdit className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-pink-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Painter</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Wall painting and touch-ups</p>
+              </div>
+            </Link>
+            <Link href="/worli/services/gardener" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiHome className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-green-600" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Gardener</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Garden care and landscaping</p>
+              </div>
+            </Link>
+            <Link href="/worli/services/ac-service" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiZap className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-blue-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">AC Service</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">AC repair and maintenance</p>
+              </div>
+            </Link>
+            <Link href="/worli/services/pest-control" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Pest Control</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Termite and pest removal</p>
+              </div>
+            </Link>
+            <Link href="/worli/services/laptop-repair" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Laptop Repair</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Laptop repair & maintenance</p>
+              </div>
+            </Link>
+            <Link href="/worli/services/piegon-net" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Pigeon Net</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Pigeon net installation</p>
+              </div>
+            </Link>
+            <Link href="/worli/services/physical-training" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiTrendingUp className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-indigo-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Physical Training</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Personal and group training</p>
+              </div>
+            </Link>
+            <Link href="/worli/services/yoga" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiAward className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-green-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Yoga</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Yoga classes and workshops</p>
+              </div>
+            </Link>
+            <Link href="/worli/services/kids-classes" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiBookOpen className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-orange-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Kids Classes</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Learning and fun for kids</p>
               </div>
             </Link>
           </div>
@@ -736,6 +800,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Doctors Container */}
+      <DoctorsContainer />
     </main>
   )
 }

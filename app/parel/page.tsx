@@ -14,6 +14,7 @@ import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { Dialog } from '@headlessui/react'
 import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit } from 'react-icons/fi'
+import DoctorsContainer from "@/components/DoctorsContainer"
 
 
 interface AllocationItem {
@@ -738,6 +739,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Doctors Container */}
+      <DoctorsContainer />
     </main>
   )
 }

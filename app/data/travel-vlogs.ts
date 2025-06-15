@@ -1,58 +1,49 @@
-export type Article = {
-  id: string
-  title: string
-  description: string
-  category: string
-  readTime: string
-  author?: string
+export interface TravelArticle {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  readTime: string;
+  author?: string;
 }
 
-export const articles: Article[] = [
+export const articles: TravelArticle[] = [
   {
-    id: '1',
-    title: 'USA Travel Vlog',
-    description: 'Explore the best places to visit in the USA and plan your next trip.',
-    category: 'USA',
-    readTime: '10 min read',
-    author: 'Aryan'
+    id: 'usa',
+    title: 'Exploring the Grand Canyon: A Journey Through Time',
+    description: 'Experience the breathtaking views and geological wonders of one of America\'s most iconic natural landmarks.',
+    category: 'North America',
+    readTime: '5 min read',
+    author: 'Rahul Sharma'
   },
   {
-    id: '2',
-    title: 'My Travel to Ayra Farms',
-    description: 'Explore the best places to visit in Ayra Farma and plan your next trip.',
-    category: 'Within-India',
-    readTime: '8 min read',
-    author: 'Aryan'
+    id: 'ayra-farms',
+    title: 'Weekend Getaway: Aryan Farms Experience',
+    description: 'Discover the perfect blend of luxury and nature at this hidden gem just a few hours from Mumbai.',
+    category: 'Within India',
+    readTime: '3 min read',
+    author: 'Priya Patel'
   },
   {
-    id: '3',
-    title: 'Spain - A Country of Culture and History',
-    description: 'Explore the best places to visit in Spain and plan your next trip.',
+    id: 'spain',
+    title: 'Barcelona: A City of Art and Architecture',
+    description: 'From Gaudi\'s masterpieces to the vibrant streets of La Rambla, explore the cultural heart of Catalonia.',
     category: 'Europe',
-    readTime: '10 min read',
-    author: 'Aryan'
+    readTime: '7 min read',
+    author: 'Amit Kumar'
   },
   {
-    id: '4',
-    title: 'My 15 Days Itinerary to Tanzania',
-    description: 'Explore the best places to visit in Tanzania and plan your next trip.',
+    id: 'tanzania',
+    title: 'Safari Adventure in Tanzania',
+    description: 'Witness the great migration and experience the raw beauty of African wildlife in their natural habitat.',
     category: 'Africa',
-    readTime: '15 min read',
-    author: 'Aryan'
+    readTime: '8 min read',
+    author: 'Aryan Mehta'
   }
-]
+];
 
-// Helper function to get article link based on society
-export const getArticleLink = (society: string, articleId: string, category: string) => {
-  const basePath = `/${society}/travel-vlogs`
-  
-  // Map article IDs to their specific paths
-  const pathMap: Record<string, string> = {
-    '1': 'usa',
-    '2': 'within-India/ayra-farms',
-    '3': 'europe/spain',
-    '4': 'africa/aryan/tanzania'
-  }
-  
-  return `${basePath}/${pathMap[articleId] || category.toLowerCase()}`
-} 
+export const getArticleLink = (society: string, articleId: string, category: string): string => {
+  // Convert category to URL-friendly format
+  const categoryPath = category.toLowerCase().replace(/\s+/g, '-');
+  return `/${society}/travel-vlogs/${categoryPath}/${articleId}`;
+}; 
