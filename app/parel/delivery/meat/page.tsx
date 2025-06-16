@@ -2,15 +2,8 @@
 
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { meatProducts } from '@/app/parel/data/delivery/meat';
+import { vendors } from '@/app/parel/data/delivery/meat';
 import { VendorCard } from '@/components/VendorCard';
-
-// Group products by brand to show as vendors
-const vendors = Array.from(new Set(meatProducts.map(p => p.brand))).map(brand => ({
-  name: brand,
-  products: meatProducts.filter(p => p.brand === brand),
-  mobile: '+91 98765 43210' // This should come from your data
-}));
 
 export default function MeatPage() {
   return (
