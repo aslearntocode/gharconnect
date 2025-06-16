@@ -95,8 +95,10 @@ export default function SocietiesClient() {
   const [selectedArea, setSelectedArea] = useState('');
 
   const areas = [
-    { name: 'Parel', value: 'parel' },
-    { name: 'Worli', value: 'worli' }
+    { name: 'Parel, Mumbai (Parel, Sewri, Bhoiwada)', value: 'parel' },
+    { name: 'Worli, Mumbai (Worli, Lower Parel)', value: 'worli' },
+    { name: 'Bandra, Mumbai (Bandra, Khar, Santacruz)', value: 'bandra' },
+    { name: 'Andheri, Mumbai (Andheri, Marol, Ghatkopar)', value: 'andheri' }
   ];
 
   const filteredSocieties = selectedArea === '' ? [] : societies.filter(society => society.area === selectedArea);

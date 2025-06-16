@@ -39,6 +39,12 @@ export default function Footer() {
               <li>
                 <Link href="/worli/" className="hover:text-indigo-600 transition-colors">Worli Community</Link>
               </li>
+              <li>
+                <Link href="/andheri/" className="hover:text-indigo-600 transition-colors">Andheri Community</Link>
+              </li>
+              <li>
+                <Link href="/bandra/" className="hover:text-indigo-600 transition-colors">Bandra Community</Link>
+              </li>
             </ul>
           </div>
 
