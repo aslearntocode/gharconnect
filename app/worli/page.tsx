@@ -459,8 +459,8 @@ export default function Home() {
         </a>
       </div>
 
-      {/* Property Management Services Section */}
-      <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-12">
+            {/* Property Management Services Section */}
+            <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-12">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -468,70 +468,38 @@ export default function Home() {
             {/* Left Content */}
             <div className="flex-1 text-center md:text-left">
               <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
-                What GharConnect Offers
+                Our Unique Service - Security Deposit Agreement (Coming Soon)
               </h3>
-              <p className="text-lg text-white/90 mb-6 max-w-2xl">
-                Hassle-free solutions for your property: rent, buy/sell, maintenance, repairs, and more.
+              <p className="text-lg text-white/90 mb-6 max-w-3xl">
+                Hassle-free solution for security deposit management through tri-party legal agreement.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <a 
-                  href="https://wa.me/919321314553" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 bg-white text-indigo-600 hover:bg-indigo-50 rounded-lg text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-                >
-                  Click Here to Chat With Us on WhatsApp
-                  <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </a>
-              </div>
-            </div>
-            {/* Right Content - Cards */}
-            <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-4 items-stretch">
-              {/* First row: 3 boxes */}
-              <div>
-                <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center h-40 transition-transform transition-shadow duration-200 hover:scale-[1.04] hover:shadow-2xl border border-gray-100">
+              <div className="w-full flex flex-col md:flex-row md:justify-center md:gap-8">
+                <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center text-center mb-6 md:mb-0 w-full md:w-[340px]">
+                  <span className="text-3xl mb-2">🧑‍💼</span>
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">Why Should Landlord Use Our Service?</h4>
+                  <ul className="text-gray-600 text-xs list-disc pl-4 text-left mt-2 space-y-1">
+                    <li>You still keep the security deposit with you.</li>
+                    <li>Zero disputes on security deposit returns with tri-party legal agreements.</li>
+                    <li>No haggling with tenants.</li>
+                  </ul>
+                </div>
+                <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center text-center mb-6 md:mb-0 w-full md:w-[340px]">
                   <span className="text-3xl mb-2">🏠</span>
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1">Rent</h4>
-                  <p className="text-gray-600 text-xs">List and find new tenants to rent your property.</p>
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">Why Should Tenant Use Our Service?</h4>
+                  <ul className="text-gray-600 text-xs list-disc pl-4 text-left mt-2 space-y-1">
+                    <li>Get your security deposit minus the renovation cost back on time with no hassle.</li>
+                    <li>You get to see the renovation bill from an authorized person.</li>
+                    <li>No more waiting for months to get your security deposit back.</li>
+                  </ul>
                 </div>
-              </div>
-              <div>
-                <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center h-40 transition-transform transition-shadow duration-200 hover:scale-[1.04] hover:shadow-2xl border border-gray-100">
-                  <span className="text-3xl mb-2">🛒</span>
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1">Buy/Sell</h4>
-                  <p className="text-gray-600 text-xs">List and sell your property.</p>
-                </div>
-              </div>
-              <div>
-                <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center h-40 transition-transform transition-shadow duration-200 hover:scale-[1.04] hover:shadow-2xl border border-gray-100">
-                  <span className="text-3xl mb-2">🛠️</span>
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1">Annual Maintenance</h4>
-                  <p className="text-gray-600 text-xs">Tenants can get the property maintained by professionals.</p>
-                </div>
-              </div>
-              {/* Second row: 2 boxes, smaller width */}
-              <div>
-                <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center h-40 transition-transform transition-shadow duration-200 hover:scale-[1.04] hover:shadow-2xl border border-gray-100">
-                  <span className="text-3xl mb-2">🧹</span>
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1">Tenancy Exit Renovation</h4>
-                  <p className="text-gray-600 text-xs">Get the property ready for new tenants in a couple of days.</p>
-                </div>
-              </div>
-              <div>
-                <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center h-40 transition-transform transition-shadow duration-200 hover:scale-[1.04] hover:shadow-2xl border border-gray-100">
-                  <span className="text-3xl mb-2">🧑‍🔧</span>
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1">Find Local Vendors</h4>
-                  <p className="text-gray-600 text-xs">Find local services and delivery partners around your society.</p>
-                </div>
-              </div>
-              {/* Placeholder for 6th box */}
-              <div>
-                <div className="bg-white rounded-xl shadow-lg p-6 flex flex-col justify-center items-center text-center h-40 transition-transform transition-shadow duration-200 hover:scale-[1.04] hover:shadow-2xl border border-gray-100">
-                  <span className="text-3xl mb-2">🌏</span>
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1">Travel Vlogs</h4>
-                  <p className="text-gray-600 text-xs">Share your travel experiences and inspire others to embark on their next adventure.</p>
+                <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center text-center w-full md:w-[340px]">
+                  <span className="text-3xl mb-2">📄</span>
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">What We Do?</h4>
+                  <ul className="text-gray-600 text-xs list-disc pl-4 text-left mt-2 space-y-1">
+                    <li>We handle all the paperwork and legalities for you.</li>
+                    <li>We get the property ready for the next tenant and deduct the amount incurred as expenses from security deposit.</li>
+                    <li>Landlord returns the amount within 15 days of the tenant vacating the property.</li>
+                  </ul>
                 </div>
               </div>
             </div>
