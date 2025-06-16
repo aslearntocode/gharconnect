@@ -13,13 +13,13 @@ export interface Vendor {
 
 export const vendors: Vendor[] = [
   {
-    name: 'Pigeon Net Services',
+    name: 'Chirag Netting Solutions',
     products: [{
       name: 'Pigeon Net Installation',
       description: 'Professional pigeon net installation and repair services',
       price: 'Call for price',
       unit: 'service'
     }],
-    mobile: '+91 9930952258'
+    mobile: '+91 9619161616'
   }
 ];

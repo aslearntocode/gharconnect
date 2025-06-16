@@ -74,7 +74,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </Link>
-            <Link href="/parel/services/cleaning" className="block group">
+            <Link href="/parel/services/house-cleaning" className="block group">
               <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
                 <FiHome className="text-4xl text-green-600 flex-shrink-0" />
                 <div>

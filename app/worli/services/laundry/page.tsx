@@ -1,7 +1,7 @@
 'use client';
 
 import Header from '@/components/Header';
-import { vendors } from '@/app/parel/data/services/laundry';
+import { vendors } from '@/app/worli/data/services/laundry';
 import { VendorCard } from '@/components/VendorCard';
 import { FiSearch } from 'react-icons/fi';
 
