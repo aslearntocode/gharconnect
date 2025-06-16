@@ -1,6 +1,7 @@
 import './parel/globals.css';
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
+import { Toaster } from '@/components/ui/toaster';
 <link rel="icon" href="/GC_Logo.png" />
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen">
         {children}
         <Analytics />
+        <Toaster />
       </body>
     </html>
   );
