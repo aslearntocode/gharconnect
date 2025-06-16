@@ -1,0 +1,204 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Header from '@/components/Header';
+
+const TIME_SLOTS = [
+  { start: 9, end: 10, label: "9-10am" },
+  { start: 10, end: 11, label: "10-11am" },
+  { start: 11, end: 12, label: "11-12pm" },
+  { start: 12, end: 13, label: "12-1pm" },
+  { start: 13, end: 14, label: "1-2pm" },
+  { start: 14, end: 15, label: "2-3pm" },
+  { start: 15, end: 16, label: "3-4pm" },
+  { start: 16, end: 17, label: "4-5pm" },
+  { start: 17, end: 18, label: "5-6pm" },
+  { start: 18, end: 19, label: "6-7pm" },
+  { start: 19, end: 20, label: "7-8pm" },
+];
+
+function getNext7Days() {
+  const days = [];
+  const today = new Date();
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    days.push(d);
+  }
+  return days;
+}
+
+export default function VendorSearchPage() {
+  const [vendors, setVendors] = useState<any[]>([]);
+  const [selectedVendor, setSelectedVendor] = useState<any | null>(null);
+  const [areaFilter, setAreaFilter] = useState("");
+  const [societyFilter, setSocietyFilter] = useState("");
+  const [serviceFilter, setServiceFilter] = useState("");
+  const [loading, setLoading] = useState(false);
+  const supabase = createClientComponentClient();
+
+  // Fetch all vendors (distinct by vendor_id)
+  useEffect(() => {
+    const fetchVendors = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("vendor_weekly_availability")
+        .select("vendor_id, Name, Mobile_No, area, societies, date")
+        .order("date", { ascending: true });
+      if (!error && data) {
+        // Group by vendor_id, get latest area/societies
+        const vendorMap: Record<string, any> = {};
+        data.forEach((row: any) => {
+          if (!vendorMap[row.vendor_id]) {
+            vendorMap[row.vendor_id] = row;
+          }
+        });
+        setVendors(Object.values(vendorMap));
+      }
+      setLoading(false);
+    };
+    fetchVendors();
+  }, []);
+
+  // Filtered vendors
+  const filteredVendors = vendors.filter(vendor => {
+    const societies = Array.isArray(vendor.societies)
+      ? vendor.societies
+      : typeof vendor.societies === "string"
+      ? vendor.societies.replace(/[{}"]+/g, "").split(",").filter(Boolean)
+      : [];
+    return (
+      (!areaFilter || vendor.area === areaFilter) &&
+      (!societyFilter || societies.includes(societyFilter)) &&
+      (!serviceFilter || (vendor.services && vendor.services.includes(serviceFilter)))
+    );
+  });
+
+  // Fetch 7-day grid for selected vendor
+  const [vendorSlots, setVendorSlots] = useState<any[]>([]);
+  useEffect(() => {
+    if (!selectedVendor) return;
+    const fetchSlots = async () => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from("vendor_weekly_availability")
+        .select("*")
+        .eq("vendor_id", selectedVendor.vendor_id)
+        .order("date", { ascending: true });
+      if (!error && data) setVendorSlots(data);
+      setLoading(false);
+    };
+    fetchSlots();
+  }, [selectedVendor]);
+
+  // Area and society options
+  const areaOptions = Array.from(new Set(vendors.map(v => v.area))).filter(Boolean);
+  const societyOptions = Array.from(
+    new Set(
+      vendors
+        .flatMap(v =>
+          Array.isArray(v.societies)
+            ? v.societies
+            : typeof v.societies === "string"
+            ? v.societies.replace(/[{}"]+/g, "").split(",").filter(Boolean)
+            : []
+        )
+    )
+  ).filter(Boolean);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      {/* Indigo Banner */}
+      <div className="relative">
+        <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-white">Domestic Help</h1>
+        </div>
+      </div>
+      <div className="py-8 px-4 max-w-7xl mx-auto">
+        {/* <h1 className="text-3xl font-bold mb-6">Find a Vendor</h1> */}
+        {/* Filters */}
+        <div className="flex flex-wrap gap-4 mb-8">
+          <select
+            value={areaFilter}
+            onChange={e => setAreaFilter(e.target.value)}
+            className="px-4 py-2 rounded-lg border border-gray-300 shadow-sm"
+          >
+            <option value="">All Areas</option>
+            {areaOptions.map(area => (
+              <option key={area} value={area}>{area}</option>
+            ))}
+          </select>
+          <select
+            value={societyFilter}
+            onChange={e => setSocietyFilter(e.target.value)}
+            className="px-4 py-2 rounded-lg border border-gray-300 shadow-sm"
+          >
+            <option value="">All Societies</option>
+            {societyOptions.map(soc => (
+              <option key={soc} value={soc}>{soc}</option>
+            ))}
+          </select>
+          {/* Add service filter if you have services */}
+        </div>
+        {/* Vendor cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
+          {filteredVendors.map(vendor => (
+            <Card
+              key={vendor.vendor_id}
+              className={`p-4 cursor-pointer border-2 transition-all duration-200 ${selectedVendor?.vendor_id === vendor.vendor_id ? "border-indigo-600 ring-2 ring-indigo-200" : "border-gray-200"}`}
+              onClick={() => setSelectedVendor(vendor)}
+            >
+              <div className="font-bold text-lg mb-2">{vendor.Name || vendor.vendor_name || (vendor.vendor_id ? vendor.vendor_id.slice(0, 8) + '...' : '')}</div>
+              <div className="text-sm text-gray-600 mb-1">Mobile: {vendor.Mobile_No || 'N/A'}</div>
+              <div className="text-sm text-gray-600 mb-1">Area: {vendor.area}</div>
+              <div className="text-sm text-gray-600 mb-1">Societies: {Array.isArray(vendor.societies) ? vendor.societies.join(", ") : String(vendor.societies).replace(/[{}"]+/g, "").split(",").filter(Boolean).join(", ")}</div>
+              {/* <div className="text-sm text-gray-600 mb-1">Services: ...</div> */}
+            </Card>
+          ))}
+        </div>
+        {/* 7-day grid for selected vendor */}
+        {selectedVendor && (
+          <Card className="p-6 w-full mb-8">
+            <h2 className="text-xl font-semibold mb-2">Availability for {selectedVendor.Name || selectedVendor.vendor_name || (selectedVendor.vendor_id ? selectedVendor.vendor_id.slice(0, 8) + '...' : '')}</h2>
+            <div className="text-base text-gray-700 mb-4">Mobile: {selectedVendor.Mobile_No || 'N/A'}</div>
+            <div className="overflow-x-auto">
+              <table className="w-full border text-center table-auto">
+                <thead>
+                  <tr>
+                    <th className="border px-3 py-2 bg-gray-100 text-base font-semibold whitespace-nowrap min-w-[160px]">Date</th>
+                    {TIME_SLOTS.map(slot => (
+                      <th key={slot.start} className="border px-3 py-2 bg-gray-100 text-base font-semibold">{slot.label}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {vendorSlots.map(row => (
+                    <tr key={row.date}>
+                      <td className="border px-3 py-2 font-medium whitespace-nowrap min-w-[160px] bg-white">
+                        {new Date(row.date).toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
+                      </td>
+                      {TIME_SLOTS.map(slot => {
+                        const col = `slot_${slot.start}_${slot.end}`;
+                        return (
+                          <td key={col} className="border px-3 py-2 bg-white">
+                            {row[col] ? (
+                              <span className="inline-block px-2 py-1 text-xs font-semibold bg-green-100 text-green-700 rounded">Available</span>
+                            ) : null}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        )}
+      </div>
+    </div>
+  );
+}
