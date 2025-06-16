@@ -25,6 +25,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { StarIcon } from '@heroicons/react/24/solid'
 import { StarIcon as StarOutlineIcon } from '@heroicons/react/24/outline'
+import LoginModal from '@/components/LoginModal'
 
 const ratingSchema = z.object({
   rating: z.number().min(1).max(10),
@@ -45,6 +46,8 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [hoverRating, setHoverRating] = useState<number | null>(null)
+  const [showLoginModal, setShowLoginModal] = useState(false)
+  const [loginMessage, setLoginMessage] = useState('')
   const supabase = createClientComponentClient()
 
   const form = useForm<RatingFormValues>({
@@ -145,62 +148,91 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
     })
   }
 
+  const handleRateClick = () => {
+    if (!auth.currentUser) {
+      setIsOpen(false)
+      setLoginMessage('Login for rating the vendor')
+      setShowLoginModal(true)
+    } else {
+      setIsOpen(true)
+    }
+  }
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        <Button variant="outline" size="sm" className="text-xs px-2 py-1 h-7">
-          Rate
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Rate {vendorName}</DialogTitle>
-        </DialogHeader>
-        {error && (
-          <div className="mb-4 p-3 bg-red-50 text-red-500 rounded-md text-sm">
-            {error}
-          </div>
-        )}
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormField
-              control={form.control}
-              name="rating"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Rating</FormLabel>
-                  <FormControl>
-                    <div className="flex gap-1">
-                      {renderStars(field.value)}
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="comment"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Your Review</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Share your experience with this vendor..."
-                      className="min-h-[100px]"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? 'Submitting...' : 'Submit Rating'}
+    <>
+      {!showLoginModal && (
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="sm" className="text-xs px-2 py-1 h-7" onClick={handleRateClick}>
+              Rate
             </Button>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Rate {vendorName}</DialogTitle>
+            </DialogHeader>
+            {error && (
+              <div className="mb-4 p-3 bg-red-50 text-red-500 rounded-md text-sm">
+                {error}
+              </div>
+            )}
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="rating"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Rating</FormLabel>
+                      <FormControl>
+                        <div className="flex gap-1">
+                          {renderStars(field.value)}
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="comment"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Your Review</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Share your experience with this vendor..."
+                          className="min-h-[100px]"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? 'Submitting...' : 'Submit Rating'}
+                </Button>
+              </form>
+            </Form>
+          </DialogContent>
+        </Dialog>
+      )}
+      {showLoginModal && (
+        <>
+          <div className="mb-4 p-3 bg-blue-50 text-blue-700 rounded-md text-sm text-center">
+            {loginMessage}
+          </div>
+          <LoginModal 
+            isOpen={showLoginModal} 
+            onClose={() => setShowLoginModal(false)}
+            onLoginSuccess={() => {
+              setShowLoginModal(false);
+              setIsOpen(true);
+            }}
+          />
+        </>
+      )}
+    </>
   )
 } 

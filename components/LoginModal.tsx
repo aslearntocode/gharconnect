@@ -14,9 +14,10 @@ interface LoginModalProps {
   isOpen: boolean
   onClose: () => void
   redirectPath?: string
+  onLoginSuccess?: () => void
 }
 
-export default function LoginModal({ isOpen, onClose, redirectPath = '/' }: LoginModalProps) {
+export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLoginSuccess }: LoginModalProps) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [isFirstTimeUser, setIsFirstTimeUser] = useState(false)
@@ -69,7 +70,11 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/' }: Logi
         
         if (!isFirstTime) {
           onClose()
-          router.push(redirectPath)
+          if (onLoginSuccess) {
+            onLoginSuccess()
+          } else {
+            router.push(redirectPath)
+          }
         }
       }
     } catch (error: any) {
@@ -82,16 +87,24 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/' }: Logi
 
   const handleProfileComplete = () => {
     onClose()
-    router.push(redirectPath)
+    if (onLoginSuccess) {
+      onLoginSuccess()
+    } else {
+      router.push(redirectPath)
+    }
   }
 
   // If user is already authenticated, close the modal and redirect
   useEffect(() => {
     if (auth.currentUser) {
       onClose()
-      router.push(redirectPath)
+      if (onLoginSuccess) {
+        onLoginSuccess()
+      } else {
+        router.push(redirectPath)
+      }
     }
-  }, [onClose, redirectPath, router])
+  }, [onClose, redirectPath, router, onLoginSuccess])
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
