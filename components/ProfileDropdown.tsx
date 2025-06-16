@@ -50,18 +50,15 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
           .eq('user_id', currentUser.uid)
           .single();
 
-        // Supabase returns an empty error object if no row is found, not a real error
-        if (profileError && (profileError.message || profileError.code)) {
-          console.error('Error fetching profile:', profileError, profileData);
+        // Only treat actual errors as errors, not missing profiles
+        if (profileError && profileError.code !== 'PGRST116') {
+          console.error('Error fetching profile:', profileError);
           setError('Could not fetch profile.');
           return;
         }
 
-        if (!profileData) {
-          setError('No profile found. Please complete your profile.');
-          return;
-        }
-        setProfile(profileData);
+        // No profile found is not an error, just set profile to null
+        setProfile(profileData || null);
 
         // Fetch recent reviews
         const { data: reviewsData, error: reviewsError } = await supabase

@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { auth } from '@/lib/firebase';
-import { signOut } from 'firebase/auth';
-import Header from '@/components/Header';
+import { signOut, setPersistence, browserLocalPersistence } from 'firebase/auth';
+import VendorHeader from '@/components/VendorHeader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -90,6 +90,8 @@ export default function VendorDashboard() {
         fetchAvailability();
       }
     };
+    // Set persistence to LOCAL to prevent timeouts
+    setPersistence(auth, browserLocalPersistence);
     checkAuth();
   }, []);
 
@@ -241,7 +243,7 @@ export default function VendorDashboard() {
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-gray-50">
-        <Header />
+        <VendorHeader />
         <main className="max-w-md mx-auto mt-10 p-6">
           <Card className="p-6">
             <h2 className="text-2xl font-bold mb-6 text-center">Vendor Dashboard</h2>
@@ -271,7 +273,7 @@ export default function VendorDashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      <VendorHeader />
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold">Vendor Dashboard</h1>
