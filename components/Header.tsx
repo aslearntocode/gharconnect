@@ -368,6 +368,10 @@ export default function Header() {
                       <FiTruck className="w-5 h-5 text-amber-500" />
                       <span>Dry Fruits</span>
                     </Link>
+                    <Link href={`/${currentSociety}/delivery/pharmacy`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                      <FiTruck className="w-5 h-5 text-indigo-500" />
+                      <span>Pharmacy</span>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -446,6 +450,9 @@ export default function Header() {
                   </Link>
                   <Link href={`/${currentSociety}/delivery/dry-fruits`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
                     Dry Fruits
+                  </Link>
+                  <Link href={`/${currentSociety}/delivery/pharmacy`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                    Pharmacy
                   </Link>
                 </div>
               )}
