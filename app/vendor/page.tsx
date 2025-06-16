@@ -216,7 +216,7 @@ export default function VendorDashboard() {
       });
       const { error } = await supabase
         .from('vendor_weekly_availability')
-        .upsert(rows, { onConflict: ['vendor_id', 'date'] });
+        .upsert(rows, { onConflict: 'vendor_id,date' });
       if (error) throw error;
       toast({ title: 'Success', description: 'Availability saved!' });
     } catch (error: any) {
