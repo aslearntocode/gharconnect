@@ -572,7 +572,7 @@ export default function Home() {
             <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 w-full">
               <div className="text-center md:text-left flex-1">
                 <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs md:text-sm font-medium mb-2">
-                  Travel Vlogs
+                  Travel Diaries
                 </span>
                 <h3 className="text-base md:text-xl lg:text-2xl font-bold">
                   Explore, Share, and Relive Adventures from Around the World!

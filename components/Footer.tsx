@@ -1,8 +1,13 @@
 'use client'
 
 import Link from "next/link"
+import { usePathname } from 'next/navigation'
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isMainPage = pathname === '/';
+  const society = pathname.split('/')[1] || 'parel'; // Default to parel if no society in path
+
   return (
     <footer className="bg-blue-50 text-gray-700">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -23,6 +28,11 @@ export default function Footer() {
               <li>
                 <Link href="/terms" className="hover:text-white/90">Terms & Conditions</Link>
               </li> */}
+              {!isMainPage && (
+                <li>
+                  <Link href={`/${society}/blog`} className="hover:text-indigo-600 transition-colors">Blogs</Link>
+                </li>
+              )}
             </ul>
           </div>
 

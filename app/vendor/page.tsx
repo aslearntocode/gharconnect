@@ -260,7 +260,7 @@ export default function VendorDashboard() {
           <Card className="p-6">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
               <p className="text-blue-800 text-center font-medium">
-                Agar aap kuch extra income kamana chahte hain to yahan pe login karein aur apna free time use karein! Yahan permanent jobs nahi milti hain.
+                Agar aap kuch extra income kamana chahte hain to yahan pe login karein aur apna free time use karein!
               </p>
             </div>
             <h2 className="text-2xl font-bold mb-6 text-center">Vendor Dashboard</h2>

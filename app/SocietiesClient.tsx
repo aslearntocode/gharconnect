@@ -7,84 +7,90 @@ import { useState } from 'react';
 const societies = [
   {
     name: 'L&T Crescent Bay',
-    href: '/parel',
+    // href: '/parel',
     description: 'A premium residential complex in Parel.',
     image: '/cb.png',
     area: 'parel'
   },
   {
     name: 'Ashok Gardens',
-    href: '/parel',
+    // href: '/parel',
     description: 'A vibrant community in the heart of Sewri.',
     image: '/ag.png',
     area: 'parel'
   },
   {
     name: 'Island City Centre',
-    href: '/parel',
+    // href: '/parel',
     description: 'Modern living with all amenities in Bhoiwada.',
     image: '/icc.png',
     area: 'parel'
   },
   {
     name: 'Ashok Towers',
-    href: '/parel',
+    // href: '/parel',
     description: 'A peaceful society in Sewri.',
     image: '/at.png',
     area: 'parel'
   },
   {
     name: 'Dosti Flamingo',
-    href: '/parel',
+    // href: '/parel',
     description: 'A peaceful society in Sewri.',
     image: '/df.png',
     area: 'parel'
   },
   {
     name: 'Ruparel Ariana',
-    href: '/parel',
+    // href: '/parel',
     description: 'A peaceful society in Bhoiwada.',
     image: '/ra.png',
     area: 'parel'
   },
   {
     name: 'Kalpataru Avana',
-    href: '/parel',
+    // href: '/parel',
     description: 'A luxurious society in Parel.',
     image: '/ka.png',
     area: 'parel'
   },
   {
     name: 'Lodha Venezia',
-    href: '/parel',
-    description: 'A peaceful society in Parel.',
+    // href: '/parel',
+    description: 'A peaceful society in Sewri.',
     image: '/lv.png',
+    area: 'parel'
+  },
+  {name: 'Runwal Nirvana',
+    // href: '/parel',
+    description: 'A peaceful society in Bhoiwada.',
+    image: '/rn.png',
     area: 'parel'
   },
   {
     name: 'Lodha Park',
-    href: '/worli',
+    // href: '/worli',
     description: 'Luxurious living in the heart of Worli.',
     image: '/Lodha_Park.png',
     area: 'worli'
   },
   {
     name: 'Lodha World One',
-    href: '/worli',
+    // href: '/worli',
     description: 'India\'s tallest residential tower in Worli.',
     image: '/Lodha_World_One.png',
     area: 'worli'
   },
   {
     name: 'Indiabulls Blu',
-    href: '/worli',
+    // href: '/worli',
     description: 'Premium residential complex in Worli.',
     image: '/Indiabulls.png',
     area: 'worli'
   },
   {
     name: 'Raheja Imperia',
-    href: '/worli',
+    // href: '/worli',
     description: 'Premium residential complex in Worli.',
     image: '/Raheja_Imperia.png',
     area: 'worli'
@@ -149,9 +155,8 @@ export default function SocietiesClient() {
             <>
               {/* Mobile grid: show all societies in 2 columns */}
               <section className="grid grid-cols-2 gap-4 mb-8 block md:hidden">
-                {filteredSocieties.map((society) => {
-                  const isNonClickable = society.name === 'L&T Crescent Bay, Bhoiwada' || society.name === 'Ashok Gardens, Sewri';
-                  const CardContent = (
+                {filteredSocieties.map((society) => (
+                  <div key={society.name} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
                     <article className="bg-gradient-to-br from-white via-indigo-50 to-blue-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col items-center cursor-pointer border border-gray-200 group-hover:border-indigo-500 group-hover:scale-[1.03] group-hover:ring-2 group-hover:ring-indigo-200 h-48 min-h-[10rem] max-h-56 justify-between">
                       {society.image ? (
                         <SocietyImage
@@ -167,24 +172,13 @@ export default function SocietiesClient() {
                       <h3 className="text-lg font-extrabold font-sans text-gray-900 mb-1 group-hover:text-indigo-700 transition-colors text-center drop-shadow-sm flex-1 flex items-center justify-center">{society.name}</h3>
                       <p className="text-gray-600 text-center text-xs flex-1 flex items-center justify-center font-medium">{society.description}</p>
                     </article>
-                  );
-
-                  return isNonClickable ? (
-                    <div key={society.name} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
-                      {CardContent}
-                    </div>
-                  ) : (
-                    <Link key={society.name} href={society.href} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
-                      {CardContent}
-                    </Link>
-                  );
-                })}
+                  </div>
+                ))}
               </section>
               {/* Desktop: keep the current split and layout */}
               <section aria-label="Featured Societies" className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mb-8 hidden md:grid">
-                {first5.map((society) => {
-                  const isNonClickable = society.name === 'L&T Crescent Bay, Bhoiwada' || society.name === 'Ashok Gardens, Sewri';
-                  const CardContent = (
+                {first5.map((society) => (
+                  <div key={society.name} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
                     <article className="bg-gradient-to-br from-white via-indigo-50 to-blue-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col items-center cursor-pointer border border-gray-200 group-hover:border-indigo-500 group-hover:scale-[1.03] group-hover:ring-2 group-hover:ring-indigo-200 h-48 min-h-[10rem] max-h-56 justify-between">
                       {society.image ? (
                         <SocietyImage
@@ -200,25 +194,14 @@ export default function SocietiesClient() {
                       <h3 className="text-lg font-extrabold font-sans text-gray-900 mb-1 group-hover:text-indigo-700 transition-colors text-center drop-shadow-sm flex-1 flex items-center justify-center">{society.name}</h3>
                       <p className="text-gray-600 text-center text-xs flex-1 flex items-center justify-center font-medium">{society.description}</p>
                     </article>
-                  );
-
-                  return isNonClickable ? (
-                    <div key={society.name} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
-                      {CardContent}
-                    </div>
-                  ) : (
-                    <Link key={society.name} href={society.href} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
-                      {CardContent}
-                    </Link>
-                  );
-                })}
+                  </div>
+                ))}
               </section>
               {/* Rest of the societies */}
               {rest.length > 0 && (
                 <section aria-label="More Societies" className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-8 mb-8 md:mb-4 hidden md:grid">
-                  {rest.map((society) => {
-                    const isNonClickable = society.name === 'L&T Crescent Bay, Bhoiwada' || society.name === 'Ashok Gardens, Sewri';
-                    const CardContent = (
+                  {rest.map((society) => (
+                    <div key={society.name} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
                       <article className="bg-gradient-to-br from-white via-indigo-50 to-blue-100 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-4 flex flex-col items-center cursor-pointer border border-gray-200 group-hover:border-indigo-500 group-hover:scale-[1.03] group-hover:ring-2 group-hover:ring-indigo-200 h-48 min-h-[10rem] max-h-56 justify-between">
                         {society.image ? (
                           <SocietyImage
@@ -234,18 +217,8 @@ export default function SocietiesClient() {
                         <h3 className="text-lg font-extrabold font-sans text-gray-900 mb-1 group-hover:text-indigo-700 transition-colors text-center drop-shadow-sm flex-1 flex items-center justify-center">{society.name}</h3>
                         <p className="text-gray-600 text-center text-xs flex-1 flex items-center justify-center font-medium">{society.description}</p>
                       </article>
-                    );
-
-                    return isNonClickable ? (
-                      <div key={society.name} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
-                        {CardContent}
-                      </div>
-                    ) : (
-                      <Link key={society.name} href={society.href} className="block group focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded-xl">
-                        {CardContent}
-                      </Link>
-                    );
-                  })}
+                    </div>
+                  ))}
                 </section>
               )}
             </>
