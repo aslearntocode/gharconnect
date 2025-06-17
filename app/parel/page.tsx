@@ -470,37 +470,38 @@ export default function Home() {
             {/* Left Content */}
             <div className="flex-1 text-center md:text-left">
               <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
-                Our Unique Service - Security Deposit Agreement (Coming Soon)
+                Why Collaborate With Us?
               </h3>
-              <p className="text-lg text-white/90 mb-6 max-w-3xl">
-                Hassle-free solution for security deposit management through tri-party legal agreement.
+              <p className="text-lg text-white/90 mb-6 max-w-4xl">
+              Community outreach is a powerful way to connect with neighbors and strengthen the sense of belonging.
               </p>
               <div className="w-full flex flex-col md:flex-row md:justify-center md:gap-8">
                 <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center text-center mb-6 md:mb-0 w-full md:w-[340px]">
-                  <span className="text-3xl mb-2">🧑‍💼</span>
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">Why Should Landlord Use Our Service?</h4>
-                  <ul className="text-gray-600 text-xs list-disc pl-4 text-left mt-2 space-y-1">
-                    <li>You still keep the security deposit with you.</li>
-                    <li>Zero disputes on security deposit returns with tri-party legal agreements.</li>
-                    <li>No haggling with tenants.</li>
+                  <span className="text-3xl mb-2">🏠</span>
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">Benefits of Listing Your Property With Us</h4>
+                  <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
+                    <li>Save on brokerage fees. We only charge 10% of one month rent</li>
+                    <li>Find the right tenant for your property within the community.</li>
+                    <li>Get the property ready for the next tenant with our renovation services.</li>
                   </ul>
                 </div>
                 <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center text-center mb-6 md:mb-0 w-full md:w-[340px]">
-                  <span className="text-3xl mb-2">🏠</span>
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">Why Should Tenant Use Our Service?</h4>
-                  <ul className="text-gray-600 text-xs list-disc pl-4 text-left mt-2 space-y-1">
-                    <li>Get your security deposit minus the renovation cost back on time with no hassle.</li>
-                    <li>You get to see the renovation bill from an authorized person.</li>
-                    <li>No more waiting for months to get your security deposit back.</li>
+                  <span className="text-3xl mb-2">🧑‍💼</span>
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">Benefits of Listing Your Business With Us</h4>
+                  <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
+                    <li>Grow your business by reaching out to the community.</li>
+                    <li>Build trust by getting rated by the community.</li>
+                    <li>No commission on your sales.</li>
                   </ul>
                 </div>
                 <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center text-center w-full md:w-[340px]">
                   <span className="text-3xl mb-2">📄</span>
                   <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">What We Do?</h4>
-                  <ul className="text-gray-600 text-xs list-disc pl-4 text-left mt-2 space-y-1">
-                    <li>We handle all the paperwork and legalities for you.</li>
-                    <li>We get the property ready for the next tenant and deduct the amount incurred as expenses from security deposit.</li>
-                    <li>Landlord returns the amount within 15 days of the tenant vacating the property.</li>
+                  <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
+                    <li>List verified properties in your area.</li>
+                    <li>Onboard local vendors in your area.</li>
+                    <li>Get the vendors rated by the community.</li>
+                    <li>Build a stronger community with fewer hassles.</li>
                   </ul>
                 </div>
               </div>

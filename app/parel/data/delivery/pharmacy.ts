@@ -51,5 +51,15 @@ export const vendors: Vendor[] = [
       unit: 'per item'
     }],
     mobile: '+91 8433995732'
+  },
+  {
+    name: 'Swastik Medical',
+    services: [{
+      name: 'OTC Medicines',
+      description: 'Over the counter medicines available',
+      price: 'MRP',
+      unit: 'per item'
+    }],
+    mobile: '+91 7738915300'
   }
 ]; 
