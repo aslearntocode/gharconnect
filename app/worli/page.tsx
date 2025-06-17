@@ -398,7 +398,7 @@ export default function Home() {
                 </Link>
               </h1>
               <p className="text-lg text-gray-600 mb-4 md:mb-8">
-                Your one-stop platform for renting, selling, services, and delivery in your society. Explore all the services available in your society.
+                Your one-stop community platform for renting, selling, services, and delivery in your society. Explore all the services available in your society.
               </p>
             </div>
             {/* Right Content - Main Offerings */}
