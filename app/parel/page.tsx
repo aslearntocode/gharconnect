@@ -377,7 +377,7 @@ export default function Home() {
       <Header />
       {/* Notification Bar */}
       <div className="w-full mt-2 mb-4">
-        <div className="bg-yellow-100 text-yellow-900 px-4 md:px-0 py-2 text-center font-medium shadow-sm rounded-none md:rounded-md w-full text-lg md:text-lg">
+        <div className="bg-yellow-100 text-yellow-900 px-4 md:px-0 py-2 text-center font-medium shadow-sm rounded-none md:rounded-md w-full text-base md:text-lg">
           We have a rental property available at Crescent Bay from 5th July 2025. Contact us at 9321314553.
         </div>
       </div>
@@ -387,7 +387,12 @@ export default function Home() {
       
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-4">
+          <div className="flex flex-col items-center mb-8">
+            <div className="text-xl md:text-3xl font-medium text-center text-indigo-700">
+              The Only Community Based Platform in India
+            </div>
+          </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* Left Content */}
             <div>
