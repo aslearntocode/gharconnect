@@ -271,6 +271,14 @@ export default function Header() {
                       <span>Laptop Repair</span>
                     </Link>
                     <Link 
+                      href={`/${currentSociety}/services/notary`}
+                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                      onClick={() => setIsCreditScoreDropdownOpen(false)}
+                    >
+                      <FiTool className="w-5 h-5 text-red-500" />
+                      <span>Notary</span>
+                    </Link>
+                    <Link 
                       href={`/${currentSociety}/services/piegon-net`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
