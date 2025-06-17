@@ -79,6 +79,7 @@ export default function VendorDashboard() {
   const [selectedSocieties, setSelectedSocieties] = useState<string[]>([]);
   const [selectedArea, setSelectedArea] = useState('');
   const [mobileNo, setMobileNo] = useState('');
+  const [selectedService, setSelectedService] = useState('');
   const router = useRouter();
   const supabase = createClientComponentClient();
 
@@ -204,6 +205,10 @@ export default function VendorDashboard() {
       toast({ title: 'Error', description: 'Please enter your mobile number', variant: 'destructive' });
       return;
     }
+    if (!selectedService) {
+      toast({ title: 'Error', description: 'Please select a service', variant: 'destructive' });
+      return;
+    }
     setIsLoading(true);
     try {
       const vendorName = auth.currentUser?.displayName || auth.currentUser?.email || '';
@@ -222,6 +227,7 @@ export default function VendorDashboard() {
           vendor_id: auth.currentUser!.uid,
           Name: vendorName,
           Mobile_No: mobileNo,
+          services: selectedService,
           area: selectedArea,
           societies: societiesString,
           date: dateKey,
@@ -336,16 +342,34 @@ export default function VendorDashboard() {
                 })}
               </div>
               <p className="text-sm text-gray-500 mb-4">You can select up to 2 societies.</p>
-              <div className="mb-4 max-w-xs">
-                <label className="block text-sm font-medium mb-1">Mobile Number</label>
-                <input
-                  type="tel"
-                  value={mobileNo}
-                  onChange={e => setMobileNo(e.target.value)}
-                  className="w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm"
-                  placeholder="Enter your mobile number"
-                  required
-                />
+              <div className="flex gap-4 items-end">
+                <div className="flex-1">
+                  <Label htmlFor="mobile">Mobile Number</Label>
+                  <Input
+                    id="mobile"
+                    type="tel"
+                    placeholder="Enter your mobile number"
+                    value={mobileNo}
+                    onChange={(e) => setMobileNo(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="flex-1">
+                  <Label htmlFor="service">Service</Label>
+                  <select
+                    id="service"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    value={selectedService}
+                    onChange={(e) => setSelectedService(e.target.value)}
+                    required
+                  >
+                    <option value="">Select a service</option>
+                    <option value="Cooking">Cooking</option>
+                    <option value="Cleaning">Cleaning</option>
+                    <option value="Both">Both (Cooking and Cleaning)</option>
+                    <option value="Nanny">Nanny</option>
+                  </select>
+                </div>
               </div>
             </>
           )}
