@@ -95,6 +95,17 @@ export default function VendorDashboard() {
     checkAuth();
   }, []);
 
+  // Add auth state listener to handle logout properly
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (!user) {
+        setIsLoggedIn(false);
+        setAvailability([]);
+      }
+    });
+    return () => unsubscribe();
+  }, []);
+
   useEffect(() => {
     const slotMap: Record<string, Record<string, boolean>> = {};
     for (const slot of availability) {
@@ -152,6 +163,7 @@ export default function VendorDashboard() {
         title: 'Success',
         description: 'Logged out successfully',
       });
+      window.location.href = '/vendor';
     } catch (error: any) {
       console.error('Logout error:', error);
       toast({
@@ -244,8 +256,13 @@ export default function VendorDashboard() {
     return (
       <div className="min-h-screen bg-gray-50">
         <VendorHeader />
-        <main className="max-w-md mx-auto mt-10 p-6">
+        <main className="max-w-lg mx-auto mt-10 p-6">
           <Card className="p-6">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <p className="text-blue-800 text-center font-medium">
+                Agar aap kuch extra income kamana chahte hain to yahan pe login karein aur apna free time use karein! Yahan permanent jobs nahi milti hain.
+              </p>
+            </div>
             <h2 className="text-2xl font-bold mb-6 text-center">Vendor Dashboard</h2>
             <p className="text-center text-gray-600 mb-6">
               Please login to manage your availability

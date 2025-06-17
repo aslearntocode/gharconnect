@@ -119,6 +119,12 @@ export default function VendorSearchPage() {
         </div>
       </div>
       <div className="py-8 px-4 max-w-7xl mx-auto">
+        {/* Warning Message */}
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+          <p className="text-yellow-800 text-center font-medium">
+            This page is to find temporary workers if you have an urgent need e.g. when your cook or cleaner are on sudden leave. Please do not try to hire from here as that will set wrong precedence and spoil the intent with which this functionality is built.
+          </p>
+        </div>
         {/* <h1 className="text-3xl font-bold mb-6">Find a Vendor</h1> */}
         {/* Filters */}
         <div className="flex flex-wrap gap-4 mb-8">
