@@ -13,7 +13,8 @@ interface BlogPostPageProps {
   society: string;
 }
 
-export function generateMetadata({ params, society }: BlogPostPageProps): Metadata {
+export function generateMetadata(props: { params: { slug: string }, society: string }): Metadata {
+  const { params, society } = props;
   const post = getBlogPost(params.slug);
   
   if (!post) {
