@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { CalendarDays, Clock, User, ArrowLeft, Share2 } from 'lucide-react';
 import { getBlogPost, getRelatedPosts } from '@/lib/blog';
 import BlogLayout from './BlogLayout';
+import ReactMarkdown from 'react-markdown';
 
 interface BlogPostPageProps {
   params: {
@@ -108,10 +109,10 @@ export default function BlogPostPage({ params, society }: BlogPostPageProps) {
       <div className="container mx-auto px-4 py-2">
         <div className="max-w-4xl mx-auto">
           <article className="bg-white rounded-lg shadow-sm p-8 md:p-12">
-            <div className="prose prose-lg max-w-none">
-              <div className="whitespace-pre-wrap text-gray-800 leading-relaxed">
+            <div className="prose prose-lg max-w-none whitespace-pre-wrap text-gray-800 leading-relaxed">
+              <ReactMarkdown>
                 {post.content}
-              </div>
+              </ReactMarkdown>
             </div>
           </article>
 

@@ -1,11 +1,7 @@
-import BlogPostPage from '@/app/components/BlogPostPage';
+import BlogPostPage, { generateMetadata as sharedGenerateMetadata } from '@/app/components/BlogPostPage';
 
-interface WorliBlogPostPageProps {
-  params: {
-    slug: string;
-  };
-}
+export const generateMetadata = sharedGenerateMetadata;
 
-export default function WorliBlogPostPage({ params }: WorliBlogPostPageProps) {
-  return <BlogPostPage params={params} society="worli" />;
+export default function WorliBlogPostPage(props: { params: { slug: string } }) {
+  return <BlogPostPage {...props} society="worli" />;
 } 

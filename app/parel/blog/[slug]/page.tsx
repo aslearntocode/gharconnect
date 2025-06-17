@@ -1,11 +1,7 @@
-import BlogPostPage from '@/app/components/BlogPostPage';
+import BlogPostPage, { generateMetadata as sharedGenerateMetadata } from '@/app/components/BlogPostPage';
 
-interface ParelBlogPostPageProps {
-  params: {
-    slug: string;
-  };
-}
+export const generateMetadata = sharedGenerateMetadata;
 
-export default function ParelBlogPostPage({ params }: ParelBlogPostPageProps) {
-  return <BlogPostPage params={params} society="parel" />;
+export default function ParelBlogPostPage(props: { params: { slug: string } }) {
+  return <BlogPostPage {...props} society="parel" />;
 } 
