@@ -31,5 +31,15 @@ export const vendors: Vendor[] = [
       unit: 'litre'
     }],
     mobile: '+91 9221568717'
+  },
+  {
+    name: 'Talegaon Dairy',
+    products: [{
+      name: 'Cow Milk',
+      description: 'Fresh paneer delivered twice a week',
+      price: 'Call for price',
+      unit: 'gms'
+    }],
+    mobile: '+91 0000000000'
   }
 ]; 

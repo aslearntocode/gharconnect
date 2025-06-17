@@ -1,22 +1,16 @@
 'use client';
 
 import Header from '@/components/Header';
-import { FiSearch } from 'react-icons/fi';
-import { kidsClassesServices } from '@/app/parel/data/services/kids-classes';
+import { vendors } from '@/app/worli/data/services/kids-classes';
 import { VendorCard } from '@/components/VendorCard';
-
-const vendors = Array.from(new Set(kidsClassesServices.map(p => p.brand))).map(brand => ({
-  name: brand,
-  services: kidsClassesServices.filter(p => p.brand === brand),
-  mobile: '+91 98765 43210'
-}));
+import { FiSearch } from 'react-icons/fi';
 
 export default function KidsClassesPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="relative">
-        <div className="w-full h-32 bg-blue-600 flex items-center justify-center">
+        <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
           <h1 className="text-3xl md:text-4xl font-bold text-white">Kids Classes</h1>
         </div>
         <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-7 w-full max-w-2xl z-10">
@@ -33,7 +27,7 @@ export default function KidsClassesPage() {
       </div>
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {vendors.map((vendor, index) => (
               <VendorCard
                 key={index}

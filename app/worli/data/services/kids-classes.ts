@@ -1,56 +1,49 @@
-export interface KidsClassService {
-  id: string;
+export interface Service {
   name: string;
   description: string;
-  services: {
-    type: string;
-    price: number;
-    unit: string;
-  }[];
-  image: string;
-  category: 'art' | 'music' | 'sports' | 'other';
-  brand: string;
-  inStock: boolean;
+  price: number | string;
+  unit: string;
 }
 
-export const kidsClassesServices: KidsClassService[] = [
+export interface Vendor {
+  name: string;
+  services: Service[];
+  mobile: string;
+  photo?: string;
+}
+
+export const vendors: Vendor[] = [
   {
-    id: 'art-1',
-    name: 'Art Classes',
-    description: 'Creative art classes for kids of all ages.',
-    services: [
-      { type: 'Single Class', price: 11.99, unit: 'class' },
-      { type: 'Monthly Pass', price: 79.99, unit: 'month' }
-    ],
-    image: '/images/services/art-class.jpg',
-    category: 'art',
-    brand: 'Creative Kids',
-    inStock: true
+    name: 'Worli Art Academy',
+    services: [{
+      name: 'Art Classes',
+      description: 'Creative art classes for kids of all ages',
+      price: '₹1500',
+      unit: 'per month'
+    }],
+    mobile: '+91 9876543211',
+    photo: '/images/services/art-class.jpg'
   },
   {
-    id: 'music-1',
-    name: 'Music Classes',
-    description: 'Fun music lessons for children.',
-    services: [
-      { type: 'Single Class', price: 13.99, unit: 'class' },
-      { type: 'Monthly Pass', price: 89.99, unit: 'month' }
-    ],
-    image: '/images/services/music-class.jpg',
-    category: 'music',
-    brand: 'Creative Kids',
-    inStock: true
+    name: 'Worli Music School',
+    services: [{
+      name: 'Music Classes',
+      description: 'Fun music lessons for children - piano, guitar, vocals',
+      price: '₹1800',
+      unit: 'per month'
+    }],
+    mobile: '+91 8765432110',
+    photo: '/images/services/music-class.jpg'
   },
   {
-    id: 'sports-1',
-    name: 'Sports Coaching',
-    description: 'Sports coaching and fitness for kids.',
-    services: [
-      { type: 'Single Session', price: 14.99, unit: 'session' },
-      { type: 'Monthly Pass', price: 99.99, unit: 'month' }
-    ],
-    image: '/images/services/sports-class.jpg',
-    category: 'sports',
-    brand: 'Active Kids',
-    inStock: true
+    name: 'Worli Sports Academy',
+    services: [{
+      name: 'Sports Coaching',
+      description: 'Sports coaching and fitness for kids - cricket, football, swimming',
+      price: '₹2200',
+      unit: 'per month'
+    }],
+    mobile: '+91 7654321109',
+    photo: '/images/services/sports-class.jpg'
   }
 ]; 

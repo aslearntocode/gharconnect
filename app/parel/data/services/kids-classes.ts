@@ -1,56 +1,71 @@
-export interface KidsClassService {
-  id: string;
+export interface Service {
   name: string;
   description: string;
-  services: {
-    type: string;
-    price: number;
-    unit: string;
-  }[];
-  image: string;
-  category: 'art' | 'music' | 'sports' | 'other';
-  brand: string;
-  inStock: boolean;
+  price: number | string;
+  unit: string;
 }
 
-export const kidsClassesServices: KidsClassService[] = [
+export interface Vendor {
+  name: string;
+  services: Service[];
+  mobile: string;
+  photo?: string;
+}
+
+export const vendors: Vendor[] = [
   {
-    id: 'art-1',
-    name: 'Art Classes',
-    description: 'Creative art classes for kids of all ages.',
-    services: [
-      { type: 'Single Class', price: 11.99, unit: 'class' },
-      { type: 'Monthly Pass', price: 79.99, unit: 'month' }
-    ],
-    image: '/images/services/art-class.jpg',
-    category: 'art',
-    brand: 'Creative Kids',
-    inStock: true
+    name: 'Kahoo Kids, Matunga',
+    services: [{
+      name: 'Art Classes',
+      description: 'Creative art classes for kids of all ages',
+      price: '₹600-₹900',
+      unit: 'per class'
+    }],
+    mobile: '+91 ',
+    photo: '/images/services/art-class.jpg'
   },
   {
-    id: 'music-1',
-    name: 'Music Classes',
-    description: 'Fun music lessons for children.',
-    services: [
-      { type: 'Single Class', price: 13.99, unit: 'class' },
-      { type: 'Monthly Pass', price: 89.99, unit: 'month' }
-    ],
-    image: '/images/services/music-class.jpg',
-    category: 'music',
-    brand: 'Creative Kids',
-    inStock: true
+    name: 'Brijesh Joshi',
+    services: [{
+      name: 'Music Classes',
+      description: 'Guitar lessons for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 7358365827',
+    photo: '/images/services/music-class.jpg'
   },
   {
-    id: 'sports-1',
-    name: 'Sports Coaching',
-    description: 'Sports coaching and fitness for kids.',
-    services: [
-      { type: 'Single Session', price: 14.99, unit: 'session' },
-      { type: 'Monthly Pass', price: 99.99, unit: 'month' }
-    ],
-    image: '/images/services/sports-class.jpg',
-    category: 'sports',
-    brand: 'Active Kids',
-    inStock: true
+    name: 'Rajesh',
+    services: [{
+      name: 'Sports Coaching',
+      description: 'Guitar lessons for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 9967655503',
+    photo: '/images/services/sports-class.jpg'
+  },
+  {
+    name: 'Noel',
+    services: [{
+      name: 'Swimming Coaching',
+      description: 'Swimming lessons for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 7900084119',
+    photo: '/images/services/sports-class.jpg'
+  },
+  {
+    name: 'Hetal Paleja',
+    services: [{
+      name: 'Swimming Coaching',
+      description: 'Swimming lessons for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 8879813233',
+    photo: '/images/services/sports-class.jpg'
   }
 ]; 

@@ -1,15 +1,9 @@
 'use client';
 
 import Header from '@/components/Header';
-import { FiSearch } from 'react-icons/fi';
-import { kidsClassesServices } from '@/app/parel/data/services/kids-classes';
+import { vendors } from '@/app/parel/data/services/kids-classes';
 import { VendorCard } from '@/components/VendorCard';
-
-const vendors = Array.from(new Set(kidsClassesServices.map(p => p.brand))).map(brand => ({
-  name: brand,
-  services: kidsClassesServices.filter(p => p.brand === brand),
-  mobile: '+91 98765 43210'
-}));
+import { FiSearch } from 'react-icons/fi';
 
 export default function KidsClassesPage() {
   return (
@@ -33,7 +27,7 @@ export default function KidsClassesPage() {
       </div>
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {vendors.map((vendor, index) => (
               <VendorCard
                 key={index}
