@@ -500,6 +500,7 @@ export default function Home() {
                   <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
                     <li>List verified properties in your area.</li>
                     <li>Onboard local vendors in your area.</li>
+                    <li>Find Domestic Help available to meet your emergency needs.</li>
                     <li>Get the vendors rated by the community.</li>
                     <li>Build a stronger community with fewer hassles.</li>
                   </ul>
