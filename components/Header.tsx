@@ -271,6 +271,14 @@ export default function Header() {
                       <span>Laptop Repair</span>
                     </Link>
                     <Link 
+                      href={`/${currentSociety}/services/electronics-repair`}
+                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                      onClick={() => setIsCreditScoreDropdownOpen(false)}
+                    >
+                      <FiTool className="w-5 h-5 text-red-500" />
+                      <span>Electronics Repair</span>
+                    </Link>
+                    <Link 
                       href={`/${currentSociety}/services/notary`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
@@ -530,6 +538,34 @@ export default function Header() {
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Pest Control
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/laptop-repair`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Laptop Repair
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/electronics-repair`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Electronics Repair
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/notary`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Notary
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/pigeon-net`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Pigeon Net
                   </Link>
                   <Link 
                     href={`/${currentSociety}/services/physical-training`}
