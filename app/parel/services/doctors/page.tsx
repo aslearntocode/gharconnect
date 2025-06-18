@@ -50,7 +50,7 @@ export default function DoctorsPage() {
               Find trusted medical professionals near your society.
             </p>
             <p className="text-indigo-600 font-bold max-w-3xl mx-auto">
-              Contacts only available for verified users. If you are verified then login, if not then WhatsApp your lease document police verified page screenshot to +919321314553 to get verified
+              Contacts only available for verified users. If you are verified then login, if not then WhatsApp your lease document police verified page screenshot to +919321314553 to get verified.
             </p>
           </div>
 

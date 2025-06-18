@@ -33,6 +33,11 @@ export default function Footer() {
                   <Link href={`/${society}/blog`} className="hover:text-indigo-600 transition-colors">Blogs</Link>
                 </li>
               )}
+              {!isMainPage && (
+                <li>
+                  <Link href={`/${society}/rental-procedure`} className="hover:text-indigo-600 transition-colors">Rental Procedure</Link>
+                </li>
+              )}
             </ul>
           </div>
 
