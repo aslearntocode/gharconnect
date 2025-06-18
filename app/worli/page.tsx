@@ -729,6 +729,30 @@ export default function Home() {
 
       {/* Doctors Container */}
       <DoctorsContainer />
+
+      {/* Property to Rent Container */}
+      <div className="max-w-4xl mx-auto mt-12 mb-16 px-4">
+        <div className="rounded-2xl border border-gray-200 shadow-md bg-white flex flex-col md:flex-row items-stretch p-0 md:p-0 gap-6 md:gap-0 relative overflow-hidden">
+          {/* Left Image as Card (faded background) */}
+          <div className="hidden md:block absolute top-0 bottom-0 left-0 h-full w-[260px]">
+            <img src="/Keys_IMG.png" alt="Keys illustration" className="h-full w-full object-contain rounded-l-2xl shadow-md" style={{opacity:0.25}} />
+            <div className="absolute inset-0 bg-white rounded-l-2xl" style={{opacity:0.25}}></div>
+          </div>
+          {/* Right Image as Card */}
+          <div className="hidden md:block absolute top-0 bottom-0 right-0 h-full w-[260px]">
+            <img src="/House_IMG.png" alt="House illustration" className="h-full w-full object-contain rounded-r-2xl shadow-md bg-white" />
+          </div>
+          {/* Main Content */}
+          <div className="flex-1 flex flex-col items-center justify-center text-center z-10 w-full min-h-[180px] md:pl-[260px] md:pr-[260px] p-6 md:p-0">
+            <h2 className="text-2xl font-bold mb-2 text-gray-900">Have a property to rent?</h2>
+            <p className="text-gray-600 mb-4">List your property & connect with clients faster!</p>
+            <a href="https://wa.me/919321314553?text=Hi, I want to list my property for rent on GharConnect" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors text-base shadow-lg">
+              <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/><path d="M12.005 2.003c-5.522 0-10 4.477-10 10 0 1.657.402 3.22 1.104 4.604l-1.1 4.021 4.142-1.085c1.342.734 2.885 1.16 4.554 1.16 5.522 0 10-4.477 10-10s-4.478-10-10-10zm0 18.197c-1.488 0-2.93-.366-4.188-1.057l-.3-.17-2.457.644.656-2.401-.195-.312c-.646-1.037-.99-2.234-.99-3.471 0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
+              WhatsApp to List
+            </a>
+          </div>
+        </div>
+      </div>
     </main>
   )
 }
