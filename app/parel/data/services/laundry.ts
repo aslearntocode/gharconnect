@@ -41,5 +41,14 @@ export const vendors: Vendor[] = [
       unit: 'kg'
     }],
     mobile: '+91 9651143603'
-  }
+  },
+  {
+    name: 'Sukhmilal Rajak',
+    services: [{
+      name: 'Wash & Fold',
+      description: 'Clothes washed and folded',
+      price: 'Call for price',
+      unit: 'kg'
+    }],
+  mobile: '+91 9324326757'}
 ]; 

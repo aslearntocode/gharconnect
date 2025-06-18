@@ -13,13 +13,23 @@ export interface Vendor {
 
 export const vendors: Vendor[] = [
   {
-    name: 'Quick Plumbers',
+    name: 'Ajay Contractor',
     services: [{
-      name: 'Leak Fix',
-      description: 'Fixing water leaks',
+      name: 'Plumbing',
+      description: 'Fixing water leaks and other plumbing issues',
       price: 200,
       unit: 'job'
     }],
-    mobile: '+91 90000 00007'
+    mobile: '+91 7208308380'
+  },
+  {
+    name: 'Raju B Mistry',
+    services: [{
+      name: 'Plumbing',
+      description: 'Speacialist in Civil & Interior Design etc.',
+      price: 200,
+      unit: 'job'
+    }],
+    mobile: '+91 9326396748'
   }
 ]; 
