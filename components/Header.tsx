@@ -11,7 +11,7 @@ import Image from 'next/image'
 import { createClient } from '@supabase/supabase-js'
 import { Button } from '@/components/ui/button'
 import { signOut } from 'firebase/auth'
-import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit } from 'react-icons/fi'
+import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid } from 'react-icons/fi'
 
 // Initialize Supabase client
 const supabaseClient = createClient(
@@ -259,7 +259,7 @@ export default function Header() {
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
-                      <FiTool className="w-5 h-5 text-red-500" />
+                      <FiShield className="w-5 h-5 text-red-500" />
                       <span>Pest Control</span>
                     </Link>
                     <Link 
@@ -283,7 +283,7 @@ export default function Header() {
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
-                      <FiTool className="w-5 h-5 text-red-500" />
+                      <FiFileText className="w-5 h-5 text-blue-500" />
                       <span>Notary</span>
                     </Link>
                     <Link 
@@ -291,7 +291,7 @@ export default function Header() {
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
-                      <FiTool className="w-5 h-5 text-red-500" />
+                      <FiGrid className="w-5 h-5 text-green-500" />
                       <span>Pigeon Net</span>
                     </Link>
                     <Link 
@@ -561,7 +561,7 @@ export default function Header() {
                     Notary
                   </Link>
                   <Link 
-                    href={`/${currentSociety}/services/pigeon-net`}
+                    href={`/${currentSociety}/services/piegon-net`}
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >

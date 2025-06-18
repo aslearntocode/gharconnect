@@ -13,7 +13,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { Dialog } from '@headlessui/react'
-import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit } from 'react-icons/fi'
+import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarSignIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid } from 'react-icons/fi'
 import DoctorsContainer from "@/components/DoctorsContainer"
 
 
@@ -676,41 +676,41 @@ export default function Home() {
                 <p className="text-xs md:text-base text-gray-600 text-center">AC repair and maintenance</p>
               </div>
             </Link>
-              <Link href="/parel/services/pest-control" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-                  <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
-                  <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Pest Control</h3>
-                  <p className="text-xs md:text-base text-gray-600 text-center">Termite and pest removal</p>
-                </div>
-              </Link>
-              <Link href="/parel/services/laptop-repair" className="block group">
-                  <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-                    <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
-                    <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Laptop Repair</h3>
-                    <p className="text-xs md:text-base text-gray-600 text-center">Laptop repair & maintenance</p>
-                  </div>
-                </Link>
-                <Link href="/parel/services/electronics-repair" className="block group">
-                  <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-                    <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
-                    <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Electronics Repair</h3>
-                    <p className="text-xs md:text-base text-gray-600 text-center">Electronics repair & maintenance</p>
-                  </div>
-                </Link>
-                <Link href="/parel/services/notary" className="block group">
-                  <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-                    <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
-                    <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Notary</h3>
-                    <p className="text-xs md:text-base text-gray-600 text-center">Legal document notarization</p>
-                  </div>
-                </Link>
-              <Link href="/parel/services/piegon-net" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
-                  <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
-                  <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Pigeon Net</h3>
-                  <p className="text-xs md:text-base text-gray-600 text-center">Pigeon net installation</p>
-                </div>
-              </Link>
+            <Link href="/parel/services/pest-control" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiShield className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Pest Control</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Termite and pest removal</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/laptop-repair" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Laptop Repair</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Laptop repair & maintenance</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/electronics-repair" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiTool className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-red-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Electronics Repair</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Electronics repair & maintenance</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/notary" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiFileText className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-blue-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Notary</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Legal document notarization</p>
+              </div>
+            </Link>
+            <Link href="/parel/services/piegon-net" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiGrid className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-green-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Pigeon Net</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Pigeon net installation</p>
+              </div>
+            </Link>
             <Link href="/parel/services/physical-training" className="block group">
               <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
                 <FiTrendingUp className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-indigo-500" />
