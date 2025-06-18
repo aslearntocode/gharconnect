@@ -60,13 +60,6 @@ export default function BlogPage({ society }: BlogPageProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogPosts.map((post) => (
             <article key={post.slug} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-              <div className="aspect-video bg-gray-200">
-                {/* Placeholder for blog post image */}
-                <div className="w-full h-full bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
-                  <span className="text-gray-500 text-sm">Featured Image</span>
-                </div>
-              </div>
-              
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
