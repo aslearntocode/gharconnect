@@ -762,6 +762,27 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {/* New: Latest in Society Container */}
+      <div className="bg-indigo-600 py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">What's the Latest in the Society?</h2>
+            <p className="text-indigo-100 max-w-2xl mx-auto mb-8">
+              Stay updated with the newest happenings, events, and announcements in your society. 
+              Get the latest news and updates about community activities and important information.
+            </p>
+            <a 
+              href="#"
+              className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors duration-200"
+            >
+              Click Here
+              <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
     </main>
   )
 }

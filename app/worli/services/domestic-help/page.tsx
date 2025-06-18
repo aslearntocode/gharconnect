@@ -46,7 +46,7 @@ export default function VendorSearchPage() {
       setLoading(true);
       const { data, error } = await supabase
         .from("vendor_weekly_availability")
-        .select("vendor_id, Name, Mobile_No, area, societies, date")
+        .select("vendor_id, Name, Mobile_No, area, societies, date, services")
         .order("date", { ascending: true });
       if (!error && data) {
         // Group by vendor_id, get latest area/societies
@@ -170,7 +170,18 @@ export default function VendorSearchPage() {
         {selectedVendor && (
           <Card className="p-6 w-full mb-8">
             <h2 className="text-xl font-semibold mb-2">Availability for {selectedVendor.Name || selectedVendor.vendor_name || (selectedVendor.vendor_id ? selectedVendor.vendor_id.slice(0, 8) + '...' : '')}</h2>
-            <div className="text-base text-gray-700 mb-4">Mobile: {selectedVendor.Mobile_No || 'N/A'}</div>
+            <div className="text-base text-gray-700 mb-4">
+              Mobile: {selectedVendor.Mobile_No || 'N/A'}
+              {selectedVendor.services && (
+                <span className="ml-4 text-gray-500">
+                  Services: {typeof selectedVendor.services === 'string' && selectedVendor.services.trim().toLowerCase() === 'both'
+                    ? 'Both (Cleaning and Cooking)'
+                    : Array.isArray(selectedVendor.services)
+                      ? selectedVendor.services.join(', ')
+                      : selectedVendor.services}
+                </span>
+              )}
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full border text-center table-auto">
                 <thead>
