@@ -388,14 +388,14 @@ export default function Home() {
       <div className="relative bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-4">
           <div className="flex flex-col items-center mb-8">
-            <div className="text-lg md:text-3xl font-medium text-center text-indigo-700">
+            <div className="text-sm md:text-3xl font-medium text-center text-indigo-700">
               The Only Community Based Platform in India
             </div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* Left Content */}
             <div>
-              <h1 className="text-[32px] md:text-[48px] leading-tight font-bold mb-6 text-center md:text-left flex flex-wrap items-center gap-2 justify-center md:justify-start">
+              <h1 className="text-[24px] md:text-[48px] leading-tight font-bold mb-6 text-center md:text-left flex flex-wrap items-center gap-2 justify-center md:justify-start">
                 <span className="text-black">Welcome to GharConnect </span>
                 <span className="text-indigo-600">@Worli</span>
                 <Link href="/" className="ml-2 text-indigo-600 text-xs md:text-sm font-semibold underline hover:no-underline transition-all">
@@ -483,7 +483,7 @@ export default function Home() {
                   <span className="text-3xl mb-2">🏠</span>
                   <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">Benefits of Listing Your Property With Us</h4>
                   <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
-                    <li>Save on brokerage fees. We only charge 10% of one month rent</li>
+                    <li>Save on brokerage fees. We only charge 10% of one month rent.</li>
                     <li>Find the right tenant for your property within the community.</li>
                     <li>Get the property ready for the next tenant with our renovation services.</li>
                   </ul>
