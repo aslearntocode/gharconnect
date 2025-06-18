@@ -101,10 +101,10 @@ export default function SocietiesClient() {
   const [selectedArea, setSelectedArea] = useState('');
 
   const areas = [
-    { name: 'Parel, Mumbai (Parel, Sewri, Bhoiwada)', value: 'parel' },
-    { name: 'Worli, Mumbai (Worli, Lower Parel)', value: 'worli' },
-    { name: 'Bandra, Mumbai (Bandra, Khar, Santacruz)', value: 'bandra' },
-    { name: 'Andheri, Mumbai (Andheri, Marol, Ghatkopar)', value: 'andheri' }
+    { name: 'Parel, Mumbai (Parel, Sewri, Bhoiwada)', value: 'parel', displayName: 'Parel, Mumbai' },
+    { name: 'Worli, Mumbai (Worli, Lower Parel)', value: 'worli', displayName: 'Worli, Mumbai' },
+    { name: 'Bandra, Mumbai (Bandra, Khar, Santacruz)', value: 'bandra', displayName: 'Bandra, Mumbai' },
+    { name: 'Andheri, Mumbai (Andheri, Marol, Ghatkopar)', value: 'andheri', displayName: 'Andheri, Mumbai' }
   ];
 
   const filteredSocieties = selectedArea === '' ? [] : societies.filter(society => society.area === selectedArea);
@@ -142,7 +142,7 @@ export default function SocietiesClient() {
                 href={`/${selectedArea}`}
                 className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white hover:bg-indigo-700 rounded-lg text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
               >
-                Explore {areas.find(a => a.value === selectedArea)?.name} Community
+                Explore {areas.find(a => a.value === selectedArea)?.displayName} Community
                 <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>

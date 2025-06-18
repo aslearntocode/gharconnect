@@ -147,7 +147,7 @@ export default function RentPage() {
                         rel="noopener noreferrer"
                         className="mt-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs text-left inline-block"
                       >
-                        <span>WhatsApp 9321314553</span>
+                        <span>WhatsApp<br />+91 9321314553</span>
                       </a>
                     </td>
                   </tr>
