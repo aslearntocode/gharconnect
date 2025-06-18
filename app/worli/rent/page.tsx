@@ -127,7 +127,7 @@ export default function RentPage() {
                     onClick={() => setExpandedIdx(expandedIdx === idx ? null : idx)}
                   >
                     <td className="px-4 py-3 flex items-center gap-2">
-                      <span className={`transition-transform duration-200 ${expandedIdx === idx ? 'rotate-180' : ''}`}>
+                      <span className={`transition-transform duration-200 ${expandedIdx === idx ? 'rotate-180' : ''}`}> 
                         <FiChevronDown className="w-5 h-5 text-indigo-500 opacity-80 group-hover:opacity-100" />
                       </span>
                       <FiHome className="text-indigo-500 w-6 h-6" />
@@ -135,16 +135,20 @@ export default function RentPage() {
                     <td className="px-4 py-3">{apt.tower || '-'}</td>
                     <td className="px-4 py-3">{apt.bedrooms ? `${apt.bedrooms} BHK` : '-'}</td>
                     <td className="px-4 py-3">{apt.area ? `${apt.area} sq.ft` : '-'}</td>
-                    <td className="px-4 py-3">{apt.price ? `₹${apt.price.toLocaleString()}` : '-'}</td>
-                    <td className="px-4 py-3">{apt.floor || '-'}</td>
+                    <td className="px-4 py-3">{apt.balconies || '-'}</td>
+                    <td className="px-4 py-3">{apt.facing || '-'}</td>
+                    <td className="px-4 py-3">{apt.furnishingStatus ? apt.furnishingStatus.charAt(0).toUpperCase() + apt.furnishingStatus.slice(1) : '-'}</td>
+                    <td className="px-4 py-3">{apt.availableFrom || '-'}</td>
                     <td className="px-4 py-3">{apt.status === 'available' ? 'Y' : 'N'}</td>
                     <td className="px-4 py-3">
-                      <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-semibold text-sm">Contact</button>
+                      <button className="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs text-left inline-block">
+                        <span>Contact Us at<br />+91 9321314553</span>
+                      </button>
                     </td>
                   </tr>
                   {expandedIdx === idx && (
                     <tr>
-                      <td colSpan={8} className="bg-gray-50 px-6 py-6">
+                      <td colSpan={10} className="bg-gray-50 px-6 py-6">
                         <div className="flex flex-col md:flex-row gap-6">
                           {/* Images */}
                           <div className="flex gap-2 overflow-x-auto md:w-1/3">
@@ -206,14 +210,20 @@ export default function RentPage() {
                       <div>{apt.bedrooms ? `${apt.bedrooms} BHK` : '-'}</div>
                       <div className="text-gray-500">Area</div>
                       <div>{apt.area ? `${apt.area} sq.ft` : '-'}</div>
-                      <div className="text-gray-500">Price</div>
-                      <div>{apt.price ? `₹${apt.price.toLocaleString()}` : '-'}</div>
-                      <div className="text-gray-500">Floor</div>
-                      <div>{apt.floor || '-'}</div>
+                      <div className="text-gray-500">Balconies</div>
+                      <div>{apt.balconies || '-'}</div>
+                      <div className="text-gray-500">Facing</div>
+                      <div>{apt.facing || '-'}</div>
+                      <div className="text-gray-500">Furnished</div>
+                      <div>{apt.furnishingStatus ? apt.furnishingStatus.charAt(0).toUpperCase() + apt.furnishingStatus.slice(1) : '-'}</div>
+                      <div className="text-gray-500">Available</div>
+                      <div>{apt.availableFrom || '-'}</div>
                       <div className="text-gray-500">In Market</div>
                       <div>{apt.status === 'available' ? 'Y' : 'N'}</div>
                     </div>
-                    <button className="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-semibold text-sm w-full">Contact</button>
+                    <button className="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs text-left inline-block">
+                      <span>Contact GC at +91 9321314553</span>
+                    </button>
                   </div>
                   {expandedMobileIdx === idx && (
                     <div className="bg-gray-50 rounded-b-xl px-4 py-4">
