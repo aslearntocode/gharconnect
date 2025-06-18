@@ -33,6 +33,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const [showReviews, setShowReviews] = useState(false);
   const [reviews, setReviews] = useState<any[]>([]);
   const [imageError, setImageError] = useState(false);
+  const [showNumber, setShowNumber] = useState(false);
   const supabase = createClientComponentClient();
   const router = useRouter();
 
@@ -189,12 +190,21 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
           <p className="text-sm text-gray-600 mb-2">
             {items.length} {itemType} available
           </p>
-          <a 
-            href={`tel:${vendor.mobile}`}
-            className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3"
-          >
-            {vendor.mobile}
-          </a>
+          {!showNumber ? (
+            <button
+              onClick={() => setShowNumber(true)}
+              className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3 underline focus:outline-none"
+            >
+              Click here to reveal the number
+            </button>
+          ) : (
+            <a 
+              href={`tel:${vendor.mobile}`}
+              className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3"
+            >
+              {vendor.mobile}
+            </a>
+          )}
           {vendorRatings && (
             <div className="flex items-center gap-1 text-yellow-500 mb-3">
               <span className="text-sm font-medium">
