@@ -38,13 +38,11 @@ function getNext7Days() {
 export default function VendorSearchPage() {
   const [vendors, setVendors] = useState<any[]>([]);
   const [selectedVendor, setSelectedVendor] = useState<any | null>(null);
-  const [areaFilter, setAreaFilter] = useState("");
-  const [societyFilter, setSocietyFilter] = useState("");
-  const [serviceFilter, setServiceFilter] = useState("");
   const [loading, setLoading] = useState(false);
   const [vendorRatings, setVendorRatings] = useState<Record<string, { rating: number; count: number }>>({});
   const [showReviews, setShowReviews] = useState<Record<string, boolean>>({});
   const [reviews, setReviews] = useState<Record<string, any[]>>({});
+  const [searchQuery, setSearchQuery] = useState("");
   const supabase = createClientComponentClient();
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const router = useRouter();
@@ -151,11 +149,17 @@ export default function VendorSearchPage() {
       : typeof vendor.societies === "string"
       ? vendor.societies.replace(/[{}"]+/g, "").split(",").filter(Boolean)
       : [];
-    return (
-      (!areaFilter || vendor.area === areaFilter) &&
-      (!societyFilter || societies.includes(societyFilter)) &&
-      (!serviceFilter || (vendor.services && vendor.services.includes(serviceFilter)))
-    );
+    
+    // Search query filter
+    const searchLower = searchQuery.toLowerCase();
+    const searchMatch = !searchQuery || 
+      (vendor.Name || vendor.vendor_name || '').toLowerCase().includes(searchLower) ||
+      String(vendor.Mobile_No || '').toLowerCase().includes(searchLower) ||
+      (vendor.area || '').toLowerCase().includes(searchLower) ||
+      societies.some((society: string) => society.toLowerCase().includes(searchLower)) ||
+      (vendor.services || '').toLowerCase().includes(searchLower);
+
+    return searchMatch;
   });
 
   // Fetch 7-day grid for selected vendor
@@ -174,21 +178,6 @@ export default function VendorSearchPage() {
     };
     fetchSlots();
   }, [selectedVendor]);
-
-  // Area and society options
-  const areaOptions = Array.from(new Set(vendors.map(v => v.area))).filter(Boolean);
-  const societyOptions = Array.from(
-    new Set(
-      vendors
-        .flatMap(v =>
-          Array.isArray(v.societies)
-            ? v.societies
-            : typeof v.societies === "string"
-            ? v.societies.replace(/[{}"]+/g, "").split(",").filter(Boolean)
-            : []
-        )
-    )
-  ).filter(Boolean);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -209,27 +198,15 @@ export default function VendorSearchPage() {
         {/* <h1 className="text-3xl font-bold mb-6">Find a Vendor</h1> */}
         {/* Filters */}
         <div className="flex flex-wrap gap-4 mb-8">
-          <select
-            value={areaFilter}
-            onChange={e => setAreaFilter(e.target.value)}
-            className="px-4 py-2 rounded-lg border border-gray-300 shadow-sm"
-          >
-            <option value="">All Areas</option>
-            {areaOptions.map(area => (
-              <option key={area} value={area}>{area}</option>
-            ))}
-          </select>
-          <select
-            value={societyFilter}
-            onChange={e => setSocietyFilter(e.target.value)}
-            className="px-4 py-2 rounded-lg border border-gray-300 shadow-sm"
-          >
-            <option value="">All Societies</option>
-            {societyOptions.map(soc => (
-              <option key={soc} value={soc}>{soc}</option>
-            ))}
-          </select>
-          {/* Add service filter if you have services */}
+          <div className="flex-1 min-w-[300px]">
+            <input
+              type="text"
+              placeholder="Search by name, mobile, area, societies, or services..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-indigo-400 focus:outline-none text-base"
+            />
+          </div>
         </div>
         {/* Vendor cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
