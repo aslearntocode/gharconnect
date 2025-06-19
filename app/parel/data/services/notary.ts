@@ -23,5 +23,15 @@ export const vendors: Vendor[] = [
     }],
     mobile: '+91 7738666394 / 9869149880',
     photo: '/Notary_CGBafna.jpeg'
+  },
+  {
+    name: 'R K Gupta',
+    services: [{
+      name: 'Document Notarization',
+      description: 'Legal document notarization and attestation services',
+      price: 'Call for price',
+      unit: 'per document'
+    }],
+    mobile: '+91 9870138183',
   }
 ];
