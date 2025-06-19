@@ -231,6 +231,22 @@ export default function Header() {
                       <span>Domestic Help</span>
                     </Link>
                     <Link 
+                      href={`/${currentSociety}/services/car-clean`}
+                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                      onClick={() => setIsCreditScoreDropdownOpen(false)}
+                    >
+                      <FiEdit className="w-5 h-5 text-pink-500" />
+                      <span>Car Clean</span>
+                    </Link>
+                    <Link 
+                      href={`/${currentSociety}/services/car-clean`}
+                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                      onClick={() => setIsCreditScoreDropdownOpen(false)}
+                    >
+                      <FiEdit className="w-5 h-5 text-pink-500" />
+                      <span>Car Clean</span>
+                    </Link>
+                    <Link 
                       href={`/${currentSociety}/services/painter`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
@@ -510,6 +526,13 @@ export default function Header() {
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Domestic Help
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/car-clean`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Car Clean
                   </Link>
                   <Link 
                     href={`/${currentSociety}/services/painter`}

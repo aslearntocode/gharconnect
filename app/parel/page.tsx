@@ -662,6 +662,13 @@ export default function Home() {
                 <p className="text-xs md:text-base text-gray-600 text-center">Helpers for urgent needs</p>
               </div>
             </Link>
+            <Link href="/parel/services/car-clean" className="block group">
+              <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
+                <FiEdit className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-pink-500" />
+                <h3 className="text-base md:text-xl font-semibold text-gray-900 mb-1 md:mb-2 group-hover:text-indigo-600 transition-colors">Car Clean</h3>
+                <p className="text-xs md:text-base text-gray-600 text-center">Daily Car Cleaning</p>
+              </div>
+            </Link>
             <Link href="/parel/services/painter" className="block group">
               <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-8 flex flex-col items-center">
                 <FiEdit className="w-8 h-8 md:w-12 md:h-12 mb-2 md:mb-4 text-pink-500" />
