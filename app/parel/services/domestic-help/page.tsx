@@ -5,6 +5,8 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
+// If you see a module not found error for 'react-responsive', run: npm install react-responsive
+import { useMediaQuery } from 'react-responsive';
 
 const TIME_SLOTS = [
   { start: 9, end: 10, label: "9-10am" },
@@ -39,6 +41,7 @@ export default function VendorSearchPage() {
   const [serviceFilter, setServiceFilter] = useState("");
   const [loading, setLoading] = useState(false);
   const supabase = createClientComponentClient();
+  const isMobile = useMediaQuery({ maxWidth: 767 });
 
   // Fetch all vendors (distinct by vendor_id)
   useEffect(() => {
@@ -153,21 +156,52 @@ export default function VendorSearchPage() {
         {/* Vendor cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
           {filteredVendors.map(vendor => (
-            <Card
-              key={vendor.vendor_id}
-              className={`p-4 cursor-pointer border-2 transition-all duration-200 ${selectedVendor?.vendor_id === vendor.vendor_id ? "border-indigo-600 ring-2 ring-indigo-200" : "border-gray-200"}`}
-              onClick={() => setSelectedVendor(vendor)}
-            >
-              <div className="font-bold text-lg mb-2">{vendor.Name || vendor.vendor_name || (vendor.vendor_id ? vendor.vendor_id.slice(0, 8) + '...' : '')}</div>
-              <div className="text-sm text-gray-600 mb-1">Mobile: {vendor.Mobile_No || 'N/A'}</div>
-              <div className="text-sm text-gray-600 mb-1">Area: {vendor.area}</div>
-              <div className="text-sm text-gray-600 mb-1">Societies: {Array.isArray(vendor.societies) ? vendor.societies.join(", ") : String(vendor.societies).replace(/[{}"]+/g, "").split(",").filter(Boolean).join(", ")}</div>
-              {/* <div className="text-sm text-gray-600 mb-1">Services: ...</div> */}
-            </Card>
+            <div key={vendor.vendor_id}>
+              <Card
+                className={`p-4 cursor-pointer border-2 transition-all duration-200 ${selectedVendor?.vendor_id === vendor.vendor_id ? "border-indigo-600 ring-2 ring-indigo-200" : "border-gray-200"}`}
+                onClick={() => setSelectedVendor(selectedVendor?.vendor_id === vendor.vendor_id ? null : vendor)}
+              >
+                <div className="font-bold text-lg mb-2">{vendor.Name || vendor.vendor_name || (vendor.vendor_id ? vendor.vendor_id.slice(0, 8) + '...' : '')}</div>
+                <div className="text-sm text-gray-600 mb-1">Mobile: {vendor.Mobile_No || 'N/A'}</div>
+                <div className="text-sm text-gray-600 mb-1">Area: {vendor.area}</div>
+                <div className="text-sm text-gray-600 mb-1">Societies: {Array.isArray(vendor.societies) ? vendor.societies.join(", ") : String(vendor.societies).replace(/[{}"]+/g, "").split(",").filter(Boolean).join(", ")}</div>
+                {vendor.services && (
+                  <div className="text-sm text-gray-600 mb-1">Services: {typeof vendor.services === 'string' && vendor.services.trim().toLowerCase() === 'both'
+                    ? 'Both (Cleaning and Cooking)'
+                    : Array.isArray(vendor.services)
+                      ? vendor.services.join(', ')
+                      : vendor.services}
+                  </div>
+                )}
+              </Card>
+              {/* On mobile, show availability right below the selected vendor card */}
+              {isMobile && selectedVendor?.vendor_id === vendor.vendor_id && (
+                <div className="overflow-x-auto mt-2">
+                  <div>
+                    {vendorSlots.map((row, idx) => {
+                      const availableSlots = TIME_SLOTS.filter(slot => row[`slot_${slot.start}_${slot.end}`]);
+                      if (availableSlots.length === 0) return null;
+                      return (
+                        <div key={row.date} className={idx !== 0 ? "mt-1 pt-1 border-t border-gray-100" : ""}>
+                          <span className="font-medium text-xs mr-2 align-middle">
+                            {new Date(row.date).toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
+                          </span>
+                          {availableSlots.map(slot => (
+                            <span key={slot.label} className="inline-block px-1.5 py-0.5 text-[11px] font-semibold bg-green-100 text-green-700 rounded mr-1 align-middle">
+                              {slot.label}
+                            </span>
+                          ))}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
         </div>
-        {/* 7-day grid for selected vendor */}
-        {selectedVendor && (
+        {/* 7-day grid for selected vendor (desktop only) */}
+        {!isMobile && selectedVendor && (
           <Card className="p-6 w-full mb-8">
             <h2 className="text-xl font-semibold mb-2">Availability for {selectedVendor.Name || selectedVendor.vendor_name || (selectedVendor.vendor_id ? selectedVendor.vendor_id.slice(0, 8) + '...' : '')}</h2>
             <div className="text-base text-gray-700 mb-4">
@@ -183,35 +217,24 @@ export default function VendorSearchPage() {
               )}
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full border text-center table-auto">
-                <thead>
-                  <tr>
-                    <th className="border px-3 py-2 bg-gray-100 text-base font-semibold whitespace-nowrap min-w-[160px]">Date</th>
-                    {TIME_SLOTS.map(slot => (
-                      <th key={slot.start} className="border px-3 py-2 bg-gray-100 text-base font-semibold">{slot.label}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {vendorSlots.map(row => (
-                    <tr key={row.date}>
-                      <td className="border px-3 py-2 font-medium whitespace-nowrap min-w-[160px] bg-white">
+              <div>
+                {vendorSlots.map((row, idx) => {
+                  const availableSlots = TIME_SLOTS.filter(slot => row[`slot_${slot.start}_${slot.end}`]);
+                  if (availableSlots.length === 0) return null;
+                  return (
+                    <div key={row.date} className={idx !== 0 ? "mt-1 pt-1 border-t border-gray-100" : ""}>
+                      <span className="font-medium text-xs mr-2 align-middle">
                         {new Date(row.date).toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
-                      </td>
-                      {TIME_SLOTS.map(slot => {
-                        const col = `slot_${slot.start}_${slot.end}`;
-                        return (
-                          <td key={col} className="border px-3 py-2 bg-white">
-                            {row[col] ? (
-                              <span className="inline-block px-2 py-1 text-xs font-semibold bg-green-100 text-green-700 rounded">Available</span>
-                            ) : null}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                      </span>
+                      {availableSlots.map(slot => (
+                        <span key={slot.label} className="inline-block px-1.5 py-0.5 text-[11px] font-semibold bg-green-100 text-green-700 rounded mr-1 align-middle">
+                          {slot.label}
+                        </span>
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </Card>
         )}
