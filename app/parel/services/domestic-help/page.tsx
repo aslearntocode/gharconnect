@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import Header from '@/components/Header';
 // If you see a module not found error for 'react-responsive', run: npm install react-responsive
 import { useMediaQuery } from 'react-responsive';
+import { VendorRating } from '@/components/VendorRating';
+import { useRouter } from 'next/navigation';
 
 const TIME_SLOTS = [
   { start: 9, end: 10, label: "9-10am" },
@@ -40,8 +42,10 @@ export default function VendorSearchPage() {
   const [societyFilter, setSocietyFilter] = useState("");
   const [serviceFilter, setServiceFilter] = useState("");
   const [loading, setLoading] = useState(false);
+  const [vendorRatings, setVendorRatings] = useState<Record<string, { rating: number; count: number }>>({});
   const supabase = createClientComponentClient();
   const isMobile = useMediaQuery({ maxWidth: 767 });
+  const router = useRouter();
 
   // Fetch all vendors (distinct by vendor_id)
   useEffect(() => {
@@ -65,6 +69,42 @@ export default function VendorSearchPage() {
     };
     fetchVendors();
   }, []);
+
+  // Fetch ratings for all vendors
+  useEffect(() => {
+    const fetchRatings = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('reviews')
+          .select('card_id, rating');
+
+        if (error) {
+          console.error('Error fetching ratings:', error);
+          return;
+        }
+
+        const ratings: Record<string, { rating: number; count: number }> = {};
+        data?.forEach(review => {
+          if (!ratings[review.card_id]) {
+            ratings[review.card_id] = { rating: 0, count: 0 };
+          }
+          ratings[review.card_id].rating += review.rating;
+          ratings[review.card_id].count += 1;
+        });
+
+        // Calculate average ratings
+        Object.keys(ratings).forEach(vendorId => {
+          ratings[vendorId].rating = ratings[vendorId].rating / ratings[vendorId].count;
+        });
+
+        setVendorRatings(ratings);
+      } catch (err) {
+        console.error('Error in fetchRatings:', err);
+      }
+    };
+
+    fetchRatings();
+  }, [supabase]);
 
   // Filtered vendors
   const filteredVendors = vendors.filter(vendor => {
@@ -161,7 +201,17 @@ export default function VendorSearchPage() {
                 className={`p-4 cursor-pointer border-2 transition-all duration-200 ${selectedVendor?.vendor_id === vendor.vendor_id ? "border-indigo-600 ring-2 ring-indigo-200" : "border-gray-200"}`}
                 onClick={() => setSelectedVendor(selectedVendor?.vendor_id === vendor.vendor_id ? null : vendor)}
               >
-                <div className="font-bold text-lg mb-2">{vendor.Name || vendor.vendor_name || (vendor.vendor_id ? vendor.vendor_id.slice(0, 8) + '...' : '')}</div>
+                <div className="flex justify-between items-start mb-2">
+                  <div className="font-bold text-lg">{vendor.Name || vendor.vendor_name || (vendor.vendor_id ? vendor.vendor_id.slice(0, 8) + '...' : '')}</div>
+                  <VendorRating
+                    vendorId={vendor.vendor_id}
+                    vendorName={vendor.Name || vendor.vendor_name || vendor.vendor_id}
+                    vendorType="service"
+                    onRatingAdded={() => {
+                      router.refresh();
+                    }}
+                  />
+                </div>
                 <div className="text-sm text-gray-600 mb-1">Mobile: {vendor.Mobile_No || 'N/A'}</div>
                 <div className="text-sm text-gray-600 mb-1">Area: {vendor.area}</div>
                 <div className="text-sm text-gray-600 mb-1">Societies: {Array.isArray(vendor.societies) ? vendor.societies.join(", ") : String(vendor.societies).replace(/[{}"]+/g, "").split(",").filter(Boolean).join(", ")}</div>
@@ -171,6 +221,16 @@ export default function VendorSearchPage() {
                     : Array.isArray(vendor.services)
                       ? vendor.services.join(', ')
                       : vendor.services}
+                  </div>
+                )}
+                {vendorRatings[vendor.vendor_id] && (
+                  <div className="flex items-center gap-1 text-yellow-500 mt-2">
+                    <span className="text-sm font-medium">
+                      {vendorRatings[vendor.vendor_id].rating.toFixed(1)}
+                    </span>
+                    <span className="text-gray-500 text-xs">
+                      ({vendorRatings[vendor.vendor_id].count} {vendorRatings[vendor.vendor_id].count === 1 ? 'rating' : 'ratings'})
+                    </span>
                   </div>
                 )}
               </Card>
