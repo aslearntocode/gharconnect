@@ -9,6 +9,7 @@ import Header from '@/components/Header';
 import { useMediaQuery } from 'react-responsive';
 import { VendorRating } from '@/components/VendorRating';
 import { useRouter } from 'next/navigation';
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 
 const TIME_SLOTS = [
   { start: 9, end: 10, label: "9-10am" },
@@ -43,6 +44,8 @@ export default function VendorSearchPage() {
   const [serviceFilter, setServiceFilter] = useState("");
   const [loading, setLoading] = useState(false);
   const [vendorRatings, setVendorRatings] = useState<Record<string, { rating: number; count: number }>>({});
+  const [showReviews, setShowReviews] = useState<Record<string, boolean>>({});
+  const [reviews, setReviews] = useState<Record<string, any[]>>({});
   const supabase = createClientComponentClient();
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const router = useRouter();
@@ -105,6 +108,42 @@ export default function VendorSearchPage() {
 
     fetchRatings();
   }, [supabase]);
+
+  // Fetch reviews for a specific vendor
+  const fetchReviews = async (vendorId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('reviews')
+        .select('*')
+        .eq('card_id', vendorId)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching reviews:', error);
+        return;
+      }
+
+      if (data) {
+        setReviews(prev => ({
+          ...prev,
+          [vendorId]: data
+        }));
+      }
+    } catch (err) {
+      console.error('Error in fetchReviews:', err);
+    }
+  };
+
+  // Toggle reviews for a vendor
+  const toggleReviews = async (vendorId: string) => {
+    if (!showReviews[vendorId]) {
+      await fetchReviews(vendorId);
+    }
+    setShowReviews(prev => ({
+      ...prev,
+      [vendorId]: !prev[vendorId]
+    }));
+  };
 
   // Filtered vendors
   const filteredVendors = vendors.filter(vendor => {
@@ -198,8 +237,7 @@ export default function VendorSearchPage() {
           {filteredVendors.map(vendor => (
             <div key={vendor.vendor_id}>
               <Card
-                className={`p-4 cursor-pointer border-2 transition-all duration-200 ${selectedVendor?.vendor_id === vendor.vendor_id ? "border-indigo-600 ring-2 ring-indigo-200" : "border-gray-200"}`}
-                onClick={() => setSelectedVendor(selectedVendor?.vendor_id === vendor.vendor_id ? null : vendor)}
+                className={`p-4 border-2 transition-all duration-200 ${selectedVendor?.vendor_id === vendor.vendor_id ? "border-indigo-600 ring-2 ring-indigo-200" : "border-gray-200"}`}
               >
                 <div className="flex justify-between items-start mb-2">
                   <div className="font-bold text-lg">{vendor.Name || vendor.vendor_name || (vendor.vendor_id ? vendor.vendor_id.slice(0, 8) + '...' : '')}</div>
@@ -224,16 +262,79 @@ export default function VendorSearchPage() {
                   </div>
                 )}
                 {vendorRatings[vendor.vendor_id] && (
-                  <div className="flex items-center gap-1 text-yellow-500 mt-2">
+                  <div className="flex items-center gap-1 text-yellow-500 mt-2 mb-3">
                     <span className="text-sm font-medium">
                       {vendorRatings[vendor.vendor_id].rating.toFixed(1)}
                     </span>
                     <span className="text-gray-500 text-xs">
-                      ({vendorRatings[vendor.vendor_id].count} {vendorRatings[vendor.vendor_id].count === 1 ? 'rating' : 'ratings'})
+                      ({vendorRatings[vendor.vendor_id].count})
                     </span>
                   </div>
                 )}
+                {vendorRatings[vendor.vendor_id] && vendorRatings[vendor.vendor_id].count > 0 && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleReviews(vendor.vendor_id);
+                    }}
+                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-2"
+                  >
+                    {showReviews[vendor.vendor_id] ? (
+                      <>
+                        <FiChevronUp className="w-4 h-4" />
+                        Hide Reviews
+                      </>
+                    ) : (
+                      <>
+                        <FiChevronDown className="w-4 h-4" />
+                        View Reviews
+                      </>
+                    )}
+                  </button>
+                )}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedVendor(selectedVendor?.vendor_id === vendor.vendor_id ? null : vendor);
+                  }}
+                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-2"
+                >
+                  {selectedVendor?.vendor_id === vendor.vendor_id ? (
+                    <>
+                      <FiChevronUp className="w-4 h-4" />
+                      Hide Availability
+                    </>
+                  ) : (
+                    <>
+                      <FiChevronDown className="w-4 h-4" />
+                      View Availability
+                    </>
+                  )}
+                </button>
               </Card>
+              {/* Reviews section */}
+              {showReviews[vendor.vendor_id] && reviews[vendor.vendor_id] && (
+                <Card className="mt-2 p-4 bg-gray-50">
+                  <div className="space-y-4">
+                    {reviews[vendor.vendor_id].map((review, index) => (
+                      <div key={index} className="border-b border-gray-200 pb-3 last:border-0 last:pb-0">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium text-gray-900">{review.user_name}</span>
+                          <span className="text-sm text-yellow-500 font-medium">{review.rating}/10</span>
+                        </div>
+                        <p className="text-sm text-gray-600">{review.comment}</p>
+                        <p className="text-xs text-gray-500 mt-1">
+                          {new Date(review.created_at).toLocaleDateString('en-IN', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric'
+                          })}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              )}
               {/* On mobile, show availability right below the selected vendor card */}
               {isMobile && selectedVendor?.vendor_id === vendor.vendor_id && (
                 <div className="overflow-x-auto mt-2">
