@@ -13,13 +13,13 @@ export interface Vendor {
 
 export const vendors: Vendor[] = [
   {
-    name: 'MedPlus Pharmacy',
+    name: 'Wellness Forever',
     services: [{
       name: 'General Medicines',
       description: 'All types of medicines available',
       price: 'MRP',
       unit: 'per item'
     }],
-    mobile: '+91 9892826805'
+    mobile: '+91 8657941715'
   }
 ]; 
