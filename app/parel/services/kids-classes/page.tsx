@@ -1,16 +1,32 @@
 'use client';
 
+import { useState } from 'react';
 import Header from '@/components/Header';
 import { vendors } from '@/app/parel/data/services/kids-classes';
 import { VendorCard } from '@/components/VendorCard';
 import { FiSearch } from 'react-icons/fi';
 
 export default function KidsClassesPage() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filter vendors based on search query
+  const filteredVendors = vendors.filter(vendor => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      vendor.name.toLowerCase().includes(searchLower) ||
+      vendor.mobile.includes(searchQuery) ||
+      vendor.services.some(service =>
+        service.name.toLowerCase().includes(searchLower) ||
+        service.description.toLowerCase().includes(searchLower)
+      )
+    );
+  });
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="relative">
-        <div className="w-full h-32 bg-blue-600 flex items-center justify-center">
+        <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
           <h1 className="text-3xl md:text-4xl font-bold text-white">Kids Classes</h1>
         </div>
         <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-7 w-full max-w-2xl z-10">
@@ -20,22 +36,29 @@ export default function KidsClassesPage() {
               type="text"
               placeholder="Search for kids classes..."
               className="flex-1 outline-none bg-transparent text-gray-700 text-base"
-              disabled
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </div>
       </div>
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {vendors.map((vendor, index) => (
-              <VendorCard
-                key={index}
-                vendor={vendor}
-                type="service"
-              />
-            ))}
-          </div>
+          {filteredVendors.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">No classes found matching your search.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredVendors.map((vendor, index) => (
+                <VendorCard
+                  key={index}
+                  vendor={vendor}
+                  type="service"
+                />
+              ))}
+            </div>
+          )}
         </div>
       </main>
     </div>

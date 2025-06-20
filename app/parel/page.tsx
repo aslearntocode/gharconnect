@@ -415,10 +415,10 @@ export default function Home() {
                   <span className="font-bold text-[#4F46E5] text-xs md:text-base">Rent</span>
                 </div>
               </Link>
-              <Link href="/parel/sell/" className="col-span-1">
+              <Link href="/parel/sell" className="col-span-1">
                 <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
                   <FiDollarSign className="w-5 h-5 md:w-8 md:h-8 text-green-600 mb-1 md:mb-2" />
-                  <span className="font-bold text-[#4F46E5] text-xs md:text-base">Sell (Coming Soon)</span>
+                  <span className="font-bold text-[#4F46E5] text-xs md:text-base">Sell</span>
                 </div>
               </Link>
               <Link href="#" className="col-span-1" onClick={e => { e.preventDefault(); document.getElementById('services-categories')?.scrollIntoView({ behavior: 'smooth' }); }}>
@@ -464,16 +464,14 @@ export default function Home() {
                   </ul>
                   <div className="flex flex-row justify-center items-end gap-3 md:gap-4 mt-4 w-full grow">
                     <a 
-                      href="https://wa.me/919321314553?text=I%20want%20to%20list%20my%20property%20in%20Parel" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center px-3 py-1.5 bg-green-600 text-white hover:bg-green-700 rounded text-xs font-semibold transition-all duration-300 shadow-md"
+                      href="/parel/rent-apartment" 
+                      className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white hover:bg-blue-700 rounded text-xs font-semibold transition-all duration-300 shadow-md"
                       style={{ minHeight: '36px' }}
                     >
-                      <span className="hidden md:inline">WhatsApp Details on 9321314553</span>
-                      <span className="md:hidden">WhatsApp to List</span>
-                      <svg className="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
+                      <span className="hidden md:inline">List Your Property</span>
+                      <span className="md:hidden">List Property</span>
+                      <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
                     </a>
                   </div>
@@ -769,9 +767,8 @@ export default function Home() {
           <div className="flex-1 flex flex-col items-center justify-center text-center z-10 w-full min-h-[180px] md:pl-[260px] md:pr-[260px] p-6 md:p-0">
             <h2 className="text-2xl font-bold mb-2 text-gray-900">Have a property to rent?</h2>
             <p className="text-gray-600 mb-4">List your property & connect with clients faster!</p>
-            <a href="https://wa.me/919321314553?text=Hi, I want to list my property for rent on GharConnect" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors text-base shadow-lg">
-              <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/><path d="M12.005 2.003c-5.522 0-10 4.477-10 10 0 1.657.402 3.22 1.104 4.604l-1.1 4.021 4.142-1.085c1.342.734 2.885 1.16 4.554 1.16 5.522 0 10-4.477 10-10s-4.478-10-10-10zm0 18.197c-1.488 0-2.93-.366-4.188-1.057l-.3-.17-2.457.644.656-2.401-.195-.312c-.646-1.037-.99-2.234-.99-3.471 0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z"/></svg>
-              WhatsApp to List
+            <a href="/parel/rent-apartment" className="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-base shadow-lg">
+              List Your Property
             </a>
           </div>
         </div>

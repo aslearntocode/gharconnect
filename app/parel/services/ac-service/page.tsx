@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
 import { acServiceServices } from '@/app/parel/data/services/acservice';
@@ -13,6 +14,21 @@ const vendors = Array.from(new Set(acServiceServices.map(p => p.name))).map(name
 }));
 
 export default function ACServicePage() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filter vendors based on search query
+  const filteredVendors = vendors.filter(vendor => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      vendor.name.toLowerCase().includes(searchLower) ||
+      vendor.mobile.toLowerCase().includes(searchLower) ||
+      vendor.services.some(service => 
+        service.name.toLowerCase().includes(searchLower) ||
+        service.description.toLowerCase().includes(searchLower)
+      )
+    );
+  });
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -29,22 +45,29 @@ export default function ACServicePage() {
               type="text"
               placeholder="Search for AC services..."
               className="flex-1 outline-none bg-transparent text-gray-700 text-base"
-              disabled
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </div>
       </div>
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {vendors.map((vendor, index) => (
-              <VendorCard
-                key={index}
-                vendor={vendor}
-                type="service"
-              />
-            ))}
-          </div>
+          {filteredVendors.length === 0 ? (
+            <div className="text-center text-gray-500 mt-8">
+              No results found for "{searchQuery}"
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredVendors.map((vendor, index) => (
+                <VendorCard
+                  key={index}
+                  vendor={vendor}
+                  type="service"
+                />
+              ))}
+            </div>
+          )}
         </div>
       </main>
     </div>

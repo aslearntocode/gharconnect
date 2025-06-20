@@ -1,11 +1,25 @@
 'use client';
 
+import { useState } from 'react';
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
 import { pestControlServices } from '@/app/parel/data/services/pest-control';
 import { VendorCard } from '@/components/VendorCard';
 
 export default function PestControlPage() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filter vendors based on search query
+  const filteredVendors = pestControlServices.filter(service => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      service.name.toLowerCase().includes(searchLower) ||
+      service.mobile.toLowerCase().includes(searchLower) ||
+      service.description.toLowerCase().includes(searchLower) ||
+      service.category.toLowerCase().includes(searchLower)
+    );
+  });
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -22,26 +36,33 @@ export default function PestControlPage() {
               type="text"
               placeholder="Search for pest control services..."
               className="flex-1 outline-none bg-transparent text-gray-700 text-base"
-              disabled
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </div>
       </div>
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {pestControlServices && pestControlServices.map((service) => (
-              <VendorCard
-                key={service.id}
-                vendor={{
-                  name: service.name,
-                  services: [service],
-                  mobile: service.mobile
-                }}
-                type="service"
-              />
-            ))}
-          </div>
+          {filteredVendors.length === 0 ? (
+            <div className="text-center text-gray-500 mt-8">
+              No results found for "{searchQuery}"
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredVendors.map((service) => (
+                <VendorCard
+                  key={service.id}
+                  vendor={{
+                    name: service.name,
+                    services: [service],
+                    mobile: service.mobile
+                  }}
+                  type="service"
+                />
+              ))}
+            </div>
+          )}
         </div>
       </main>
     </div>

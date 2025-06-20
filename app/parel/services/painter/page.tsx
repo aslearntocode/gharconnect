@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
 import { painterServices } from '@/app/parel/data/services/painter';
@@ -13,6 +14,21 @@ const vendors = Array.from(new Set(painterServices.map(p => p.brand))).map(brand
 }));
 
 export default function PainterPage() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filter vendors based on search query
+  const filteredVendors = vendors.filter(vendor => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      vendor.name.toLowerCase().includes(searchLower) ||
+      vendor.mobile.includes(searchQuery) ||
+      vendor.services.some(service =>
+        service.name.toLowerCase().includes(searchLower) ||
+        service.description.toLowerCase().includes(searchLower)
+      )
+    );
+  });
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -29,22 +45,29 @@ export default function PainterPage() {
               type="text"
               placeholder="Search for painting services..."
               className="flex-1 outline-none bg-transparent text-gray-700 text-base"
-              disabled
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </div>
       </div>
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {vendors.map((vendor, index) => (
-              <VendorCard
-                key={index}
-                vendor={vendor}
-                type="service"
-              />
-            ))}
-          </div>
+          {filteredVendors.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">No painting services found matching your search.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredVendors.map((vendor, index) => (
+                <VendorCard
+                  key={index}
+                  vendor={vendor}
+                  type="service"
+                />
+              ))}
+            </div>
+          )}
         </div>
       </main>
     </div>
