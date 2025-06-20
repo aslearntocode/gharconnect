@@ -316,7 +316,7 @@ export default function RentPage() {
                             </div>
                             <div className="mb-2">
                               <span className="font-semibold">Address: </span>
-                              <span>{apt.building_name}, {apt.street_name}, {apt.tower}, {apt.apartment_number}, {apt.city}, {apt.state} - {apt.pincode}</span>
+                              <span>{apt.building_name}, {apt.street_name}, {apt.city}, {apt.state} - {apt.pincode}</span>
                             </div>
                             <div className="mb-2">
                               <span className="font-semibold">Rent: </span>
@@ -399,7 +399,7 @@ export default function RentPage() {
                       </div>
                       <div className="mb-2">
                         <span className="font-semibold">Address: </span>
-                        <span>{apt.building_name}, {apt.street_name}, {apt.tower}, {apt.apartment_number}, {apt.city}, {apt.state} - {apt.pincode}</span>
+                        <span>{apt.building_name}, {apt.street_name}, {apt.city}, {apt.state} - {apt.pincode}</span>
                       </div>
                       <div className="mb-2">
                         <span className="font-semibold">Security Deposit: </span>
