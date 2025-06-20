@@ -51,9 +51,16 @@ export default function VendorSearchPage() {
   useEffect(() => {
     const fetchVendors = async () => {
       setLoading(true);
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      const todayDateString = `${year}-${month}-${day}`;
+
       const { data, error } = await supabase
         .from("vendor_weekly_availability")
         .select("vendor_id, Name, Mobile_No, area, societies, date, services")
+        .gte("date", todayDateString)
         .order("date", { ascending: true });
       if (!error && data) {
         // Group by vendor_id, get latest area/societies
@@ -168,10 +175,17 @@ export default function VendorSearchPage() {
     if (!selectedVendor) return;
     const fetchSlots = async () => {
       setLoading(true);
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      const todayDateString = `${year}-${month}-${day}`;
+
       const { data, error } = await supabase
         .from("vendor_weekly_availability")
         .select("*")
         .eq("vendor_id", selectedVendor.vendor_id)
+        .gte("date", todayDateString)
         .order("date", { ascending: true });
       if (!error && data) setVendorSlots(data);
       setLoading(false);

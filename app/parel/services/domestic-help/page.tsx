@@ -28,6 +28,7 @@ const TIME_SLOTS = [
 function getNext7Days() {
   const days = [];
   const today = new Date();
+  today.setHours(0, 0, 0, 0); // Normalize to the start of the day
   for (let i = 0; i < 7; i++) {
     const d = new Date(today);
     d.setDate(today.getDate() + i);
@@ -52,9 +53,16 @@ export default function VendorSearchPage() {
   useEffect(() => {
     const fetchVendors = async () => {
       setLoading(true);
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      const todayDateString = `${year}-${month}-${day}`;
+
       const { data, error } = await supabase
         .from("vendor_weekly_availability")
         .select("vendor_id, Name, Mobile_No, area, societies, date, services")
+        .gte("date", todayDateString)
         .order("date", { ascending: true });
       if (!error && data) {
         // Group by vendor_id, get latest area/societies
@@ -169,10 +177,17 @@ export default function VendorSearchPage() {
     if (!selectedVendor) return;
     const fetchSlots = async () => {
       setLoading(true);
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = String(today.getMonth() + 1).padStart(2, '0');
+      const day = String(today.getDate()).padStart(2, '0');
+      const todayDateString = `${year}-${month}-${day}`;
+
       const { data, error } = await supabase
         .from("vendor_weekly_availability")
         .select("*")
         .eq("vendor_id", selectedVendor.vendor_id)
+        .gte("date", todayDateString)
         .order("date", { ascending: true });
       if (!error && data) setVendorSlots(data);
       setLoading(false);
