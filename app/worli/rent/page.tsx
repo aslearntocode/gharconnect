@@ -262,11 +262,13 @@ export default function RentPage() {
                     className={`group transition-colors duration-150 cursor-pointer ${expandedIdx === idx ? 'bg-indigo-50 border-l-4 border-indigo-400 shadow' : 'hover:bg-indigo-50'}`}
                     onClick={() => setExpandedIdx(expandedIdx === idx ? null : idx)}
                   >
-                    <td className="px-4 py-3 flex items-center gap-2">
-                      <span className={`transition-transform duration-200 ${expandedIdx === idx ? 'rotate-180' : ''}`}> 
-                        <FiChevronDown className="w-5 h-5 text-indigo-500 opacity-80 group-hover:opacity-100" />
-                      </span>
-                      <FiHome className="text-indigo-500 w-6 h-6" />
+                    <td className="px-4 py-3">
+                      <div className="flex items-center gap-2">
+                        <span className={`transition-transform duration-200 ${expandedIdx === idx ? 'rotate-180' : ''}`}> 
+                          <FiChevronDown className="w-5 h-5 text-indigo-500 opacity-80 group-hover:opacity-100" />
+                        </span>
+                        <FiHome className="text-indigo-500 w-6 h-6" />
+                      </div>
                     </td>
                     <td className="px-4 py-3">{apt.building_name || '-'}</td>
                     <td className="px-4 py-3">{apt.location || '-'}</td>
