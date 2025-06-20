@@ -13,6 +13,60 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'why-landlords-shouldnt-pay-huge-brokerage',
+    title: "Why Landlords and Tenants Shouldn't Pay a Huge Brokerage for a Lease Agreement",
+    excerpt: 'When it comes to renting a home in India, one of the most frustrating parts for both landlords and tenants is the high brokerage fee. Learn how GharConnect is changing the game.',
+    content: `
+# Why Landlords and Tenants Shouldn't Pay a Huge Brokerage for a Lease Agreement
+### And how GharConnect.in is changing the game with a 10% digital solution
+
+When it comes to renting a home in India, one of the most frustrating parts for both landlords and tenants is the high brokerage fee—often equivalent to one full month's rent, sometimes even more. For a process that involves minimal effort from many traditional brokers, this cost is hard to justify.
+
+### Let's break it down:
+#### 1. Traditional Brokers Charge a Lot for Minimal Work
+Most brokers help you find a tenant or landlord, get the lease signed, and then disappear. In many cases, they:
+- Don't assist with documentation.
+- Don't ensure legal compliance.
+- Don't even digitize the agreement.
+
+Yet they charge a full month's rent as commission.
+
+#### 2. Lease Agreements Are Now Digital and Easier Than Ever
+Thanks to digital platforms, creating a legally valid lease agreement can now be done in a few clicks. You don't need to run to notaries, stamp vendors, or government offices.
+
+Platforms like GharConnect.in handle:
+- Digital identity verification
+- Legally binding e-agreements
+- E-stamping (where required)
+- Secure storage of agreements
+
+All online, all trackable, and completely legitimate.
+
+#### 3. Paying 100% Brokerage Just Doesn't Add Up
+Let's say your monthly rent is ₹30,000. A traditional broker would charge ₹30,000 as commission—without offering any digital service, legal assurance, or document storage.
+
+At GharConnect, we only charge 10% of one month's rent—₹3,000 in this case—and offer complete digital onboarding, agreement creation, and verification.
+
+You get better service, faster turnaround, and legal peace of mind—for one-tenth the cost.
+
+### Why GharConnect.in?
+- ✅ Digital and legally compliant agreements
+- ✅ E-stamping and Aadhaar verification included
+- ✅ No hidden charges
+- ✅ Transparent pricing (just 10% of one month's rent)
+- ✅ No need for physical visits
+
+Stop overpaying brokers. Start using GharConnect.in for simple, fast, and affordable rental agreements.
+
+👉 Visit [www.gharconnect.in](https://www.gharconnect.in)
+    `,
+    author: 'GharConnect Team',
+    date: '2025-06-20',
+    readTime: '4 min read',
+    category: 'Rental Tips',
+    image: '/blog/no-brokerage-lease-agreement.jpg'
+  },
+  {
     slug: 'school-centric-luxury-towers-south-bombay',
     title: '10 School-Centric Luxury Towers in South Bombay: Perfect for Families with Kids',
     excerpt: 'Discover the most prestigious luxury towers in South Bombay that offer proximity to top international schools like DAIS, Bombay Scottish, BD Somani, and more.',
