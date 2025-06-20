@@ -26,7 +26,7 @@ When it comes to renting a home in India, one of the most frustrating parts for 
 #### 1. Traditional Brokers Charge a Lot for Minimal Work
 Most brokers help you find a tenant or landlord, get the lease signed, and then disappear. In many cases, they:
 - Don't assist with documentation.
-- Don't ensure legal compliance.
+- Don't ensure property readiness.
 - Don't even digitize the agreement.
 
 Yet they charge a full month's rent as commission.
