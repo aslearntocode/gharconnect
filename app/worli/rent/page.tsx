@@ -277,12 +277,12 @@ export default function RentPage() {
                     <td className="px-4 py-3">{apt.available_from ? new Date(apt.available_from).toLocaleDateString() : '-'}</td>
                     <td className="px-4 py-3">
                       <a 
-                        href={`https://wa.me/91${apt.contact_phone}?text=Hi, I am interested in knowing more about the property at ${apt.building_name}`}
+                        href={`https://wa.me/919321314553?text=Hi, I am interested in knowing more about the property at ${apt.building_name}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="mt-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs text-left inline-block"
                       >
-                        <span>WhatsApp<br />+91 {apt.contact_phone}</span>
+                        <span>WhatsApp<br />+91 9321314553</span>
                       </a>
                     </td>
                   </tr>
@@ -366,12 +366,12 @@ export default function RentPage() {
                       <div>{apt.available_from ? new Date(apt.available_from).toLocaleDateString() : '-'}</div>
                     </div>
                     <a 
-                      href={`https://wa.me/91${apt.contact_phone}?text=Hi, I am interested in knowing more about the property at ${apt.building_name}`}
+                      href={`https://wa.me/919321314553?text=Hi, I am interested in knowing more about the property at ${apt.building_name}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="mt-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs text-left inline-block"
                     >
-                      <span>WhatsApp +91 {apt.contact_phone}</span>
+                      <span>WhatsApp +91 9321314553</span>
                     </a>
                   </div>
                   {expandedMobileIdx === idx && (
