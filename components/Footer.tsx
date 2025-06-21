@@ -22,12 +22,12 @@ export default function Footer() {
               <li>
                 <Link href="/parel/careers" className="hover:text-indigo-600 transition-colors">Careers</Link>
               </li>
-              {/* <li>
-                <Link href="/privacy" className="hover:text-white/90">Privacy Policy</Link>
+              <li>
+                <Link href={isMainPage ? "/terms" : `/${society}/terms`} className="hover:text-indigo-600 transition-colors">Terms & Conditions</Link>
               </li>
               <li>
-                <Link href="/terms" className="hover:text-white/90">Terms & Conditions</Link>
-              </li> */}
+                <Link href={isMainPage ? "/privacy" : `/${society}/privacy`} className="hover:text-indigo-600 transition-colors">Privacy Policy</Link>
+              </li>
               {!isMainPage && (
                 <li>
                   <Link href={`/${society}/blog`} className="hover:text-indigo-600 transition-colors">Blogs</Link>

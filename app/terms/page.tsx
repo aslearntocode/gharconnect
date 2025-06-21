@@ -1,20 +1,29 @@
-'use client'
+import { Metadata } from 'next';
+import Link from 'next/link';
 
-import Header from "@/components/Header"
+export const metadata: Metadata = {
+  title: 'Terms & Conditions - GharConnect',
+  description: 'Terms and conditions for using GharConnect platform. Important information about vendor listings and user responsibilities.',
+};
 
-export default function ParelTermsPage() {
+export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
-      <Header />
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4 text-center">
-          Terms & Conditions
-        </h1>
-        <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-          Important information about using GharConnect platform and your responsibilities.
-        </p>
-        
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <header className="w-full bg-white shadow-sm py-4 px-6 flex items-center justify-center mb-8">
+        <div className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
+            <h1 className="text-2xl font-extrabold text-indigo-700 tracking-tight">GharConnect</h1>
+            <span className="ml-2 text-sm text-gray-400 font-medium hidden sm:inline">Community Platform</span>
+          </Link>
+        </div>
+      </header>
+
+      {/* Content */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-sm p-8">
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">Terms & Conditions</h1>
+          
           <div className="prose prose-lg max-w-none">
             <div className="mb-8">
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">Important Disclaimer</h2>
@@ -98,7 +107,7 @@ export default function ParelTermsPage() {
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 } 
