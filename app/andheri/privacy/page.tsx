@@ -6,14 +6,18 @@ export default function AndheriPrivacyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       <Header />
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4 text-center">
-          Privacy Policy
-        </h1>
-        <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
-          Learn how we collect, use, and protect your personal information on GharConnect.
-        </p>
-        
+      
+      {/* Indigo Banner */}
+      <section className="w-full bg-indigo-600 text-white py-8">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">Privacy Policy</h1>
+          <p className="text-lg md:text-xl text-indigo-100">
+            Learn how we collect, use, and protect your personal information
+          </p>
+        </div>
+      </section>
+
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="bg-white rounded-lg shadow-sm p-8">
           <div className="prose prose-lg max-w-none">
             <div className="mb-8">
