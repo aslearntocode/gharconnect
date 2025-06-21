@@ -185,7 +185,7 @@ export default function RentPage() {
       <Header />
       {/* Blue Banner */}
       <div className="relative">
-        <div className="w-full h-32 bg-blue-600 flex items-center justify-center">
+        <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
           <h1 className="text-3xl md:text-4xl font-bold text-white">Rental Apartments</h1>
         </div>
       </div>
@@ -284,14 +284,13 @@ export default function RentPage() {
                     <td className="px-4 py-3">{apt.furnishing_status ? apt.furnishing_status.charAt(0).toUpperCase() + apt.furnishing_status.slice(1) : '-'}</td>
                     <td className="px-4 py-3">{apt.available_from ? new Date(apt.available_from).toLocaleDateString() : '-'}</td>
                     <td className="px-4 py-3">
-                      <a 
-                        href={`https://wa.me/919321314553?text=Hi, I am interested in knowing more about the property at ${apt.building_name}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs text-left inline-block"
+                      <Link
+                        href={`/parel/apply-for-rent/${apt.id}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
                       >
-                        <span>WhatsApp<br />+91 9321314553</span>
-                      </a>
+                        Schedule a Visit
+                      </Link>
                     </td>
                   </tr>
                   {expandedIdx === idx && (
@@ -336,6 +335,29 @@ export default function RentPage() {
                                 </ul>
                               </div>
                             )}
+                            <div className="text-sm text-gray-800 space-y-2 mt-4">
+                              <p><span className="font-semibold">BHK Type:</span> {apt.apartment_type}</p>
+                              <p><span className="font-semibold">Rent:</span> ₹{apt.rent_amount.toLocaleString()}</p>
+                              <p><span className="font-semibold">Deposit:</span> ₹{apt.security_deposit.toLocaleString()}</p>
+                              {/* Add other details you want to show */}
+                            </div>
+                            <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                              <Link
+                                href={`/parel/apply-for-rent/${apt.id}`}
+                                onClick={(e) => e.stopPropagation()}
+                                className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
+                              >
+                                Schedule a Visit
+                              </Link>
+                              <a 
+                                href="https://wa.me/919321314553"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+                              >
+                                WhatsApp
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -373,14 +395,13 @@ export default function RentPage() {
                       <div className="text-gray-500">Available</div>
                       <div>{apt.available_from ? new Date(apt.available_from).toLocaleDateString() : '-'}</div>
                     </div>
-                    <a 
-                      href={`https://wa.me/919321314553?text=Hi, I am interested in knowing more about the property at ${apt.building_name}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs text-left inline-block"
+                    <Link
+                      href={`/parel/apply-for-rent/${apt.id}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs inline-block"
                     >
-                      <span>WhatsApp +91 9321314553</span>
-                    </a>
+                      Schedule a Visit
+                    </Link>
                   </div>
                   {expandedMobileIdx === idx && (
                     <div className="bg-gray-50 rounded-b-xl px-4 py-4">

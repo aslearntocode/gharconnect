@@ -23,18 +23,9 @@ interface UserProfile {
   phone: string | null
 }
 
-interface Review {
-  id: string
-  card_name: string
-  rating: number
-  comment: string
-  created_at: string
-}
-
 export function ProfileDropdown({ user }: ProfileDropdownProps) {
   const router = useRouter()
   const [profile, setProfile] = useState<UserProfile | null>(null)
-  const [reviews, setReviews] = useState<Review[]>([])
   const [error, setError] = useState<string | null>(null)
   const supabase = createClientComponentClient()
 
@@ -59,23 +50,6 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
 
         // No profile found is not an error, just set profile to null
         setProfile(profileData || null);
-
-        // Fetch recent reviews
-        const { data: reviewsData, error: reviewsError } = await supabase
-          .from('reviews')
-          .select('*')
-          .eq('user_id', currentUser.uid)
-          .order('created_at', { ascending: false })
-          .limit(3);
-
-        if (reviewsError) {
-          console.error('Error fetching reviews:', reviewsError);
-          return;
-        }
-
-        if (reviewsData) {
-          setReviews(reviewsData);
-        }
       } catch (error) {
         console.error('Error:', error);
         setError('Failed to load profile information');
@@ -97,13 +71,6 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
     } catch (error) {
       console.error('Error signing out:', error)
     }
-  }
-
-  const getSentimentColor = (rating: number): string => {
-    if (rating >= 8) return 'text-green-400'
-    if (rating >= 6) return 'text-blue-400'
-    if (rating >= 4) return 'text-yellow-400'
-    return 'text-red-400'
   }
 
   return (
@@ -149,32 +116,6 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
               <p className="mt-2 text-xs text-gray-400">Profile not completed</p>
             )}
           </div>
-
-          {reviews.length > 0 && (
-            <div className="px-4 py-3">
-              <p className="text-sm font-medium text-gray-100 mb-2">Recent Reviews</p>
-              <div className="space-y-3">
-                {reviews.map((review) => (
-                  <div key={review.id} className="text-xs">
-                    <div className="flex items-center justify-between">
-                      <span className="text-gray-300 font-medium">{review.card_name}</span>
-                      <span className={`font-bold ${getSentimentColor(review.rating)}`}>
-                        {review.rating}/10
-                      </span>
-                    </div>
-                    <p className="text-gray-400 mt-1 line-clamp-2">{review.comment}</p>
-                    <p className="text-gray-500 mt-1">
-                      {new Date(review.created_at).toLocaleDateString('en-IN', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                      })}
-                    </p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
 
           <div className="px-1 py-1">
             <Menu.Item>
