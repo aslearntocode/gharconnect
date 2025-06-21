@@ -83,6 +83,7 @@ export default function Home() {
   const [touchMoved, setTouchMoved] = useState(false)
   const [isSwiping, setIsSwiping] = useState(false)
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
+  const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
 
   const testimonials = [
     {
@@ -128,6 +129,51 @@ export default function Home() {
       text: 'I was skeptical at first, but the app proved me wrong. No unwanted calls, no data sharing, and most importantly, it helped me find a card with great rewards for my business expenses.'
     }
   ]
+
+  const mainActionCards = [
+    {
+      id: 'rent',
+      title: 'Tenant',
+      description: 'Find your perfect rental property',
+      icon: FiHome,
+      href: '/parel/rent/',
+    },
+    {
+      id: 'list-property',
+      title: 'Landlord',
+      description: 'List Your Property for Rent',
+      icon: FiFileText,
+      href: '/parel/rent-apartment',
+    },
+    {
+      id: 'services',
+      title: 'Local Services',
+      description: 'Book trusted home services',
+      icon: FiTool,
+      href: '#',
+      onClick: (e: React.MouseEvent) => { e.preventDefault(); document.getElementById('services-categories')?.scrollIntoView({ behavior: 'smooth' }); }
+    },
+    {
+      id: 'delivery',
+      title: 'Local Delivery',
+      description: 'Get essentials delivered to your door',
+      icon: FiTruck,
+      href: '#',
+      onClick: (e: React.MouseEvent) => { e.preventDefault(); document.getElementById('delivery-categories')?.scrollIntoView({ behavior: 'smooth' }); }
+    }
+  ];
+
+  const nextSlide = () => {
+    setCurrentCarouselIndex((prev) => 
+      prev >= Math.ceil(mainActionCards.length / 2) - 1 ? 0 : prev + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentCarouselIndex((prev) => 
+      prev <= 0 ? Math.ceil(mainActionCards.length / 2) - 1 : prev - 1
+    );
+  };
 
   useEffect(() => {
     const checkMobile = () => {
@@ -408,31 +454,111 @@ export default function Home() {
               </p>
             </div>
             {/* Right Content - Main Offerings */}
-            <div className="grid grid-cols-2 gap-4">
-              <Link href="/parel/rent/" className="col-span-1">
-                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
-                  <FiHome className="w-5 h-5 md:w-8 md:h-8 text-blue-600 mb-1 md:mb-2" />
-                  <span className="font-bold text-[#4F46E5] text-xs md:text-base">Rent</span>
+            <div className="relative">
+              {/* Carousel Container */}
+              <div className="overflow-hidden rounded-2xl">
+                <div 
+                  className="flex transition-transform duration-500 ease-in-out"
+                  style={{ transform: `translateX(-${currentCarouselIndex * 100}%)` }}
+                >
+                  {/* First Slide - 2 cards */}
+                  <div className="flex gap-4 w-full flex-shrink-0">
+                    {mainActionCards.slice(0, 2).map((card) => {
+                      const IconComponent = card.icon;
+                      return (
+                        <Link 
+                          key={card.id} 
+                          href={card.href} 
+                          onClick={card.onClick}
+                          className="flex-1 group"
+                        >
+                          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 ease-in-out hover:scale-[1.02] p-6 h-40 flex flex-col items-start justify-center cursor-pointer">
+                            <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+                              <IconComponent className="w-8 h-8 text-indigo-600" />
+                            </div>
+                            <div className="text-left">
+                              <h3 className="font-bold text-gray-900 text-xl">
+                                {card.title}
+                              </h3>
+                              <p className="text-sm md:text-md text-gray-600 mt-1">
+                                {card.description}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
+                  
+                  {/* Second Slide - 2 cards */}
+                  <div className="flex gap-4 w-full flex-shrink-0">
+                    {mainActionCards.slice(2, 4).map((card) => {
+                      const IconComponent = card.icon;
+                      return (
+                        <Link 
+                          key={card.id} 
+                          href={card.href} 
+                          onClick={card.onClick}
+                          className="flex-1 group"
+                        >
+                          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 ease-in-out hover:scale-[1.02] p-6 h-40 flex flex-col items-start justify-center cursor-pointer">
+                            <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
+                              <IconComponent className="w-8 h-8 text-indigo-600" />
+                            </div>
+                            <div className="text-left">
+                              <h3 className="font-bold text-gray-900 text-xl">
+                                {card.title}
+                              </h3>
+                              <p className="text-sm md:text-md text-gray-600 mt-1">
+                                {card.description}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                      );
+                    })}
+                  </div>
                 </div>
-              </Link>
-              <Link href="/parel/sell" className="col-span-1">
-                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
-                  <FiDollarSign className="w-5 h-5 md:w-8 md:h-8 text-green-600 mb-1 md:mb-2" />
-                  <span className="font-bold text-[#4F46E5] text-xs md:text-base">Sell</span>
+              </div>
+              
+              {/* Navigation Controls */}
+              <div className="flex justify-center mt-6 space-x-2">
+                <button
+                  onClick={prevSlide}
+                  className="w-8 h-8 rounded-full bg-white border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md"
+                  aria-label="Previous slide"
+                >
+                  <svg className="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                
+                {/* Dots Indicator */}
+                <div className="flex space-x-1">
+                  {[0, 1].map((index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentCarouselIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                        currentCarouselIndex === index 
+                          ? 'bg-indigo-600 w-6' 
+                          : 'bg-gray-300 hover:bg-gray-400'
+                      }`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
                 </div>
-              </Link>
-              <Link href="#" className="col-span-1" onClick={e => { e.preventDefault(); document.getElementById('services-categories')?.scrollIntoView({ behavior: 'smooth' }); }}>
-                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
-                  <FiTool className="w-5 h-5 md:w-8 md:h-8 text-yellow-600 mb-1 md:mb-2" />
-                  <span className="font-bold text-[#4F46E5] text-xs md:text-base">Local Services</span>
-                </div>
-              </Link>
-              <Link href="#" className="col-span-1" onClick={e => { e.preventDefault(); document.getElementById('delivery-categories')?.scrollIntoView({ behavior: 'smooth' }); }}>
-                <div className="group bg-white hover:bg-gray-50 shadow-sm hover:shadow-md border-2 border-gray-200 hover:border-gray-300 rounded-xl transition-all duration-200 ease-in-out hover:scale-[1.02] p-2 md:p-4 h-16 md:h-24 flex flex-col items-center justify-center cursor-pointer">
-                  <FiTruck className="w-5 h-5 md:w-8 md:h-8 text-indigo-600 mb-1 md:mb-2" />
-                  <span className="font-bold text-[#4F46E5] text-xs md:text-base">Local Delivery</span>
-                </div>
-              </Link>
+                
+                <button
+                  onClick={nextSlide}
+                  className="w-8 h-8 rounded-full bg-white border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 flex items-center justify-center transition-all duration-200 shadow-sm hover:shadow-md"
+                  aria-label="Next slide"
+                >
+                  <svg className="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
