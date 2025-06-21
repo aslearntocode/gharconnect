@@ -90,86 +90,121 @@ export default function RentalProcedurePage() {
           </div>
         </div>
 
-        {/* Detailed Workflow */}
+        {/* Third Party Paperwork Section */}
         <div className="bg-white rounded-xl shadow-lg p-8 mb-16">
           <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">
-            How GharConnect Handles Everything - You Just Sign!
+            Once the Deal is Finalized - Third Party Paperwork
           </h3>
           
-          <div className="space-y-8">
-            <div className="flex items-start gap-6">
-              <div className="w-12 h-12 bg-indigo-600 text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
-                1
+          <div className="bg-blue-50 rounded-lg p-6 mb-8">
+            <h4 className="text-xl font-semibold text-blue-900 mb-4">
+              We Connect with Third Party to Finish All Paperwork
+            </h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="bg-white rounded-lg p-4">
+                <h5 className="font-semibold text-gray-900 mb-2">Landlord Pays:</h5>
+                <p className="text-gray-700">10% of one month rent</p>
               </div>
-              <div className="flex-1">
-                <h4 className="text-xl font-semibold text-gray-900 mb-3">
-                  GharConnect Does All The Heavy Lifting
-                </h4>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="text-gray-700 mb-2">
-                    <strong>Our Team Handles:</strong> Property documentation, legal compliance, agreement drafting, terms negotiation, and all paperwork.
-                  </p>
-                  <p className="text-gray-700">
-                    <strong>SignDesk Integration:</strong> We automatically upload the complete agreement to SignDesk with pre-configured signature fields.
-                  </p>
-                </div>
+              <div className="bg-white rounded-lg p-4">
+                <h5 className="font-semibold text-gray-900 mb-2">Tenant Pays:</h5>
+                <p className="text-gray-700">10% of one month rent + Government stamp duty</p>
               </div>
             </div>
+          </div>
 
-            <div className="flex items-start gap-6">
-              <div className="w-12 h-12 bg-green-600 text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
-                2
+          <div className="bg-gray-50 rounded-lg p-6">
+            <h4 className="text-xl font-semibold text-gray-900 mb-6">
+              Documents Needed:
+            </h4>
+            
+            <div className="space-y-6">
+              {/* Section 1: Identity Documents */}
+              <div className="bg-white rounded-lg p-4">
+                <h5 className="font-semibold text-gray-900 mb-3">1. Identity Documents</h5>
+                <ul className="space-y-2 text-gray-700">
+                  <li>• Aadhar and PAN card for both parties</li>
+                  <li>• Passport size photo for both parties</li>
+                  <li>• Aadhar card for both witnesses</li>
+                </ul>
               </div>
-              <div className="flex-1">
-                <h4 className="text-xl font-semibold text-gray-900 mb-3">
-                  You Receive Digital Invitation
-                </h4>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="text-gray-700 mb-2">
-                    <strong>Simple Process:</strong> You receive a secure digital invitation via email/SMS with a link to sign.
-                  </p>
-                  <p className="text-gray-700">
-                    <strong>Quick Verification:</strong> Complete Aadhaar-based e-KYC verification in just 2 minutes.
-                  </p>
+
+              {/* Section 2: Contact & Occupation */}
+              <div className="bg-white rounded-lg p-4">
+                <h5 className="font-semibold text-gray-900 mb-3">2. Contact & Occupation</h5>
+                <ul className="space-y-2 text-gray-700">
+                  <li>• Contact details for both parties</li>
+                  <li>• Occupation for both parties</li>
+                </ul>
+              </div>
+
+              {/* Section 3: Contract Details */}
+              <div className="bg-white rounded-lg p-4">
+                <h5 className="font-semibold text-gray-900 mb-3">3. Contract Details</h5>
+                <ul className="space-y-2 text-gray-700">
+                  <li>• Rent amount</li>
+                  <li>• Deposit amount</li>
+                  <li>• Duration of agreement</li>
+                  <li>• Mode of payment of deposit</li>
+                  <li>• Lock-in period</li>
+                  <li>• Maintenance charges paid by (Landlord/Tenant)</li>
+                </ul>
+              </div>
+
+              {/* Section 4: Payment Details */}
+              <div className="bg-white rounded-lg p-4">
+                <h5 className="font-semibold text-gray-900 mb-3">4. Payment Details (Based on Mode)</h5>
+                
+                <div className="space-y-4 mt-4">
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <h6 className="font-semibold text-gray-900 mb-2">4.1 If Mode of Payment is Cheque/Internet Banking:</h6>
+                    <ul className="space-y-1 text-gray-700 text-sm">
+                      <li>• Bank name</li>
+                      <li>• Branch name</li>
+                      <li>• Transaction ID/cheque number</li>
+                      <li>• Date of transaction</li>
+                      <li>• Transaction amount</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <h6 className="font-semibold text-gray-900 mb-2">4.2 If UPI:</h6>
+                    <ul className="space-y-1 text-gray-700 text-sm">
+                      <li>• Transaction ID</li>
+                      <li>• Date of transaction</li>
+                      <li>• Transaction amount</li>
+                    </ul>
+                  </div>
+                  
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <h6 className="font-semibold text-gray-900 mb-2">4.3 If Cash:</h6>
+                    <ul className="space-y-1 text-gray-700 text-sm">
+                      <li>• Date of transaction</li>
+                      <li>• Transaction amount</li>
+                    </ul>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="flex items-start gap-6">
-              <div className="w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
-                3
+              {/* Section 5: Property Details */}
+              <div className="bg-white rounded-lg p-4">
+                <h5 className="font-semibold text-gray-900 mb-3">5. Property Details</h5>
+                <ul className="space-y-2 text-gray-700">
+                  <li>• Flat number</li>
+                  <li>• Floor number</li>
+                  <li>• Building and society name</li>
+                  <li>• Built up area (in square feet)</li>
+                  <li>• Parking area (in square feet - optional)</li>
+                  <li>• Gallery area (in square feet - optional)</li>
+                  <li>• Survey number/CTS number</li>
+                  <li>• Complete address with pin code</li>
+                  <li>• Village name as per property index 2</li>
+                </ul>
               </div>
-              <div className="flex-1">
-                <h4 className="text-xl font-semibold text-gray-900 mb-3">
-                  Review & Sign - That's It!
-                </h4>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="text-gray-700 mb-2">
-                    <strong>Review:</strong> Read through the complete agreement we've prepared for you.
-                  </p>
-                  <p className="text-gray-700">
-                    <strong>Sign:</strong> Click to sign digitally using your Aadhaar - takes just 30 seconds!
-                  </p>
-                </div>
-              </div>
-            </div>
 
-            <div className="flex items-start gap-6">
-              <div className="w-12 h-12 bg-purple-600 text-white rounded-full flex items-center justify-center font-bold text-lg flex-shrink-0">
-                4
-              </div>
-              <div className="flex-1">
-                <h4 className="text-xl font-semibold text-gray-900 mb-3">
-                  Agreement Complete - You're Done!
-                </h4>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="text-gray-700 mb-2">
-                    <strong>Automatic Completion:</strong> Once both parties sign, the agreement is legally binding.
-                  </p>
-                  <p className="text-gray-700">
-                    <strong>Instant Delivery:</strong> Receive your signed agreement via email immediately.
-                  </p>
-                </div>
+              {/* Section 6: Amenities */}
+              <div className="bg-white rounded-lg p-4">
+                <h5 className="font-semibold text-gray-900 mb-3">6. Amenities</h5>
+                <p className="text-gray-700">List of all amenities available in the property</p>
               </div>
             </div>
           </div>
