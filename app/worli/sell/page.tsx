@@ -45,7 +45,7 @@ export default function SellPage() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="relative">
-        <div className="w-full h-32 bg-blue-600 flex items-center justify-center">
+        <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
           <h1 className="text-3xl md:text-4xl font-bold text-white">Properties for Sale</h1>
         </div>
       </div>
