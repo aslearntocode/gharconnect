@@ -51,5 +51,18 @@ export const doctors: Doctor[] = [
     society: "Parel",
     consultationFee: "Call for appointment",
     languages: ["English", "Hindi", "Marathi"]
+  },
+  {
+    id: "4",
+    name: "Dr. Kinjal Jain - Smiles Dental Care",
+    specialization: "Dental Surgeon",
+    qualification: "BDS",
+    experience: "10+ years",
+    address: "Parel, Mumbai",
+    phone: "+91 8850501259",
+    timing: "Mon-Sat",
+    society: "Parel",
+    consultationFee: "Call for appointment",
+    languages: ["English", "Hindi", "Marathi"]
   }
 ]; 
