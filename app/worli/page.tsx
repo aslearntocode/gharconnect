@@ -628,51 +628,39 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Travel Vlogs Section */}
-      <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
+      {/* Marketplace Section */}
+      {/*
+      <div className="bg-indigo-600 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="py-8 flex items-center justify-center relative">
-            {/* Main content */}
-            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 w-full">
-              <div className="text-center md:text-left flex-1">
-                <span className="inline-block px-3 py-1 bg-white/20 rounded-full text-xs md:text-sm font-medium mb-2">
-                  Travel Diaries
-                </span>
-                <h3 className="text-base md:text-xl lg:text-2xl font-bold">
-                  Explore, Share, and Relive Adventures from Around the World!
-                </h3>
-                <p className="mt-2 text-white/90">
-                  Dive into exciting travel stories, breathtaking destinations, and hidden gems. Share your travel experiences and inspire others to embark on their next adventure. Whether you love mountains, beaches, or the road less traveled - this is your space to connect with fellow travellers in your society
-                </p>
-              </div>
-              <div className="flex gap-2 md:gap-3 mt-2">
-                <a 
-                  href="/worli/travel-vlogs" 
-                  className="inline-flex items-center px-3 py-2 md:px-6 md:py-3 bg-white text-indigo-600 hover:bg-indigo-50 rounded-lg text-xs md:text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 whitespace-nowrap"
-                >
-                  Read Vlogs
-                  <svg className="w-4 h-4 md:w-5 md:h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </a>
-                <a 
-                  href="https://docs.google.com/forms/d/1ZDUMxLOgL0FZaJDpRnAHbhikQP_S8jyIaslXKWfPQ9U/edit?pli=1" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-3 py-2 md:px-6 md:py-3 bg-white text-indigo-600 hover:bg-indigo-50 rounded-lg text-xs md:text-base font-semibold transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 whitespace-nowrap"
-                >
-                  Share Your Story
-                  <svg className="w-4 h-4 md:w-5 md:h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </a>
-              </div>
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">Buy and Sell Items with Your Neighbors!</h2>
+            <p className="text-indigo-100 max-w-2xl mx-auto mb-8">
+              List items you want to sell and find great deals from neighbors. From electronics to furniture, everything you need is just a click away.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <a 
+                href="/worli/marketplace"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors duration-200"
+              >
+                Browse Items
+                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
+              <a 
+                href="/worli/marketplace/sell"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors duration-200"
+              >
+                Sell Item
+                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
             </div>
           </div>
         </div>
       </div>
+      */}
 
       {/* Services Categories Section */}
       <div id="services-categories" className="bg-white py-8 md:py-12">
