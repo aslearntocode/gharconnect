@@ -81,5 +81,15 @@ export const vendors: Vendor[] = [
       unit: 'per month'
     }],
     mobile: '+91 9167179484'
+  },
+  {
+    name: 'Rushi Kapadia - State Level tennis player',
+    services: [{
+      name: 'Table Tennis Classes',
+      description: 'Table Tennis classes for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 9819735090'
   }
 ]; 

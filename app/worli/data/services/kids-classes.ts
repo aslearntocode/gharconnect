@@ -45,5 +45,15 @@ export const vendors: Vendor[] = [
     }],
     mobile: '+91 7654321109',
     photo: '/images/services/sports-class.jpg'
+  },
+  {
+    name: 'Rushi Kapadia - State Level Tennis Player',
+    services: [{
+      name: 'Table Tennis Classes',
+      description: 'Table Tennis classes for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 9819735090'
   }
 ]; 
