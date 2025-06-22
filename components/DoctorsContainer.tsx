@@ -27,7 +27,7 @@ export default function DoctorsContainer() {
             href={`/${currentSociety}/services/doctors`}
             className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors duration-200"
           >
-            View Doctors Directory (Coming Soon)
+            View Doctors Directory
             <FiArrowRight className="ml-2" />
           </Link>
         </div>
