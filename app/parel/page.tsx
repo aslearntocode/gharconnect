@@ -137,6 +137,7 @@ export default function Home() {
       description: 'Find your perfect rental property',
       icon: FiHome,
       href: '/parel/rent/',
+      gradient: 'from-blue-500 to-cyan-500'
     },
     {
       id: 'list-property',
@@ -144,6 +145,7 @@ export default function Home() {
       description: 'List Your Property for Rent',
       icon: FiFileText,
       href: '/parel/rent-apartment',
+      gradient: 'from-purple-500 to-pink-500'
     },
     {
       id: 'services',
@@ -151,7 +153,8 @@ export default function Home() {
       description: 'Book trusted home services',
       icon: FiTool,
       href: '#',
-      onClick: (e: React.MouseEvent) => { e.preventDefault(); document.getElementById('services-categories')?.scrollIntoView({ behavior: 'smooth' }); }
+      onClick: (e: React.MouseEvent) => { e.preventDefault(); document.getElementById('services-categories')?.scrollIntoView({ behavior: 'smooth' }); },
+      gradient: 'from-yellow-500 to-orange-500'
     },
     {
       id: 'delivery',
@@ -159,20 +162,25 @@ export default function Home() {
       description: 'Get essentials delivered to your door',
       icon: FiTruck,
       href: '#',
-      onClick: (e: React.MouseEvent) => { e.preventDefault(); document.getElementById('delivery-categories')?.scrollIntoView({ behavior: 'smooth' }); }
+      onClick: (e: React.MouseEvent) => { e.preventDefault(); document.getElementById('delivery-categories')?.scrollIntoView({ behavior: 'smooth' }); },
+      gradient: 'from-green-500 to-teal-500'
     }
   ];
 
   const nextSlide = () => {
-    setCurrentCarouselIndex((prev) => 
-      prev >= Math.ceil(mainActionCards.length / 2) - 1 ? 0 : prev + 1
-    );
+    if (isMobile) {
+      setCurrentCarouselIndex((prev) => (prev + 1) % mainActionCards.length);
+    } else {
+      setCurrentCarouselIndex((prev) => (prev + 2) % mainActionCards.length);
+    }
   };
 
   const prevSlide = () => {
-    setCurrentCarouselIndex((prev) => 
-      prev <= 0 ? Math.ceil(mainActionCards.length / 2) - 1 : prev - 1
-    );
+    if (isMobile) {
+      setCurrentCarouselIndex((prev) => (prev - 1 + mainActionCards.length) % mainActionCards.length);
+    } else {
+      setCurrentCarouselIndex((prev) => (prev - 2 + mainActionCards.length) % mainActionCards.length);
+    }
   };
 
   useEffect(() => {
@@ -458,10 +466,41 @@ export default function Home() {
               {/* Carousel Container */}
               <div className="overflow-hidden rounded-2xl">
                 <div 
-                  className="flex transition-transform duration-500 ease-in-out"
-                  style={{ transform: `translateX(-${currentCarouselIndex * 100}%)` }}
+                  className="flex transition-transform duration-500 ease-in-out md:hidden"
+                  style={{ transform: `translateX(-${currentCarouselIndex * 80}%)` }}
                 >
-                  {/* First Slide - 2 cards */}
+                  {mainActionCards.map((card, index) => {
+                    const IconComponent = card.icon;
+                    return (
+                      <div key={card.id} className="w-4/5 flex-shrink-0 px-2">
+                        <Link 
+                          href={card.href} 
+                          onClick={card.onClick}
+                          className="flex-1 group"
+                        >
+                          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 p-6 flex items-center gap-x-5 group hover:bg-gray-50 cursor-pointer h-full">
+                            <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${card.gradient} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                              <IconComponent className="w-8 h-8 text-white" />
+                            </div>
+                            <div className="text-left">
+                              <h3 className="font-bold text-gray-900 text-lg">
+                                {card.title}
+                              </h3>
+                              <p className="text-sm text-gray-600 mt-1">
+                                {card.description}
+                              </p>
+                            </div>
+                          </div>
+                        </Link>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div 
+                  className="hidden md:flex transition-transform duration-500 ease-in-out"
+                  style={{ transform: `translateX(-${Math.floor(currentCarouselIndex / 2) * 100}%)` }}
+                >
+                  {/* Slide 1 */}
                   <div className="flex gap-4 w-full flex-shrink-0">
                     {mainActionCards.slice(0, 2).map((card) => {
                       const IconComponent = card.icon;
@@ -472,15 +511,15 @@ export default function Home() {
                           onClick={card.onClick}
                           className="flex-1 group"
                         >
-                          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 ease-in-out hover:scale-[1.02] p-6 h-40 flex flex-col items-start justify-center cursor-pointer">
-                            <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
-                              <IconComponent className="w-8 h-8 text-indigo-600" />
+                          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 p-6 flex items-center gap-x-5 group hover:bg-gray-50 cursor-pointer h-full">
+                            <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${card.gradient} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                              <IconComponent className="w-8 h-8 text-white" />
                             </div>
                             <div className="text-left">
-                              <h3 className="font-bold text-gray-900 text-xl">
+                              <h3 className="font-bold text-gray-900 text-lg">
                                 {card.title}
                               </h3>
-                              <p className="text-sm md:text-md text-gray-600 mt-1">
+                              <p className="text-sm text-gray-600 mt-1">
                                 {card.description}
                               </p>
                             </div>
@@ -490,7 +529,7 @@ export default function Home() {
                     })}
                   </div>
                   
-                  {/* Second Slide - 2 cards */}
+                  {/* Slide 2 */}
                   <div className="flex gap-4 w-full flex-shrink-0">
                     {mainActionCards.slice(2, 4).map((card) => {
                       const IconComponent = card.icon;
@@ -501,15 +540,15 @@ export default function Home() {
                           onClick={card.onClick}
                           className="flex-1 group"
                         >
-                          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 ease-in-out hover:scale-[1.02] p-6 h-40 flex flex-col items-start justify-center cursor-pointer">
-                            <div className="w-16 h-16 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
-                              <IconComponent className="w-8 h-8 text-indigo-600" />
+                          <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 p-6 flex items-center gap-x-5 group hover:bg-gray-50 cursor-pointer h-full">
+                            <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${card.gradient} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                              <IconComponent className="w-8 h-8 text-white" />
                             </div>
                             <div className="text-left">
-                              <h3 className="font-bold text-gray-900 text-xl">
+                              <h3 className="font-bold text-gray-900 text-lg">
                                 {card.title}
                               </h3>
-                              <p className="text-sm md:text-md text-gray-600 mt-1">
+                              <p className="text-sm text-gray-600 mt-1">
                                 {card.description}
                               </p>
                             </div>
@@ -535,18 +574,32 @@ export default function Home() {
                 
                 {/* Dots Indicator */}
                 <div className="flex space-x-1">
-                  {[0, 1].map((index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentCarouselIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-all duration-200 ${
-                        currentCarouselIndex === index 
-                          ? 'bg-indigo-600 w-6' 
-                          : 'bg-gray-300 hover:bg-gray-400'
-                      }`}
-                      aria-label={`Go to slide ${index + 1}`}
-                    />
-                  ))}
+                  {isMobile 
+                    ? [...Array(mainActionCards.length)].map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentCarouselIndex(index)}
+                          className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                            currentCarouselIndex === index 
+                              ? 'bg-indigo-600 w-4' 
+                              : 'bg-gray-300 hover:bg-gray-400'
+                          }`}
+                          aria-label={`Go to slide ${index + 1}`}
+                        />
+                      ))
+                    : [...Array(Math.ceil(mainActionCards.length / 2))].map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentCarouselIndex(index * 2)}
+                          className={`w-2 h-2 rounded-full transition-all duration-200 ${
+                            Math.floor(currentCarouselIndex / 2) === index 
+                              ? 'bg-indigo-600 w-6' 
+                              : 'bg-gray-300 hover:bg-gray-400'
+                          }`}
+                          aria-label={`Go to slide ${index + 1}`}
+                        />
+                      ))
+                  }
                 </div>
                 
                 <button
