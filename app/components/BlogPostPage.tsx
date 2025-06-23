@@ -27,6 +27,75 @@ interface CustomComponents extends Components {
   PlatformComparisonTable: React.ComponentType;
 }
 
+// Custom components for better markdown rendering
+const customComponents: Components = {
+  h2: ({ children }) => (
+    <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 mt-6">
+      {children}
+    </h2>
+  ),
+  h3: ({ children }) => (
+    <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 mt-4">
+      {children}
+    </h3>
+  ),
+  p: ({ children }) => (
+    <p className="text-gray-700 mb-3 leading-6 text-base">
+      {children}
+    </p>
+  ),
+  ul: ({ children }) => (
+    <ul className="list-disc list-inside mb-4 space-y-1">
+      {children}
+    </ul>
+  ),
+  ol: ({ children }) => (
+    <ol className="list-decimal list-inside mb-4 space-y-1">
+      {children}
+    </ol>
+  ),
+  li: ({ children }) => (
+    <li className="text-gray-700 leading-5">
+      {children}
+    </li>
+  ),
+  strong: ({ children }) => (
+    <strong className="font-semibold text-gray-900">
+      {children}
+    </strong>
+  ),
+  blockquote: ({ children }) => (
+    <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-600 my-4">
+      {children}
+    </blockquote>
+  ),
+  table: ({ children }) => (
+    <div className="overflow-x-auto my-4">
+      <table className="min-w-full border border-gray-200">
+        {children}
+      </table>
+    </div>
+  ),
+  th: ({ children }) => (
+    <th className="bg-gray-50 p-3 text-left font-semibold text-gray-900 border border-gray-200">
+      {children}
+    </th>
+  ),
+  td: ({ children }) => (
+    <td className="p-3 border border-gray-200 text-gray-700">
+      {children}
+    </td>
+  ),
+  tr: ({ children }) => (
+    <tr className="border-b border-gray-200">
+      {children}
+    </tr>
+  ),
+  hr: () => (
+    <hr className="my-6 border-gray-200" />
+  ),
+};
+
 export function generateMetadata(props: { params: { slug: string }, society: string }): Metadata {
   const { params, society } = props;
   const post = getBlogPost(params.slug);
@@ -56,10 +125,10 @@ function renderWithTable(content: string) {
   return content.split('[[PLATFORM_COMPARISON_TABLE]]').map((part, idx, arr) =>
     idx < arr.length - 1
       ? <Fragment key={idx}>
-          <ReactMarkdown>{part}</ReactMarkdown>
+          <ReactMarkdown components={customComponents}>{part}</ReactMarkdown>
           <PlatformComparisonTable />
         </Fragment>
-      : <ReactMarkdown key={idx}>{part}</ReactMarkdown>
+      : <ReactMarkdown key={idx} components={customComponents}>{part}</ReactMarkdown>
   );
 }
 
@@ -93,11 +162,11 @@ export default function BlogPostPage({ params, society }: BlogPostPageProps) {
       </Head>
       <BlogLayout>
         {/* Navigation */}
-        <div className="bg-white border-b">
-          <div className="container mx-auto px-4 py-4">
+        <div className="bg-white border-b border-gray-100">
+          <div className="max-w-6xl mx-auto px-4 py-4">
             <Link 
               href={`/${society}/blog`} 
-              className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors"
+              className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors font-medium"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Blog
@@ -106,26 +175,26 @@ export default function BlogPostPage({ params, society }: BlogPostPageProps) {
         </div>
 
         {/* Article Header */}
-        <div className="bg-white">
-          <div className="max-w-7xl mx-auto px-4 py-2">
+        <div className="bg-white border-b border-gray-100">
+          <div className="max-w-6xl mx-auto px-4 py-6">
             <div className="flex items-center gap-2 mb-4">
               <span className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
                 {post.category}
               </span>
             </div>
             
-            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
               {post.title}
             </h1>
             
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-lg md:text-xl text-gray-600 mb-6 leading-relaxed">
               {post.excerpt}
             </p>
             
-            <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 border-t pt-6">
+            <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 pt-4 border-t border-gray-200">
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4" />
-                <span>{post.author}</span>
+                <span className="font-medium">{post.author}</span>
               </div>
               <div className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
@@ -148,41 +217,39 @@ export default function BlogPostPage({ params, society }: BlogPostPageProps) {
         </div>
 
         {/* Article Content */}
-        <div className="max-w-7xl mx-auto px-4 py-2">
-          <div className="max-w-7xl mx-auto">
-            <article className="bg-white rounded-lg shadow-sm p-8 md:p-12">
-              <div className="prose prose-lg max-w-none whitespace-pre-wrap text-gray-800 leading-relaxed">
-                {renderWithTable(post.content)}
-              </div>
-            </article>
+        <div className="max-w-6xl mx-auto px-4 py-6">
+          <article className="bg-white rounded-lg shadow-sm p-6 md:p-8">
+            <div className="text-gray-800 leading-relaxed">
+              {renderWithTable(post.content)}
+            </div>
+          </article>
 
-            {/* Related Articles */}
-            {relatedPosts.length > 0 && (
-              <div className="mt-16">
-                <h2 className="text-2xl font-bold text-gray-900 mb-8">Related Articles</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {relatedPosts.map((relatedPost) => (
-                    <Link 
-                      key={relatedPost.slug} 
-                      href={`/${society}/blog/${relatedPost.slug}`}
-                      className="block bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow"
-                    >
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
-                        {relatedPost.title}
-                      </h3>
-                      <p className="text-gray-600 text-sm mb-3">
-                        {relatedPost.excerpt}
-                      </p>
-                      <div className="flex items-center gap-4 text-xs text-gray-500">
-                        <span>{relatedPost.category}</span>
-                        <span>{relatedPost.readTime}</span>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+          {/* Related Articles */}
+          {relatedPosts.length > 0 && (
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Related Articles</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {relatedPosts.map((relatedPost) => (
+                  <Link 
+                    key={relatedPost.slug} 
+                    href={`/${society}/blog/${relatedPost.slug}`}
+                    className="block bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow border border-gray-100"
+                  >
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
+                      {relatedPost.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-3">
+                      {relatedPost.excerpt}
+                    </p>
+                    <div className="flex items-center gap-4 text-xs text-gray-500">
+                      <span>{relatedPost.category}</span>
+                      <span>{relatedPost.readTime}</span>
+                    </div>
+                  </Link>
+                ))}
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </BlogLayout>
     </>

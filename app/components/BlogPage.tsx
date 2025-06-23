@@ -29,58 +29,61 @@ export default function BlogPage({ society }: BlogPageProps) {
     <BlogLayout>
       {/* Blue Banner */}
       <div className="relative">
-        <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white">Blogs by GharConnect</h1>
+        <div className="w-full h-40 bg-gradient-to-r from-indigo-600 to-blue-600 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">Blogs by GharConnect</h1>
+            <p className="text-indigo-100 text-lg">Expert insights for better community living</p>
+          </div>
         </div>
       </div>
 
       {/* Blog Posts Grid */}
-      <div className="container mx-auto px-4 py-4">
-        <div className="max-w-4xl mx-auto text-center mb-12">
-          <p className="text-xl text-gray-600 mb-8">
+      <div className="container mx-auto px-4 py-6">
+        <div className="max-w-5xl mx-auto text-center mb-10">
+          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
             Insights, tips, and guides for better community living and real estate decisions
           </p>
-          <div className="flex flex-wrap justify-center gap-2 mb-4">
-            <span className="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm">
+          <div className="flex flex-wrap justify-center gap-3 mb-8">
+            <span className="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-indigo-200 transition-colors">
               Real Estate
             </span>
-            <span className="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm">
+            <span className="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-indigo-200 transition-colors">
               Community Living
             </span>
-            <span className="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm">
+            <span className="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-indigo-200 transition-colors">
               Investment Tips
             </span>
-            <span className="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm">
+            <span className="bg-indigo-100 text-indigo-800 px-4 py-2 rounded-full text-sm font-medium hover:bg-indigo-200 transition-colors">
               Neighborhood Guides
             </span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogPosts.map((post) => (
-            <article key={post.slug} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-              <div className="p-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+            <article key={post.slug} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+              <div className="p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
                     {post.category}
                   </span>
                 </div>
                 
-                <h2 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
+                <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 leading-tight">
                   <Link href={`/${society}/blog/${post.slug}`} className="hover:text-blue-600 transition-colors">
                     {post.title}
                   </Link>
                 </h2>
                 
-                <p className="text-gray-600 mb-4 line-clamp-3">
+                <p className="text-gray-600 mb-5 line-clamp-3 leading-relaxed">
                   {post.excerpt}
                 </p>
                 
-                <div className="flex items-center justify-between text-sm text-gray-500">
+                <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-gray-100">
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-1">
                       <User className="w-4 h-4" />
-                      <span>{post.author}</span>
+                      <span className="font-medium">{post.author}</span>
                     </div>
                     <div className="flex items-center gap-1">
                       <CalendarDays className="w-4 h-4" />
@@ -91,9 +94,9 @@ export default function BlogPage({ society }: BlogPageProps) {
                       })}</span>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    <span>{post.readTime}</span>
+                  <div className="flex items-center gap-1 bg-gray-50 px-2 py-1 rounded-full">
+                    <Clock className="w-3 h-3" />
+                    <span className="text-xs font-medium">{post.readTime}</span>
                   </div>
                 </div>
               </div>
@@ -102,20 +105,20 @@ export default function BlogPage({ society }: BlogPageProps) {
         </div>
 
         {/* Newsletter Signup */}
-        <div className="mt-16 bg-white rounded-lg shadow-md p-8 text-center">
+        <div className="mt-16 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl shadow-lg p-8 text-center border border-blue-100">
           <h3 className="text-2xl font-bold text-gray-900 mb-4">
             Stay Updated with Our Latest Insights
           </h3>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+          <p className="text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
             Get the latest real estate trends, community living tips, and neighborhood updates delivered to your inbox.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
             <input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
             />
-            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium">
+            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-md hover:shadow-lg">
               Subscribe
             </button>
           </div>

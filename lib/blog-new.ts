@@ -13,6 +13,94 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'why-community-should-rate-vendors',
+    title: '🌟 Why Your Community Should Rate Vendors: Empower Your Neighbors, Improve Your Services',
+    excerpt: 'In every housing society, residents rely on a range of service providers. Imagine if your community had a shared system where real residents rated vendors. That\'s exactly what GharConnect.in enables.',
+    content: `
+# 🌟 Why Your Community Should Rate Vendors: Empower Your Neighbors, Improve Your Services
+
+In every housing society, residents rely on a range of service providers — electricians, maids, plumbers, painters, movers, pest control, internet installers, and more. While some vendors provide excellent service, others may be unreliable, overpriced, or unprofessional.
+
+Imagine if your community had a shared system where real residents rated vendors — like how you rate a restaurant or a ride on Uber.
+
+That's exactly what GharConnect.in enables: a community-driven review system that empowers residents and improves service quality for everyone.
+
+## ✅ 1. Shared Knowledge = Smarter Choices
+
+Why should every resident struggle through trial and error to find a good electrician or carpenter?
+
+When someone in your society already used a vendor and shares a quick rating — it saves time, money, and frustration for the next resident.
+
+By rating vendors on punctuality, pricing, professionalism, and quality of work, you help others make informed choices.
+
+## 🤝 2. Community Trust over Online Ads
+
+Most people today Google vendors or find them on JustDial, UrbanClap, or Google Maps. But let's be honest — many of those reviews are:
+
+- Fake or paid
+- Not specific to your society or locality
+- Outdated
+
+On GharConnect, the ratings are from verified residents in your building or neighborhood. That means you get real, trustworthy feedback — not marketing fluff.
+
+## 📈 3. Reward the Good, Weed Out the Bad
+
+Consistent ratings help:
+
+🏆 Promote the most reliable vendors
+
+🚫 Avoid those with repeated complaints
+
+🧾 Build a recommendation list for new tenants or buyers
+
+Vendors who know they're being rated deliver better service to maintain their reputation.
+
+## 🛠️ 4. Easier Facility Management
+
+Society managers and RWA teams often get flooded with service complaints.
+
+Community ratings help RWAs choose vetted vendors for society-level work — plumbing, painting, CCTV, cleaning — saving cost and improving results.
+
+## 💬 5. It Only Takes 30 Seconds
+
+GharConnect makes it easy: after using a service, residents can just:
+
+- Give a ⭐⭐⭐⭐ rating
+- Write 1–2 lines about the experience
+- Optionally upload a photo (before/after work)
+
+This small action makes a big difference for the next resident — and gradually builds a better vendor ecosystem.
+
+## 🌐 Real Example:
+
+Mrs. Gupta from Tower C hired a sofa cleaning vendor from the society list. She rated them 5 stars for promptness and posted a photo of the result. Two other neighbors used the same vendor within a week — with zero search effort.
+
+## 💡 Tip for Societies
+
+Encourage your residents to rate vendors by:
+
+- Adding a "Rate your vendor" link in your WhatsApp group or noticeboard
+- Using GharConnect to track and display top-rated vendors
+- Giving a monthly shout-out to the most helpful review
+
+## 🚪 Final Word
+
+A strong community is not just about events and amenities — it's also about helping each other with everyday decisions.
+
+By taking a minute to rate a vendor, you:
+
+- Improve service quality in your society
+- Help new residents settle in faster
+- Build trust and cooperation in your community
+
+👉 Start rating vendors today at GharConnect.in — and help your neighborhood run smoother, smarter, and stronger.`,
+    author: 'GharConnect Team',
+    date: '2025-06-23',
+    readTime: '6 min read',
+    category: 'Community',
+    image: '/blog/community-vendor-rating.jpg'
+  },
+  {
     slug: 'mumbai-residential-real-estate-market-2025',
     title: 'Mumbai Residential Real Estate Market 2025: Trends, Opportunities & Local Insights',
     excerpt: 'Mumbai — India\'s financial capital — continues to dominate the country\'s residential real estate landscape. Explore the latest trends, emerging neighborhoods, and what to expect in 2025.',
