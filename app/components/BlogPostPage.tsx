@@ -5,6 +5,7 @@ import { CalendarDays, Clock, User, ArrowLeft, Share2 } from 'lucide-react';
 import { getBlogPost, getRelatedPosts } from '@/lib/blog';
 import BlogLayout from './BlogLayout';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import dynamic from 'next/dynamic';
 import { Components } from 'react-markdown';
 import React, { Fragment } from 'react';
@@ -125,10 +126,10 @@ function renderWithTable(content: string) {
   return content.split('[[PLATFORM_COMPARISON_TABLE]]').map((part, idx, arr) =>
     idx < arr.length - 1
       ? <Fragment key={idx}>
-          <ReactMarkdown components={customComponents}>{part}</ReactMarkdown>
+          <ReactMarkdown components={customComponents} remarkPlugins={[remarkGfm]}>{part}</ReactMarkdown>
           <PlatformComparisonTable />
         </Fragment>
-      : <ReactMarkdown key={idx} components={customComponents}>{part}</ReactMarkdown>
+      : <ReactMarkdown key={idx} components={customComponents} remarkPlugins={[remarkGfm]}>{part}</ReactMarkdown>
   );
 }
 
