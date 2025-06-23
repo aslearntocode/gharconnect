@@ -31,12 +31,12 @@ interface CustomComponents extends Components {
 // Custom components for better markdown rendering
 const customComponents: Components = {
   h2: ({ children }) => (
-    <h2 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 mt-6">
+    <h2 className="text-xl md:text-xl font-bold text-gray-900 mb-3 mt-6">
       {children}
     </h2>
   ),
   h3: ({ children }) => (
-    <h3 className="text-lg md:text-xl font-semibold text-gray-900 mb-2 mt-4">
+    <h3 className="text-lg md:text-lg font-semibold text-gray-900 mb-2 mt-4">
       {children}
     </h3>
   ),
@@ -184,7 +184,7 @@ export default function BlogPostPage({ params, society }: BlogPostPageProps) {
               </span>
             </div>
             
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">
               {post.title}
             </h1>
             

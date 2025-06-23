@@ -13,6 +13,53 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'community-vendors-vs-urban-company',
+    title: 'Who Needs Urban Company When Your Community Has Trusted Vendors?',
+    excerpt: 'Discover why your housing society\'s network of trusted, neighbor-rated vendors can be faster, more reliable, and more affordable than services like Urban Company.',
+    content: `
+# 🛠️ Who Needs Urban Company When Your Community Has Trusted Vendors?
+
+We've all been there — searching for a plumber or electrician on Urban Company, only to wait hours or pay a premium for a simple job. But what if the help you needed was already available within your community?
+
+With platforms like GharConnect.in, residents can discover and rate local service providers — ones who are already working in your society, trusted by your neighbors, and just a few floors away.
+
+## ✅ Why Look Beyond Your Gate?
+
+- The maid from Tower A is already rated 5 stars for punctuality.
+- The AC repair guy who fixed Mr. Shah's unit yesterday is available now.
+- The painter who did Mrs. Iyer's flat has pictures and reviews you can see.
+
+## 💬 Real Voices, Not Paid Listings
+
+Unlike generic reviews on apps, community ratings are real — from people you actually live with. That means:
+
+- **No fake profiles:** Get genuine feedback.
+- **No inflated pricing:** Find vendors with fair rates.
+- **No guesswork:** Hire with confidence.
+
+Just trustworthy vendors, verified by your neighbors.
+
+## 🔁 Support Local, Save Time
+
+By hiring from within the community, you:
+
+- Get faster service.
+- Support local livelihoods.
+- Build a network of reliable help around you.
+
+## 🏡 Your Building is Your Best Bet
+
+Urban Company is a great service, but sometimes, the best help is already inside your building.
+
+Start rating and finding trusted vendors on **GharConnect.in**. Empower your community, get work done faster, and skip the app-based drama.
+`,
+    author: 'GharConnect Team',
+    date: '2025-06-24',
+    readTime: '3 min read',
+    category: 'Community',
+    image: '/blog/community-vendors.jpg'
+  },
+  {
     slug: 'why-community-should-rate-vendors',
     title: 'Why Your Community Should Rate Vendors: Empower Your Neighbors, Improve Your Services',
     excerpt: 'In every housing society, residents rely on a range of service providers. Imagine if your community had a shared system where real residents rated vendors. That\'s exactly what GharConnect.in enables.',
@@ -167,7 +214,7 @@ Offering higher HRA is a win-win when employees are in rented homes — it boost
   },
   {
     slug: 'mumbai-residential-real-estate-market-2025',
-    title: '🏙️ Mumbai Residential Real Estate Market 2025: Trends, Opportunities & Local Insights',
+    title: 'Mumbai Residential Real Estate Market 2025: Trends, Opportunities & Local Insights',
     excerpt: 'Mumbai — India\'s financial capital — continues to dominate the country\'s residential real estate landscape. Explore the latest trends, emerging neighborhoods, and what to expect in 2025.',
     content: `
 # 🏙️ Mumbai Residential Real Estate Market 2025: Trends, Opportunities & Local Insights
