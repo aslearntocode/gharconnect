@@ -1,3 +1,7 @@
+import { Analytics } from "@vercel/analytics/react"
+import Footer from "@/components/Footer"
+import { Toaster } from "@/components/ui/toaster"
+
 export default function SocietyLayout({
   children,
 }: {
@@ -5,7 +9,10 @@ export default function SocietyLayout({
 }) {
   return (
     <>
-      {children}
+      <main>{children}</main>
+      <Footer />
+      <Analytics />
+      <Toaster />
     </>
   )
 } 
