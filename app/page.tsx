@@ -39,10 +39,9 @@ export default function SocietiesPage() {
       {/* Website Description */}
       <div className="w-full flex justify-center mb-6 px-4">
         <p className="max-w-6xl text-center text-gray-600 text-sm md:text-lg leading-relaxed">
-        Looking to rent or sell your property? Searching for your next rental or dream home?
-        Need trusted service providers or local delivery options within your society?
-        Or just curious about your neighbors' recent travel experiences to plan your next vacation?
-        Whatever you're looking for — gharconnect.in helps you stay connected, informed, and empowered within your residential community.
+        Your Society. Your Network. One Powerful Platform. <br />
+        Whether you're renting, selling, house-hunting, or hiring a plumber - GharConnect.in keeps you informed and connected <br />
+        👉 Choose your location to explore
         </p>
       </div>
       <div className="flex-grow">
