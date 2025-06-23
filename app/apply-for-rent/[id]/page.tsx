@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { applicationSchema, ApplicationFormData } from '@/lib/application-schema';
 import { createRentalApplication } from '@/lib/actions';
-import { supabase } from '@/lib/supabaseClient';
+import { getSupabaseClient } from '@/lib/supabase';
 import { auth } from '@/lib/firebase';
 import { User } from 'firebase/auth';
 import { useRouter, useParams } from 'next/navigation';
@@ -51,6 +51,7 @@ export default function ApplyForRentPage() {
     if (!apartmentId) return;
 
     const fetchApartment = async () => {
+      const supabase = await getSupabaseClient();
       const { data, error } = await supabase
         .from('apartments')
         .select('*')

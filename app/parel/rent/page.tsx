@@ -5,7 +5,7 @@ import Header from '@/components/Header';
 import { FiHome, FiChevronDown, FiX } from 'react-icons/fi';
 import { useState, useEffect } from 'react';
 import React from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { getSupabaseClient } from '@/lib/supabase';
 import { Apartment } from '@/types/apartment';
 
 export default function RentPage() {
@@ -60,6 +60,7 @@ export default function RentPage() {
     const fetchApartments = async () => {
       try {
         setLoading(true);
+        const supabase = await getSupabaseClient();
         const { data, error } = await supabase
           .from('apartments')
           .select('*')

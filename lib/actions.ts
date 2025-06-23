@@ -1,12 +1,13 @@
 'use server';
 
-import { supabase } from '@/lib/supabaseClient';
+import { getSupabaseClient } from '@/lib/supabase';
 import { apartmentFormSchema, ApartmentFormData } from './apartment-schema';
 import { applicationSchema, ApplicationFormData } from './application-schema';
 
 export async function createApartment(formData: ApartmentFormData, userId: string) {
   try {
     const validatedData = apartmentFormSchema.parse(formData);
+    const supabase = await getSupabaseClient();
     const { data, error } = await supabase.from('apartments').insert([
       { ...validatedData, 
         user_id: userId,
@@ -40,6 +41,7 @@ export async function createRentalApplication(
       applicant_user_id: applicantUserId,
     });
 
+    const supabase = await getSupabaseClient();
     const { data, error } = await supabase
       .from('rental_applications')
       .insert([

@@ -6,18 +6,10 @@ import { User } from "firebase/auth"
 import { ProfileDropdown } from "./ProfileDropdown"
 import { useRouter, usePathname } from "next/navigation"
 import Link from "next/link"
-import { supabase } from "@/lib/supabase"
 import Image from 'next/image'
-import { createClient } from '@supabase/supabase-js'
 import { Button } from '@/components/ui/button'
 import { signOut } from 'firebase/auth'
 import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid } from 'react-icons/fi'
-
-// Initialize Supabase client
-const supabaseClient = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
 
 export default function Header() {
   const [user, setUser] = useState<User | null>(null)

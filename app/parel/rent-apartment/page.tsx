@@ -12,7 +12,6 @@ import {
   PREFERRED_TENANT_TYPES,
   AMENITIES_OPTIONS 
 } from '@/types/apartment';
-import { supabase } from '@/lib/supabaseClient';
 import { auth } from '@/lib/firebase';
 import { User } from 'firebase/auth';
 import { toast } from 'react-hot-toast';
