@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import { getSupabaseClient } from './supabase'
 import { auth } from '@/lib/firebase'
 import { Pool, PoolClient } from 'pg'
 
@@ -54,6 +54,7 @@ export async function saveInvestmentData(data: InvestmentData) {
 
     console.log('Prepared record:', record);
 
+    const supabase = await getSupabaseClient();
     const { data: result, error: insertError } = await supabase
       .from('investment_records')
       .insert([record])
@@ -89,6 +90,7 @@ export async function getUserInvestmentHistory(userId: string) {
   }
 
   try {
+    const supabase = await getSupabaseClient();
     const { data, error } = await supabase
       .from('investment_records')
       .select('*')
