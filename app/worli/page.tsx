@@ -443,8 +443,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-4">
           <div className="flex flex-col items-center mb-8">
             <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700">
-              The Only Community Based Platform in India
-            </div>
+            Connecting Residents, Businesses, and Property Owners Within a Location            </div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             {/* Left Content */}

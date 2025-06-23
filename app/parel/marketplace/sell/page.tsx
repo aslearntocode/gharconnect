@@ -217,7 +217,22 @@ export default function SellPage() {
   }
 
   if (!user || !userProfile) {
-    return null
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-lg font-semibold text-red-600">Error</p>
+          <p className="mt-2 text-gray-600">
+            Could not load user profile. You may need to complete your profile before you can sell items.
+          </p>
+          <Button
+            onClick={() => router.push('/parel')}
+            className="mt-4"
+          >
+            Go to Parel Homepage
+          </Button>
+        </div>
+      </div>
+    )
   }
 
   return (

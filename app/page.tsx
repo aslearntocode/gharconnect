@@ -40,7 +40,7 @@ export default function SocietiesPage() {
       <div className="w-full flex justify-center mb-6 px-4">
         <p className="max-w-6xl text-center text-gray-600 text-sm md:text-lg leading-relaxed">
         Your Society. Your Network. One Powerful Platform. <br />
-        Whether you're renting, selling, house-hunting, or hiring a plumber - GharConnect.in keeps you informed and connected <br />
+        Whether you're renting, selling, house-hunting, or hiring a plumber - GharConnect.in keeps you informed and connected. <br />
         👉 Choose your location to explore
         </p>
       </div>
