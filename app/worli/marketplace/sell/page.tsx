@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { auth } from '@/lib/firebase'
-import { supabase, updateSupabaseAuth } from '@/lib/supabase'
+import { getSupabaseClient } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -64,7 +64,6 @@ export default function SellPage() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
-        await updateSupabaseAuth() // Update token before any action
         setUser(user)
         await fetchUserProfile(user.uid)
       } else {
@@ -77,6 +76,7 @@ export default function SellPage() {
 
   const fetchUserProfile = async (userId: string) => {
     try {
+      const supabase = await getSupabaseClient()
       const { data, error } = await supabase
         .from('user_profiles')
         .select('*')
@@ -150,6 +150,7 @@ export default function SellPage() {
     setSubmitting(true)
 
     try {
+      const supabase = await getSupabaseClient()
       const imageUrls: string[] = []
       if (imageFiles.length > 0) {
         for (const file of imageFiles) {

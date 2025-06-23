@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { auth } from '@/lib/firebase'
-import { supabase, updateSupabaseAuth } from '@/lib/supabase'
+import { getSupabaseClient } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -73,9 +73,6 @@ export default function MarketplacePage() {
   useEffect(() => {
     const handleAuthChange = async (user: any) => {
       setUser(user)
-      if (user) {
-        await updateSupabaseAuth()
-      }
       fetchProducts()
     }
 
@@ -87,6 +84,7 @@ export default function MarketplacePage() {
   const fetchProducts = async () => {
     try {
       setLoading(true)
+      const supabase = await getSupabaseClient()
       const { data, error } = await supabase
         .from('marketplace_products')
         .select(`
