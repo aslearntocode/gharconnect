@@ -12,7 +12,7 @@ const jobOpenings = [
     jobType: "Type: Hybrid (3 days in office)",
     experience: "Experience: Minimum 2 years",
     education: "Education: B.Tech or M.Tech",
-    aboutUs: "Financial Health is a forward-thinking tech company focused on creating exceptional products that make a real difference in people's lives. We believe in empowering teams to grow, innovate, and push the boundaries of technology. We are a new age Fintech working to improve financial health of Indians.",
+    aboutUs: "GharConnect is a forward-thinking tech company focused on creating exceptional platform for society living. We believe in empowering teams to grow, innovate, and push the boundaries of technology. We are a new age Tech working to improve community living.",
     description: [
       "We are looking for an enthusiastic and experienced Front-End Engineer with a strong background in React, NextJS, and TypeScript to join our dynamic team. You will play a pivotal role in building scalable, user-centric web applications and delivering high-quality solutions to our users.",
       "As a Front-End Engineer, you will work closely with cross-functional teams to design and implement intuitive user interfaces, while ensuring top-notch performance and responsiveness."
@@ -297,14 +297,14 @@ export default function Careers() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
               <ul className="space-y-2 text-gray-400">
-                <li>support@financialhealth.co.in</li>
+                <li>gharconnectindia @gmail.com</li>
                 <li>+91 93213 14553</li>
                 <li>Mumbai 400012<br />India</li>
               </ul>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400">
-            <p>&copy; 2024 Financial Health. All rights reserved.</p>
+            <p>&copy; 2024 GharConnect. All rights reserved.</p>
           </div>
         </div>
       </footer>

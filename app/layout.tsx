@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     statusBarStyle: 'black',
   },
   icons: {
-    apple: '/icons/icon-192x192.png',
+    apple: '/GC_Logo.png',
   },
 }
 
