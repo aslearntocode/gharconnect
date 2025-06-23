@@ -13,79 +13,11 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
-    slug: 'hra-structure-impact-companies-employees',
-    title: 'HRA Structure Impact: How Higher House Rent Allowance Benefits Companies & Employees',
-    excerpt: 'The structure of HRA (House Rent Allowance) in a salary impacts both the employee and the employer, but in different ways. Learn the benefits and trade-offs companies face when offering higher HRA.',
-    content: `
-# HRA Structure Impact: How Higher House Rent Allowance Benefits Companies & Employees
-
-The structure of HRA (House Rent Allowance) in a salary impacts both the employee and the employer, but in different ways. Let's break down what benefits and trade-offs companies face when offering higher HRA as a component of salary.
-
-## ✅ Why Companies Offer Higher HRA: Benefits
-
-### 1. 🧾 Tax Optimization for Employees (Attractive Perk)
-Offering a higher HRA helps employees save tax if they live in rented homes.
-
-This makes the CTC (Cost to Company) more tax-efficient for employees — a smart HR tool to attract talent, especially in urban centers like Mumbai or Bangalore.
-
-### 2. 💸 No Additional Cost to Company
-Increasing HRA doesn't increase the total salary payout — it just restructures the same CTC into components that help employees reduce tax burden.
-
-### 3. 👥 Boosts Employee Satisfaction
-Tax savings make employees feel like they're getting more "in-hand salary", increasing job satisfaction and retention, especially among younger renters.
-
-### 4. ✅ Simple to Administer
-HRA is a standard salary component under Indian tax laws and doesn't require extra compliance burden for the company (unlike stock options or bonuses).
-
-## ⚠️ Downsides / Trade-offs for Employers
-
-### 1. 🧾 No Direct Tax Benefit to the Employer
-HRA is a fully deductible expense for the employer like any other salary component. But increasing HRA doesn't offer extra deductions or benefits on the company's tax return.
-
-### 2. 🔍 Risk of Tax Scrutiny (for Fake Rent Claims)
-If employees misuse HRA by faking rent receipts (e.g., claiming rent paid to relatives), it could result in compliance red flags during tax audits — especially for companies with many high HRA claims.
-
-### 3. 📉 Lower Provident Fund Contributions (Optional)
-Since PF is based on Basic Salary, increasing HRA (and decreasing Basic) may lower PF contributions.
-
-This may help the employer reduce their PF liability, but
-
-It may also be viewed negatively by employees looking for higher retirement savings.
-
-## 🏁 Summary: Pros & Cons of Offering Higher HRA
-
-| Pros for Employer | Cons for Employer |
-|-------------------|-------------------|
-| Helps employees save tax (boosts morale) | No extra tax savings for employer |
-| Makes CTC more attractive | Can lower PF if Basic is reduced |
-| Easy to manage (no extra compliance) | Risk of rent receipt misuse |
-| No increase in total salary cost | Not useful for employees with owned homes |
-
-## 👨‍💼 What Smart Companies Do
-
-**Maintain a balanced salary structure:**
-e.g., 40–50% Basic, 30–40% HRA, rest as allowances and bonuses.
-
-**Provide tools to help employees file legit HRA claims:** rent receipts, landlord PAN fields, digital portals.
-
-**Offer customizable salary structure (flexi-pay)** to let employees optimize components as per their tax situation.
-
-## 💬 Final Thought
-
-Offering higher HRA is a win-win when employees are in rented homes — it boosts their take-home pay without increasing employer costs. But companies should structure it transparently, ensure proper documentation, and educate employees on using it responsibly.
-    `,
-    author: 'GharConnect Team',
-    date: '2025-01-25',
-    readTime: '8 min read',
-    category: 'HR & Finance',
-    image: '/blog/hra-structure-impact.jpg'
-  },
-  {
     slug: 'mumbai-residential-real-estate-market-2025',
-    title: '🏙️ Mumbai Residential Real Estate Market 2025: Trends, Opportunities & Local Insights',
+    title: 'Mumbai Residential Real Estate Market 2025: Trends, Opportunities & Local Insights',
     excerpt: 'Mumbai — India\'s financial capital — continues to dominate the country\'s residential real estate landscape. Explore the latest trends, emerging neighborhoods, and what to expect in 2025.',
     content: `
-# 🏙️ Mumbai Residential Real Estate Market 2025: Trends, Opportunities & Local Insights
+# Mumbai Residential Real Estate Market 2025: Trends, Opportunities & Local Insights
 
 Mumbai — India's financial capital — continues to dominate the country's residential real estate landscape. With strong demand from end-users and investors alike, the city's property market is evolving rapidly. In this article, we explore the latest trends in Mumbai's residential real estate market, highlight emerging neighborhoods, and guide buyers, sellers, and renters through what to expect in 2025.
 
@@ -157,8 +89,7 @@ GharConnect.in empowers you to do just that — by bringing residents, owners, b
 
 🔗 **Ready to explore real listings or list your flat?**
 
-👉 Visit [www.gharconnect.in](https://www.gharconnect.in) and select your society or locality to get started!
-    `,
+👉 Visit [www.gharconnect.in](https://www.gharconnect.in) and select your society or locality to get started!`,
     author: 'GharConnect Team',
     date: '2025-06-23',
     readTime: '12 min read',

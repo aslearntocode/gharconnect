@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import { getSupabaseClient } from '@/lib/supabase';
 import { Apartment } from '@/types/apartment';
+import SEOScript from '@/components/SEOScript';
 
 export default function RentPage() {
   // Data states
@@ -204,6 +205,28 @@ export default function RentPage() {
           <h1 className="text-3xl md:text-4xl font-bold text-white">Rental Apartments</h1>
         </div>
       </div>
+      
+      {/* SEO Content Section - Low Brokerage Value Proposition */}
+      <div className="bg-white py-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <p className="text-lg text-gray-600 max-w-5xl mx-auto">
+              Discover premium rental apartments in Mumbai with transparent pricing and minimal brokerage fees. 
+              GharConnect offers the best rental deals with no hidden charges and exceptional value for money.
+            </p>
+          </div>
+          
+          
+          {/* SEO Content for Search Engines */}
+          <div className="sr-only">
+            <p>Location: Parel</p>
+            <p>Type: Rental</p>
+            <p>Price Range: ₹15,000 to ₹1,00,000+</p>
+            <p>Property Types: 1BHK, 2BHK, 3BHK, 4BHK</p>
+          </div>
+        </div>
+      </div>
+      
       {/* Filter Bar below the blue box */}
       <div className="w-full flex justify-center mt-0 mb-0">
         <div className="max-w-5xl w-full flex flex-wrap md:flex-nowrap justify-center gap-2 md:gap-4 bg-white rounded-2xl shadow-lg px-4 py-3">
@@ -509,6 +532,9 @@ export default function RentPage() {
           </div>
         </div>
       </div>
+      
+      {/* SEO Structured Data */}
+      <SEOScript location="Parel" type="rent" />
     </div>
   );
 }
