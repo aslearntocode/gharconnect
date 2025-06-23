@@ -1,21 +1,32 @@
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { auth } from './firebase' // Import Firebase auth
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+// Create a base client
+const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     persistSession: false,
   },
-  global: {
-    headers: {
-      Authorization: `Bearer ${auth.currentUser?.getIdToken()}`,
-    },
-  },
 })
 
-// Function to update the Supabase client with the latest auth token
+// Function to get an authenticated Supabase client
+export const getSupabaseClient = async (): Promise<SupabaseClient> => {
+  const token = await auth.currentUser?.getIdToken()
+  
+  if (token) {
+    supabase.auth.setSession({
+      access_token: token,
+      refresh_token: token,
+    })
+  }
+  
+  return supabase
+}
+
+// DEPRECATED: This function is part of a pattern that can cause race conditions.
+// Use getSupabaseClient instead.
 export const updateSupabaseAuth = async () => {
   const token = await auth.currentUser?.getIdToken()
   if (token) {

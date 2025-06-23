@@ -9,8 +9,7 @@ import { User } from "firebase/auth"
 import { ProfileDropdown } from "@/components/ProfileDropdown"
 import Testimonials from "@/components/Testimonials"
 import Header from "@/components/Header"
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { supabase } from '@/lib/supabase'
+import { getSupabaseClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { Dialog } from '@headlessui/react'
 import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid } from 'react-icons/fi'
@@ -222,8 +221,7 @@ export default function Home() {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setUser(user)
       if (user) {
-        // Fetch latest credit report from Supabase
-        const supabase = createClientComponentClient()
+        const supabase = await getSupabaseClient()
         const { data, error } = await supabase
           .from('credit_reports')
           .select('created_at, report_analysis')
@@ -272,7 +270,7 @@ export default function Home() {
   useEffect(() => {
     const fetchAllocation = async () => {
       if (user) {
-        const supabase = createClientComponentClient()
+        const supabase = await getSupabaseClient()
         const { data, error } = await supabase
           .from('investment_records')
           .select('allocation')
@@ -293,6 +291,7 @@ export default function Home() {
   useEffect(() => {
     const fetchReport = async () => {
       if (user) {  // Only fetch if user is logged in
+        const supabase = await getSupabaseClient()
         const { data: reports } = await supabase
           .from('credit_reports')
           .select('*')

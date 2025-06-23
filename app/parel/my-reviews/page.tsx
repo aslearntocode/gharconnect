@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { auth } from '@/lib/firebase'
-import { supabase, type Review } from '@/lib/supabase'
+import { getSupabaseClient, type Review } from '@/lib/supabase'
 import Header from '@/components/Header'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -22,6 +22,7 @@ export default function MyReviews() {
       }
 
       try {
+        const supabase = await getSupabaseClient()
         const { data, error } = await supabase
           .from('reviews')
           .select('*')
@@ -56,7 +57,7 @@ export default function MyReviews() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">My Reviews</h1>
-            <p className="mt-2 text-gray-600">All your credit card reviews in one place</p>
+            <p className="mt-2 text-gray-600">All your reviews in one place</p>
           </div>
 
           {loading ? (
@@ -70,12 +71,12 @@ export default function MyReviews() {
           ) : reviews.length === 0 ? (
             <div className="bg-white rounded-lg shadow-sm p-8 text-center">
               <h3 className="text-lg font-medium text-gray-900 mb-2">No reviews yet</h3>
-              <p className="text-gray-500 mb-6">You haven't reviewed any credit cards yet.</p>
-              <Link 
-                href="/credit" 
+              <p className="text-gray-500 mb-6">You haven't reviewed any items yet.</p>
+              <Link
+                href="/parel/marketplace"
                 className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Browse Credit Cards
+                Browse Marketplace
               </Link>
             </div>
           ) : (
@@ -84,7 +85,7 @@ export default function MyReviews() {
                 <div key={review.id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                   <div className="p-6">
                     <Link 
-                      href={`/credit/${review.card_id}`}
+                      href={`/parel/marketplace/${review.card_id}`}
                       className="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors mb-2 block"
                     >
                       {review.card_name}
