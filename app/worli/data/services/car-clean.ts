@@ -12,14 +12,5 @@ export interface Vendor {
 }
 
 export const vendors: Vendor[] = [
-  {
-    name: 'Srikant Car Wash',
-    services: [{
-      name: 'Basic Car Wash',
-      description: 'Exterior wash, interior cleaning, and tire cleaning',
-      price: '₹700/800',
-      unit: 'car'
-    }],
-    mobile: '+91 9876543210'
-  }
+
 ]; 
