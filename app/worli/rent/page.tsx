@@ -98,6 +98,20 @@ export default function RentPage() {
     return apartmentImages[apartmentId] || [];
   };
 
+  // Function to convert description text into bullet points
+  const formatDescriptionAsBullets = (description: string): string[] => {
+    if (!description) return [];
+    
+    // Split by common delimiters and clean up
+    const features = description
+      .split(/[,;•\n]/) // Split by comma, semicolon, bullet, or newline
+      .map(feature => feature.trim())
+      .filter(feature => feature.length > 0)
+      .map(feature => feature.replace(/^[-•*]\s*/, '')); // Remove existing bullet points
+    
+    return features;
+  };
+
   // Component for handling image loading with fallback
   const ApartmentImage = ({ src, alt, className, onClick, style }: { 
     src: string; 
@@ -307,7 +321,9 @@ export default function RentPage() {
                           <div className="flex-1">
                             <div className="mb-2">
                               <span className="font-semibold">Description: </span>
-                              <span>{apt.description || 'No description available'}</span>
+                              <ul className="list-disc list-inside text-sm text-gray-700">
+                                {formatDescriptionAsBullets(apt.description || '').map((feature, i) => <li key={i}>{feature}</li>)}
+                              </ul>
                             </div>
                             <div className="mb-2">
                               <span className="font-semibold">Address: </span>
@@ -412,7 +428,9 @@ export default function RentPage() {
                       </div>
                       <div className="mb-2">
                         <span className="font-semibold">Description: </span>
-                        <span>{apt.description || 'No description available'}</span>
+                        <ul className="list-disc list-inside text-sm text-gray-700">
+                          {formatDescriptionAsBullets(apt.description || '').map((feature, i) => <li key={i}>{feature}</li>)}
+                        </ul>
                       </div>
                       <div className="mb-2">
                         <span className="font-semibold">Address: </span>
