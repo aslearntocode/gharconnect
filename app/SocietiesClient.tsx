@@ -68,6 +68,13 @@ const societies = [
     area: 'parel'
   },
   {
+    name: 'Celestia Spaces',
+    // href: '/worli',
+    description: 'A newly built society in Sewri.',
+    image: '/CS.png',
+    area: 'parel'
+  },
+  {
     name: 'Lodha Park',
     // href: '/worli',
     description: 'Luxurious living in the heart of Worli.',
@@ -103,8 +110,12 @@ export default function SocietiesClient() {
   const areas = [
     { name: 'Parel, Mumbai (Parel, Sewri, Bhoiwada)', value: 'parel', displayName: 'Parel, Mumbai' },
     { name: 'Worli, Mumbai (Worli, Lower Parel)', value: 'worli', displayName: 'Worli, Mumbai' },
-    { name: 'Bandra, Mumbai (Bandra, Khar, Santacruz)', value: 'bandra', displayName: 'Bandra, Mumbai' },
-    { name: 'Andheri, Mumbai (Andheri, Marol, Ghatkopar)', value: 'andheri', displayName: 'Andheri, Mumbai' }
+    // { name: 'Bandra, Mumbai (Bandra, Khar, Santacruz)', value: 'bandra', displayName: 'Bandra, Mumbai' },
+    // { name: 'Andheri, Mumbai (Andheri, Marol, Ghatkopar)', value: 'andheri', displayName: 'Andheri, Mumbai' },
+    // { name: 'Juhu, Mumbai (Juhu, Vile Parle, Andheri)', value: 'juhu', displayName: 'Juhu, Mumbai' },
+    // { name: 'Malad, Mumbai (Malad, Kandivali, Andheri)', value: 'malad', displayName: 'Malad, Mumbai' },
+    // { name: 'Powai, Mumbai (Powai, Andheri)', value: 'powai', displayName: 'Powai, Mumbai' },
+    // { name: 'Thane, Mumbai (Thane, Ghodbunder Road)', value: 'thane', displayName: 'Thane, Mumbai' }
   ];
 
   const filteredSocieties = selectedArea === '' ? [] : societies.filter(society => society.area === selectedArea);

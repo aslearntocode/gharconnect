@@ -23,6 +23,9 @@ export default function Footer() {
                 <Link href="/parel/careers" className="hover:text-indigo-600 transition-colors">Careers</Link>
               </li>
               <li>
+                <Link href="/parel/faq" className="hover:text-indigo-600 transition-colors">FAQ</Link>
+              </li>
+              <li>
                 <Link href={isMainPage ? "/terms" : `/${society}/terms`} className="hover:text-indigo-600 transition-colors">Terms & Conditions</Link>
               </li>
               <li>
@@ -41,26 +44,19 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Resources */}
+          {/* Communities */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900">Resources</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link href="/parel/faq" className="hover:text-indigo-600 transition-colors">FAQ</Link>
-              </li>
-              <li>
-                <Link href="/parel/" className="hover:text-indigo-600 transition-colors">Parel Community</Link>
-              </li>
-              <li>
-                <Link href="/worli/" className="hover:text-indigo-600 transition-colors">Worli Community</Link>
-              </li>
-              <li>
-                <Link href="/andheri/" className="hover:text-indigo-600 transition-colors">Andheri Community</Link>
-              </li>
-              <li>
-                <Link href="/bandra/" className="hover:text-indigo-600 transition-colors">Bandra Community</Link>
-              </li>
-            </ul>
+            <h3 className="text-lg font-semibold text-gray-900">Communities</h3>
+            <div className="grid grid-cols-2 gap-2">
+              <Link href="/parel/" className="hover:text-indigo-600 transition-colors">Parel</Link>
+              <Link href="/worli/" className="hover:text-indigo-600 transition-colors">Worli</Link>
+              <Link href="/andheri/" className="hover:text-indigo-600 transition-colors">Andheri</Link>
+              <Link href="/bandra/" className="hover:text-indigo-600 transition-colors">Bandra</Link>
+              <Link href="/juhu/" className="hover:text-indigo-600 transition-colors">Juhu</Link>
+              <Link href="/malad/" className="hover:text-indigo-600 transition-colors">Malad</Link>
+              <Link href="/powai/" className="hover:text-indigo-600 transition-colors">Powai</Link>
+              <Link href="/thane/" className="hover:text-indigo-600 transition-colors">Thane</Link>
+            </div>
           </div>
 
           {/* Social Media */}
