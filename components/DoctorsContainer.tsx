@@ -18,7 +18,7 @@ export default function DoctorsContainer() {
     <div className="bg-indigo-600 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Find Local Doctors</h2>
+          <h2 className="text-3xl font-bold text-white mb-4">Find Local Doctors, Dieticians, and more</h2>
           <p className="text-indigo-100 max-w-2xl mx-auto mb-8">
             Access our comprehensive directory of trusted medical professionals in your area. 
             Find doctors by specialization, check their availability, and book appointments.

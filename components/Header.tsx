@@ -138,14 +138,14 @@ export default function Header() {
                     <FiHome className="text-blue-600 w-5 h-5" />
                     <span>Rent</span>
                   </Link>
-                  <Link 
+                  {/* <Link 
                     href={`/${currentSociety}/sell`}
                     className="flex items-center gap-x-3 px-4 py-2 text-base text-black hover:bg-gray-50"
                     onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
                     <FiHome className="text-blue-600 w-5 h-5" />
                     <span>Sell</span>
-                  </Link>
+                  </Link> */}
                 </div>
               </div>
 
