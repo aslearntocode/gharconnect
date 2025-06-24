@@ -572,7 +572,7 @@ export default function Home() {
       </div>
 
       {/* Property Management Services Section */}
-      <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-0 pt-4 md:pt-6">
+      <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-0 pt-2 md:pt-3">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
