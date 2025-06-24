@@ -513,11 +513,11 @@ export default function Home() {
               <div className="grid grid-cols-1 md:grid-cols-3 items-stretch gap-8 w-full">
                 <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center text-center w-full h-full min-h-[340px] justify-between">
                   <span className="text-3xl mb-2">🏠</span>
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">Benefits of Listing Your Property With Us</h4>
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">List Your Property With Us</h4>
                   <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
-                    <li>Save on brokerage fees. We only charge 10% of one month rent.</li>
-                    <li>Find the right tenant for your property within the community.</li>
-                    <li>Get the property ready for the next tenant with our renovation services.</li>
+                    <li>Save on brokerage fees – We charge only 10% of one month’s rent.</li>
+                    <li>Find genuine tenants from within your community.</li>
+                    <li>Renovation support – Get the property ready for the next tenant with our expert services.</li>
                   </ul>
                   <div className="flex flex-row justify-center items-end gap-3 md:gap-4 mt-4 w-full grow">
                     <a 
@@ -525,7 +525,7 @@ export default function Home() {
                       className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white hover:bg-blue-700 rounded text-xs font-semibold transition-all duration-300 shadow-md"
                       style={{ minHeight: '36px' }}
                     >
-                      <span className="hidden md:inline">List Your Property</span>
+                      <span className="hidden md:inline">List Your Property With Us</span>
                       <span className="md:hidden">List Property</span>
                       <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
@@ -535,11 +535,11 @@ export default function Home() {
                 </div>
                 <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center text-center w-full h-full min-h-[340px] justify-between">
                   <span className="text-3xl mb-2">🧑‍💼</span>
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">Benefits of Listing Your Business With Us</h4>
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">List Your Business With Us</h4>
                   <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
-                    <li>Grow your business by reaching out to the community.</li>
-                    <li>Build trust by getting rated by the community.</li>
-                    <li>No commission on your sales.</li>
+                    <li>Reach more customers right where they live.</li>
+                    <li>Build trust by getting rated and reviewed by the community.</li>
+                    <li>Zero commission – You keep 100% of your earnings.</li>
                   </ul>
                   <div className="flex flex-row justify-center items-end gap-3 md:gap-4 mt-4 w-full grow">
                     <a 
@@ -559,13 +559,12 @@ export default function Home() {
                 </div>
                 <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center text-center w-full h-full min-h-[340px] justify-between">
                   <span className="text-3xl mb-2">📄</span>
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">What GharConnect Does for You and Community?</h4>
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">What GharConnect Offers?</h4>
                   <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
-                    <li>List verified properties in your area.</li>
-                    <li>Onboard local vendors in your area.</li>
-                    <li>Find Domestic Help & Drivers available to meet your needs.</li>
-                    <li>Get the vendors rated by the community.</li>
-                    <li>Build a stronger community with fewer hassles.</li>
+                    <li>Verified property listings in your society.</li>
+                    <li>Local vendors you can trust—rated by residents.</li>
+                    <li>Domestic help and drivers who meet your needs.</li>
+                    <li>A stronger, better-connected community with fewer hassles.</li>
                   </ul>
                   <div className="flex flex-row justify-center items-end gap-3 md:gap-4 mt-4 w-full grow">
                     <div style={{ minHeight: '36px' }} className="inline-block" />
