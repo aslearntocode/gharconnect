@@ -423,13 +423,13 @@ export default function Header() {
                   >
                     Rent
                   </Link>
-                  <Link 
+                  {/* <Link 
                     href={`/${currentSociety}/sell`}
                     className="flex items-center px-4 py-2 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
                     Sell
-                  </Link>
+                  </Link> */}
                 </div>
               )}
             </div>
