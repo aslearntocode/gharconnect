@@ -83,6 +83,7 @@ export default function Home() {
   const [isSwiping, setIsSwiping] = useState(false)
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
+  const [currentAdCarouselIndex, setCurrentAdCarouselIndex] = useState(0);
 
   const testimonials = [
     {
@@ -425,6 +426,14 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [notificationMessages.length]);
 
+  // Auto-play advertisement carousel
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentAdCarouselIndex((prev) => (prev + 1) % 3);
+    }, 4000); // 4 seconds per slide
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <main className="min-h-screen bg-white">
       <Header />
@@ -495,9 +504,75 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Advertisement Section */}
+      <div className="bg-white py-3 md:py-4 mb-0">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100 p-3 md:p-4 relative">
+            {/* Sponsored Label */}
+            <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-medium px-2 py-1 rounded-full">
+              Sponsored
+            </div>
+            
+            <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+              {/* Left Side - School Details */}
+              <div className="flex-1 flex items-center space-x-4 mt-8 md:mt-0">
+                <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-white font-bold text-lg">🏫</span>
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg md:text-xl font-semibold text-gray-900">Casa Vista Montessori Preschool</h3>
+                  <p className="text-gray-600 text-sm md:text-base">📍 Sion West, Mumbai • Admissions Open for 2025-26</p>
+                  <p className="text-gray-600 text-sm md:text-base">📞 Contact: 9820297119, 9820963632</p>
+                </div>
+              </div>
+              
+              {/* Right Side - Photo Carousel */}
+              <div className="relative w-60 h-36 md:w-96 md:h-56 rounded-lg overflow-hidden flex-shrink-0">
+                {/* Sample images - replace with actual business photos */}
+                <div className="absolute inset-0 flex transition-transform duration-500 ease-in-out" 
+                     style={{ transform: `translateX(-${currentAdCarouselIndex * 100}%)` }}>
+                  <div className="w-full flex-shrink-0 h-full">
+                    <img 
+                      src="/Ads/IMG_1.png" 
+                      alt="School Advertisement 1" 
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <div className="w-full flex-shrink-0 h-full">
+                    <img 
+                      src="/Ads/IMG_2.png" 
+                      alt="School Advertisement 2" 
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                  <div className="w-full flex-shrink-0 h-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center">
+                    <div className="text-center text-white">
+                      <div className="text-4xl md:text-5xl mb-2">🎓</div>
+                      <p className="text-sm md:text-base font-semibold">Admissions Open</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Navigation Dots */}
+                <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                  {[0, 1, 2].map((index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentAdCarouselIndex(index)}
+                      className={`w-3 h-3 rounded-full transition-colors ${
+                        currentAdCarouselIndex === index ? 'bg-white' : 'bg-white/50'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Property Management Services Section */}
-      <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-12">
+      <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-0 pt-4 md:pt-6">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -515,7 +590,7 @@ export default function Home() {
                   <span className="text-3xl mb-2">🏠</span>
                   <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">List Your Property With Us</h4>
                   <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
-                    <li>Save on brokerage fees – We charge only 10% of one month’s rent.</li>
+                    <li>Save on brokerage fees – We charge only 10% of one month's rent.</li>
                     <li>Find genuine tenants from within your community.</li>
                     <li>Renovation support – Get the property ready for the next tenant with our expert services.</li>
                   </ul>
