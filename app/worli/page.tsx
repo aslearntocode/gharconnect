@@ -521,6 +521,12 @@ export default function Home() {
                 <h3 className="text-lg md:text-xl font-semibold text-gray-900">Casa Vista Montessori Preschool</h3>
                   <p className="text-gray-600 text-sm md:text-base">📍 Sion West, Mumbai • Admissions Open for 2025-26</p>
                   <p className="text-gray-600 text-sm md:text-base">📞 Contact: 9820297119, 9820963632</p>
+                  <p className="text-gray-600 text-sm md:text-base mt-1">
+                    <a href="https://www.instagram.com/casa_vista_montessori/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center underline hover:text-blue-700">
+                      <svg className="w-4 h-4 mr-1" viewBox="0 0 448 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M224 202.66A53.34 53.34 0 1 0 277.34 256 53.38 53.38 0 0 0 224 202.66Zm124.71-41a54 54 0 0 0-30.22-30.22C293.19 120 256 118.13 224 118.13s-69.19 1.87-94.49 13.31a54 54 0 0 0-30.22 30.22C120 162.81 118.13 200 118.13 232s1.87 69.19 13.31 94.49a54 54 0 0 0 30.22 30.22C162.81 392 200 393.87 232 393.87s69.19-1.87 94.49-13.31a54 54 0 0 0 30.22-30.22C392 349.19 393.87 312 393.87 280s-1.87-69.19-13.31-94.49ZM224 338a82 82 0 1 1 82-82 82 82 0 0 1-82 82Zm85.4-148.6a19.2 19.2 0 1 1-19.2-19.2 19.2 19.2 0 0 1 19.2 19.2ZM398.8 80A80 80 0 0 0 368 51.2C347.2 32 320.8 32 224 32S100.8 32 80 51.2A80 80 0 0 0 51.2 80C32 100.8 32 127.2 32 224s0 123.2 19.2 144A80 80 0 0 0 80 460.8C100.8 480 127.2 480 224 480s123.2 0 144-19.2a80 80 0 0 0 28.8-28.8C480 347.2 480 320.8 480 224s0-123.2-19.2-144ZM432 368a48 48 0 0 1-27.31 27.31C380.8 408 353.6 416 224 416s-156.8-8-180.69-20.69A48 48 0 0 1 16 368C8 353.6 0 326.4 0 224s8-129.6 20.69-144A48 48 0 0 1 48 51.2C62.4 40 89.6 32 192 32s129.6 8 144 19.2A48 48 0 0 1 432 80c12.69 14.4 20.69 41.6 20.69 144s-8 129.6-20.69 144Z"/></svg>
+                      @casa_vista_montessori
+                    </a>
+                  </p>
                 </div>
               </div>
               
