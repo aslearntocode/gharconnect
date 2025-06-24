@@ -510,7 +510,7 @@ export default function Home() {
           <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border border-blue-100 p-3 md:p-4 relative">
             {/* Sponsored Label */}
             <div className="absolute top-2 left-2 bg-orange-500 text-white text-xs font-medium px-2 py-1 rounded-full">
-              Sponsored
+              Advertisement
             </div>
             
             <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
