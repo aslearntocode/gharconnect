@@ -436,10 +436,11 @@ export default function VendorDashboard() {
                     required
                   >
                     <option value="">Select a service</option>
-                    <option value="Cooking">Cooking</option>
-                    <option value="Cleaning">Cleaning</option>
-                    <option value="Both">Both (Cooking and Cleaning)</option>
+                    <option value="Cooking">Cook</option>
+                    <option value="Cleaning">Cleaner</option>
+                    <option value="Both">Both (Cook and Cleaner)</option>
                     <option value="Nanny">Nanny</option>
+                    <option value="Driver">Driver</option>
                   </select>
                 </div>
               </div>
