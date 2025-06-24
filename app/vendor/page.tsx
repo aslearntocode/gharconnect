@@ -34,6 +34,12 @@ const TIME_SLOTS = [
   { start: '19:00', end: '20:00', label: '7-8pm' },
 ];
 
+const PERMANENT_SLOTS = [
+  { id: 'morning', label: 'Morning', start: '07:00', end: '12:00' },
+  { id: 'afternoon', label: 'Afternoon', start: '12:00', end: '17:00' },
+  { id: 'evening', label: 'Evening', start: '17:00', end: '20:00' },
+];
+
 const societies = [
   { name: 'L&T Crescent Bay', area: 'parel', image: '/cb.png' },
   { name: 'Ashok Gardens', area: 'parel', image: '/ag.png' },
@@ -67,6 +73,17 @@ function getNext7Days() {
   return days;
 }
 
+function getNext10Days() {
+  const days = [];
+  const today = new Date();
+  for (let i = 0; i < 10; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    days.push(d);
+  }
+  return days;
+}
+
 export default function VendorDashboard() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -80,6 +97,12 @@ export default function VendorDashboard() {
   const [selectedArea, setSelectedArea] = useState('');
   const [mobileNo, setMobileNo] = useState('');
   const [selectedService, setSelectedService] = useState('');
+  const [activeTab, setActiveTab] = useState<'temporary' | 'permanent'>('temporary');
+  const [permanentSlots, setPermanentSlots] = useState<Record<string, boolean>>({
+    morning: false,
+    afternoon: false,
+    evening: false,
+  });
   const router = useRouter();
   const supabase = createClientComponentClient();
 
@@ -175,13 +198,20 @@ export default function VendorDashboard() {
     }
   };
 
-  const handleSlotToggle = (date: Date, slot: typeof TIME_SLOTS[0]) => {
+  const handleSlotToggle = (date: Date, slot: { id: string }) => {
     const dateKey = date.toISOString().slice(0, 10);
     setSelectedSlots(prev => {
       const daySlots = { ...(prev[dateKey] || {}) };
-      daySlots[slot.start] = !daySlots[slot.start];
+      daySlots[slot.id] = !daySlots[slot.id];
       return { ...prev, [dateKey]: daySlots };
     });
+  };
+
+  const handlePermanentSlotToggle = (slotId: string) => {
+    setPermanentSlots(prev => ({
+      ...prev,
+      [slotId]: !prev[slotId]
+    }));
   };
 
   const handleSocietyToggle = (name: string) => {
@@ -215,23 +245,65 @@ export default function VendorDashboard() {
       const societiesString = selectedSocieties.length
         ? `{${selectedSocieties.map(s => `"${s}"`).join(',')}}`
         : '{}';
-      const days = getNext7Days();
+
+      if (activeTab === 'permanent') {
+        // Save permanent availability
+        const rows = Object.entries(permanentSlots)
+          .filter(([slotId, isAvailable]) => isAvailable)
+          .map(([slotId]) => {
+            const slot = PERMANENT_SLOTS.find(s => s.id === slotId);
+            return {
+              vendor_id: auth.currentUser!.uid,
+              name: vendorName,
+              mobile_no: mobileNo,
+              services: selectedService,
+              area: selectedArea,
+              societies: societiesString,
+              slot_type: slotId,
+              slot_start_time: slot?.start,
+              slot_end_time: slot?.end,
+              is_available: true,
+            };
+          });
+
+        if (rows.length === 0) {
+          toast({ title: 'Error', description: 'Please select at least one permanent slot', variant: 'destructive' });
+          setIsLoading(false);
+          return;
+        }
+
+        const { error } = await supabase
+          .from('vendor_permanent_availability')
+          .upsert(rows, { onConflict: 'vendor_id,slot_type' });
+
+        if (error) {
+          toast({
+            title: 'Error',
+            description: error.message || 'Failed to save permanent availability',
+            variant: 'destructive',
+          });
+        } else {
+          toast({ title: 'Success', description: 'Permanent availability saved!' });
+        }
+        setIsLoading(false);
+        return;
+      }
+
+      // Temporary (weekly) availability logic (updated for 10 days and 3 slots)
+      const days = getNext10Days();
       const rows = days.map(date => {
         const dateKey = date.toISOString().slice(0, 10);
-        const slotBooleans: { [key: string]: boolean } = {};
-        TIME_SLOTS.forEach(slot => {
-          const col = `slot_${parseInt(slot.start)}_${parseInt(slot.end)}`;
-          slotBooleans[col] = !!selectedSlots[dateKey]?.[slot.start];
-        });
         return {
           vendor_id: auth.currentUser!.uid,
-          Name: vendorName,
-          Mobile_No: mobileNo,
+          name: vendorName,
+          mobile_no: mobileNo,
           services: selectedService,
           area: selectedArea,
           societies: societiesString,
           date: dateKey,
-          ...slotBooleans,
+          morning: !!selectedSlots[dateKey]?.morning,
+          afternoon: !!selectedSlots[dateKey]?.afternoon,
+          evening: !!selectedSlots[dateKey]?.evening,
         };
       });
       const { error } = await supabase
@@ -375,41 +447,98 @@ export default function VendorDashboard() {
           )}
         </Card>
         <Card className="p-6 mb-8 w-full">
-          <h2 className="text-xl font-semibold mb-4">Set Your Availability (Next 7 Days)</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full border text-center table-auto">
-              <thead>
-                <tr>
-                  <th className="border px-3 py-2 bg-gray-100 text-base font-semibold whitespace-nowrap min-w-[160px]">Date</th>
-                  {TIME_SLOTS.map(slot => (
-                    <th key={slot.start} className="border px-3 py-2 bg-gray-100 text-base font-semibold">{slot.label}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {getNext7Days().map(date => {
-                  const dateKey = date.toISOString().slice(0, 10);
-                  return (
-                    <tr key={dateKey}>
-                      <td className="border px-3 py-2 font-medium whitespace-nowrap min-w-[160px] bg-white">
-                        {date.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
-                      </td>
-                      {TIME_SLOTS.map(slot => (
-                        <td key={slot.start} className="border px-3 py-2 bg-white">
-                          <input
-                            type="checkbox"
-                            checked={!!selectedSlots[dateKey]?.[slot.start]}
-                            onChange={() => handleSlotToggle(date, slot)}
-                            className="w-5 h-5 accent-indigo-600"
-                          />
-                        </td>
+          <h2 className="text-xl font-semibold mb-4">Set Your Availability</h2>
+          
+          {/* Tab Navigation */}
+          <div className="flex border-b border-gray-200 mb-6">
+            <button
+              onClick={() => setActiveTab('temporary')}
+              className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
+                activeTab === 'temporary'
+                  ? 'border-indigo-600 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Temporary Availability
+            </button>
+            <button
+              onClick={() => setActiveTab('permanent')}
+              className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
+                activeTab === 'permanent'
+                  ? 'border-indigo-600 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Permanent Availability
+            </button>
+          </div>
+
+          {/* Temporary Availability Tab */}
+          {activeTab === 'temporary' && (
+            <div>
+              <h3 className="text-lg font-medium mb-4">Next 10 Days Availability</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full border text-center table-auto">
+                  <thead>
+                    <tr>
+                      <th className="border px-3 py-2 bg-gray-100 text-base font-semibold whitespace-nowrap min-w-[160px]">Date</th>
+                      {PERMANENT_SLOTS.map(slot => (
+                        <th key={slot.id} className="border px-3 py-2 bg-gray-100 text-base font-semibold">{slot.label}</th>
                       ))}
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                  </thead>
+                  <tbody>
+                    {getNext10Days().map(date => {
+                      const dateKey = date.toISOString().slice(0, 10);
+                      return (
+                        <tr key={dateKey}>
+                          <td className="border px-3 py-2 font-medium whitespace-nowrap min-w-[160px] bg-white">
+                            {date.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
+                          </td>
+                          {PERMANENT_SLOTS.map(slot => (
+                            <td key={slot.id} className="border px-3 py-2 bg-white">
+                              <input
+                                type="checkbox"
+                                checked={!!selectedSlots[dateKey]?.[slot.id]}
+                                onChange={() => handleSlotToggle(date, slot)}
+                                className="w-5 h-5 accent-indigo-600"
+                              />
+                            </td>
+                          ))}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+
+          {/* Permanent Availability Tab */}
+          {activeTab === 'permanent' && (
+            <div>
+              <h3 className="text-lg font-medium mb-4">Permanent Availability</h3>
+              <p className="text-gray-600 mb-4">Select your regular availability slots:</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {PERMANENT_SLOTS.map(slot => (
+                  <div key={slot.id} className="flex items-center p-4 border border-gray-200 rounded-lg bg-white">
+                    <input
+                      type="checkbox"
+                      id={slot.id}
+                      checked={permanentSlots[slot.id]}
+                      onChange={() => handlePermanentSlotToggle(slot.id)}
+                      className="w-5 h-5 accent-indigo-600 mr-3"
+                    />
+                    <label htmlFor={slot.id} className="flex-1 cursor-pointer">
+                      <div className="font-medium text-gray-900">{slot.label}</div>
+                      <div className="text-sm text-gray-500">{slot.start} - {slot.end}</div>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <Button className="mt-6 w-full" onClick={handleSaveAvailability} disabled={isLoading}>
             {isLoading ? 'Saving...' : 'Save Availability'}
           </Button>

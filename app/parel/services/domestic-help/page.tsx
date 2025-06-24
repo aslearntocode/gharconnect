@@ -10,6 +10,7 @@ import { useMediaQuery } from 'react-responsive';
 import { VendorRating } from '@/components/VendorRating';
 import { useRouter } from 'next/navigation';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import LoginModal from '@/components/LoginModal';
 
 const TIME_SLOTS = [
   { start: 9, end: 10, label: "9-10am" },
@@ -23,6 +24,12 @@ const TIME_SLOTS = [
   { start: 17, end: 18, label: "5-6pm" },
   { start: 18, end: 19, label: "6-7pm" },
   { start: 19, end: 20, label: "7-8pm" },
+];
+
+const PERMANENT_SLOTS = [
+  { id: 'morning', label: 'Morning', start: '07:00', end: '12:00' },
+  { id: 'afternoon', label: 'Afternoon', start: '12:00', end: '17:00' },
+  { id: 'evening', label: 'Evening', start: '17:00', end: '20:00' },
 ];
 
 function getNext7Days() {
@@ -48,6 +55,14 @@ export default function VendorSearchPage() {
   const supabase = createClientComponentClient();
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<'temporary' | 'permanent'>('temporary');
+  const [permanentVendors, setPermanentVendors] = useState<any[]>([]);
+  const [vendorAvailabilities, setVendorAvailabilities] = useState<Record<string, any[]>>({});
+  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [openVendorId, setOpenVendorId] = useState<string | null>(null);
+  const [showNumberMap, setShowNumberMap] = useState<Record<string, boolean>>({});
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [pendingVendorId, setPendingVendorId] = useState<string | null>(null);
 
   // Fetch all vendors (distinct by vendor_id)
   useEffect(() => {
@@ -61,18 +76,20 @@ export default function VendorSearchPage() {
 
       const { data, error } = await supabase
         .from("vendor_weekly_availability")
-        .select("vendor_id, Name, Mobile_No, area, societies, date, services")
+        .select("vendor_id, name, mobile_no, area, societies, date, services, morning, afternoon, evening")
         .gte("date", todayDateString)
         .order("date", { ascending: true });
+      console.log('Fetched vendor_weekly_availability:', data, error);
       if (!error && data) {
-        // Group by vendor_id, get latest area/societies
-        const vendorMap: Record<string, any> = {};
+        // Group all rows by vendor_id
+        const vendorMap: Record<string, any[]> = {};
         data.forEach((row: any) => {
-          if (!vendorMap[row.vendor_id]) {
-            vendorMap[row.vendor_id] = row;
-          }
+          if (!vendorMap[row.vendor_id]) vendorMap[row.vendor_id] = [];
+          vendorMap[row.vendor_id].push(row);
         });
-        setVendors(Object.values(vendorMap));
+        setVendorAvailabilities(vendorMap);
+        if (error && typeof error === 'object' && 'message' in error) setFetchError((error as any).message);
+        else setFetchError(null);
       }
       setLoading(false);
     };
@@ -162,8 +179,8 @@ export default function VendorSearchPage() {
     // Search query filter
     const searchLower = searchQuery.toLowerCase();
     const searchMatch = !searchQuery || 
-      (vendor.Name || vendor.vendor_name || '').toLowerCase().includes(searchLower) ||
-      String(vendor.Mobile_No || '').toLowerCase().includes(searchLower) ||
+      (vendor.name || vendor.vendor_name || '').toLowerCase().includes(searchLower) ||
+      String(vendor.mobile_no || '').toLowerCase().includes(searchLower) ||
       (vendor.area || '').toLowerCase().includes(searchLower) ||
       societies.some((society: string) => society.toLowerCase().includes(searchLower)) ||
       (vendor.services || '').toLowerCase().includes(searchLower);
@@ -195,23 +212,96 @@ export default function VendorSearchPage() {
     fetchSlots();
   }, [selectedVendor]);
 
+  // Fetch permanent vendors
+  useEffect(() => {
+    const fetchPermanentVendors = async () => {
+      const { data, error } = await supabase
+        .from('vendor_permanent_availability')
+        .select('*');
+      if (!error && data) {
+        // Group by vendor_id, aggregate slots
+        const vendorMap: Record<string, any> = {};
+        data.forEach((row: any) => {
+          if (!vendorMap[row.vendor_id]) {
+            vendorMap[row.vendor_id] = {
+              ...row,
+              slots: {},
+            };
+          }
+          vendorMap[row.vendor_id].slots[row.slot_type] = row;
+        });
+        setPermanentVendors(Object.values(vendorMap));
+      }
+    };
+    if (activeTab === 'permanent') fetchPermanentVendors();
+  }, [activeTab, supabase]);
+
+  useEffect(() => {
+    if (activeTab === 'permanent') {
+      setSelectedVendor(null);
+    }
+  }, [activeTab]);
+
+  // Helper to check if user is logged in
+  const isLoggedIn = typeof window !== 'undefined' && (window as any).firebase?.auth?.currentUser;
+
+  const handleShowNumber = (vendorId: string) => {
+    if (isLoggedIn) {
+      setShowNumberMap((prev) => ({ ...prev, [vendorId]: true }));
+    } else {
+      setPendingVendorId(vendorId);
+      setIsLoginModalOpen(true);
+    }
+  };
+
+  const handleLoginSuccess = () => {
+    if (pendingVendorId) {
+      setShowNumberMap((prev) => ({ ...prev, [pendingVendorId]: true }));
+      setPendingVendorId(null);
+    }
+    setIsLoginModalOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
       {/* Indigo Banner */}
       <div className="relative">
         <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white">Domestic Help</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-white">Domestic Help & Drivers</h1>
         </div>
       </div>
       <div className="py-8 px-4 max-w-7xl mx-auto">
-        {/* Warning Message */}
-        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-          <p className="text-yellow-800 text-center font-medium">
-            This page is to find temporary workers if you have an urgent need e.g. when your cook or cleaner are on sudden leave. Please do not try to hire from here as that will set wrong precedence and spoil the intent with which this functionality is built.
-          </p>
+        {fetchError && (
+          <div className="bg-red-100 text-red-800 p-4 mb-4 rounded border border-red-300">
+            Error fetching temporary availability: {fetchError}
+          </div>
+        )}
+        {/* Tabs for Temporary and Permanent */}
+        <div className="flex border-b border-gray-200 mb-6 gap-2">
+          <button
+            onClick={() => setActiveTab('temporary')}
+            className={`px-6 py-2 text-lg font-bold rounded-t-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
+              activeTab === 'temporary'
+                ? 'bg-indigo-600 text-white shadow-md'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+            aria-current={activeTab === 'temporary' ? 'page' : undefined}
+          >
+            Temporary
+          </button>
+          <button
+            onClick={() => setActiveTab('permanent')}
+            className={`px-6 py-2 text-lg font-bold rounded-t-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
+              activeTab === 'permanent'
+                ? 'bg-indigo-600 text-white shadow-md'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+            aria-current={activeTab === 'permanent' ? 'page' : undefined}
+          >
+            Permanent
+          </button>
         </div>
-        {/* <h1 className="text-3xl font-bold mb-6">Find a Vendor</h1> */}
         {/* Filters */}
         <div className="flex flex-wrap gap-4 mb-8">
           <div className="flex-1 min-w-[300px]">
@@ -225,140 +315,175 @@ export default function VendorSearchPage() {
           </div>
         </div>
         {/* Vendor cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
-          {filteredVendors.map(vendor => (
-            <div key={vendor.vendor_id}>
-              <Card
-                className={`p-4 border-2 transition-all duration-200 ${selectedVendor?.vendor_id === vendor.vendor_id ? "border-indigo-600 ring-2 ring-indigo-200" : "border-gray-200"}`}
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div className="font-bold text-lg">{vendor.Name || vendor.vendor_name || (vendor.vendor_id ? vendor.vendor_id.slice(0, 8) + '...' : '')}</div>
-                  <VendorRating
-                    vendorId={vendor.vendor_id}
-                    vendorName={vendor.Name || vendor.vendor_name || vendor.vendor_id}
-                    vendorType="service"
-                    onRatingAdded={() => {
-                      router.refresh();
-                    }}
-                  />
-                </div>
-                <div className="text-sm text-gray-600 mb-1">Mobile: {vendor.Mobile_No || 'N/A'}</div>
-                <div className="text-sm text-gray-600 mb-1">Area: {vendor.area}</div>
-                <div className="text-sm text-gray-600 mb-1">Societies: {Array.isArray(vendor.societies) ? vendor.societies.join(", ") : String(vendor.societies).replace(/[{}"]+/g, "").split(",").filter(Boolean).join(", ")}</div>
-                {vendor.services && (
-                  <div className="text-sm text-gray-600 mb-1">Services: {typeof vendor.services === 'string' && vendor.services.trim().toLowerCase() === 'both'
-                    ? 'Both (Cleaning and Cooking)'
-                    : Array.isArray(vendor.services)
-                      ? vendor.services.join(', ')
-                      : vendor.services}
-                  </div>
-                )}
-                {vendorRatings[vendor.vendor_id] && (
-                  <div className="flex items-center gap-1 text-yellow-500 mt-2 mb-3">
-                    <span className="text-sm font-medium">
-                      {vendorRatings[vendor.vendor_id].rating.toFixed(1)}
-                    </span>
-                    <span className="text-gray-500 text-xs">
-                      ({vendorRatings[vendor.vendor_id].count})
-                    </span>
-                  </div>
-                )}
-                {vendorRatings[vendor.vendor_id] && vendorRatings[vendor.vendor_id].count > 0 && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleReviews(vendor.vendor_id);
-                    }}
-                    className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-2"
-                  >
-                    {showReviews[vendor.vendor_id] ? (
-                      <>
-                        <FiChevronUp className="w-4 h-4" />
-                        Hide Reviews
-                      </>
-                    ) : (
-                      <>
-                        <FiChevronDown className="w-4 h-4" />
-                        View Reviews
-                      </>
-                    )}
-                  </button>
-                )}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedVendor(selectedVendor?.vendor_id === vendor.vendor_id ? null : vendor);
-                  }}
-                  className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-2"
-                >
-                  {selectedVendor?.vendor_id === vendor.vendor_id ? (
-                    <>
-                      <FiChevronUp className="w-4 h-4" />
-                      Hide Availability
-                    </>
-                  ) : (
-                    <>
-                      <FiChevronDown className="w-4 h-4" />
-                      View Availability
-                    </>
-                  )}
-                </button>
-              </Card>
-              {/* Reviews section */}
-              {showReviews[vendor.vendor_id] && reviews[vendor.vendor_id] && (
-                <Card className="mt-2 p-4 bg-gray-50">
-                  <div className="space-y-4">
-                    {reviews[vendor.vendor_id].map((review, index) => (
-                      <div key={index} className="border-b border-gray-200 pb-3 last:border-0 last:pb-0">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium text-gray-900">{review.user_name}</span>
-                          <span className="text-sm text-yellow-500 font-medium">{review.rating}/10</span>
-                        </div>
-                        <p className="text-sm text-gray-600">{review.comment}</p>
-                        <p className="text-xs text-gray-500 mt-1">
-                          {new Date(review.created_at).toLocaleDateString('en-IN', {
-                            year: 'numeric',
-                            month: 'short',
-                            day: 'numeric'
-                          })}
-                        </p>
+        {activeTab === 'temporary' ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
+            {Object.entries(vendorAvailabilities)
+              .filter(([_, availRows]) => {
+                const vendor = availRows[0];
+                const societies = Array.isArray(vendor.societies)
+                  ? vendor.societies
+                  : typeof vendor.societies === "string"
+                    ? vendor.societies.replace(/[{}"]+/g, "").split(",").filter(Boolean)
+                    : [];
+                const searchLower = searchQuery.toLowerCase();
+                return (
+                  !searchQuery ||
+                  (vendor.name || '').toLowerCase().includes(searchLower) ||
+                  String(vendor.mobile_no || '').toLowerCase().includes(searchLower) ||
+                  (vendor.area || '').toLowerCase().includes(searchLower) ||
+                  societies.some((society: string) => society.toLowerCase().includes(searchLower)) ||
+                  (vendor.services || '').toLowerCase().includes(searchLower)
+                );
+              })
+              .map(([vendorId, availRows]) => {
+                const vendor = availRows[0];
+                return (
+                  <Card key={vendorId} className="p-4 border-2 border-gray-200 mb-6">
+                    <div className="font-bold text-lg mb-1">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</div>
+                    <div className="text-sm text-gray-600 mb-1">
+                      Mobile: {!showNumberMap[vendorId] ? (
+                        <button
+                          onClick={() => handleShowNumber(vendorId)}
+                          className="text-blue-600 text-sm font-medium hover:text-blue-700 underline focus:outline-none"
+                        >
+                          Log-in to view number
+                        </button>
+                      ) : (
+                        <a href={`tel:${vendor.mobile_no}`} className="text-blue-600 text-sm font-medium hover:text-blue-700">
+                          {vendor.mobile_no}
+                        </a>
+                      )}
+                    </div>
+                    <div className="text-sm text-gray-600 mb-1">Area: {vendor.area}</div>
+                    <div className="text-sm text-gray-600 mb-1">Societies: {Array.isArray(vendor.societies) ? vendor.societies.join(", ") : String(vendor.societies).replace(/[{}"]+/g, "").split(",").filter(Boolean).join(", ")}</div>
+                    {vendor.services && (
+                      <div className="text-sm text-gray-600 mb-1">Services: {typeof vendor.services === 'string' && vendor.services.trim().toLowerCase() === 'both'
+                        ? 'Both (Cleaning and Cooking)'
+                        : Array.isArray(vendor.services)
+                          ? vendor.services.join(', ')
+                          : vendor.services}
                       </div>
-                    ))}
-                  </div>
-                </Card>
-              )}
-              {/* On mobile, show availability right below the selected vendor card */}
-              {isMobile && selectedVendor?.vendor_id === vendor.vendor_id && (
-                <div className="overflow-x-auto mt-2">
-                  <div>
-                    {vendorSlots.map((row, idx) => {
-                      const availableSlots = TIME_SLOTS.filter(slot => row[`slot_${slot.start}_${slot.end}`]);
-                      if (availableSlots.length === 0) return null;
-                      return (
-                        <div key={row.date} className={idx !== 0 ? "mt-1 pt-1 border-t border-gray-100" : ""}>
-                          <span className="font-medium text-xs mr-2 align-middle">
-                            {new Date(row.date).toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
-                          </span>
-                          {availableSlots.map(slot => (
-                            <span key={slot.label} className="inline-block px-1.5 py-0.5 text-[11px] font-semibold bg-green-100 text-green-700 rounded mr-1 align-middle">
-                              {slot.label}
-                            </span>
+                    )}
+                    <button
+                      className="mt-2 mb-2 px-4 py-1 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700 transition"
+                      onClick={() => setOpenVendorId(openVendorId === vendorId ? null : vendorId)}
+                    >
+                      {openVendorId === vendorId ? 'Hide Availability' : 'View Availability'}
+                    </button>
+                    {openVendorId === vendorId && (
+                      <div className="overflow-x-auto mt-4">
+                        <table className="w-full border text-center table-auto">
+                          <thead>
+                            <tr>
+                              <th className="border px-3 py-2 bg-gray-100 text-base font-semibold whitespace-nowrap min-w-[120px]">Date</th>
+                              <th className="border px-3 py-2 bg-gray-100 text-base font-semibold">Morning</th>
+                              <th className="border px-3 py-2 bg-gray-100 text-base font-semibold">Afternoon</th>
+                              <th className="border px-3 py-2 bg-gray-100 text-base font-semibold">Evening</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {availRows.map(row => (
+                              <tr key={row.date}>
+                                <td className="border px-3 py-2 font-medium whitespace-nowrap min-w-[120px] bg-white">
+                                  {new Date(row.date).toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
+                                </td>
+                                <td className="border px-3 py-2 bg-white">{row.morning ? '✔️' : ''}</td>
+                                <td className="border px-3 py-2 bg-white">{row.afternoon ? '✔️' : ''}</td>
+                                <td className="border px-3 py-2 bg-white">{row.evening ? '✔️' : ''}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+                  </Card>
+                );
+              })}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
+            {permanentVendors
+              .filter(vendor => {
+                const societies = Array.isArray(vendor.societies)
+                  ? vendor.societies
+                  : typeof vendor.societies === "string"
+                    ? vendor.societies.replace(/[{}"]+/g, "").split(",").filter(Boolean)
+                    : [];
+                const searchLower = searchQuery.toLowerCase();
+                return (
+                  !searchQuery ||
+                  (vendor.name || '').toLowerCase().includes(searchLower) ||
+                  String(vendor.mobile_no || '').toLowerCase().includes(searchLower) ||
+                  (vendor.area || '').toLowerCase().includes(searchLower) ||
+                  societies.some((society: string) => society.toLowerCase().includes(searchLower)) ||
+                  (vendor.services || '').toLowerCase().includes(searchLower)
+                );
+              })
+              .map(vendor => {
+                const vendorId = vendor.vendor_id;
+                return (
+                  <div key={vendorId}>
+                    <Card className="p-4 border-2 border-gray-200">
+                      <div className="font-bold text-lg mb-1">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</div>
+                      <div className="text-sm text-gray-600 mb-1">
+                        Mobile: {!showNumberMap[vendorId] ? (
+                          <button
+                            onClick={() => handleShowNumber(vendorId)}
+                            className="text-blue-600 text-sm font-medium hover:text-blue-700 underline focus:outline-none"
+                          >
+                            Log-in to view number
+                          </button>
+                        ) : (
+                          <a href={`tel:${vendor.mobile_no}`} className="text-blue-600 text-sm font-medium hover:text-blue-700">
+                            {vendor.mobile_no}
+                          </a>
+                        )}
+                      </div>
+                      <div className="text-sm text-gray-600 mb-1">Area: {vendor.area}</div>
+                      <div className="text-sm text-gray-600 mb-1">Societies: {Array.isArray(vendor.societies) ? vendor.societies.join(", ") : String(vendor.societies).replace(/[{}"]+/g, "").split(",").filter(Boolean).join(", ")}</div>
+                      {vendor.services && (
+                        <div className="text-sm text-gray-600 mb-1">Services: {typeof vendor.services === 'string' && vendor.services.trim().toLowerCase() === 'both'
+                          ? 'Both (Cleaning and Cooking)'
+                          : Array.isArray(vendor.services)
+                            ? vendor.services.join(', ')
+                            : vendor.services}
+                        </div>
+                      )}
+                      <div className="mt-2">
+                        <div className="font-semibold text-sm mb-1">Permanent Slots:</div>
+                        <div className="flex flex-wrap gap-2">
+                          {PERMANENT_SLOTS.map(slot => (
+                            vendor.slots[slot.id]?.is_available ? (
+                              <span key={slot.id} className="inline-block px-2 py-1 text-xs font-semibold bg-green-100 text-green-700 rounded">
+                                {slot.label} ({slot.start} - {slot.end})
+                              </span>
+                            ) : null
                           ))}
                         </div>
-                      );
-                    })}
+                      </div>
+                    </Card>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+                );
+              })}
+          </div>
+        )}
         {/* 7-day grid for selected vendor (desktop only) */}
         {!isMobile && selectedVendor && (
           <Card className="p-6 w-full mb-8">
-            <h2 className="text-xl font-semibold mb-2">Availability for {selectedVendor.Name || selectedVendor.vendor_name || (selectedVendor.vendor_id ? selectedVendor.vendor_id.slice(0, 8) + '...' : '')}</h2>
+            <h2 className="text-xl font-semibold mb-2">Availability for {selectedVendor.name || selectedVendor.vendor_name || (selectedVendor.vendor_id ? selectedVendor.vendor_id.slice(0, 8) + '...' : '')}</h2>
             <div className="text-base text-gray-700 mb-4">
-              Mobile: {selectedVendor.Mobile_No || 'N/A'}
+              Mobile: {!showNumberMap[selectedVendor.vendor_id] ? (
+                <button
+                  onClick={() => handleShowNumber(selectedVendor.vendor_id)}
+                  className="text-blue-600 text-sm font-medium hover:text-blue-700 underline focus:outline-none"
+                >
+                  Log-in to view number
+                </button>
+              ) : (
+                <a href={`tel:${selectedVendor.mobile_no}`} className="text-blue-600 text-sm font-medium hover:text-blue-700">
+                  {selectedVendor.mobile_no}
+                </a>
+              )}
               {selectedVendor.services && (
                 <span className="ml-4 text-gray-500">
                   Services: {typeof selectedVendor.services === 'string' && selectedVendor.services.trim().toLowerCase() === 'both'
@@ -372,7 +497,11 @@ export default function VendorSearchPage() {
             <div className="overflow-x-auto">
               <div>
                 {vendorSlots.map((row, idx) => {
-                  const availableSlots = TIME_SLOTS.filter(slot => row[`slot_${slot.start}_${slot.end}`]);
+                  const availableSlots = [
+                    row.morning ? { label: 'Morning' } : null,
+                    row.afternoon ? { label: 'Afternoon' } : null,
+                    row.evening ? { label: 'Evening' } : null,
+                  ].filter(Boolean);
                   if (availableSlots.length === 0) return null;
                   return (
                     <div key={row.date} className={idx !== 0 ? "mt-1 pt-1 border-t border-gray-100" : ""}>
@@ -380,9 +509,11 @@ export default function VendorSearchPage() {
                         {new Date(row.date).toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })}
                       </span>
                       {availableSlots.map(slot => (
-                        <span key={slot.label} className="inline-block px-1.5 py-0.5 text-[11px] font-semibold bg-green-100 text-green-700 rounded mr-1 align-middle">
-                          {slot.label}
-                        </span>
+                        slot && (
+                          <span key={slot.label} className="inline-block px-1.5 py-0.5 text-[11px] font-semibold bg-green-100 text-green-700 rounded mr-1 align-middle">
+                            {slot.label}
+                          </span>
+                        )
                       ))}
                     </div>
                   );
@@ -392,6 +523,11 @@ export default function VendorSearchPage() {
           </Card>
         )}
       </div>
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onLoginSuccess={handleLoginSuccess}
+      />
     </div>
   );
 }

@@ -220,7 +220,7 @@ export default function Header() {
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
                       <FiEdit className="w-5 h-5 text-pink-500" />
-                      <span>Domestic Help</span>
+                      <span>Domestic Help & Drivers</span>
                     </Link>
                     <Link 
                       href={`/${currentSociety}/services/car-clean`}
@@ -509,7 +509,7 @@ export default function Header() {
                     className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
-                    Domestic Help
+                    Domestic Help & Drivers
                   </Link>
                   <Link 
                     href={`/${currentSociety}/services/car-clean`}

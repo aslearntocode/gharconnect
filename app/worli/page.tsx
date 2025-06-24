@@ -560,7 +560,7 @@ export default function Home() {
                   <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
                     <li>List verified properties in your area.</li>
                     <li>Onboard local vendors in your area.</li>
-                    <li>Find Domestic Help available to meet your emergency needs.</li>
+                    <li>Find Domestic Help & Drivers available to meet your emergency needs.</li>
                     <li>Get the vendors rated by the community.</li>
                     <li>Build a stronger community with fewer hassles.</li>
                   </ul>
@@ -697,7 +697,7 @@ export default function Home() {
             <Link href="/worli/services/domestic-help" className="block group">
               <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
                 <FiHome className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-green-600" />
-                <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Domestic Help</h3>
+                <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Domestic Help & Drivers</h3>
                 <p className="text-xs md:text-sm text-gray-600 text-center">Helpers for urgent needs</p>
               </div>
             </Link>
@@ -818,7 +818,7 @@ export default function Home() {
       <div className="bg-indigo-600 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-white mb-4">Looking for Temporary Domestic Help?</h2>
+            <h2 className="text-3xl font-bold text-white mb-4">Looking for Domestic Help & Drivers?</h2>
             <p className="text-indigo-100 max-w-2xl mx-auto mb-8">
               The domestic help puts in their availability for the next 10 days 
               and you can book them for a few hours or for a few days to meet your emergency needs.
