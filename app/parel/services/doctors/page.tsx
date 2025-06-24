@@ -21,7 +21,7 @@ export default function DoctorsPage() {
       <div className="relative">
         <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
           <div className="text-center text-white">
-            <h1 className="text-3xl md:text-4xl font-bold">Find a Doctor in Parel</h1>
+            <h1 className="text-3xl md:text-4xl font-bold">Doctors, Dieticians, and more</h1>
           </div>
         </div>
         <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-7 w-full max-w-2xl px-4 z-10">
