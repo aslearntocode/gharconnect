@@ -5,6 +5,7 @@ import { VendorRating } from './VendorRating';
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
+import LoginModal from './LoginModal';
 
 interface ServiceRating {
   rating: number;
@@ -34,6 +35,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const [reviews, setReviews] = useState<any[]>([]);
   const [imageError, setImageError] = useState(false);
   const [showNumber, setShowNumber] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const supabase = createClientComponentClient();
   const router = useRouter();
 
@@ -131,6 +133,10 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
     return `N/A${unit ? `/${unit}` : ''}`;
   };
 
+  const handleShowNumber = () => {
+    setIsLoginModalOpen(true);
+  };
+
   return (
     <>
       <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
@@ -192,10 +198,10 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
           </p>
           {!showNumber ? (
             <button
-              onClick={() => setShowNumber(true)}
+              onClick={handleShowNumber}
               className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3 underline focus:outline-none"
             >
-              Click here to reveal the number
+              Log-in to view number
             </button>
           ) : (
             <a 
@@ -349,6 +355,15 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
           </div>
         </div>
       )}
+
+      <LoginModal
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+        onLoginSuccess={() => {
+          setIsLoginModalOpen(false);
+          setShowNumber(true);
+        }}
+      />
     </>
   );
 } 
