@@ -565,6 +565,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
+            <div className="sr-only">
+              <p>
+                <a href="/worli" className="underline hover:text-blue-700">Montessori schools in South Bombay</a> |
+                <a href="/worli" className="underline hover:text-blue-700">Montessori school in Sion</a> |
+                <a href="/worli" className="underline hover:text-blue-700">Best Montessori schools</a>
+              </p>
+            </div>
           </div>
         </div>
       </div>

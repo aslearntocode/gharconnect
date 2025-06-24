@@ -523,6 +523,13 @@ export default function Home() {
                   <h3 className="text-lg md:text-xl font-semibold text-gray-900">Casa Vista Montessori Preschool</h3>
                   <p className="text-gray-600 text-sm md:text-base">📍 Sion West, Mumbai • Admissions Open for 2025-26</p>
                   <p className="text-gray-600 text-sm md:text-base">📞 Contact: 9820297119, 9820963632</p>
+                  <div className="sr-only">
+                    <p>
+                      <a href="/parel" className="underline hover:text-blue-700">Montessori schools in South Bombay</a> |
+                      <a href="/parel" className="underline hover:text-blue-700">Montessori school in Sion</a> |
+                      <a href="/parel" className="underline hover:text-blue-700">best Montessori schools</a>
+                    </p>
+                  </div>
                 </div>
               </div>
               
