@@ -2,12 +2,14 @@
 
 import Link from 'next/link';
 import Header from '@/components/Header';
-import { FiHome, FiChevronDown, FiX } from 'react-icons/fi';
+import { FiHome, FiChevronDown, FiX, FiSearch, FiSmile, FiFileText } from 'react-icons/fi';
 import { useState, useEffect } from 'react';
 import React from 'react';
 import { getSupabaseClient } from '@/lib/supabase';
 import { Apartment } from '@/types/apartment';
 import SEOScript from '@/components/SEOScript';
+import { HiMagnifyingGlassCircle, HiFaceSmile, HiDocumentText } from 'react-icons/hi2';
+import { motion } from 'framer-motion';
 
 export default function RentPage() {
   // Data states
@@ -195,22 +197,19 @@ export default function RentPage() {
       <Header />
       {/* Blue Banner */}
       <div className="relative">
-        <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
+        <div className="w-full bg-indigo-600 flex flex-col items-center justify-center py-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white">Rental Apartments</h1>
+          <p className="text-indigo-100 text-base md:text-lg mt-2 text-center max-w-5xl">
+            Discover premium rental apartments with transparent pricing and minimal brokerage fees. We offer the best rental deals with no hidden charges and exceptional value for money.
+          </p>
         </div>
       </div>
-      
       {/* SEO Content Section - Low Brokerage Value Proposition */}
-      <div className="bg-white py-8 px-4 sm:px-6 lg:px-8">
+      <div className="bg-white py-4 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <p className="text-lg text-gray-600 max-w-5xl mx-auto">
-              Discover premium rental apartments in Mumbai with transparent pricing and minimal brokerage fees. 
-              GharConnect offers the best rental deals with no hidden charges and exceptional value for money.
-            </p>
+          <div className="text-center mb-4">
+            {/* Value proposition moved to indigo banner above */}
           </div>
-          
-          
           {/* SEO Content for Search Engines */}
           <div className="sr-only">
             <p>Location: Worli</p>
@@ -220,9 +219,8 @@ export default function RentPage() {
           </div>
         </div>
       </div>
-      
       {/* Filter Bar below the blue box */}
-      <div className="w-full flex justify-center mt-0 mb-0">
+      <div className="w-full flex justify-center mt-[-1.5rem] mb-0">
         <div className="max-w-5xl w-full flex flex-wrap md:flex-nowrap justify-center gap-2 md:gap-4 bg-white rounded-2xl shadow-lg px-4 py-3">
           <input
             type="text"
@@ -506,14 +504,72 @@ export default function RentPage() {
           )}
         </div>
       </main>
-      
+      {/* Informational Feature Containers */}
+      <section className="py-8 bg-white">
+        <div className="w-full max-w-6xl mx-auto flex flex-col gap-6 px-2 sm:px-4">
+          {/* Card 1: Icon Left, Text Right */}
+          <motion.div
+            className="flex flex-col md:flex-row items-center bg-gray-50 rounded-2xl shadow-lg p-10 md:p-16 min-h-[260px]"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.4 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+          >
+            <div className="flex-shrink-0 flex justify-center md:justify-start mb-4 md:mb-0 md:mr-8 w-full md:w-1/3">
+              <span className="inline-flex items-center justify-center rounded-full bg-indigo-100" style={{ width: 110, height: 110 }}>
+                <HiMagnifyingGlassCircle className="text-indigo-500" size={80} />
+              </span>
+            </div>
+            <div className="md:w-2/3 text-left">
+              <h3 className="text-3xl font-bold mb-4">Eliminate the struggle of house hunting</h3>
+              <p className="text-gray-700 text-lg leading-relaxed">With out community based approach, finding the right rental property that meets your needs and preferences is easier. We provide you with a list of properties within your vicinity that meet your requirements, saving you time and effort in your search.</p>
+            </div>
+          </motion.div>
+          {/* Card 2: Icon Right, Text Left */}
+          <motion.div
+            className="flex flex-col md:flex-row-reverse items-center bg-gray-50 rounded-2xl shadow-lg p-10 md:p-16 min-h-[260px]"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.4 }}
+            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.15 }}
+          >
+            <div className="flex-shrink-0 flex justify-center md:justify-end mb-4 md:mb-0 md:ml-8 w-full md:w-1/3">
+              <span className="inline-flex items-center justify-center rounded-full bg-green-100" style={{ width: 110, height: 110 }}>
+                <HiFaceSmile className="text-green-500" size={80} />
+              </span>
+            </div>
+            <div className="md:w-2/3 text-left">
+              <h3 className="text-3xl font-bold mb-4">Hassle-free experience</h3>
+              <p className="text-gray-700 text-lg leading-relaxed">We will ensure that you have a hassle-free experience before and during the tenancy period. We handle all the paperwork, rental agreements, and payments on your behalf, making the rental process more streamlined and convenient for you.</p>
+            </div>
+          </motion.div>
+          {/* Card 3: Icon Left, Text Right */}
+          <motion.div
+            className="flex flex-col md:flex-row items-center bg-gray-50 rounded-2xl shadow-lg p-10 md:p-16 min-h-[260px]"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ amount: 0.4 }}
+            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.3 }}
+          >
+            <div className="flex-shrink-0 flex justify-center md:justify-start mb-4 md:mb-0 md:mr-8 w-full md:w-1/3">
+              <span className="inline-flex items-center justify-center rounded-full bg-pink-100" style={{ width: 110, height: 110 }}>
+                <HiDocumentText className="text-pink-500" size={80} />
+              </span>
+            </div>
+            <div className="md:w-2/3 text-left">
+              <h3 className="text-3xl font-bold mb-4">Seamless Paperwork</h3>
+              <p className="text-gray-700 text-lg leading-relaxed">The rental process involves a lot of paperwork, including rental agreements, security deposits, and utility bills. We handle all the paperwork for you, ensuring that it is completed accurately and in a timely manner.</p>
+            </div>
+          </motion.div>
+        </div>
+      </section>
       {/* Call to Action Section */}
       <div className="bg-indigo-600 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-white mb-4">Have a Property to Rent?</h2>
             <p className="text-indigo-100 max-w-2xl mx-auto mb-8">
-              If you want to list your property for rent, then login and fill this form to reach potential tenants in your community.
+              If you want to list your property for rent, then login and fill this form to reach potential tenants in your community or just WhatsApp us.
             </p>
             <a 
               href="/worli/rent-apartment"
@@ -527,7 +583,6 @@ export default function RentPage() {
           </div>
         </div>
       </div>
-      
       {/* SEO Structured Data */}
       <SEOScript location="Worli" type="rent" />
     </div>
