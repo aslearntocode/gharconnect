@@ -15,9 +15,10 @@ interface LoginModalProps {
   onClose: () => void
   redirectPath?: string
   onLoginSuccess?: () => void
+  suppressProfileUpdate?: boolean
 }
 
-export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLoginSuccess }: LoginModalProps) {
+export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLoginSuccess, suppressProfileUpdate }: LoginModalProps) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [isFirstTimeUser, setIsFirstTimeUser] = useState(false)
@@ -111,7 +112,7 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>
-            {isFirstTimeUser ? 'Complete Your Profile' : 'Sign in to GharConnect'}
+            {isFirstTimeUser && !suppressProfileUpdate ? 'Complete Your Profile' : 'Sign in to GharConnect'}
           </DialogTitle>
         </DialogHeader>
 
@@ -121,7 +122,7 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
           </div>
         )}
 
-        {isFirstTimeUser ? (
+        {isFirstTimeUser && !suppressProfileUpdate ? (
           <FirstTimeLoginForm onComplete={handleProfileComplete} />
         ) : (
           <div className="space-y-6 w-full">

@@ -143,7 +143,7 @@ export default function Home() {
       id: 'list-property',
       title: 'Landlord',
       description: 'List Your Property for Rent',
-      icon: FiFileText,
+      icon: FiHome,
       href: '/parel/rent-apartment',
       gradient: 'from-purple-500 to-pink-500'
     },

@@ -361,6 +361,7 @@ export default function VendorDashboard() {
             setIsLoggedIn(true);
             fetchAvailability();
           }}
+          suppressProfileUpdate={true}
         />
       </div>
     );
