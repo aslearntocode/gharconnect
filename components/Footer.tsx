@@ -65,7 +65,7 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <a 
-                  href="https://www.youtube.com/" 
+                  href="https://www.youtube.com/channel/UC9hCxKVxX0BZXxZZNiRf4TQ" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="hover:text-indigo-600 transition-colors flex items-center gap-2"

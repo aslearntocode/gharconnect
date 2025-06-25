@@ -621,7 +621,7 @@ export default function Home() {
                 </div>
                 <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center text-center w-full h-full min-h-[340px] justify-between">
                   <span className="text-3xl mb-2">🧑‍💼</span>
-                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">Benefits of Listing Your Business With Us</h4>
+                  <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">List Your Business With Us</h4>
                   <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
                     <li>Reach more customers right where they live.</li>
                     <li>Build trust by getting rated and reviewed by the community.</li>
