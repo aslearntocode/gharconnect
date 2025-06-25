@@ -30,7 +30,7 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 7358365827'
+    mobile: '+91 73583 65827'
   },
   {
     name: 'Rajesh',
@@ -40,7 +40,7 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 9967655503'
+    mobile: '+91 99676 55503'
   },
   {
     name: 'Noel',
@@ -50,7 +50,7 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 7900084119'
+    mobile: '+91 79000 84119'
   },
   {
     name: 'Hetal Paleja',
@@ -60,7 +60,7 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 8879813233'
+    mobile: '+91 88798 13233'
   },
   {
     name: 'Hemini Lakdawala',
@@ -70,7 +70,7 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per class'
     }],
-    mobile: '+91 9324260874'
+    mobile: '+91 93242 60874'
   },
   {
     name: 'Sonesh Sir',
@@ -80,16 +80,26 @@ export const vendors: Vendor[] = [
       price: '₹3500/2500',
       unit: 'per month'
     }],
-    mobile: '+91 9167179484'
+    mobile: '+91 91671 79484'
   },
   {
-    name: 'Rushi Kapadia - State Level tennis player',
+    name: 'Rushi Kapadia - State Level Player',
     services: [{
       name: 'Table Tennis Classes',
       description: 'Table Tennis classes for children and adults',
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 9819735090'
+    mobile: '+91 98197 35090'
+  },
+  {
+    name: 'Ranjit',
+    services: [{
+      name: 'Swimming Classes',
+      description: 'Swimming classes for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 98707 96928'
   }
 ]; 
