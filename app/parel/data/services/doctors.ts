@@ -29,7 +29,7 @@ export const doctors: Doctor[] = [
   {
     id: "2",
     name: "Dr. Cyrus Contractor",
-    specialization: "Pediatrician",
+    specialization: "Paediatrician",
     qualification: "MBBS, DCH",
     experience: "20 years",
     address: "Dadar, Mumbai",
@@ -42,7 +42,7 @@ export const doctors: Doctor[] = [
   {
     id: "3",
     name: "Krishna Eye Centre",
-    specialization: "Pediatrician Eye Care",
+    specialization: "Paediatrician Eye Care",
     qualification: "MBBS, DCH",
     experience: "20 years",
     address: "Parel, Mumbai",

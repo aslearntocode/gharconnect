@@ -29,7 +29,7 @@ export interface Doctor {
     {
       id: "2",
       name: "Dr. Cyrus Contractor",
-      specialization: "Pediatrician",
+      specialization: "Paediatrician",
       qualification: "MBBS, DCH",
       experience: "20 years",
       address: "Dadar, Mumbai",

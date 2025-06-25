@@ -136,16 +136,16 @@ export default function Header() {
                     onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
                     <FiHome className="text-blue-600 w-5 h-5" />
-                    <span>Rent</span>
+                    <span>Tenant</span>
                   </Link>
-                  {/* <Link 
-                    href={`/${currentSociety}/sell`}
+                  <Link 
+                    href={`/${currentSociety}/rent-apartment`}
                     className="flex items-center gap-x-3 px-4 py-2 text-base text-black hover:bg-gray-50"
                     onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
                     <FiHome className="text-blue-600 w-5 h-5" />
-                    <span>Sell</span>
-                  </Link> */}
+                    <span>Landlord</span>
+                  </Link>
                 </div>
               </div>
 
@@ -421,15 +421,15 @@ export default function Header() {
                     className="flex items-center px-4 py-2 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
-                    Rent
+                    Tenant
                   </Link>
-                  {/* <Link 
-                    href={`/${currentSociety}/sell`}
+                  <Link 
+                    href={`/${currentSociety}/rent-apartment`}
                     className="flex items-center px-4 py-2 text-sm text-black hover:bg-gray-50"
                     onClick={() => setIsPropertiesDropdownOpen(false)}
                   >
-                    Sell
-                  </Link> */}
+                    Landlord
+                  </Link>
                 </div>
               )}
             </div>
