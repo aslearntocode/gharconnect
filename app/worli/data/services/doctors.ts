@@ -63,5 +63,18 @@ export interface Doctor {
     society: "Online",
     consultationFee: "Call for appointment",
     languages: ["English", "Hindi", "Marathi"]
+  },
+  {
+    id: "5",
+    name: "Shivani Kapadia",
+    specialization: "Clinical Psychologist, Counsellor",
+    qualification: "M.A. (Clinical Psychology), Post Grad in Counselling, Art and Behavioral Therapist",
+    experience: "5+ years",
+    address: "Parel",
+    phone: "+91 87674 70496",
+    timing: "Mon-Fri",
+    society: "Online or Parel",
+    consultationFee: "Call for appointment",
+    languages: ["English", "Hindi"]
   }
   ]; 

@@ -89,5 +89,18 @@ export const doctors: Doctor[] = [
     society: "Online",
     consultationFee: "Call for appointment",
     languages: ["English", "Hindi", "Marathi"]
+  },
+  {
+    id: "7",
+    name: "Shivani Kapadia",
+    specialization: "Clinical Psychologist, Counsellor",
+    qualification: "M.A. (Clinical Psychology), Post Grad in Counselling, Art and Behavioral Therapist",
+    experience: "5+ years",
+    address: "Parel, Mumbai",
+    phone: "+91 87674 70496",
+    timing: "Mon-Fri",
+    society: "Online or Parel, Mumbai",
+    consultationFee: "Call for appointment",
+    languages: ["English", "Hindi"]
   }
 ]; 
