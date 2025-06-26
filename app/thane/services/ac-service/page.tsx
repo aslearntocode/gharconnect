@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { acServiceServices } from '@/app/parel/data/services/acservice';
+import { acServiceServices } from '@/app/thane/data/services/acservice';
 import { VendorCard } from '@/components/VendorCard';
 
 // Group services by name to show as vendors

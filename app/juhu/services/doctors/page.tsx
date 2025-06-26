@@ -1,7 +1,7 @@
 'use client'
 
 import Header from '@/components/Header';
-import { doctors } from '@/app/parel/data/services/doctors';
+import { doctors } from '@/app/juhu/data/services/doctors';
 import { DoctorCard } from '@/components/DoctorCard';
 import { FiShield } from 'react-icons/fi';
 import { useState } from 'react';

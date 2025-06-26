@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Header from '@/components/Header';
-import { vendors } from '@/app/parel/data/services/laptoprepair';
+import { vendors } from '@/app/thane/data/services/laptoprepair';
 import { VendorCard } from '@/components/VendorCard';
 import { FiSearch } from 'react-icons/fi';
 

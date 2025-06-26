@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Header from '@/components/Header';
-import { gardenerServices } from '@/app/parel/data/services/gardener';
+import { gardenerServices } from '@/app/juhu/data/services/gardener';
 import { VendorCard } from '@/components/VendorCard';
 import { FiSearch } from 'react-icons/fi';
 

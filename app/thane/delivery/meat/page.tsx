@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { vendors } from '@/app/parel/data/delivery/meat';
+import { vendors } from '@/app/thane/data/delivery/meat';
 import { VendorCard } from '@/components/VendorCard';
 
 export default function MeatPage() {

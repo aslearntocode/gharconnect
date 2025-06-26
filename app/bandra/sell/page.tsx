@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { FiHome, FiChevronDown, FiX } from 'react-icons/fi';
-import { sellApartments } from '@/app/parel/data/sellApartments';
+import { sellApartments } from '@/app/bandra/data/sellApartments';
 import { useState } from 'react';
 import Header from '@/components/Header';
 

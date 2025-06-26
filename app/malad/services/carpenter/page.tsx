@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Header from '@/components/Header';
-import { vendors } from '@/app/parel/data/services/carpenter';
+import { vendors } from '@/app/malad/data/services/carpenter';
 import { VendorCard } from '@/components/VendorCard';
 import { FiSearch } from 'react-icons/fi';
 

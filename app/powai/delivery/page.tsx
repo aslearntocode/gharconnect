@@ -1,7 +1,7 @@
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
 import Link from 'next/link';
-import { deliveryCategories } from '@/app/parel/data/delivery';
+import { deliveryCategories } from '@/app/powai/data/delivery';
 
 export default function DeliveryPage() {
   return (

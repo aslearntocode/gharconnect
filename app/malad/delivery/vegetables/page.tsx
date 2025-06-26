@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { vendors } from '@/app/parel/data/delivery/vegetables';
+import { vendors } from '@/app/malad/data/delivery/vegetables';
 import { VendorCard } from '@/components/VendorCard';
 
 export default function VegetablesPage() {
