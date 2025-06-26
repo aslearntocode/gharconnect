@@ -32,6 +32,7 @@ import SuccessPage from '@/components/SuccessPage';
 import { Button } from '@/components/ui/button';
 import { HiMagnifyingGlassCircle, HiFaceSmile, HiDocumentText } from 'react-icons/hi2';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 export default function RentApartmentPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,6 +42,9 @@ export default function RentApartmentPage() {
   const [loadingUser, setLoadingUser] = useState(true);
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>([]);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
+  const pathname = usePathname();
+  const location = pathname.split('/')[1]?.charAt(0).toUpperCase() + pathname.split('/')[1]?.slice(1) || 'Location';
 
   const {
     register,
@@ -117,7 +121,7 @@ export default function RentApartmentPage() {
       console.log('User found:', user.uid);
 
       console.log('Saving apartment data to Supabase...');
-      const result = await createApartment(data, user.uid, 'Worli');
+      const result = await createApartment(data, user.uid, location);
       
       if (result.success) {
         console.log('Apartment created successfully:', result.data);
@@ -184,7 +188,7 @@ export default function RentApartmentPage() {
     <>
       {/* Indigo Info Banner */}
       <div className="w-full bg-indigo-600 flex flex-col items-center justify-center py-8 mb-4 rounded-lg">
-        <h1 className="text-3xl md:text-4xl font-bold text-white">List Your Property for Rent</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-white">List Your Property for Rent in {location}</h1>
         <p className="text-indigo-100 text-base md:text-lg mt-2 text-center max-w-5xl">
           Find trusted tenants for your property.
         </p>
@@ -334,21 +338,17 @@ export default function RentApartmentPage() {
     <div className="bg-gray-50 py-8">
       {InfoBannerAndCards}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Area Info Banner */}
-        <div className="mb-6 rounded-lg bg-indigo-100 border border-indigo-300 px-4 py-3 text-indigo-800 font-semibold text-center text-base">
-          This listing will be visible under <span className="font-bold">Worli</span>.
-        </div>
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-8">
+          {/* <div className="bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-8">
             <div className="flex items-center space-x-3">
               <HomeIcon className="h-8 w-8 text-white" />
               <div>
-                <h1 className="text-3xl font-bold text-white">List Your Apartment for Rent in Worli</h1>
-                <p className="text-blue-100 mt-1">Fill in the details below to create your rental listing in Worli</p>
+                <h1 className="text-3xl font-bold text-white">List Your Apartment for Rent in {location}</h1>
+                <p className="text-blue-100 mt-1">Fill in the details below to create your rental listing in {location}</p>
               </div>
             </div>
-          </div>
+          </div> */}
 
           {/* Form */}
           <form onSubmit={handleSubmit(onSubmit, onFormError)} className="p-6 space-y-8">
