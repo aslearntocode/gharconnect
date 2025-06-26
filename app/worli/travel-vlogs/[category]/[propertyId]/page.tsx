@@ -587,7 +587,7 @@ function PropertyDetail() {
                       <div>
                         <p className="text-sm text-gray-700">{property.address}</p>
                         <p className="text-xs text-gray-500 mt-1">
-                          Coordinates: {property.location.latitude}, {property.location.longitude}
+                          <a href={property.location.mapUrl} target="_blank" rel="noopener noreferrer" className="text-indigo-600 underline">View on Map</a>
                         </p>
                       </div>
                     </div>
