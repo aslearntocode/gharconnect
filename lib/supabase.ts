@@ -72,4 +72,61 @@ export async function testSupabaseConnection() {
     console.error('Supabase connection test failed:', err)
     return false
   }
+}
+
+// Test storage access
+export async function testStorageAccess() {
+  try {
+    const { data, error } = await supabase.storage
+      .from('product-images')
+      .list('', { limit: 1 })
+
+    if (error) {
+      console.error('Storage access test error:', {
+        message: error.message,
+        name: error.name
+      })
+      return false
+    }
+
+    console.log('Storage access successful')
+    return true
+  } catch (err) {
+    console.error('Storage access test failed:', err)
+    return false
+  }
+}
+
+// Test authenticated storage upload
+export async function testStorageUpload(userId: string) {
+  try {
+    const testFile = new File(['test'], 'test.txt', { type: 'text/plain' })
+    const fileName = `${userId}/test-${Date.now()}.txt`
+    
+    const { data, error } = await supabase.storage
+      .from('product-images')
+      .upload(fileName, testFile, {
+        cacheControl: '3600',
+        upsert: false
+      })
+
+    if (error) {
+      console.error('Storage upload test error:', {
+        message: error.message,
+        name: error.name
+      })
+      return false
+    }
+
+    // Clean up test file
+    await supabase.storage
+      .from('product-images')
+      .remove([fileName])
+
+    console.log('Storage upload test successful')
+    return true
+  } catch (err) {
+    console.error('Storage upload test failed:', err)
+    return false
+  }
 } 

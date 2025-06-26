@@ -305,13 +305,25 @@ export default function MarketplacePage() {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {filteredProducts.map((product) => (
                 <Card key={product.id} className="hover:shadow-lg transition-shadow duration-200 flex flex-col">
-                  <div className="aspect-square bg-gray-100 rounded-t-lg overflow-hidden">
+                  <div className="aspect-square bg-gray-100 rounded-t-lg overflow-hidden relative group">
                     {product.images && product.images.length > 0 ? (
-                      <img
-                        src={product.images[0]}
-                        alt={product.title}
-                        className="w-full h-full object-cover"
-                      />
+                      <>
+                        <img
+                          src={product.images[0]}
+                          alt={product.title}
+                          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement
+                            target.src = '/placeholder-image.svg'
+                          }}
+                          loading="lazy"
+                        />
+                        {product.images.length > 1 && (
+                          <div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full">
+                            +{product.images.length - 1}
+                          </div>
+                        )}
+                      </>
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-gray-400">
                         <Search className="w-10 h-10" />
@@ -324,9 +336,13 @@ export default function MarketplacePage() {
                       <CardTitle className="text-base font-semibold line-clamp-2">
                         {product.title}
                       </CardTitle>
-                      <span className={`text-xs font-medium rounded-full px-2 py-0.5 whitespace-nowrap ${
+                      <span className={`text-xs font-medium rounded-full px-2 py-0.5 whitespace-nowrap flex-shrink-0 ml-2 ${
                         product.condition === 'New' 
                           ? 'bg-green-100 text-green-800' 
+                          : product.condition === 'Like New'
+                          ? 'bg-blue-100 text-blue-800'
+                          : product.condition === 'Good'
+                          ? 'bg-yellow-100 text-yellow-800'
                           : 'bg-gray-100 text-gray-800'
                       }`}>
                         {product.condition}
@@ -340,14 +356,14 @@ export default function MarketplacePage() {
                     <div className="flex-grow"></div>
 
                     <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                      <MapPin className="w-3 h-3" />
+                      <MapPin className="w-3 h-3 flex-shrink-0" />
                       <span className="truncate">
                         {product.user_profile?.society_name}, {product.user_profile?.building_name}
                       </span>
                     </div>
                     
                     <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
-                      <Calendar className="w-3 h-3" />
+                      <Calendar className="w-3 h-3 flex-shrink-0" />
                       <span>{formatDate(product.created_at)}</span>
                     </div>
                     
@@ -358,7 +374,7 @@ export default function MarketplacePage() {
                       <Button
                         onClick={() => handleWhatsAppChat(product.contact_phone, product.title)}
                         size="sm"
-                        className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 h-auto"
+                        className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 h-auto flex-shrink-0"
                       >
                         <MessageCircle className="w-3 h-3 mr-1" />
                         Chat

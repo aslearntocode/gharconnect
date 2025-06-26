@@ -93,7 +93,7 @@ export const vendors: Vendor[] = [
     mobile: '+91 98197 35090'
   },
   {
-    name: 'Ranjit',
+    name: 'Ranjeet Tambe',
     services: [{
       name: 'Swimming Classes',
       description: 'Swimming classes for children and adults',
