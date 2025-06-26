@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation'
 import { Dialog } from '@headlessui/react'
 import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid } from 'react-icons/fi'
 import DoctorsContainer from "@/components/DoctorsContainer"
+import TravelDiariesContainer from "@/components/TravelDiariesContainer"
 
 
 interface AllocationItem {
@@ -890,6 +891,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {/* Travel Diaries Container */}
+      <TravelDiariesContainer />
     </main>
   )
 }

@@ -19,8 +19,7 @@ export interface Property {
     social?: string;
   };
   location: {
-    latitude: number;
-    longitude: number;
+    mapUrl: string;
   };
   availability: string;
   propertyType: string;
@@ -64,67 +63,17 @@ export const properties: Property[] = [
       'Luxury Accommodation'
     ],
     contactInfo: {
-      phone: '+91-22-1234-5678',
-      email: 'bookings@aryanfarms.com',
-      website: 'www.aryanfarms.com',
+      phone: '+91 860504 47365',
+      email: 'gharconnectindia@gmail.com',
+      website: 'www.ayrafarms.com',
       social: 'https://www.instagram.com/theayrafarms/?hl=en'
     },
     location: {
-      latitude: 19.0760,
-      longitude: 72.8777
+      mapUrl: "https://www.google.com/maps/place/Ayra+Farms,+house+%23655,+BrahminVadi,+Talavli+village,+Chikhali,+Guhagar,+Ratnagiri,+Maharashtra+415719/data=!4m2!3m1!1s0x3be9e5451cbea55b:0x233928cacc099708?utm_source=mstt_1&entry=gps&coh=192189&g_ep=CAESBzI1LjIxLjEYACCenQoqfSw5NDI1OTU1MTk0Mjc1MzEyLDk0MjIzMjk5LDk0MjE2NDEzLDk0MjEyNDk2LDk0MjA3Mzk0LDk0MjA3NTA2LDk0MjA4NTA2LDk0MjE3NTIzLDk0MjE4NjUzLDk0MjI5ODM5LDQ3MDg0MzkzLDk0MjEzMjAwLDk0MjU4MzI1QgJJTg%3D%3D&skid=80b3006b-ebb1-46c6-b767-36c0bbce5cc8"
     },
     availability: 'Available year-round',
     propertyType: 'Farm Resort',
     size: '25 acres'
-  },
-  {
-    id: 'bali-villa',
-    title: 'Bali Luxury Villa',
-    description: 'Stunning beachfront villa with infinity pool, private beach access, and breathtaking ocean views in the heart of Bali.',
-    category: 'Outside India',
-    address: 'Seminyak, Bali 80361, Indonesia',
-    price: '₹15,000/night',
-    rating: 4.8,
-    reviewCount: 3,
-    image: '/properties/bali-villa-1.png',
-    images: [
-      '/properties/bali-villa-1.png',
-      '/properties/bali-villa-2.png',
-      '/properties/bali-villa-3.png',
-      '/properties/bali-villa-4.png'
-    ],
-    amenities: [
-      'Infinity Pool',
-      'Private Beach Access',
-      'Spa Services',
-      'Butler Service',
-      'Free WiFi'
-    ],
-    thingsToDo: [
-      'Beach Activities',
-      'Spa Treatments'
-    ],
-    highlights: [
-      'Beachfront Location',
-      'Infinity Pool',
-      'Luxury Villa',
-      'Ocean Views'
-    ],
-    contactInfo: {
-      phone: '+62-361-123-4567',
-      email: 'bookings@baliluxuryvilla.com',
-      website: 'www.baliluxuryvilla.com',
-      social: 'https://www.instagram.com/baliluxuryvilla/'
-    },
-    location: {
-      latitude: -8.4095,
-      longitude: 115.1889
-    },
-    availability: 'Available year-round',
-    propertyType: 'Luxury Villa',
-    size: '500 sqm',
-    bedrooms: 4,
-    bathrooms: 3
   }
 ];
 
