@@ -1,4 +1,4 @@
-import './parel/globals.css';
+import './globals.css';
 import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import { Toaster } from '@/components/ui/toaster';

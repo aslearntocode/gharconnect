@@ -97,15 +97,19 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
 
   // If user is already authenticated, close the modal and redirect
   useEffect(() => {
-    if (auth.currentUser) {
-      onClose()
-      if (onLoginSuccess) {
-        onLoginSuccess()
-      } else {
-        router.push(redirectPath)
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user && isOpen) {
+        onClose()
+        if (onLoginSuccess) {
+          onLoginSuccess()
+        } else {
+          router.push(redirectPath)
+        }
       }
-    }
-  }, [onClose, redirectPath, router, onLoginSuccess])
+    });
+    
+    return () => unsubscribe();
+  }, [isOpen, onClose, redirectPath, router, onLoginSuccess])
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

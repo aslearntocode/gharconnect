@@ -86,7 +86,7 @@ function getNext10Days() {
 
 export default function VendorDashboard() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [availability, setAvailability] = useState<Availability[]>([]);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
   const [startTime, setStartTime] = useState('09:00');
@@ -107,26 +107,19 @@ export default function VendorDashboard() {
   const supabase = createClientComponentClient();
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const currentUser = auth.currentUser;
-      if (currentUser) {
+    setPersistence(auth, browserLocalPersistence);
+    
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
         setIsLoggedIn(true);
         fetchAvailability();
-      }
-    };
-    // Set persistence to LOCAL to prevent timeouts
-    setPersistence(auth, browserLocalPersistence);
-    checkAuth();
-  }, []);
-
-  // Add auth state listener to handle logout properly
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (!user) {
+      } else {
         setIsLoggedIn(false);
         setAvailability([]);
       }
+      setIsLoading(false);
     });
+    
     return () => unsubscribe();
   }, []);
 
@@ -329,6 +322,23 @@ export default function VendorDashboard() {
     setSelectedSocieties([]); // Reset societies when area changes
     setSelectedSlots({}); // Reset slots when area changes
   };
+
+  // Show loading state while authentication is being determined
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <VendorHeader />
+        <main className="max-w-lg mx-auto mt-10 p-6">
+          <Card className="p-6">
+            <div className="flex items-center justify-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+              <span className="ml-3 text-gray-600">Loading...</span>
+            </div>
+          </Card>
+        </main>
+      </div>
+    );
+  }
 
   if (!isLoggedIn) {
     return (
