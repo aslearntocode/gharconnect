@@ -29,85 +29,49 @@ const communities = [
     name: 'Parel, Mumbai',
     description: 'Parel, Sewri, Bhoiwada',
     href: '/parel',
-    buildings: [
-      'L&T Crescent Bay',
-      'Ashok Gardens', 
-      'Island City Centre',
-      'Ashok Towers',
-      'Dosti Flamingo',
-      'Ruparel Ariana',
-      'Kalpataru Avana',
-      'Lodha Venezia',
-      'Runwal Nirvana',
-      'Celestia Spaces'
-    ],
     status: 'active'
   },
   {
     name: 'Worli, Mumbai',
     description: 'Worli, Lower Parel',
     href: '/worli',
-    buildings: [
-      'Lodha Park',
-      'Lodha World One',
-      'Indiabulls Blu',
-      'Raheja Imperia'
-    ],
     status: 'active'
   },
   {
     name: 'Bandra, Mumbai',
-    description: 'Bandra, Khar',
-    href: '#',
-    buildings: [
-      'Coming Soon'
-    ],
-    status: 'coming-soon'
+    description: 'Bandra, Khar, Santacruz',
+    href: '/bandra',
+    status: 'active'
   },
   {
     name: 'Andheri, Mumbai',
-    description: 'Andheri, Marol, Santacruz',
-    href: '#',
-    buildings: [
-      'Coming Soon'
-    ],
-    status: 'coming-soon'
+    description: 'Andheri, Andheri West, Andheri East',
+    href: '/andheri',
+    status: 'active'
   },
   {
     name: 'Juhu, Mumbai',
-    description: 'Juhu, Vile Parle',
-    href: '#',
-    buildings: [
-      'Coming Soon'
-    ],
-    status: 'coming-soon'
+    description: 'Juhu, Vile Parle, Andheri',
+    href: '/juhu',
+    status: 'active'
   },
   {
     name: 'Malad, Mumbai',
-    description: 'Malad, Kandivali, Borivali',
-    href: '#',
-    buildings: [
-      'Coming Soon'
-    ],
-    status: 'coming-soon'
+    description: 'Malad, Kandivali, Andheri',
+    href: '/malad',
+    status: 'active'
   },
   {
     name: 'Powai, Mumbai',
-    description: 'Powai',
-    href: '#',
-    buildings: [
-      'Coming Soon'
-    ],
-    status: 'coming-soon'
+    description: 'Powai, Andheri',
+    href: '/powai',
+    status: 'active'
   },
   {
     name: 'Thane, Mumbai',
     description: 'Thane, Ghodbunder Road',
-    href: '#',
-    buildings: [
-      'Coming Soon'
-    ],
-    status: 'coming-soon'
+    href: '/thane',
+    status: 'active'
   }
 ];
 
@@ -141,82 +105,44 @@ export default function SocietiesPage() {
               >
                 {community.status === 'active' ? (
                   <Link href={community.href} className="block group h-full">
-                    {/* Community Header */}
-                    <div className="bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-4 text-white">
-                      <h2 className="text-lg font-bold mb-1 group-hover:text-indigo-100 transition-colors">
+                    {/* Community Header with Integrated Button */}
+                    <div className="bg-white px-4 py-4 border-b border-gray-200">
+                      <h2 className="text-lg font-bold mb-1 text-gray-900 group-hover:text-indigo-600 transition-colors">
                         {community.name}
                       </h2>
-                      <p className="text-indigo-100 text-xs">
+                      <p className="text-gray-600 text-xs mb-3">
                         {community.description}
                       </p>
-                    </div>
-                    {/* Card Content with flex and min-h */}
-                    <div className="p-4 flex flex-col justify-between h-[220px]">
-                      <div>
-                        <h3 className="text-sm font-semibold text-gray-800 mb-3 flex items-center">
-                          <svg className="w-4 h-4 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                          </svg>
-                          Buildings
-                        </h3>
-                        <div className="space-y-1">
-                          {community.buildings.slice(0, 4).map((building) => (
-                            <div key={building} className="flex items-center text-gray-700 hover:text-indigo-600 transition-colors">
-                              <div className="w-1.5 h-1.5 bg-indigo-400 rounded-full mr-2 flex-shrink-0"></div>
-                              <span className="text-xs font-medium truncate">{building}</span>
-                            </div>
-                          ))}
-                          {community.buildings.length > 4 && (
-                            <div className="text-xs text-gray-500 mt-1">
-                              +{community.buildings.length - 4} more
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      {/* Explore Button always at bottom */}
-                      <div className="mt-4 pt-3 border-t border-gray-200 flex items-end">
-                        <div className="inline-flex items-center text-indigo-600 font-semibold text-sm group-hover:text-indigo-700 transition-colors">
-                          Explore Community
-                          <svg className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                          </svg>
-                        </div>
+                      {/* Explore Button Integrated in Header */}
+                      <div className="inline-flex items-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-xs px-3 py-1.5 rounded-lg group-hover:from-indigo-700 group-hover:to-purple-700 transition-all duration-300">
+                        Explore Community
+                        <svg className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
                       </div>
                     </div>
                   </Link>
                 ) : (
                   <div className="block h-full">
                     {/* Community Header - Coming Soon */}
-                    <div className="bg-gradient-to-r from-gray-500 to-gray-600 px-4 py-4 text-white">
-                      <div className="flex items-center justify-between">
-                        <h2 className="text-lg font-bold mb-1">
+                    <div className="bg-gray-100 px-4 py-4 border-b border-gray-200">
+                      <div className="flex items-center justify-between mb-1">
+                        <h2 className="text-lg font-bold text-gray-700">
                           {community.name}
                         </h2>
                         <span className="bg-yellow-500 text-yellow-900 text-xs px-2 py-1 rounded-full font-bold">
                           SOON
                         </span>
                       </div>
-                      <p className="text-gray-200 text-xs">
+                      <p className="text-gray-600 text-xs mb-3">
                         {community.description}
                       </p>
-                    </div>
-                    {/* Card Content with flex and min-h */}
-                    <div className="p-4 flex flex-col justify-between h-[220px]">
-                      <div className="flex flex-col items-center justify-center flex-1">
-                        <svg className="w-8 h-8 mx-auto text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      {/* Disabled Explore Button */}
+                      <div className="inline-flex items-center bg-gray-400 text-white font-semibold text-xs px-3 py-1.5 rounded-lg cursor-not-allowed">
+                        Explore Community
+                        <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
-                        <p className="text-sm text-gray-600 font-medium">Coming Soon</p>
-                        <p className="text-xs text-gray-500 mt-1">We're expanding to this area</p>
-                      </div>
-                      {/* Disabled Explore Button for alignment */}
-                      <div className="mt-4 pt-3 border-t border-gray-200 flex items-end">
-                        <div className="inline-flex items-center text-gray-400 font-semibold text-sm cursor-not-allowed">
-                          Explore Community
-                          <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                          </svg>
-                        </div>
                       </div>
                     </div>
                   </div>

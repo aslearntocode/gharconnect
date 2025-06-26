@@ -1,4 +1,7 @@
 import { Metadata } from 'next';
+import { Analytics } from "@vercel/analytics/react"
+import Footer from "@/components/Footer"
+import { Toaster } from "@/components/ui/toaster"
 
 export const metadata: Metadata = {
   title: 'Andheri Communities - Coming Soon | GharConnect',
@@ -10,5 +13,12 @@ export default function AndheriLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <main>{children}</main>
+      <Footer />
+      <Analytics />
+      <Toaster />
+    </>
+  );
 }

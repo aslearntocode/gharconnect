@@ -2,7 +2,7 @@
 
 import Header from "@/components/Header"
 
-export default function AndheriPrivacyPage() {
+export default function BandraPrivacyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       <Header />

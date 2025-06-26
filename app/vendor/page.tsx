@@ -53,13 +53,53 @@ const societies = [
   { name: 'Lodha World One', area: 'worli', image: '/Lodha_World_One.png' },
   { name: 'Indiabulls Blu', area: 'worli', image: '/Indiabulls.png' },
   { name: 'Raheja Imperia', area: 'worli', image: '/Raheja_Imperia.png' },
+  { name: 'Sheth Beau Pride', area: 'bandra', image: '' },
+  { name: 'Excel Bellissima', area: 'bandra', image: '' },
+  { name: 'Rustomjee Panorama', area: 'bandra', image: '' },
+  { name: 'Hiranandani gardens', area: 'powai', image: '' },
+  { name: 'Lodha Bellagio', area: 'powai', image: '' },
+  { name: 'Godrej Urban park', area: 'powai', image: '' },
+  { name: 'Hiranandani Regent Hill', area: 'powai', image: '' },
+  { name: 'Shapoorji Pallonji Vicinia', area: 'powai', image: '' },
+  { name: 'Nahar Amrit Shakti', area: 'powai', image: '' },
+  { name: 'Hiranandani Estate', area: 'thane', image: '' },
+  { name: 'Rustomjee Urbania', area: 'thane', image: '' },
+  { name: 'Dosti Vihar', area: 'thane', image: '' },
+  { name: 'Lodha Amara', area: 'thane', image: '' },
+  { name: 'Sheth Avalon', area: 'thane', image: '' },
+  { name: 'Rustomjee Elements', area: 'juhu', image: '' },
+  { name: 'Prime Beach', area: 'juhu', image: '' },
+  { name: 'DLH Mamta', area: 'juhu', image: '' },
+  { name: 'Kalpataru Solitaire', area: 'juhu', image: '' },
+  { name: 'Rustomjee Ashiana', area: 'juhu', image: '' },
+  { name: 'Lodha One', area: 'juhu', image: '' },
+  { name: 'Ruparel Stardom', area: 'malad', image: '' },
+  { name: 'Gurukrupa Marina Enclave', area: 'malad', image: '' },
+  { name: 'Chandak Treesourus', area: 'malad', image: '' },
+  { name: 'Auris Serenity', area: 'malad', image: '' },
+  { name: 'Lodha Raj Infinia', area: 'malad', image: '' },
+  { name: 'Omkar Alta Monte', area: 'malad', image: '' },
+  { name: 'Kalpatru Vienta', area: 'malad', image: '' },
+  { name: 'Royal Pristo', area: 'malad', image: '' },
+  { name: 'Adani Western Heights', area: 'andheri', image: '' },
+  { name: 'Oberoi Springs', area: 'andheri', image: '' },
+  { name: 'Transcon Triumph', area: 'andheri', image: '' },
+  { name: 'Lodha Eternis', area: 'andheri', image: '' },
+  { name: 'Oberoi Sky Gardens', area: 'andheri', image: '' },
+  { name: 'Parthenon Raiskaran', area: 'andheri', image: '' },
+  { name: 'Oberoi Sky Heights', area: 'andheri', image: '' },
+  { name: 'Windsor Grande Residences', area: 'andheri', image: '' }
 ];
 
 const areas = [
   { name: 'Parel, Mumbai (Parel, Sewri, Bhoiwada)', value: 'parel' },
   { name: 'Worli, Mumbai (Worli, Lower Parel)', value: 'worli' },
-  { name: 'Bandra, Mumbai (Bandra, Khar, Santacruz)', value: 'bandra' },
-  { name: 'Andheri, Mumbai (Andheri, Marol, Ghatkopar)', value: 'andheri' },
+  { name: 'Bandra, Mumbai (Bandra, Bandra West, Bandra East,Khar)', value: 'bandra' },
+  { name: 'Andheri, Mumbai (Andheri, Marol, Ghatkopar, Santacruz)', value: 'andheri' },
+  { name: 'Powai, Mumbai (Powai, Hiranandani, Chandivali)', value: 'powai' },
+  { name: 'Malad, Mumbai (Malad, Malad West, Malad East)', value: 'malad' },
+  { name: 'Juhu, Mumbai (Juhu, Vile Parle, Santacruz West)', value: 'juhu' },
+  { name: 'Thane, Mumbai (Thane West, Thane East, Ghodbunder)', value: 'thane' },
 ];
 
 function getNext7Days() {
@@ -404,26 +444,37 @@ export default function VendorDashboard() {
           {selectedArea && (
             <>
               <h2 className="text-lg font-semibold mb-4">Select up to 2 Societies</h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-4">
+              <ul className="mb-4 grid grid-cols-2 gap-2">
                 {filteredSocieties.map(society => {
                   const isSelected = selectedSocieties.includes(society.name);
                   const isDisabled = !isSelected && selectedSocieties.length >= 2;
                   return (
-                    <button
-                      key={society.name}
-                      type="button"
-                      onClick={() => handleSocietyToggle(society.name)}
-                      disabled={isDisabled}
-                      className={`flex flex-col items-center p-3 rounded-xl border-2 transition-all duration-200 shadow-sm bg-white hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-400
-                        ${isSelected ? 'border-indigo-600 ring-2 ring-indigo-200 bg-indigo-50' : 'border-gray-200'}
-                        ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-                    >
-                      <img src={society.image} alt={society.name} className="w-12 h-12 object-cover rounded-lg mb-2 border border-gray-100 bg-gray-50" />
-                      <span className="text-xs font-semibold text-center">{society.name}</span>
-                    </button>
+                    <li key={society.name} className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id={`society-${society.name}`}
+                        checked={isSelected}
+                        disabled={isDisabled}
+                        onChange={() => handleSocietyToggle(society.name)}
+                        className="w-5 h-5 accent-indigo-600 mr-2"
+                      />
+                      <label htmlFor={`society-${society.name}`} className={`text-sm font-medium ${isDisabled ? 'text-gray-400' : 'text-gray-900'}`}>{society.name}</label>
+                    </li>
                   );
                 })}
-              </div>
+                {/* Other option */}
+                <li key="Other" className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="society-Other"
+                    checked={selectedSocieties.includes('Other')}
+                    disabled={!selectedSocieties.includes('Other') && selectedSocieties.length >= 2}
+                    onChange={() => handleSocietyToggle('Other')}
+                    className="w-5 h-5 accent-indigo-600 mr-2"
+                  />
+                  <label htmlFor="society-Other" className={`text-sm font-medium ${!selectedSocieties.includes('Other') && selectedSocieties.length >= 2 ? 'text-gray-400' : 'text-gray-900'}`}>Other</label>
+                </li>
+              </ul>
               <p className="text-sm text-gray-500 mb-4">You can select up to 2 societies.</p>
               <div className="flex gap-4 items-end">
                 <div className="flex-1">

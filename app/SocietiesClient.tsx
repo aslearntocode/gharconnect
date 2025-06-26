@@ -101,6 +101,192 @@ const societies = [
     description: 'Premium residential complex in Worli.',
     image: '/Raheja_Imperia.png',
     area: 'worli'
+  },
+  // Bandra Societies
+  {
+    name: 'Bandra West Society',
+    description: 'Premium residential complex in Bandra West.',
+    image: '/cb.png',
+    area: 'bandra'
+  },
+  {
+    name: 'Khar East Community',
+    description: 'A vibrant community in Khar East.',
+    image: '/ag.png',
+    area: 'bandra'
+  },
+  {
+    name: 'Santacruz Towers',
+    description: 'Modern living with all amenities in Santacruz.',
+    image: '/icc.png',
+    area: 'bandra'
+  },
+  {
+    name: 'Bandra East Gardens',
+    description: 'A peaceful society in Bandra East.',
+    image: '/at.png',
+    area: 'bandra'
+  },
+  {
+    name: 'Khar West Residences',
+    description: 'Luxurious living in Khar West.',
+    image: '/df.png',
+    area: 'bandra'
+  },
+  // Juhu Societies
+  {
+    name: 'Juhu Beach Residences',
+    description: 'Premium beachfront living in Juhu.',
+    image: '/ra.png',
+    area: 'juhu'
+  },
+  {
+    name: 'Vile Parle Gardens',
+    description: 'A peaceful community in Vile Parle.',
+    image: '/ka.png',
+    area: 'juhu'
+  },
+  {
+    name: 'Andheri West Society',
+    description: 'Modern living in Andheri West.',
+    image: '/lv.png',
+    area: 'juhu'
+  },
+  {
+    name: 'Juhu Tara Road',
+    description: 'Exclusive living on Juhu Tara Road.',
+    image: '/rn.png',
+    area: 'juhu'
+  },
+  {
+    name: 'Vile Parle East',
+    description: 'A vibrant community in Vile Parle East.',
+    image: '/CS.png',
+    area: 'juhu'
+  },
+  // Malad Societies
+  {
+    name: 'Malad West Complex',
+    description: 'Premium residential complex in Malad West.',
+    image: '/Lodha_Park.png',
+    area: 'malad'
+  },
+  {
+    name: 'Kandivali East',
+    description: 'A peaceful community in Kandivali East.',
+    image: '/Lodha_World_One.png',
+    area: 'malad'
+  },
+  {
+    name: 'Malad East Gardens',
+    description: 'Modern living in Malad East.',
+    image: '/Indiabulls.png',
+    area: 'malad'
+  },
+  {
+    name: 'Kandivali West',
+    description: 'A vibrant society in Kandivali West.',
+    image: '/Raheja_Imperia.png',
+    area: 'malad'
+  },
+  {
+    name: 'Malad Central',
+    description: 'Central location living in Malad.',
+    image: '/cb.png',
+    area: 'malad'
+  },
+  // Powai Societies
+  {
+    name: 'Powai Lake View',
+    description: 'Premium lakefront living in Powai.',
+    image: '/ag.png',
+    area: 'powai'
+  },
+  {
+    name: 'Hiranandani Gardens',
+    description: 'Luxurious living in Hiranandani Gardens.',
+    image: '/icc.png',
+    area: 'powai'
+  },
+  {
+    name: 'Powai Central',
+    description: 'Central location in Powai.',
+    image: '/at.png',
+    area: 'powai'
+  },
+  {
+    name: 'IIT Powai',
+    description: 'Near IIT Bombay campus.',
+    image: '/df.png',
+    area: 'powai'
+  },
+  {
+    name: 'Powai West',
+    description: 'Peaceful living in Powai West.',
+    image: '/ra.png',
+    area: 'powai'
+  },
+  // Thane Societies
+  {
+    name: 'Thane West Complex',
+    description: 'Premium residential complex in Thane West.',
+    image: '/ka.png',
+    area: 'thane'
+  },
+  {
+    name: 'Ghodbunder Road',
+    description: 'Modern living on Ghodbunder Road.',
+    image: '/lv.png',
+    area: 'thane'
+  },
+  {
+    name: 'Thane East Gardens',
+    description: 'A peaceful community in Thane East.',
+    image: '/rn.png',
+    area: 'thane'
+  },
+  {
+    name: 'Thane Central',
+    description: 'Central location in Thane.',
+    image: '/CS.png',
+    area: 'thane'
+  },
+  {
+    name: 'Thane Station Road',
+    description: 'Convenient location near Thane station.',
+    image: '/Lodha_Park.png',
+    area: 'thane'
+  },
+  // Andheri Societies
+  {
+    name: 'Andheri West Society',
+    description: 'Premium residential complex in Andheri West.',
+    image: '/cb.png',
+    area: 'andheri'
+  },
+  {
+    name: 'Andheri East Gardens',
+    description: 'A peaceful community in Andheri East.',
+    image: '/ag.png',
+    area: 'andheri'
+  },
+  {
+    name: 'Andheri Central',
+    description: 'Central location in Andheri.',
+    image: '/icc.png',
+    area: 'andheri'
+  },
+  {
+    name: 'Andheri Station Road',
+    description: 'Convenient location near Andheri station.',
+    image: '/at.png',
+    area: 'andheri'
+  },
+  {
+    name: 'Andheri Metro',
+    description: 'Modern living near Andheri Metro.',
+    image: '/df.png',
+    area: 'andheri'
   }
 ];
 
@@ -110,12 +296,12 @@ export default function SocietiesClient() {
   const areas = [
     { name: 'Parel, Mumbai (Parel, Sewri, Bhoiwada)', value: 'parel', displayName: 'Parel, Mumbai' },
     { name: 'Worli, Mumbai (Worli, Lower Parel)', value: 'worli', displayName: 'Worli, Mumbai' },
-    // { name: 'Bandra, Mumbai (Bandra, Khar, Santacruz)', value: 'bandra', displayName: 'Bandra, Mumbai' },
-    // { name: 'Andheri, Mumbai (Andheri, Marol, Ghatkopar)', value: 'andheri', displayName: 'Andheri, Mumbai' },
-    // { name: 'Juhu, Mumbai (Juhu, Vile Parle, Andheri)', value: 'juhu', displayName: 'Juhu, Mumbai' },
-    // { name: 'Malad, Mumbai (Malad, Kandivali, Andheri)', value: 'malad', displayName: 'Malad, Mumbai' },
-    // { name: 'Powai, Mumbai (Powai, Andheri)', value: 'powai', displayName: 'Powai, Mumbai' },
-    // { name: 'Thane, Mumbai (Thane, Ghodbunder Road)', value: 'thane', displayName: 'Thane, Mumbai' }
+    { name: 'Bandra, Mumbai (Bandra, Khar, Santacruz)', value: 'bandra', displayName: 'Bandra, Mumbai' },
+    { name: 'Juhu, Mumbai (Juhu, Vile Parle, Andheri)', value: 'juhu', displayName: 'Juhu, Mumbai' },
+    { name: 'Malad, Mumbai (Malad, Kandivali, Andheri)', value: 'malad', displayName: 'Malad, Mumbai' },
+    { name: 'Powai, Mumbai (Powai, Andheri)', value: 'powai', displayName: 'Powai, Mumbai' },
+    { name: 'Thane, Mumbai (Thane, Ghodbunder Road)', value: 'thane', displayName: 'Thane, Mumbai' },
+    { name: 'Andheri, Mumbai (Andheri, Vile Parle)', value: 'andheri', displayName: 'Andheri, Mumbai' }
   ];
 
   const filteredSocieties = selectedArea === '' ? [] : societies.filter(society => society.area === selectedArea);
