@@ -402,8 +402,7 @@ export default function Header() {
         <div className="md:hidden py-2 w-full bg-white fixed bottom-0 left-0 border-t border-gray-200 shadow-lg" style={{ position: 'fixed', bottom: 0, zIndex: 9999 }}>
           <div className="flex justify-around items-center px-1 pb-6">
             <Link href={`/${currentSociety}`} className="text-black hover:text-gray-700 flex flex-col items-center">
-              <FiHome className="w-5 h-5 mb-0.5" />
-              <span className="text-base font-semibold mt-1">Home</span>
+              <FiHome className="w-6 h-6" />
             </Link>
 
             <div className="relative">
@@ -411,8 +410,7 @@ export default function Header() {
                 onClick={() => setIsPropertiesDropdownOpen(isPropertiesDropdownOpen => !isPropertiesDropdownOpen)}
                 className="text-black hover:text-gray-700 flex flex-col items-center"
               >
-                <FiHome className="w-5 h-5 mb-0.5" />
-                <span className="text-base font-semibold mt-1">Properties</span>
+                <FiBriefcase className="w-6 h-6" />
               </button>
               {isPropertiesDropdownOpen && (
                 <div className="absolute bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)' }}>
@@ -439,8 +437,7 @@ export default function Header() {
                 onClick={() => setIsDeliveryDropdownOpen(isDeliveryDropdownOpen => !isDeliveryDropdownOpen)}
                 className="text-black hover:text-gray-700 flex flex-col items-center"
               >
-                <FiTruck className="w-5 h-5 mb-0.5" />
-                <span className="text-base font-semibold mt-1">Delivery</span>
+                <FiTruck className="w-6 h-6" />
               </button>
               {isDeliveryDropdownOpen && (
                 <div className="absolute bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)' }}>
@@ -471,8 +468,7 @@ export default function Header() {
                 onClick={() => setIsCreditScoreDropdownOpen(isCreditScoreDropdownOpen => !isCreditScoreDropdownOpen)}
                 className="text-black hover:text-gray-700 flex flex-col items-center"
               >
-                <FiTool className="w-5 h-5 mb-0.5" />
-                <span className="text-base font-semibold mt-1">Services</span>
+                <FiTool className="w-6 h-6" />
               </button>
               {isCreditScoreDropdownOpen && (
                 <div className="absolute bottom-full mb-2 w-64 bg-white rounded-lg shadow-lg py-2" style={{ right: 0, maxWidth: '90vw' }}>

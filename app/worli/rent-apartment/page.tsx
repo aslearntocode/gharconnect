@@ -188,7 +188,7 @@ export default function RentApartmentPage() {
     <>
       {/* Indigo Info Banner */}
       <div className="w-full bg-indigo-600 flex flex-col items-center justify-center py-8 mb-4 rounded-lg">
-        <h1 className="text-3xl md:text-4xl font-bold text-white">List Your Property for Rent in {location}</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-white text-center md:text-left">List Your Property for Rent in {location}</h1>
         <p className="text-indigo-100 text-base md:text-lg mt-2 text-center max-w-5xl">
           Find trusted tenants for your property.
         </p>

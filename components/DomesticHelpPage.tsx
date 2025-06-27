@@ -287,7 +287,7 @@ export default function DomesticHelpPage() {
       {/* Indigo Banner */}
       <div className="relative">
         <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white">Domestic Help & Drivers - {currentArea.charAt(0).toUpperCase() + currentArea.slice(1)}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-white text-center md:text-left">Domestic Help & Drivers - {currentArea.charAt(0).toUpperCase() + currentArea.slice(1)}</h1>
         </div>
       </div>
       <div className="py-8 px-4 max-w-7xl mx-auto">
