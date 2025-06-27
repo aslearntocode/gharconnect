@@ -86,6 +86,7 @@ export default function Home() {
   const [expandedCard, setExpandedCard] = useState<string | null>(null);
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
   const [currentAdCarouselIndex, setCurrentAdCarouselIndex] = useState(0);
+  const [currentPopularServicesIndex, setCurrentPopularServicesIndex] = useState(0);
 
   const testimonials = [
     {
@@ -436,6 +437,100 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  const popularServicesCards: Array<{
+    id: string;
+    title: string;
+    icon: string | React.ComponentType<{ className?: string }>;
+    iconBg: string;
+    iconColor: string;
+    buttonBg: string;
+    buttonHover: string;
+    href: string;
+    buttonText: string;
+    buttonTextMobile: string;
+  }> = [
+    {
+      id: 'domestic-help',
+      title: 'Domestic Help & Drivers',
+      icon: FiHome,
+      iconBg: 'bg-green-100',
+      iconColor: 'text-green-600',
+      buttonBg: 'bg-green-600',
+      buttonHover: 'hover:bg-green-700',
+      href: '/juhu/services/domestic-help',
+      buttonText: 'Find Domestic Help or Driver',
+      buttonTextMobile: 'Find Help'
+    },
+    {
+      id: 'rental',
+      title: 'Find Rental Property',
+      icon: FiHome,
+      iconBg: 'bg-blue-100',
+      iconColor: 'text-blue-600',
+      buttonBg: 'bg-blue-600',
+      buttonHover: 'hover:bg-blue-700',
+      href: '/juhu/rent/',
+      buttonText: 'Browse Properties',
+      buttonTextMobile: 'Browse'
+    },
+    {
+      id: 'pharmacy',
+      title: 'Pharmacy Delivery',
+      icon: '💊',
+      iconBg: 'bg-red-100',
+      iconColor: 'text-red-600',
+      buttonBg: 'bg-red-600',
+      buttonHover: 'hover:bg-red-700',
+      href: '/juhu/delivery/pharmacy',
+      buttonText: 'Order Medicines',
+      buttonTextMobile: 'Order'
+    },
+    {
+      id: 'laptop-repair',
+      title: 'Laptop Repair',
+      icon: FiTool,
+      iconBg: 'bg-purple-100',
+      iconColor: 'text-purple-600',
+      buttonBg: 'bg-purple-600',
+      buttonHover: 'hover:bg-purple-700',
+      href: '/juhu/services/laptop-repair',
+      buttonText: 'Get Laptop Fixed',
+      buttonTextMobile: 'Repair'
+    }
+  ];
+
+  const nextPopularService = () => {
+    setCurrentPopularServicesIndex((prev) => (prev + 1) % popularServicesCards.length);
+  };
+
+  const prevPopularService = () => {
+    setCurrentPopularServicesIndex((prev) => (prev - 1 + popularServicesCards.length) % popularServicesCards.length);
+  };
+
+  const handlePopularServiceTouchStart = (e: React.TouchEvent) => {
+    setTouchStart(e.touches[0].clientX);
+    setTouchMoved(false);
+  };
+
+  const handlePopularServiceTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.touches[0].clientX);
+    setTouchMoved(true);
+  };
+
+  const handlePopularServiceTouchEnd = () => {
+    if (!touchMoved) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe) {
+      nextPopularService();
+    } else if (isRightSwipe) {
+      prevPopularService();
+    }
+  };
+
   return (
     <>
       <Head>
@@ -444,8 +539,84 @@ export default function Home() {
       </Head>
       <main className="min-h-screen bg-white">
         <Header />
+        
+        {/* Popular Service Banner */}
+        <div className="w-full bg-gray-50 py-4 md:py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-4 md:mb-4">
+              <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-1">Most Popular Services</h2>
+            </div>
+            
+            {/* Mobile Carousel */}
+            <div className="md:hidden">
+              <div 
+                className="relative overflow-hidden rounded-lg"
+                onTouchStart={handlePopularServiceTouchStart}
+                onTouchMove={handlePopularServiceTouchMove}
+                onTouchEnd={handlePopularServiceTouchEnd}
+              >
+                <div className="flex transition-transform duration-300 ease-in-out" style={{ transform: `translateX(-${currentPopularServicesIndex * 50}%)` }}>
+                  {popularServicesCards.map((card, index) => {
+                    const IconComponent = typeof card.icon === 'string' ? null : card.icon;
+                    return (
+                      <div key={card.id} className="w-1/2 flex-shrink-0 px-2">
+                        <div className="bg-white rounded-lg shadow-md p-2 border border-gray-200">
+                          <div className="text-center">
+                            <div className={`w-8 h-8 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-2`}>
+                              {IconComponent ? (
+                                <IconComponent className={`w-4 h-4 ${card.iconColor}`} />
+                              ) : (
+                                <span className="text-2xl">{card.icon as string}</span>
+                              )}
+                            </div>
+                            <h3 className="text-xs font-bold text-gray-900 mb-1">{card.title}</h3>
+                            <a 
+                              href={card.href}
+                              className={`inline-flex items-center px-2 py-1 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-xs`}
+                            >
+                              {card.buttonTextMobile}
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop Grid */}
+            <div className="hidden md:grid md:grid-cols-4 gap-2 max-w-5xl mx-auto">
+              {popularServicesCards.map((card) => {
+                const IconComponent = typeof card.icon === 'string' ? null : card.icon;
+                return (
+                  <div key={card.id} className="bg-white rounded-lg shadow-md p-2 md:p-4 border border-gray-200">
+                    <div className="text-center">
+                      <div className={`w-8 h-8 md:w-12 md:h-12 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3`}>
+                        {IconComponent ? (
+                          <IconComponent className={`w-4 h-4 md:w-6 md:h-6 ${card.iconColor}`} />
+                        ) : (
+                          <span className="text-2xl md:text-3xl">{card.icon as string}</span>
+                        )}
+                      </div>
+                      <h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1">{card.title}</h3>
+                      <a 
+                        href={card.href}
+                        className={`inline-flex items-center px-2 py-1 md:px-4 md:py-2 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-xs`}
+                      >
+                        <span className="hidden sm:inline">{card.buttonText}</span>
+                        <span className="sm:hidden">{card.buttonTextMobile}</span>
+                      </a>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
         {/* Notification Bar */}
-        <div className="w-full mt-2 mb-4">
+        {/* <div className="w-full mt-2 mb-4">
           <div className="bg-yellow-100 text-yellow-900 px-4 md:px-0 py-2 text-center font-medium shadow-sm rounded-none md:rounded-md w-full text-base md:text-lg">
             We have a rental property available at Crescent Bay from 5th July 2025. Contact us at 9321314553.
           </div>
