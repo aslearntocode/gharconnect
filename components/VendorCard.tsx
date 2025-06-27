@@ -39,8 +39,10 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const supabase = createClientComponentClient();
   const router = useRouter();
 
-  // Get all available photos
-  const photos = vendor.photos || (vendor.photo ? [vendor.photo] : []);
+  // Get all available photos (only include defined, non-empty strings)
+  const photos = (vendor.photos && Array.isArray(vendor.photos) && vendor.photos.length > 0)
+    ? vendor.photos.filter(Boolean)
+    : (vendor.photo ? [vendor.photo] : []);
   
   useEffect(() => {
     const fetchRatings = async () => {
@@ -140,7 +142,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   return (
     <>
       <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
-        {photos.length > 0 && !imageError && (
+        {Array.isArray(photos) && photos.length > 0 && !imageError && (
           <div 
             className="w-full h-48 overflow-hidden rounded-t-lg cursor-pointer relative bg-gray-100 flex items-center justify-center"
             onClick={() => setIsImageModalOpen(true)}

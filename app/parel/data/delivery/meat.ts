@@ -9,6 +9,7 @@ export interface Vendor {
   name: string;
   products: Product[];
   mobile: string;
+  photo?: string;
 }
 
 export interface MeatProduct {
