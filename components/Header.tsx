@@ -10,6 +10,7 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { signOut } from 'firebase/auth'
 import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid } from 'react-icons/fi'
+import { FaBuilding } from 'react-icons/fa'
 
 export default function Header() {
   const [user, setUser] = useState<User | null>(null)
@@ -410,7 +411,7 @@ export default function Header() {
                 onClick={() => setIsPropertiesDropdownOpen(isPropertiesDropdownOpen => !isPropertiesDropdownOpen)}
                 className="text-black hover:text-gray-700 flex flex-col items-center"
               >
-                <FiBriefcase className="w-6 h-6" />
+                <FaBuilding className="w-6 h-6" />
               </button>
               {isPropertiesDropdownOpen && (
                 <div className="absolute bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)' }}>
