@@ -47,7 +47,7 @@ const communities = [
     name: 'Andheri, Mumbai',
     description: 'Andheri, Santacruz',
     href: '/andheri',
-    status: 'active'
+    status: 'coming-soon'
   },
   {
     name: 'Juhu, Mumbai',
@@ -59,19 +59,19 @@ const communities = [
     name: 'Malad, Mumbai',
     description: 'Malad, Kandivali, Borivali',
     href: '/malad',
-    status: 'active'
+    status: 'coming-soon'
   },
   {
     name: 'Powai, Mumbai',
     description: 'Powai, Chandivali',
     href: '/powai',
-    status: 'active'
+    status: 'coming-soon'
   },
   {
     name: 'Thane, Mumbai',
     description: 'Thane, Ghodbunder Road',
     href: '/thane',
-    status: 'active'
+    status: 'coming-soon'
   }
 ];
 
