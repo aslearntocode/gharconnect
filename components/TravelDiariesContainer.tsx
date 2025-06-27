@@ -20,7 +20,7 @@ export default function TravelDiariesContainer() {
             href={travelVlogsLink}
             className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors duration-200"
           >
-            Explore Travel Vlogs
+            Explore and Book
           </Link>
         </div>
       </div>

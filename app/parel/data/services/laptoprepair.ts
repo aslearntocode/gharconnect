@@ -21,5 +21,25 @@ export const vendors: Vendor[] = [
       unit: 'service'
     }],
     mobile: '+91 9930952258'
+  },
+  {
+    name: 'Born Computers Sailesh',
+    products: [{
+      name: 'Laptop Repair',
+      description: 'Professional laptop repair and maintenance services',
+      price: 'Call for price',
+      unit: 'service'
+    }],
+    mobile: '+91 98210 52256'
+  },
+  {
+    name: 'Vijay',
+    products: [{
+      name: 'Laptop Repair',
+      description: 'Professional laptop repair and maintenance services',
+      price: 'Call for price',
+      unit: 'service'
+    }],
+    mobile: '+91 98673 21454'
   }
 ];
