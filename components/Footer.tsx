@@ -50,9 +50,11 @@ export default function Footer() {
             <div className="grid grid-cols-2 gap-2">
               <Link href="/parel/" className="hover:text-indigo-600 transition-colors">Parel</Link>
               <Link href="/worli/" className="hover:text-indigo-600 transition-colors">Worli</Link>
+              <Link href="/wadala/" className="hover:text-indigo-600 transition-colors">Wadala</Link>
+              {/* <Link href="/mahalaxmi/" className="hover:text-indigo-600 transition-colors">Mahalaxmi</Link> */}
               {/* <Link href="/andheri/" className="hover:text-indigo-600 transition-colors">Andheri</Link> */}
               <Link href="/bandra/" className="hover:text-indigo-600 transition-colors">Bandra</Link>
-              <Link href="/juhu/" className="hover:text-indigo-600 transition-colors">Juhu</Link>
+              {/* <Link href="/juhu/" className="hover:text-indigo-600 transition-colors">Juhu</Link> */}
               {/* <Link href="/malad/" className="hover:text-indigo-600 transition-colors">Malad</Link>
               <Link href="/powai/" className="hover:text-indigo-600 transition-colors">Powai</Link>
               <Link href="/thane/" className="hover:text-indigo-600 transition-colors">Thane</Link> */}
