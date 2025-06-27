@@ -9,7 +9,7 @@ import Link from "next/link"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { signOut } from 'firebase/auth'
-import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid } from 'react-icons/fi'
+import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiSearch } from 'react-icons/fi'
 import { FaBuilding } from 'react-icons/fa'
 
 export default function Header() {
@@ -18,6 +18,7 @@ export default function Header() {
   const [isPropertiesDropdownOpen, setIsPropertiesDropdownOpen] = useState(false)
   const [isCreditScoreDropdownOpen, setIsCreditScoreDropdownOpen] = useState(false)
   const [isDeliveryDropdownOpen, setIsDeliveryDropdownOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
   const router = useRouter()
   const pathname = usePathname()
 
@@ -75,6 +76,15 @@ export default function Header() {
       router.push('/')
     } catch (error) {
       console.error('Error signing out:', error)
+    }
+  }
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      // Navigate to search results page with the query
+      router.push(`/${currentSociety}/search?q=${encodeURIComponent(searchQuery.trim())}`)
+      setSearchQuery("")
     }
   }
 
@@ -384,10 +394,42 @@ export default function Header() {
                   </div>
                 </div>
               </div>
+
+              {/* Search Box - Desktop */}
+              <div className="ml-6">
+                <form onSubmit={handleSearch} className="relative">
+                  <div className="relative">
+                    <input
+                      type="text"
+                      placeholder="Search anything..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-80 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    />
+                    <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
 
           <div className="flex items-center">
+            {/* Search Box - Mobile */}
+            <div className="md:hidden absolute left-1/2 transform -translate-x-1/2">
+              <form onSubmit={handleSearch} className="relative">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search anything..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                  />
+                  <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                </div>
+              </form>
+            </div>
+
             {user ? (
               <ProfileDropdown user={user} />
             ) : (
