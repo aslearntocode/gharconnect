@@ -358,7 +358,9 @@ export default function DomesticHelpPage() {
                 const vendor = availRows[0];
                 return (
                   <Card key={vendorId} className="p-4 border-2 border-gray-200 mb-6">
-                    <div className="font-bold text-lg mb-1">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</div>
+                    <div className="flex justify-between items-start mb-2">
+                      <span className="font-bold text-lg">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</span>
+                    </div>
                     <div className="text-sm text-gray-600 mb-1">
                       Mobile: {!showNumberMap[vendorId] ? (
                         <button
@@ -389,6 +391,66 @@ export default function DomesticHelpPage() {
                     >
                       {openVendorId === vendorId ? 'Hide Availability' : 'View Availability'}
                     </button>
+                    <div>
+                      <div className="flex justify-between items-start mb-2">
+                        <VendorRating
+                          vendorId={vendorId}
+                          vendorName={vendor.name}
+                          vendorType="service"
+                          onRatingAdded={() => {}}
+                        />
+                      </div>
+                      {vendorRatings[vendorId] && (
+                        <div className="flex items-center gap-1 text-yellow-500 mb-2">
+                          <span className="text-sm font-medium">
+                            {vendorRatings[vendorId].rating.toFixed(1)}
+                          </span>
+                          <span className="text-gray-500 text-xs">
+                            ({vendorRatings[vendorId].count})
+                          </span>
+                        </div>
+                      )}
+                      {vendorRatings[vendorId] && vendorRatings[vendorId].count > 0 && (
+                        <button
+                          onClick={() => toggleReviews(vendorId)}
+                          className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-2"
+                        >
+                          {showReviews[vendorId] ? (
+                            <>
+                              <FiChevronUp className="w-4 h-4" />
+                              Hide Reviews
+                            </>
+                          ) : (
+                            <>
+                              <FiChevronDown className="w-4 h-4" />
+                              Show Reviews
+                            </>
+                          )}
+                        </button>
+                      )}
+                      {showReviews[vendorId] && reviews[vendorId] && (
+                        <div className="border-t border-gray-100 p-4 bg-gray-50">
+                          <div className="space-y-4">
+                            {reviews[vendorId].map((review, index) => (
+                              <div key={index} className="border-b border-gray-200 pb-3 last:border-0 last:pb-0">
+                                <div className="flex items-center justify-between mb-2">
+                                  <span className="text-sm font-medium text-gray-900">{review.user_name}</span>
+                                  <span className="text-sm text-yellow-500 font-medium">{review.rating}/10</span>
+                                </div>
+                                <p className="text-sm text-gray-600">{review.comment}</p>
+                                <p className="text-xs text-gray-500 mt-1">
+                                  {new Date(review.created_at).toLocaleDateString('en-IN', {
+                                    year: 'numeric',
+                                    month: 'short',
+                                    day: 'numeric'
+                                  })}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                     {openVendorId === vendorId && (
                       <div className="overflow-x-auto mt-4">
                         <table className="w-full border text-center table-auto">
@@ -434,7 +496,9 @@ export default function DomesticHelpPage() {
               })
               .map((vendor) => (
                 <Card key={vendor.vendor_id} className="p-4 border-2 border-gray-200 mb-6">
-                  <div className="font-bold text-lg mb-1">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</div>
+                  <div className="flex justify-between items-start mb-2">
+                    <span className="font-bold text-lg">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</span>
+                  </div>
                   <div className="text-sm text-gray-600 mb-1">
                     Mobile: {!showNumberMap[vendor.vendor_id] ? (
                       <button
@@ -465,6 +529,66 @@ export default function DomesticHelpPage() {
                         {slotType.charAt(0).toUpperCase() + slotType.slice(1)}: {slotData.slot_start_time || '-'} - {slotData.slot_end_time || '-'}
                       </div>
                     ))}
+                  </div>
+                  <div>
+                    <div className="flex justify-between items-start mb-2">
+                      <VendorRating
+                        vendorId={vendor.vendor_id}
+                        vendorName={vendor.name}
+                        vendorType="service"
+                        onRatingAdded={() => {}}
+                      />
+                    </div>
+                    {vendorRatings[vendor.vendor_id] && (
+                      <div className="flex items-center gap-1 text-yellow-500 mb-2">
+                        <span className="text-sm font-medium">
+                          {vendorRatings[vendor.vendor_id].rating.toFixed(1)}
+                        </span>
+                        <span className="text-gray-500 text-xs">
+                          ({vendorRatings[vendor.vendor_id].count})
+                        </span>
+                      </div>
+                    )}
+                    {vendorRatings[vendor.vendor_id] && vendorRatings[vendor.vendor_id].count > 0 && (
+                      <button
+                        onClick={() => toggleReviews(vendor.vendor_id)}
+                        className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-2"
+                      >
+                        {showReviews[vendor.vendor_id] ? (
+                          <>
+                            <FiChevronUp className="w-4 h-4" />
+                            Hide Reviews
+                          </>
+                        ) : (
+                          <>
+                            <FiChevronDown className="w-4 h-4" />
+                            Show Reviews
+                          </>
+                        )}
+                      </button>
+                    )}
+                    {showReviews[vendor.vendor_id] && reviews[vendor.vendor_id] && (
+                      <div className="border-t border-gray-100 p-4 bg-gray-50">
+                        <div className="space-y-4">
+                          {reviews[vendor.vendor_id].map((review, index) => (
+                            <div key={index} className="border-b border-gray-200 pb-3 last:border-0 last:pb-0">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="text-sm font-medium text-gray-900">{review.user_name}</span>
+                                <span className="text-sm text-yellow-500 font-medium">{review.rating}/10</span>
+                              </div>
+                              <p className="text-sm text-gray-600">{review.comment}</p>
+                              <p className="text-xs text-gray-500 mt-1">
+                                {new Date(review.created_at).toLocaleDateString('en-IN', {
+                                  year: 'numeric',
+                                  month: 'short',
+                                  day: 'numeric'
+                                })}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </Card>
               ))}
