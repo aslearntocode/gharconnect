@@ -294,7 +294,7 @@ export default function SocietiesClient() {
   const [selectedArea, setSelectedArea] = useState('');
 
   const areas = [
-    { name: 'Parel, Mumbai (Parel, Sewri, Bhoiwada)', value: 'parel', displayName: 'Parel, Mumbai' },
+    { name: 'Parel, Mumbai (Parel, Sewri, Bhoiwada, Wadala)', value: 'parel', displayName: 'Parel, Mumbai' },
     { name: 'Worli, Mumbai (Worli, Lower Parel)', value: 'worli', displayName: 'Worli, Mumbai' },
     { name: 'Bandra, Mumbai (Bandra, Khar, Santacruz)', value: 'bandra', displayName: 'Bandra, Mumbai' },
     { name: 'Juhu, Mumbai (Juhu, Vile Parle, Andheri)', value: 'juhu', displayName: 'Juhu, Mumbai' },

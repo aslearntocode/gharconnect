@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 const communities = [
   {
     name: 'Parel, Mumbai',
-    description: 'Parel, Sewri, Bhoiwada',
+    description: 'Parel, Sewri, Bhoiwada, Wadala',
     href: '/parel',
     status: 'active'
   },
@@ -39,31 +39,31 @@ const communities = [
   },
   {
     name: 'Bandra, Mumbai',
-    description: 'Bandra, Khar, Santacruz',
+    description: 'Bandra, Khar',
     href: '/bandra',
     status: 'active'
   },
   {
     name: 'Andheri, Mumbai',
-    description: 'Andheri, Andheri West, Andheri East',
+    description: 'Andheri, Santacruz',
     href: '/andheri',
     status: 'active'
   },
   {
     name: 'Juhu, Mumbai',
-    description: 'Juhu, Vile Parle, Andheri',
+    description: 'Juhu, Vile Parle',
     href: '/juhu',
     status: 'active'
   },
   {
     name: 'Malad, Mumbai',
-    description: 'Malad, Kandivali, Andheri',
+    description: 'Malad, Kandivali, Borivali',
     href: '/malad',
     status: 'active'
   },
   {
     name: 'Powai, Mumbai',
-    description: 'Powai, Andheri',
+    description: 'Powai, Chandivali',
     href: '/powai',
     status: 'active'
   },
