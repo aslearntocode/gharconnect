@@ -41,6 +41,11 @@ export default function Footer() {
                   <Link href={`/${society}/rental-procedure`} className="hover:text-indigo-600 transition-colors">Rental Procedure</Link>
                 </li>
               )}
+              {!isMainPage && (
+                <li>
+                  <Link href={`/vendor`} className="hover:text-indigo-600 transition-colors">Domestic Help & Driver Registration</Link>
+                </li>
+              )}
             </ul>
           </div>
 

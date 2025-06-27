@@ -95,11 +95,11 @@ const areas = [
   { name: 'Parel, Mumbai (Parel, Sewri, Bhoiwada)', value: 'parel' },
   { name: 'Worli, Mumbai (Worli, Lower Parel)', value: 'worli' },
   { name: 'Bandra, Mumbai (Bandra, Bandra West, Bandra East,Khar)', value: 'bandra' },
-  { name: 'Andheri, Mumbai (Andheri, Marol, Ghatkopar, Santacruz)', value: 'andheri' },
-  { name: 'Powai, Mumbai (Powai, Hiranandani, Chandivali)', value: 'powai' },
-  { name: 'Malad, Mumbai (Malad, Malad West, Malad East)', value: 'malad' },
-  { name: 'Juhu, Mumbai (Juhu, Vile Parle, Santacruz West)', value: 'juhu' },
-  { name: 'Thane, Mumbai (Thane West, Thane East, Ghodbunder)', value: 'thane' },
+  // { name: 'Andheri, Mumbai (Andheri, Marol, Ghatkopar, Santacruz)', value: 'andheri' },
+  // { name: 'Powai, Mumbai (Powai, Hiranandani, Chandivali)', value: 'powai' },
+  // { name: 'Malad, Mumbai (Malad, Malad West, Malad East)', value: 'malad' },
+  // { name: 'Juhu, Mumbai (Juhu, Vile Parle, Santacruz West)', value: 'juhu' },
+  // { name: 'Thane, Mumbai (Thane West, Thane East, Ghodbunder)', value: 'thane' },
 ];
 
 function getNext7Days() {
