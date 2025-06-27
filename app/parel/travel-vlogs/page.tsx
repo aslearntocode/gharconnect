@@ -108,10 +108,10 @@ function PropertyShowcase() {
           
           <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-6">
             <div className="text-center pt-4">
-              <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white mb-2 font-serif tracking-wide">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 font-serif tracking-wide">
                 Explore Places Your Neighbors Love
               </h1>
-              <p className="text-indigo-100 text-lg mb-6">
+              <p className="text-indigo-100 text-base mb-6">
                 Discover amazing properties rated by our community
               </p>
               

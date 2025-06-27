@@ -31,8 +31,8 @@ export default function BlogPage({ society }: BlogPageProps) {
       <div className="relative">
         <div className="w-full h-40 bg-gradient-to-r from-indigo-600 to-blue-600 flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-2">Blogs by GharConnect</h1>
-            <p className="text-indigo-100 text-lg">Expert insights for better community living</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Blogs by GharConnect</h1>
+            <p className="text-indigo-100 text-base">Expert insights for better community living</p>
           </div>
         </div>
       </div>
