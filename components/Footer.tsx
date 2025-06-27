@@ -43,7 +43,7 @@ export default function Footer() {
               )}
               {!isMainPage && (
                 <li>
-                  <Link href={`/vendor`} className="hover:text-indigo-600 transition-colors">Domestic Help & Driver Registration</Link>
+                  <Link href={`/vendor`} className="hover:text-indigo-600 transition-colors">Domestic Help & Driver Login</Link>
                 </li>
               )}
             </ul>
