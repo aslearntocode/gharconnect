@@ -5,6 +5,8 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { FiSearch, FiHome, FiTool, FiTruck, FiMapPin, FiStar, FiDollarSign } from 'react-icons/fi'
 import { FaBuilding } from 'react-icons/fa'
+import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 
 // Import actual vendor data
 import { vendors as plumberVendors } from '@/app/parel/data/services/plumber'
@@ -58,6 +60,97 @@ export default function SearchPage() {
 
   const currentSociety = getSocietyFromPath()
 
+  // Dynamic imports based on current society
+  const [vendorData, setVendorData] = useState<any>({
+    plumberVendors: [],
+    physicalTrainingVendors: [],
+    yogaVendors: [],
+    laundryVendors: [],
+    carpenterVendors: [],
+    electricianVendors: [],
+    doctors: [],
+    dairyVendors: [],
+    meatVendors: [],
+    vegetablesVendors: [],
+    fruitsVendors: [],
+    dryFruitsVendors: [],
+    pharmacyVendors: []
+  })
+
+  // Load vendor data for the current society
+  useEffect(() => {
+    const loadVendorData = async () => {
+      try {
+        // Dynamic imports based on current society
+        const [
+          { vendors: plumberVendors },
+          { vendors: physicalTrainingVendors },
+          { vendors: yogaVendors },
+          { vendors: laundryVendors },
+          { vendors: carpenterVendors },
+          { vendors: electricianVendors },
+          { doctors },
+          { vendors: dairyVendors },
+          { vendors: meatVendors },
+          { vendors: vegetablesVendors },
+          { vendors: fruitsVendors },
+          { vendors: dryFruitsVendors },
+          { vendors: pharmacyVendors }
+        ] = await Promise.all([
+          import(`@/app/${currentSociety}/data/services/plumber`),
+          import(`@/app/${currentSociety}/data/services/physical-training`),
+          import(`@/app/${currentSociety}/data/services/yoga`),
+          import(`@/app/${currentSociety}/data/services/laundry`),
+          import(`@/app/${currentSociety}/data/services/carpenter`),
+          import(`@/app/${currentSociety}/data/services/electrician`),
+          import(`@/app/${currentSociety}/data/services/doctors`),
+          import(`@/app/${currentSociety}/data/delivery/dairy`),
+          import(`@/app/${currentSociety}/data/delivery/meat`),
+          import(`@/app/${currentSociety}/data/delivery/vegetables`),
+          import(`@/app/${currentSociety}/data/delivery/fruits`),
+          import(`@/app/${currentSociety}/data/delivery/dry-fruits`),
+          import(`@/app/${currentSociety}/data/delivery/pharmacy`)
+        ])
+
+        setVendorData({
+          plumberVendors,
+          physicalTrainingVendors,
+          yogaVendors,
+          laundryVendors,
+          carpenterVendors,
+          electricianVendors,
+          doctors,
+          dairyVendors,
+          meatVendors,
+          vegetablesVendors,
+          fruitsVendors,
+          dryFruitsVendors,
+          pharmacyVendors
+        })
+      } catch (error) {
+        console.error('Error loading vendor data:', error)
+        // If data doesn't exist for this society, use empty arrays
+        setVendorData({
+          plumberVendors: [],
+          physicalTrainingVendors: [],
+          yogaVendors: [],
+          laundryVendors: [],
+          carpenterVendors: [],
+          electricianVendors: [],
+          doctors: [],
+          dairyVendors: [],
+          meatVendors: [],
+          vegetablesVendors: [],
+          fruitsVendors: [],
+          dryFruitsVendors: [],
+          pharmacyVendors: []
+        })
+      }
+    }
+
+    loadVendorData()
+  }, [currentSociety])
+
   // Fuzzy search function
   const fuzzySearch = (searchTerm: string, text: string): boolean => {
     if (!searchTerm || !text) return false
@@ -104,8 +197,8 @@ export default function SearchPage() {
     }
 
     // Add plumber vendors
-    plumberVendors.forEach(vendor => {
-      vendor.services?.forEach(service => {
+    vendorData.plumberVendors.forEach((vendor: any) => {
+      vendor.services?.forEach((service: any) => {
         results.push({
           id: `plumber-${idCounter++}`,
           title: `${vendor.name} - ${service.name}`,
@@ -123,8 +216,8 @@ export default function SearchPage() {
     })
 
     // Add physical training vendors
-    physicalTrainingVendors.forEach(vendor => {
-      vendor.products?.forEach(product => {
+    vendorData.physicalTrainingVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
         results.push({
           id: `pt-${idCounter++}`,
           title: `${vendor.name} - ${product.name}`,
@@ -142,8 +235,8 @@ export default function SearchPage() {
     })
 
     // Add yoga vendors
-    yogaVendors.forEach(vendor => {
-      vendor.products?.forEach(product => {
+    vendorData.yogaVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
         results.push({
           id: `yoga-${idCounter++}`,
           title: vendor.name,
@@ -161,8 +254,8 @@ export default function SearchPage() {
     })
 
     // Add laundry vendors
-    laundryVendors.forEach(vendor => {
-      vendor.services?.forEach(service => {
+    vendorData.laundryVendors.forEach((vendor: any) => {
+      vendor.services?.forEach((service: any) => {
         results.push({
           id: `laundry-${idCounter++}`,
           title: `${vendor.name} - ${service.name}`,
@@ -180,8 +273,8 @@ export default function SearchPage() {
     })
 
     // Add carpenter vendors
-    carpenterVendors.forEach(vendor => {
-      vendor.products?.forEach(product => {
+    vendorData.carpenterVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
         results.push({
           id: `carpenter-${idCounter++}`,
           title: `${vendor.name} - ${product.name}`,
@@ -199,8 +292,8 @@ export default function SearchPage() {
     })
 
     // Add electrician vendors
-    electricianVendors.forEach(vendor => {
-      vendor.services?.forEach(service => {
+    vendorData.electricianVendors.forEach((vendor: any) => {
+      vendor.services?.forEach((service: any) => {
         results.push({
           id: `electrician-${idCounter++}`,
           title: `${vendor.name} - ${service.name}`,
@@ -218,7 +311,7 @@ export default function SearchPage() {
     })
 
     // Add doctors
-    doctors.forEach(doctor => {
+    vendorData.doctors.forEach((doctor: any) => {
       results.push({
         id: `doctor-${idCounter++}`,
         title: doctor.name,
@@ -236,8 +329,8 @@ export default function SearchPage() {
 
     // Add delivery vendors
     // Dairy vendors
-    dairyVendors.forEach(vendor => {
-      vendor.products?.forEach(product => {
+    vendorData.dairyVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
         results.push({
           id: `dairy-${idCounter++}`,
           title: `${vendor.name} - ${product.name}`,
@@ -255,8 +348,8 @@ export default function SearchPage() {
     })
 
     // Meat vendors
-    meatVendors.forEach(vendor => {
-      vendor.products?.forEach(product => {
+    vendorData.meatVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
         results.push({
           id: `meat-${idCounter++}`,
           title: `${vendor.name} - ${product.name}`,
@@ -274,8 +367,8 @@ export default function SearchPage() {
     })
 
     // Vegetables vendors (includes Krishna Gupta Groceries)
-    vegetablesVendors.forEach(vendor => {
-      vendor.products?.forEach(product => {
+    vendorData.vegetablesVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
         results.push({
           id: `vegetables-${idCounter++}`,
           title: `${vendor.name} - ${product.name}`,
@@ -293,8 +386,8 @@ export default function SearchPage() {
     })
 
     // Fruits vendors
-    fruitsVendors.forEach(vendor => {
-      vendor.products?.forEach(product => {
+    vendorData.fruitsVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
         results.push({
           id: `fruits-${idCounter++}`,
           title: `${vendor.name} - ${product.name}`,
@@ -312,8 +405,8 @@ export default function SearchPage() {
     })
 
     // Dry fruits vendors
-    dryFruitsVendors.forEach(vendor => {
-      vendor.products?.forEach(product => {
+    vendorData.dryFruitsVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
         results.push({
           id: `dryfruits-${idCounter++}`,
           title: `${vendor.name} - ${product.name}`,
@@ -331,8 +424,8 @@ export default function SearchPage() {
     })
 
     // Pharmacy vendors
-    pharmacyVendors.forEach(vendor => {
-      vendor.products?.forEach(product => {
+    vendorData.pharmacyVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
         results.push({
           id: `pharmacy-${idCounter++}`,
           title: `${vendor.name} - ${product.name}`,
@@ -545,7 +638,7 @@ export default function SearchPage() {
     } else {
       setResults([])
     }
-  }, [query])
+  }, [query, vendorData])
 
   const performSearch = (searchQuery: string) => {
     setLoading(true)
@@ -636,147 +729,151 @@ export default function SearchPage() {
   const filteredResults = getFilteredResults()
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        {/* Search Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Search Results
-          </h1>
-          {query && (
-            <p className="text-gray-600">
-              Showing results for "{query}"
-            </p>
+    <>
+      <Header />
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 py-8">
+          {/* Search Header */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              Search Results
+            </h1>
+            {query && (
+              <p className="text-gray-600">
+                Showing results for "{query}"
+              </p>
+            )}
+          </div>
+
+          {/* Filters */}
+          {results.length > 0 && (
+            <div className="mb-6">
+              <div className="flex flex-wrap gap-2">
+                <button
+                  onClick={() => setActiveFilter('all')}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    activeFilter === 'all'
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+                  }`}
+                >
+                  All ({results.length})
+                </button>
+                {['building', 'service', 'delivery', 'rent', 'landlord', 'vendor', 'apartment'].map(type => {
+                  const count = results.filter(r => r.type === type).length
+                  if (count === 0) return null
+                  return (
+                    <button
+                      key={type}
+                      onClick={() => setActiveFilter(type)}
+                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
+                        activeFilter === type
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
+                      }`}
+                    >
+                      {getTypeIcon(type)}
+                      {getTypeLabel(type)} ({count})
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Loading State */}
+          {loading && (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+            </div>
+          )}
+
+          {/* No Results */}
+          {!loading && query && filteredResults.length === 0 && (
+            <div className="text-center py-12">
+              <FiSearch className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                No results found
+              </h3>
+              <p className="text-gray-600">
+                Try searching with different keywords or browse our categories
+              </p>
+            </div>
+          )}
+
+          {/* Search Results */}
+          {!loading && filteredResults.length > 0 && (
+            <div className="grid gap-6">
+              {filteredResults.map((result) => (
+                <Link
+                  key={result.id}
+                  href={result.url}
+                  className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      {getTypeIcon(result.type)}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-lg font-semibold text-gray-900 truncate">
+                          {result.title}
+                        </h3>
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          {getTypeLabel(result.type)}
+                        </span>
+                      </div>
+                      <p className="text-gray-600 mb-3">
+                        {result.description}
+                      </p>
+                      <div className="flex items-center gap-4 text-sm text-gray-500">
+                        {result.category && (
+                          <span className="flex items-center gap-1">
+                            <FiMapPin className="w-4 h-4" />
+                            {result.category}
+                          </span>
+                        )}
+                        {result.location && (
+                          <span className="flex items-center gap-1">
+                            <FiMapPin className="w-4 h-4" />
+                            {result.location}
+                          </span>
+                        )}
+                        {result.rating && (
+                          <span className="flex items-center gap-1">
+                            <FiStar className="w-4 h-4 text-yellow-400" />
+                            {result.rating}
+                          </span>
+                        )}
+                        {result.price && (
+                          <span className="flex items-center gap-1">
+                            <FiDollarSign className="w-4 h-4" />
+                            {result.price}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {/* Empty State */}
+          {!loading && !query && (
+            <div className="text-center py-12">
+              <FiSearch className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                Start searching
+              </h3>
+              <p className="text-gray-600">
+                Search for buildings, services, delivery options, or rental properties
+              </p>
+            </div>
           )}
         </div>
-
-        {/* Filters */}
-        {results.length > 0 && (
-          <div className="mb-6">
-            <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setActiveFilter('all')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  activeFilter === 'all'
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
-                }`}
-              >
-                All ({results.length})
-              </button>
-              {['building', 'service', 'delivery', 'rent', 'landlord', 'vendor', 'apartment'].map(type => {
-                const count = results.filter(r => r.type === type).length
-                if (count === 0) return null
-                return (
-                  <button
-                    key={type}
-                    onClick={() => setActiveFilter(type)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
-                      activeFilter === type
-                        ? 'bg-blue-600 text-white'
-                        : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
-                    }`}
-                  >
-                    {getTypeIcon(type)}
-                    {getTypeLabel(type)} ({count})
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-        )}
-
-        {/* Loading State */}
-        {loading && (
-          <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-          </div>
-        )}
-
-        {/* No Results */}
-        {!loading && query && filteredResults.length === 0 && (
-          <div className="text-center py-12">
-            <FiSearch className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              No results found
-            </h3>
-            <p className="text-gray-600">
-              Try searching with different keywords or browse our categories
-            </p>
-          </div>
-        )}
-
-        {/* Search Results */}
-        {!loading && filteredResults.length > 0 && (
-          <div className="grid gap-6">
-            {filteredResults.map((result) => (
-              <Link
-                key={result.id}
-                href={result.url}
-                className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0">
-                    {getTypeIcon(result.type)}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-lg font-semibold text-gray-900 truncate">
-                        {result.title}
-                      </h3>
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                        {getTypeLabel(result.type)}
-                      </span>
-                    </div>
-                    <p className="text-gray-600 mb-3">
-                      {result.description}
-                    </p>
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
-                      {result.category && (
-                        <span className="flex items-center gap-1">
-                          <FiMapPin className="w-4 h-4" />
-                          {result.category}
-                        </span>
-                      )}
-                      {result.location && (
-                        <span className="flex items-center gap-1">
-                          <FiMapPin className="w-4 h-4" />
-                          {result.location}
-                        </span>
-                      )}
-                      {result.rating && (
-                        <span className="flex items-center gap-1">
-                          <FiStar className="w-4 h-4 text-yellow-400" />
-                          {result.rating}
-                        </span>
-                      )}
-                      {result.price && (
-                        <span className="flex items-center gap-1">
-                          <FiDollarSign className="w-4 h-4" />
-                          {result.price}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-
-        {/* Empty State */}
-        {!loading && !query && (
-          <div className="text-center py-12">
-            <FiSearch className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">
-              Start searching
-            </h3>
-            <p className="text-gray-600">
-              Search for buildings, services, delivery options, or rental properties
-            </p>
-          </div>
-        )}
       </div>
-    </div>
+      <Footer />
+    </>
   )
 } 
