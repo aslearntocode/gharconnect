@@ -629,7 +629,7 @@ export default function Home() {
         <div className="relative bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-4">
             <div className="flex flex-col items-center mb-8">
-              <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700">
+              <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700 italic bg-indigo-50 px-8 md:px-16 py-2 rounded-lg w-full max-w-1xl">
               Connecting Residents, Businesses, and Property Owners Within a Location
               </div>
             </div>

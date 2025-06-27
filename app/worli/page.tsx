@@ -507,7 +507,7 @@ export default function Home() {
               {popularServicesCards.map((card) => {
                 const IconComponent = typeof card.icon === 'string' ? null : card.icon;
                 return (
-                  <div key={card.id} className="bg-white rounded-lg shadow-md p-2 md:p-4 border border-gray-200">
+                  <div key={card.id} className="bg-white rounded-xl shadow-md p-2 md:p-4 border border-gray-200">
                     <div className="text-center">
                       <div className={`w-8 h-8 md:w-12 md:h-12 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3`}>
                         {IconComponent ? (
@@ -539,7 +539,7 @@ export default function Home() {
         <div className="relative bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-4">
             <div className="flex flex-col items-center mb-8">
-              <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700">
+              <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700 italic bg-indigo-50 px-8 md:px-16 py-2 rounded-lg w-full max-w-1xl">
               Connecting Residents, Businesses, and Property Owners Within a Location            </div>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
