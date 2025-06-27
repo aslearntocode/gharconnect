@@ -273,7 +273,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
                         </div>
                       ))
                     ) : (
-                      <div className="flex justify-between items-center text-sm">
+                      <div className="flex justify-between items-center text-sm gap-4">
                         <span className="text-gray-600">{item.description}</span>
                         <span className="text-gray-900 font-medium">{formatPrice(item.price, item.unit)}</span>
                       </div>
