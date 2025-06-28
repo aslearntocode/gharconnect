@@ -388,7 +388,7 @@ export default function VendorDashboard() {
           <Card className="p-6">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
               <p className="text-blue-800 text-center font-medium">
-                Agar aap kuch extra income kamana chahte hain to yahan pe login karein aur apna free time use karein!
+                Agar aap kuch extra income kamana chahte hain ya phir permanent kaam dhoondh rahe hain to yahan pe login karein aur apna free time use karein!
               </p>
             </div>
             <h2 className="text-2xl font-bold mb-6 text-center">Vendor Dashboard</h2>
@@ -401,6 +401,9 @@ export default function VendorDashboard() {
             >
               Login
             </Button>
+            <p className="text-center text-gray-600 mt-4 text-sm">
+              Agar aapke pass email nahi hai to humme sampark karein +91 9321314553 pe aur hum aapki madad kar denge
+            </p>
           </Card>
         </main>
         <LoginModal 
