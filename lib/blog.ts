@@ -13,6 +13,88 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'mumbai-metro-2025-expansion',
+    title: 'Mumbai Metro 2025: New Lines, Expansions & What It Means for You',
+    excerpt: `Mumbai's metro network is in the fast lane — with several new routes either recently inaugurated or nearing completion, the system is expanding rapidly across the city and its suburbs. Here's a comprehensive update on the latest lines, timelines, and what it means for residents, commuters, and property owners.`,
+    content: `
+Mumbai's metro network is in the fast lane with several new routes either recently inaugurated or nearing completion, the system is expanding rapidly across the city and its suburbs. Here's a comprehensive update:
+
+🚇 **New & Expanded Metro Lines**
+
+### Line 3 – Aqua Line (Underground)
+- **Route:** Colaba ↔ SEEPZ via Cuffe Parade, BKC, Worli, Mahalaxmi, Mumbai Central, Dadar
+- **Length:** 33.5 km, 27 stations
+- **Status:**
+  - Phase 1 (Aarey → BKC) operational since Oct 2024
+  - Phase 2 (BKC → Acharya Atre Chowk, Worli) operational May 2025
+  - Remainder expected by mid‑2025
+- **Significance:** Mumbai's first fully underground line — connects key commercial hubs and airport stations
+
+### Line 2B – Yellow Line Extension
+- **Route:** D.N. Nagar (Andheri West) → Mandale (Mankhurd), with future extension to Chembur and Kurla ↔ Bandra ↔ Andheri West
+- **Length:** ~23.6 km, ~22 stations
+- **Status:**
+  - Civil work ~78% complete; first section (Mandale → Diamond Garden) opens by 2025, full stretch by 2026
+
+### Line 4 & 4A – Green Corridor (Wadala ↔ Thane ↔ Gaimukh)
+- **Route:** Wadala → Kasarvadavali (Line 4) → Gaimukh (Line 4A)
+- **Length:** Line 4 (~32 km, 32 stations); Line 4A (~2.7 km, 2 stations)
+- **Status:**
+  - Line 4 main corridor by Dec 2025; Line 4A by April 2025
+  - U-girders installed at Kapurbawdi station — trial runs expected before year-end
+
+### Line 6 – Pink Line (Elevated)
+- **Route:** Lokhandwala (Swami Samarth Nagar) → Vikhroli (via Jogeshwari SEEPZ)
+- **Length:** 15.18 km, 13 stations
+- **Status:** 78% civil work complete; targeted completion end‑2025
+
+### Line 7A – Red Extension (Airport Connector)
+- **Route:** Andheri East → CSMIA (T2), extension of Line 7
+- **Length:** ~3.2 km, 2–3 stations
+- **Status:** ~24% complete (tunneling underway); slated for operations in 2025
+
+### Line 9 – Dahisar East → Mira-Bhayandar
+- **Route:** Extension of Line 7 northwards
+- **Length:** ~10–11 km, 4–8 stations
+- **Status:** ~77%–100% complete; trial runs underway; launch expected mid‑2025
+
+### Line 12 – Orange Line (Extended Suburban Link)
+- **Route:** Kalyan → Taloja
+- **Length:** ~22 km, 19 stations
+- **Status:** Construction begun; target opening 2027
+
+### Line 8 – Gold Line (Airport Express)
+- **Route:** CSMIA (T2) → Navi Mumbai Airport (NMIA)
+- **Length:** ~35 km, ~5–7 stations
+- **Status:** Approved; DPR underway; to be built via PPP
+
+📅 **Key Timelines & Impact**
+
+| Year  | Lines Opening / Phases |
+|-------|-----------------------|
+| 2025  | Lines 3 (complete), 2B (partial/full), 4 & 4A, 6, 7A, 9 |
+| 2026  | Remainder of 2B, Line 12 (start), Line 5 (Thane‑Bhiwandi) |
+| 2027+ | Line 12 full, Line 8 (airport express), Thane Metro ring, further east‑west expansions |
+
+These developments will add ~37 km of metro lines in 2024–25, transforming travel for new areas like Mira Road, Thane, Gaimukh, Airport, BKC, and Worli.
+
+🧭 **Overall Outlook**
+- Interchanges across lines (e.g., SEEPZ, Kanjurmarg, Adarsh Nagar, Kapurbawdi) will drastically enhance network connectivity.
+- Travel time reductions are significant — some corridors see commuters saving up to 75%.
+- Coverage expansion moves into eastern, northern suburbs, and crucial airport links — Mumbai Metro is truly becoming a city-wide mobility spine.
+
+✅ **What This Means for You**
+- Enhance property values near new metro stations — key for real estate planning.
+- Commuters across Mira Road, Thane, Bhayandar, and airport areas will feel the biggest impact.
+- Plan your business or service expansion with this new access in mind.
+`,
+    author: 'GharConnect Team',
+    date: '2025-06-28',
+    readTime: '15 min read',
+    category: 'Mumbai Infrastructure',
+    image: '/metro/mumbai-metro-2025.jpg'
+  },
+  {
     slug: 'mumbai-tallest-buildings-2025',
     title: "Mumbai's Tallest Buildings: From 2000 to 2025 and What Lies Ahead",
     excerpt: "Explore how Mumbai's skyline has transformed from modest high-rises in 2000 to India's tallest skyscrapers in 2025, and discover the supertall towers set to redefine the city by 2028.",
