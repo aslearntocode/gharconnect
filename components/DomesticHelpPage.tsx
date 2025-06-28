@@ -10,6 +10,7 @@ import { VendorRating } from '@/components/VendorRating';
 import { useRouter, usePathname } from 'next/navigation';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import LoginModal from '@/components/LoginModal';
+import { CheckCircleIcon } from '@heroicons/react/24/solid';
 
 // Utility function to get current area from URL path
 const getCurrentArea = (pathname: string): string => {
@@ -87,7 +88,7 @@ export default function DomesticHelpPage() {
 
       const { data, error } = await supabase
         .from("vendor_weekly_availability")
-        .select("vendor_id, name, mobile_no, area, societies, date, services, morning, afternoon, evening")
+        .select("vendor_id, name, mobile_no, area, societies, date, services, morning, afternoon, evening, is_verified")
         .gte("date", todayDateString)
         .ilike("area", `%${currentArea}%`) // Filter for current area only
         .order("date", { ascending: true });
@@ -226,34 +227,39 @@ export default function DomesticHelpPage() {
 
   // Fetch permanent vendors
   useEffect(() => {
-    const fetchPermanentVendors = async () => {
+    const fetchSlots = async () => {
       const { data, error } = await supabase
-        .from('vendor_permanent_availability')
-        .select('*');
+        .from("vendor_permanent_availability")
+        .select("vendor_id, name, mobile_no, area, societies, services, slot_type, slot_start_time, slot_end_time, is_verified")
+        .ilike("area", `%${currentArea}%`)
+        .order("created_at", { ascending: false });
+
       if (!error && data) {
-        // Filter by current area after fetching all data
-        const filteredData = data.filter((row: any) => {
-          const vendorArea = (row.area || '').toLowerCase();
-          const currentAreaLower = currentArea.toLowerCase();
-          return vendorArea.includes(currentAreaLower) || currentAreaLower.includes(vendorArea);
-        });
-        
-        // Group by vendor_id, aggregate slots
+        // Group by vendor_id and organize slots
         const vendorMap: Record<string, any> = {};
-        filteredData.forEach((row: any) => {
+        data.forEach((row: any) => {
           if (!vendorMap[row.vendor_id]) {
             vendorMap[row.vendor_id] = {
-              ...row,
-              slots: {},
+              vendor_id: row.vendor_id,
+              name: row.name,
+              mobile_no: row.mobile_no,
+              area: row.area,
+              societies: row.societies,
+              services: row.services,
+              is_verified: row.is_verified,
+              slots: {}
             };
           }
-          vendorMap[row.vendor_id].slots[row.slot_type] = row;
+          vendorMap[row.vendor_id].slots[row.slot_type] = {
+            slot_start_time: row.slot_start_time,
+            slot_end_time: row.slot_end_time
+          };
         });
         setPermanentVendors(Object.values(vendorMap));
       }
     };
-    if (activeTab === 'permanent') fetchPermanentVendors();
-  }, [activeTab, supabase, currentArea]); // Re-fetch when area changes
+    fetchSlots();
+  }, [currentArea]);
 
   useEffect(() => {
     if (activeTab === 'permanent') {
@@ -359,7 +365,15 @@ export default function DomesticHelpPage() {
                 return (
                   <Card key={vendorId} className="p-4 border-2 border-gray-200 mb-6">
                     <div className="flex justify-between items-start mb-2">
-                      <span className="font-bold text-lg">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-lg">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</span>
+                        {vendor.is_verified && (
+                          <>
+                            <CheckCircleIcon className="w-5 h-5 text-green-600" title="Verified Vendor" />
+                            <span className="text-green-700 font-semibold ml-1">Verified</span>
+                          </>
+                        )}
+                      </div>
                     </div>
                     <div className="text-sm text-gray-600 mb-1">
                       Mobile: {!showNumberMap[vendorId] ? (
@@ -497,7 +511,15 @@ export default function DomesticHelpPage() {
               .map((vendor) => (
                 <Card key={vendor.vendor_id} className="p-4 border-2 border-gray-200 mb-6">
                   <div className="flex justify-between items-start mb-2">
-                    <span className="font-bold text-lg">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-lg">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</span>
+                      {vendor.is_verified && (
+                        <>
+                          <CheckCircleIcon className="w-5 h-5 text-green-600" title="Verified Vendor" />
+                          <span className="text-green-700 font-semibold ml-1">Verified</span>
+                        </>
+                      )}
+                    </div>
                   </div>
                   <div className="text-sm text-gray-600 mb-1">
                     Mobile: {!showNumberMap[vendor.vendor_id] ? (
