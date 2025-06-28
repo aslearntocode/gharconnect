@@ -35,7 +35,7 @@ export const properties: Property[] = [
     description: 'A perfect blend of luxury and nature, offering farm-to-table dining and outdoor activities just hours from Mumbai.',
     category: 'Within India',
     address: 'Guhaghar, Maharashtra 410201, India',
-    price: '₹8,500/night',
+    price: '₹7,500/night',
     rating: 4.5,
     reviewCount: 1,
     image: '/properties/ayra-farms-1.png',
@@ -48,19 +48,21 @@ export const properties: Property[] = [
     amenities: [
       'Organic Farm',
       'Plunge Pool',
-      'Adventure Sports',
+      // 'Adventure Sports',
       'Bonfire',
-      'Free WiFi'
+      'Free WiFi',
+      'Home Made Food'
     ],
     thingsToDo: [
       'Farm Tours',
-      'Trekking'
+      'Trekking',
+      'Milking the cow',
     ],
     highlights: [
       'Organic Farm Experience',
-      'Mountain Views',
-      'Adventure Activities',
-      'Luxury Accommodation'
+      'Beautiful Farm View',
+      'Luxury Accommodation',
+      'Home Made Food'
     ],
     contactInfo: {
       phone: '+91 860504 47365',
@@ -73,7 +75,7 @@ export const properties: Property[] = [
     },
     availability: 'Available year-round',
     propertyType: 'Farm Resort',
-    size: '25 acres'
+    size: '2.5 acres'
   }
 ];
 

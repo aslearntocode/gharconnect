@@ -552,9 +552,6 @@ function PropertyDetail() {
                   <button className="w-full bg-indigo-600 text-white py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
                     Book Now
                   </button>
-                  <button className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-50 transition-colors">
-                    Contact Host
-                  </button>
                 </div>
 
                 <div className="border-t pt-6">
