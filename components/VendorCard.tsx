@@ -18,6 +18,7 @@ interface VendorCardProps {
     services?: any[];
     products?: any[];
     mobile: string;
+    mobile_no: string;
     photo?: string;
     photos?: string[];
   };
@@ -207,10 +208,10 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
             </button>
           ) : (
             <a 
-              href={`tel:${vendor.mobile}`}
+              href={`tel:${vendor.mobile_no}`}
               className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3"
             >
-              {vendor.mobile}
+              {vendor.mobile_no}
             </a>
           )}
           {vendorRatings && (
