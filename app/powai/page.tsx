@@ -16,6 +16,7 @@ import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, F
 import DoctorsContainer from "@/components/DoctorsContainer"
 import TravelDiariesContainer from "@/components/TravelDiariesContainer"
 import Head from 'next/head'
+import VideoEmbed from '@/components/VideoEmbed'
 
 
 interface AllocationItem {
@@ -586,6 +587,29 @@ export default function Home() {
                     ))}
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Community Video Section */}
+        <div className="bg-gray-50 py-8 md:py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Spotlight</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Watch video to learn how to register as a vendor
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 gap-6">
+              {/* Featured Video */}
+              <div className="max-w-4xl mx-auto">
+                <VideoEmbed
+                  videoId="Yj-uofiMN7Q" // Your specific YouTube video
+                  title="Welcome to Powai - Community Introduction"
+                  className="w-full h-64 md:h-80"
+                />
               </div>
             </div>
           </div>
