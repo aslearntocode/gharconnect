@@ -17,8 +17,8 @@ interface VendorCardProps {
     name: string;
     services?: any[];
     products?: any[];
-    mobile: string;
-    mobile_no: string;
+    mobile?: string;
+    mobile_no?: string;
     photo?: string;
     photos?: string[];
   };
@@ -140,6 +140,8 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
     setIsLoginModalOpen(true);
   };
 
+  const mobileNumber = vendor.mobile_no || vendor.mobile;
+
   return (
     <>
       <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
@@ -208,10 +210,10 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
             </button>
           ) : (
             <a 
-              href={`tel:${vendor.mobile_no}`}
+              href={`tel:${mobileNumber}`}
               className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3"
             >
-              {vendor.mobile_no}
+              {mobileNumber}
             </a>
           )}
           {vendorRatings && (
