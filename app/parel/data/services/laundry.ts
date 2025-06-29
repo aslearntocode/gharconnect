@@ -26,7 +26,7 @@ export const vendors: Vendor[] = [
     name: 'Vijay',
     services: [{
       name: 'Wash & Fold',
-      description: 'Clothes washed and folded',
+      description: 'Clothes washed, ironed and folded',
       price: 'Call for price',
       unit: 'kg'
     }],
@@ -36,7 +36,7 @@ export const vendors: Vendor[] = [
     name: 'Santosh',
     services: [{
       name: 'Wash & Fold',
-      description: 'Clothes washed and folded',
+      description: 'Clothes washed, ironed and folded',
       price: 'Call for price',
       unit: 'kg'
     }],
@@ -46,9 +46,20 @@ export const vendors: Vendor[] = [
     name: 'Sukhmilal Rajak',
     services: [{
       name: 'Wash & Fold',
-      description: 'Clothes washed and folded',
+      description: 'Clothes washed, ironed and folded',
       price: 'Call for price',
       unit: 'kg'
     }],
-  mobile: '+91 9324326757'}
+  mobile: '+91 9324326757'
+},
+{
+  name: 'Rakesh',
+  services: [{
+    name: 'Wash & Fold',
+    description: 'Clothes washed, ironed and folded',
+    price: 'Call for price',
+    unit: 'kg'
+  }],
+  mobile: '+91 90041 93870'
+}
 ]; 
