@@ -13,6 +13,39 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'why-more-people-search-gharconnect',
+    title: 'Why More People Are Searching for Apartments on GharConnect.in',
+    excerpt: `GharConnect.in is redefining apartment search by focusing on community, trust, and end-to-end support. Discover why renters and buyers are choosing this people-first platform over generic property portals.`,
+    content: `
+When it comes to finding the perfect apartment, people aren't just looking for square footage and amenities anymore — they're searching for community, trust, and support. That's exactly what GharConnect.in is built around. As a growing and community-first platform, GharConnect is redefining how people discover and settle into homes.
+
+Here's why more and more renters and buyers are turning to GharConnect.in:
+
+🌱 **A Growing, Community-Focused Platform**
+Unlike generic property portals, GharConnect.in is designed with communities at its core. It's not just about listings — it's about bringing people together and creating a connected living experience. As an upcoming platform, it's the only one that puts resident involvement and neighborhood collaboration front and center.
+
+✅ **Verified Properties by Locals**
+What truly sets GharConnect apart is its property verification process. The team behind the platform lives within the very communities they serve, ensuring that every listing is authentic, visited, and reliable. This local-first approach removes the guesswork and reduces risk for tenants and buyers alike.
+
+🛠️ **End-to-End Community Support**
+Getting a lease ready often involves more than just signing papers. GharConnect supports you throughout the process — from connecting you with society management to ensuring all formalities are complete. It's like having a local friend guiding you every step of the way.
+
+🧰 **Built-in Vendor Ecosystem**
+Need a cleaner, carpenter, or internet setup after you move in? GharConnect doesn't leave you hanging. It offers access to a rich, vetted database of local vendors tailored to each community — making your move-in process smoother and your living experience more convenient from day one.
+
+📢 **Polls That Amplify Your Voice**
+One of GharConnect's standout features is its resident polls, which help collect and broadcast community sentiment. Whether it's about maintenance, safety, or upcoming changes, these polls give residents a say in decisions that affect their daily lives. It's community-driven living, powered by technology.
+
+## Final Thoughts
+GharConnect.in isn't just a property portal — it's a people-first platform built around trust, transparency, and togetherness. Whether you're house-hunting or planning a move, GharConnect helps you find more than just an apartment — it helps you find a community.
+`,
+    author: 'GharConnect Team',
+    date: '2025-06-29',
+    readTime: '8 min read',
+    category: 'Platform Updates',
+    image: '/blog/gharconnect-community-search.jpg'
+  },
+  {
     slug: 'mumbai-metro-2025-expansion',
     title: 'Mumbai Metro 2025: New Lines, Expansions & What It Means for You',
     excerpt: `Mumbai's metro network is in the fast lane — with several new routes either recently inaugurated or nearing completion, the system is expanding rapidly across the city and its suburbs. Here's a comprehensive update on the latest lines, timelines, and what it means for residents, commuters, and property owners.`,
