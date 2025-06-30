@@ -212,8 +212,8 @@ export default function RentPage() {
 
   // Filtering logic
   const filteredApartments = apartments.filter((apt) => {
-    // Building name (tower)
-    if (building && !apt.tower.toLowerCase().includes(building.toLowerCase())) return false;
+    // Building name (building_name)
+    if (building && !apt.building_name?.toLowerCase().includes(building.toLowerCase())) return false;
     // Min area
     if (minArea && apt.carpet_area < parseInt(minArea)) return false;
     // Max area
@@ -326,7 +326,9 @@ export default function RentPage() {
           >
             <option value="">Size (BHK)</option>
             <option value="2BHK">2 BHK</option>
+            <option value="2.5BHK">2.5 BHK</option>
             <option value="3BHK">3 BHK</option>
+            <option value="3.5BHK">3.5 BHK</option>
             <option value="4BHK">4 BHK</option>
           </select>
           <select
@@ -338,15 +340,6 @@ export default function RentPage() {
             <option value="Not">Not</option>
             <option value="Semi">Semi</option>
             <option value="Fully">Fully</option>
-          </select>
-          <select
-            className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 min-w-[120px]"
-            value={inMarket}
-            onChange={e => setInMarket(e.target.value)}
-          >
-            <option value="">In Market</option>
-            <option value="Y">Y</option>
-            <option value="N">N</option>
           </select>
         </div>
       </div>
