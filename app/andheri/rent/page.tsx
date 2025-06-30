@@ -326,7 +326,7 @@ export default function RentPage() {
                     <td className="px-4 py-3">{apt.available_from ? new Date(apt.available_from).toLocaleDateString() : '-'}</td>
                     <td className="px-4 py-3">
                       <Link
-                        href={`/parel/apply-for-rent/${apt.id}`}
+                        href={`/andheri/apply-for-rent/${apt.id}`}
                         onClick={(e) => e.stopPropagation()}
                         className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
                       >
@@ -386,7 +386,7 @@ export default function RentPage() {
                             </div>
                             <div className="mt-6 flex flex-col sm:flex-row gap-3">
                               <Link
-                                href={`/parel/apply-for-rent/${apt.id}`}
+                                href={`/andheri/apply-for-rent/${apt.id}`}
                                 onClick={(e) => e.stopPropagation()}
                                 className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
                               >
@@ -439,7 +439,7 @@ export default function RentPage() {
                       <div>{apt.available_from ? new Date(apt.available_from).toLocaleDateString() : '-'}</div>
                     </div>
                     <Link
-                      href={`/parel/apply-for-rent/${apt.id}`}
+                      href={`/andheri/apply-for-rent/${apt.id}`}
                       onClick={(e) => e.stopPropagation()}
                       className="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs inline-block"
                     >
@@ -559,7 +559,7 @@ export default function RentPage() {
               If you want to list your property for rent, then login and fill this form to reach potential tenants in your community or just WhatsApp us.
             </p>
             <a 
-              href="/parel/rent-apartment"
+              href="/andheri/rent-apartment"
               className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors duration-200"
             >
               List Your Property
