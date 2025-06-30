@@ -17,6 +17,7 @@ import DoctorsContainer from "@/components/DoctorsContainer"
 import TravelDiariesContainer from "@/components/TravelDiariesContainer"
 import Head from 'next/head'
 import VideoEmbed from '@/components/VideoEmbed'
+import Poll from '@/components/Poll'
 
 
 interface AllocationItem {
@@ -939,6 +940,9 @@ export default function Home() {
         </div>
         {/* Travel Diaries Container */}
         <TravelDiariesContainer />
+        
+        {/* Community Poll */}
+        <Poll location="powai" />
       </main>
     </>
   )
