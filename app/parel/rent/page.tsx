@@ -180,7 +180,10 @@ export default function RentPage() {
     return true;
   });
 
-  const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+  );
 
   async function getMediaUrlsForContactPhone(contact_phone: string): Promise<string[]> {
     // List all folders in rent-apartment-photos
@@ -425,7 +428,7 @@ export default function RentPage() {
                               <Lightbox
                                 open={lightboxOpen}
                                 close={() => setLightboxOpen(false)}
-                                slides={getMediaSlides(apt.images ?? [])}
+                                slides={getMediaSlides(apt.images ?? []) as any}
                                 index={lightboxIndex}
                                 plugins={[Thumbnails, Zoom]}
                                 render={{
@@ -564,7 +567,7 @@ export default function RentPage() {
                             <Lightbox
                               open={lightboxOpen}
                               close={() => setLightboxOpen(false)}
-                              slides={getMediaSlides(apt.images ?? [])}
+                              slides={getMediaSlides(apt.images ?? []) as any}
                               index={lightboxIndex}
                               plugins={[Thumbnails, Zoom]}
                               render={{
