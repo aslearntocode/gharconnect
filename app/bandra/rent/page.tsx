@@ -11,13 +11,19 @@ import SEOScript from '@/components/SEOScript';
 import Lottie from 'react-lottie-player';
 import { HiMagnifyingGlassCircle, HiFaceSmile, HiDocumentText } from 'react-icons/hi2';
 import { motion } from 'framer-motion';
+import { createClient } from '@supabase/supabase-js';
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 
 export default function RentPage() {
   // Data states
   const [apartments, setApartments] = useState<Apartment[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [apartmentImages, setApartmentImages] = useState<{ [key: string]: string[] }>({});
+  const [apartmentMedia, setApartmentMedia] = useState<{ [key: string]: string[] }>({});
 
   // Filter states
   const [building, setBuilding] = useState('');
@@ -29,37 +35,10 @@ export default function RentPage() {
   const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
   const [photoModal, setPhotoModal] = useState<{ images: string[]; idx: number } | null>(null);
   const [expandedMobileIdx, setExpandedMobileIdx] = useState<number | null>(null);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  // Function to get images for a specific mobile number
-  const getImagesForMobile = (mobileNumber: string): string[] => {
-    try {
-      // This is a client-side approach - we'll use a predefined list of common image names
-      // In a real implementation, you might want to use an API endpoint to get the actual files
-      const commonImageNames = [
-        '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg',
-        '1.png', '2.png', '3.png', '4.png', '5.png',
-        'main.jpg', 'main.png', 'front.jpg', 'front.png',
-        'living.jpg', 'living.png', 'bedroom.jpg', 'bedroom.png',
-        'kitchen.jpg', 'kitchen.png', 'bathroom.jpg', 'bathroom.png'
-      ];
-      
-      const images: string[] = [];
-      
-      // Try to load images for this mobile number
-      commonImageNames.forEach((imageName, index) => {
-        const imagePath = `/apartment-images/${mobileNumber}/${imageName}`;
-        // We'll add the path - the actual loading will happen when the image is rendered
-        images.push(imagePath);
-      });
-      
-      return images;
-    } catch (error) {
-      console.error('Error getting images for mobile:', mobileNumber, error);
-      return [];
-    }
-  };
-
-  // Fetch apartments from Supabase
+  // Fetch apartments from Supabase and their media manifests
   useEffect(() => {
     const fetchApartments = async () => {
       try {
@@ -77,15 +56,27 @@ export default function RentPage() {
           setError('Failed to load apartments');
         } else {
           setApartments(data || []);
-          
-          // Generate image paths for each apartment
-          const imagesMap: { [key: string]: string[] } = {};
-          data?.forEach(apt => {
-            if (apt.contact_phone) {
-              imagesMap[apt.id!] = getImagesForMobile(apt.contact_phone);
-            }
-          });
-          setApartmentImages(imagesMap);
+
+          // Fetch manifest for each apartment
+          const mediaMap: { [key: string]: string[] } = {};
+          await Promise.all(
+            (data || []).map(async (apt) => {
+              if (apt.contact_phone) {
+                try {
+                  const res = await fetch(`/apartment-images/landlord_${apt.contact_phone}/manifest.json`);
+                  if (res.ok) {
+                    const files: string[] = await res.json();
+                    mediaMap[apt.id!] = files.map(f => `/apartment-images/landlord_${apt.contact_phone}/${f}`);
+                  } else {
+                    mediaMap[apt.id!] = [];
+                  }
+                } catch (e) {
+                  mediaMap[apt.id!] = [];
+                }
+              }
+            })
+          );
+          setApartmentMedia(mediaMap);
         }
       } catch (err) {
         console.error('Error fetching apartments:', err);
@@ -98,9 +89,9 @@ export default function RentPage() {
     fetchApartments();
   }, []);
 
-  // Function to get images for a specific apartment
-  const getApartmentImages = (apartmentId: string): string[] => {
-    return apartmentImages[apartmentId] || [];
+  // Function to get media for a specific apartment
+  const getApartmentMedia = (apartmentId: string): string[] => {
+    return apartmentMedia[apartmentId] || [];
   };
 
   // Function to convert description text into bullet points
@@ -117,19 +108,39 @@ export default function RentPage() {
     return features;
   };
 
-  // Component for handling image loading with fallback
-  const ApartmentImage = ({ src, alt, className, onClick, style }: { 
+  // Component for handling image and video loading with fallback
+  const ApartmentMedia = ({ src, alt, className, onClick, style }: { 
     src: string; 
     alt: string; 
     className: string; 
     onClick?: () => void;
     style?: React.CSSProperties;
   }) => {
-    const [imageError, setImageError] = useState(false);
-    const [imageLoaded, setImageLoaded] = useState(false);
+    const [mediaError, setMediaError] = useState(false);
+    const [mediaLoaded, setMediaLoaded] = useState(false);
+    const isVideo = src.toLowerCase().endsWith('.mp4') || src.toLowerCase().endsWith('.mov') || src.toLowerCase().endsWith('.avi');
 
-    if (imageError) {
-      return null; // Don't render anything if image fails to load
+    if (mediaError) {
+      return null; // Don't render anything if media fails to load
+    }
+
+    if (isVideo) {
+      return (
+        <video
+          src={src}
+          className={className}
+          onClick={onClick}
+          onLoadedData={() => setMediaLoaded(true)}
+          onError={() => setMediaError(true)}
+          style={{ display: mediaLoaded ? 'block' : 'none', ...style }}
+          muted
+          loop
+          playsInline
+        >
+          <source src={src} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      );
     }
 
     return (
@@ -138,12 +149,66 @@ export default function RentPage() {
         alt={alt}
         className={className}
         onClick={onClick}
-        onLoad={() => setImageLoaded(true)}
-        onError={() => setImageError(true)}
-        style={{ display: imageLoaded ? 'block' : 'none', ...style }}
+        onLoad={() => setMediaLoaded(true)}
+        onError={() => setMediaError(true)}
+        style={{ display: mediaLoaded ? 'block' : 'none', ...style }}
       />
     );
   };
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+  );
+
+  async function getMediaUrlsForContactPhone(contact_phone: string): Promise<string[]> {
+    // List all folders in rent-apartment-photos
+    const { data: folders, error: listError } = await supabase
+      .storage
+      .from('rent-apartment-photos')
+      .list('', { limit: 100 });
+    if (listError) return [];
+    // Find the folder that ends with _{contact_phone}
+    const folder = folders.find(f => f.name.endsWith(`_${contact_phone}`));
+    if (!folder) return [];
+    // List all files in that folder
+    const { data: files, error: filesError } = await supabase
+      .storage
+      .from('rent-apartment-photos')
+      .list(folder.name, { limit: 100 });
+    if (filesError) return [];
+    // Get public URLs for each file
+    return files
+      .filter(f => !f.name.endsWith('.json'))
+      .map(f => supabase.storage.from('rent-apartment-photos').getPublicUrl(`${folder.name}/${f.name}`).data.publicUrl);
+  }
+
+  function ApartmentGallery({ contact_phone }: { contact_phone: string }) {
+    const [mediaUrls, setMediaUrls] = React.useState<string[]>([]);
+    React.useEffect(() => {
+      if (!contact_phone) return;
+      getMediaUrlsForContactPhone(contact_phone).then(setMediaUrls);
+    }, [contact_phone]);
+    return (
+      <div className="flex gap-2 overflow-x-auto md:w-1/3">
+        {mediaUrls.map((url, i) =>
+          url.match(/\.(mp4|mov|avi)$/i) ? (
+            <video key={i} src={url} className="w-32 h-24 object-cover rounded-lg border" controls />
+          ) : (
+            <img key={i} src={url} alt={`Property media ${i + 1}`} className="w-32 h-24 object-cover rounded-lg border" />
+          )
+        )}
+      </div>
+    );
+  }
+
+  // Helper to include both images and videos for the lightbox
+  const getMediaSlides = (media: string[] = []) =>
+    media.map(url =>
+      url.match(/\.(mp4|mov|avi)$/i)
+        ? { src: url, type: "video" }
+        : { src: url }
+    );
 
   // Filtering logic
   const filteredApartments = apartments.filter((apt) => {
@@ -222,9 +287,9 @@ export default function RentPage() {
           
           {/* SEO Content for Search Engines */}
           <div className="sr-only">
-            <p>Location: Parel</p>
+            <p>Location: Bandra</p>
             <p>Type: Rental</p>
-            <p>Price Range: ₹15,000 to ₹1,00,000+</p>
+            <p>Price Range: ₹30,000 to ₹3,00,000+</p>
             <p>Property Types: 1BHK, 2BHK, 3BHK, 4BHK</p>
           </div>
         </div>
@@ -339,17 +404,46 @@ export default function RentPage() {
                       <td colSpan={8} className="bg-gray-50 px-6 py-6">
                         <div className="flex flex-col md:flex-row gap-6">
                           {/* Images */}
-                          <div className="flex gap-2 overflow-x-auto md:w-1/3">
-                            {getApartmentImages(apt.id!).map((img, i) => (
-                              <ApartmentImage
-                                key={i}
-                                src={img}
-                                alt={`Property photo ${i+1}`}
-                                className="w-32 h-24 object-cover rounded-lg border cursor-pointer hover:shadow-lg"
-                                onClick={() => setPhotoModal({ images: getApartmentImages(apt.id!), idx: i })}
+                          {(apt.images ?? []).length > 0 && (
+                            <div className="flex gap-2 overflow-x-auto md:w-1/3">
+                              {(apt.images ?? []).map((url: string, i: number) =>
+                                url.match(/\.(mp4|mov|avi)$/i) ? (
+                                  <video
+                                    key={i}
+                                    src={url}
+                                    className="w-32 h-24 object-cover rounded-lg border cursor-pointer"
+                                    onClick={() => { setLightboxIndex(i); setLightboxOpen(true); }}
+                                    controls
+                                  />
+                                ) : (
+                                  <img
+                                    key={i}
+                                    src={url}
+                                    alt={`Property media ${i + 1}`}
+                                    className="w-32 h-24 object-cover rounded-lg border cursor-pointer"
+                                    onClick={() => { setLightboxIndex(i); setLightboxOpen(true); }}
+                                  />
+                                )
+                              )}
+                              <Lightbox
+                                open={lightboxOpen}
+                                close={() => setLightboxOpen(false)}
+                                slides={getMediaSlides(apt.images ?? []) as any}
+                                index={lightboxIndex}
+                                plugins={[Thumbnails, Zoom]}
+                                render={{
+                                  slide: ({ slide }) =>
+                                    (slide as any).type === "video" ? (
+                                      <video
+                                        src={slide.src}
+                                        controls
+                                        style={{ width: "100%", height: "100%", background: "#000" }}
+                                      />
+                                    ) : undefined,
+                                }}
                               />
-                            ))}
-                          </div>
+                            </div>
+                          )}
                           {/* Details */}
                           <div className="flex-1">
                             <div className="mb-2">
@@ -449,15 +543,42 @@ export default function RentPage() {
                   {expandedMobileIdx === idx && (
                     <div className="bg-gray-50 rounded-b-xl px-4 py-4">
                       <div className="flex gap-2 overflow-x-auto mb-2">
-                        {getApartmentImages(apt.id!).map((img, i) => (
-                          <ApartmentImage
-                            key={i}
-                            src={img}
-                            alt={`Property photo ${i+1}`}
-                            className="w-32 h-24 object-cover rounded-lg border cursor-pointer hover:shadow-lg"
-                            onClick={() => setPhotoModal({ images: getApartmentImages(apt.id!), idx: i })}
-                          />
-                        ))}
+                        {(apt.images ?? []).map((url: string, i: number) =>
+                          url.match(/\.(mp4|mov|avi)$/i) ? (
+                            <video
+                              key={i}
+                              src={url}
+                              className="w-32 h-24 object-cover rounded-lg border cursor-pointer"
+                              onClick={() => { setLightboxIndex(i); setLightboxOpen(true); }}
+                              controls
+                            />
+                          ) : (
+                            <img
+                              key={i}
+                              src={url}
+                              alt={`Property media ${i + 1}`}
+                              className="w-32 h-24 object-cover rounded-lg border cursor-pointer"
+                              onClick={() => { setLightboxIndex(i); setLightboxOpen(true); }}
+                            />
+                          )
+                        )}
+                        <Lightbox
+                          open={lightboxOpen}
+                          close={() => setLightboxOpen(false)}
+                          slides={getMediaSlides(apt.images ?? []) as any}
+                          index={lightboxIndex}
+                          plugins={[Thumbnails, Zoom]}
+                          render={{
+                            slide: ({ slide }) =>
+                              (slide as any).type === "video" ? (
+                                <video
+                                  src={slide.src}
+                                  controls
+                                  style={{ width: "100%", height: "100%", background: "#000" }}
+                                />
+                              ) : undefined,
+                          }}
+                        />
                       </div>
                       <div className="mb-2">
                         <span className="font-semibold">Description: </span>
@@ -572,7 +693,7 @@ export default function RentPage() {
       </div>
       
       {/* SEO Structured Data */}
-      <SEOScript location="Parel" type="rent" />
+      <SEOScript location="Bandra" type="rent" />
     </div>
   );
 }
