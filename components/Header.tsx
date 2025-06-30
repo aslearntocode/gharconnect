@@ -210,6 +210,14 @@ export default function Header() {
                       <span>Carpenter</span>
                     </Link>
                     <Link 
+                      href={`/${currentSociety}/services/tailor`}
+                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                      onClick={() => setIsCreditScoreDropdownOpen(false)}
+                    >
+                      <FiEdit className="w-5 h-5 text-pink-500" />
+                      <span>Tailor</span>
+                    </Link>
+                    <Link 
                       href={`/${currentSociety}/services/plumber`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
@@ -528,6 +536,13 @@ export default function Header() {
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Carpenter
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/tailor`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Tailor
                   </Link>
                   <Link 
                     href={`/${currentSociety}/services/plumber`}

@@ -12,7 +12,7 @@ import Header from "@/components/Header"
 import { getSupabaseClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { Dialog } from '@headlessui/react'
-import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarSignIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiUsers } from 'react-icons/fi'
+import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollar, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiUsers, FiScissors } from 'react-icons/fi'
 import DoctorsContainer from "@/components/DoctorsContainer"
 import TravelDiariesContainer from "@/components/TravelDiariesContainer"
 import Head from 'next/head'
@@ -960,6 +960,13 @@ export default function Home() {
                   <FiTool className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-yellow-600" />
                   <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Carpenter</h3>
                   <p className="text-xs md:text-sm text-gray-600 text-center">Woodwork, repairs, and furniture</p>
+                </div>
+              </Link>
+              <Link href="/bandra/services/tailor" className="block group">
+                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
+                  <FiScissors className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-purple-500" />
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Tailor</h3>
+                  <p className="text-xs md:text-sm text-gray-600 text-center">Clothing alterations & stitching</p>
                 </div>
               </Link>
               <Link href="/bandra/services/plumber" className="block group">

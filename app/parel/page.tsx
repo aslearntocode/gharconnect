@@ -962,6 +962,13 @@ export default function Home() {
                   <p className="text-xs md:text-sm text-gray-600 text-center">Woodwork, repairs, and furniture</p>
                 </div>
               </Link>
+              <Link href="/parel/services/tailor" className="block group">
+                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
+                  <FiEdit className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-pink-500" />
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Tailor</h3>
+                  <p className="text-xs md:text-sm text-gray-600 text-center">Tailoring and sewing</p>
+                </div>
+              </Link>
               <Link href="/parel/services/plumber" className="block group">
                 <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
                   <FiTool className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-blue-600" />
