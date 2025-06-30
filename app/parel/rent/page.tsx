@@ -398,6 +398,14 @@ export default function RentPage() {
                         >
                           Schedule a Visit
                         </Link>
+                        {/* <a
+                          href="https://wa.me/919321314553"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs inline-block"
+                        >
+                          WhatsApp
+                        </a> */}
                       </div>
                     </td>
                   </tr>
@@ -541,6 +549,14 @@ export default function RentPage() {
                     >
                       Schedule a Visit
                     </Link>
+                    <a
+                      href="https://wa.me/919321314553"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs inline-block"
+                    >
+                      WhatsApp
+                    </a>
                   </div>
                   {expandedMobileIdx === idx && (
                     <div className="bg-gray-50 rounded-b-xl px-4 py-4">
