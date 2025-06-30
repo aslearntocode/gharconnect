@@ -368,12 +368,15 @@ export default function DomesticHelpPage() {
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-lg">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</span>
                         {vendor.is_verified && (
-                          <>
-                            <CheckCircleIcon className="w-5 h-5 text-green-600" title="Verified Vendor" />
-                            <span className="text-green-700 font-semibold ml-1">Verified</span>
-                          </>
+                          <CheckCircleIcon className="w-5 h-5 text-green-600" title="Verified Vendor" />
                         )}
                       </div>
+                      <VendorRating
+                        vendorId={vendorId}
+                        vendorName={vendor.name}
+                        vendorType="service"
+                        onRatingAdded={() => {}}
+                      />
                     </div>
                     <div className="text-sm text-gray-600 mb-1">
                       Mobile: {!showNumberMap[vendorId] ? (
@@ -399,21 +402,15 @@ export default function DomesticHelpPage() {
                           : vendor.services}
                       </div>
                     )}
-                    <button
-                      className="mt-2 mb-2 px-4 py-1 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700 transition"
-                      onClick={() => setOpenVendorId(openVendorId === vendorId ? null : vendorId)}
-                    >
-                      {openVendorId === vendorId ? 'Hide Availability' : 'View Availability'}
-                    </button>
+                    <div className="flex gap-2 mt-2 mb-2">
+                      <button
+                        className="mt-2 mb-2 px-4 py-1 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700 transition"
+                        onClick={() => setOpenVendorId(openVendorId === vendorId ? null : vendorId)}
+                      >
+                        {openVendorId === vendorId ? 'Hide Availability' : 'View Availability'}
+                      </button>
+                    </div>
                     <div>
-                      <div className="flex justify-between items-start mb-2">
-                        <VendorRating
-                          vendorId={vendorId}
-                          vendorName={vendor.name}
-                          vendorType="service"
-                          onRatingAdded={() => {}}
-                        />
-                      </div>
                       {vendorRatings[vendorId] && (
                         <div className="flex items-center gap-1 text-yellow-500 mb-2">
                           <span className="text-sm font-medium">
@@ -517,12 +514,15 @@ export default function DomesticHelpPage() {
                       <div className="flex items-center gap-2">
                         <span className="font-bold text-lg">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</span>
                         {vendor.is_verified && (
-                          <>
-                            <CheckCircleIcon className="w-5 h-5 text-green-600" title="Verified Vendor" />
-                            <span className="text-green-700 font-semibold ml-1">Verified</span>
-                          </>
+                          <CheckCircleIcon className="w-5 h-5 text-green-600" title="Verified Vendor" />
                         )}
                       </div>
+                      <VendorRating
+                        vendorId={vendor.vendor_id}
+                        vendorName={vendor.name}
+                        vendorType="service"
+                        onRatingAdded={() => {}}
+                      />
                     </div>
                     <div className="text-sm text-gray-600 mb-1">
                       Mobile: {!showNumberMap[vendorKey] ? (
@@ -555,15 +555,15 @@ export default function DomesticHelpPage() {
                         </div>
                       ))}
                     </div>
+                    <div className="flex gap-2 mt-2 mb-2">
+                      <button
+                        className="mt-2 mb-2 px-4 py-1 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700 transition"
+                        onClick={() => setOpenVendorId(openVendorId === vendorKey ? null : vendorKey)}
+                      >
+                        {openVendorId === vendorKey ? 'Hide Availability' : 'View Availability'}
+                      </button>
+                    </div>
                     <div>
-                      <div className="flex justify-between items-start mb-2">
-                        <VendorRating
-                          vendorId={vendor.vendor_id}
-                          vendorName={vendor.name}
-                          vendorType="service"
-                          onRatingAdded={() => {}}
-                        />
-                      </div>
                       {vendorRatings[vendor.vendor_id] && (
                         <div className="flex items-center gap-1 text-yellow-500 mb-2">
                           <span className="text-sm font-medium">
