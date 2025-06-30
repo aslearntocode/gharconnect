@@ -61,5 +61,15 @@ export const vendors: Vendor[] = [
     unit: 'kg'
   }],
   mobile: '+91 90041 93870'
+},
+{
+  name: 'Washart Drycleaners',
+  services: [{
+    name: 'Dryclean & Steam Press',
+    description: 'Dryclean & Steam Press',
+    price: 'Call for price',
+    unit: 'kg'
+  }],
+  mobile: '+91 98670 69459'
 }
 ]; 
