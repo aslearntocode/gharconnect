@@ -433,7 +433,7 @@ export default function RentPage() {
                                 plugins={[Thumbnails, Zoom]}
                                 render={{
                                   slide: ({ slide }) =>
-                                    slide.type === "video" ? (
+                                    (slide as any).type === "video" ? (
                                       <video
                                         src={slide.src}
                                         controls
@@ -572,7 +572,7 @@ export default function RentPage() {
                               plugins={[Thumbnails, Zoom]}
                               render={{
                                 slide: ({ slide }) =>
-                                  slide.type === "video" ? (
+                                  (slide as any).type === "video" ? (
                                     <video
                                       src={slide.src}
                                       controls
