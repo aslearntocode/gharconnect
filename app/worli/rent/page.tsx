@@ -389,14 +389,16 @@ export default function RentPage() {
                     <td className="px-4 py-3">{apt.rent_amount ? `₹${apt.rent_amount.toLocaleString()}` : '-'}</td>
                     <td className="px-4 py-3">{apt.furnishing_status ? apt.furnishing_status.charAt(0).toUpperCase() + apt.furnishing_status.slice(1) : '-'}</td>
                     <td className="px-4 py-3">{apt.available_from ? new Date(apt.available_from).toLocaleDateString() : '-'}</td>
-                    <td className="px-4 py-3">
-                      <Link
-                        href={`/worli/apply-for-rent/${apt.id}`}
-                        onClick={(e) => e.stopPropagation()}
-                        className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
-                      >
-                        Schedule a Visit
-                      </Link>
+                    <td className="px-4 py-3 align-middle" style={{ minWidth: 180, maxWidth: 200, width: 180 }}>
+                      <div className="flex items-center justify-center w-full h-full">
+                        <Link
+                          href={`/worli/apply-for-rent/${apt.id}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
+                        >
+                          Schedule a Visit
+                        </Link>
+                      </div>
                     </td>
                   </tr>
                   {expandedIdx === idx && (
