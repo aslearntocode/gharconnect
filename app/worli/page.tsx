@@ -1019,7 +1019,7 @@ export default function Home() {
           </div>
         </div>
         {/* Travel Diaries Container */}
-        <TravelDiariesContainer />
+        {/* <TravelDiariesContainer /> */}
         
         {/* Community Poll */}
         <Poll location="worli" />

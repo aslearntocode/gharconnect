@@ -629,6 +629,21 @@ export default function RentPage() {
         </div>
       </main>
 
+      {/* WhatsApp Group Invite Section */}
+      <div className="w-full flex justify-center my-8">
+        <a
+          href="https://chat.whatsapp.com/HCGFi2XMl4rDwqlx3ieVZF"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 px-6 py-4 bg-green-500 hover:bg-green-600 text-white text-lg font-semibold rounded-2xl shadow-lg transition-colors duration-200 border-2 border-green-600"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-7 h-7">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 12h.008v.008H7.5V12zm4.5 0h.008v.008H12.0V12zm4.5 0h.008v.008H16.5V12zm-9 6.75A9 9 0 1112 21a8.963 8.963 0 01-4.5-1.25l-4.25 1.25 1.25-4.25A8.963 8.963 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9-4.03 9-9 9a8.963 8.963 0 01-4.5-1.25z" />
+          </svg>
+          Join the WhatsApp group to know about the latest property that gets listed on GharConnect
+        </a>
+      </div>
+
       {/* Informational Feature Containers */}
       <section className="py-8 bg-white">
         <div className="w-full max-w-6xl mx-auto flex flex-col gap-6 px-2 sm:px-4">

@@ -9,7 +9,7 @@ export interface Vendor {
   name: string;
   products: Product[];
   mobile: string;
-  photo?: string;
+  photo: string;
 }
 
 export interface MeatProduct {
@@ -36,7 +36,19 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'kg'
     }],
-    mobile: '+91 90000 00002'
+    mobile: '+91 90000 00002',
+    photo: ''
+  },
+  {
+    name: 'Figo Fresh Meat',
+    products: [{
+      name: 'Meat',
+      description: 'Fresh meat - chicken, mutton and eggs available',
+      price: 'Image Attached',
+      unit: 'per kg'
+    }],
+    mobile: '+91 98679 72116',
+    photo: '/images/vendors/Figo_Fresh_Meat.jpeg'
   }
 ];
 
