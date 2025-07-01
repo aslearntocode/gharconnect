@@ -961,6 +961,13 @@ export default function Home() {
                   <p className="text-xs md:text-sm text-gray-600 text-center">Pigeon net installation</p>
                 </div>
               </Link>
+              <Link href="/worli/services/movers-packers" className="block group">
+                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
+                  <FiTruck className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-blue-500" />
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Movers & Packers</h3>
+                  <p className="text-xs md:text-sm text-gray-600 text-center">Movers & Packers</p>
+                </div>
+              </Link>
               <Link href="/worli/services/physical-training" className="block group">
                 <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
                   <FiTrendingUp className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-indigo-500" />
