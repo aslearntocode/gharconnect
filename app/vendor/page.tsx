@@ -384,8 +384,16 @@ export default function VendorDashboard() {
     return (
       <div className="min-h-screen bg-gray-50">
         <VendorHeader />
-        <main className="max-w-lg mx-auto mt-10 p-6">
-          <Card className="p-6">
+        {/* HERO SECTION START */}
+        <section className="w-full bg-[#eaf3fa] py-8 rounded-b-3xl shadow-sm">
+          <div className="max-w-3xl mx-auto flex flex-col items-center justify-center px-4">
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 text-center leading-tight drop-shadow-sm">Zyaada Kamaayein aur Apne Availability Ke Hisaab Se Kaam Karein.</h1>
+            <p className="text-lg md:text-2xl text-gray-700 mb-8 text-center">Work within your known society so you always feel safe.</p>
+          </div>
+        </section>
+        {/* HERO SECTION END */}
+        <main className="max-w-xl mx-auto mt-1 p-6">
+          <Card className="p-8 rounded-3xl shadow-xl border border-gray-100">
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
               <p className="text-blue-800 text-center font-medium">
                 Agar aap kuch extra income kamana chahte hain ya phir permanent kaam dhoondh rahe hain to yahan pe login karein aur apna free time use karein!
