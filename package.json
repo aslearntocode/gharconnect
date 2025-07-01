@@ -71,6 +71,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.3.4",
     "@tailwindcss/typography": "^0.5.16",
     "@types/lodash": "^4.17.16",
     "@types/node": "^20",
