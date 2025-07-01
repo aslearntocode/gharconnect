@@ -357,7 +357,7 @@ export default function RentPage() {
                 <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Rent</th>
                 <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Furnished</th>
                 <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Available From</th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Contact</th>
+                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Details</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -384,13 +384,15 @@ export default function RentPage() {
                     <td className="px-4 py-3">{apt.available_from ? new Date(apt.available_from).toLocaleDateString() : '-'}</td>
                     <td className="px-4 py-3 align-middle" style={{ minWidth: 180, maxWidth: 200, width: 180 }}>
                       <div className="flex items-center justify-center w-full h-full">
-                        <Link
-                          href={`/bandra/apply-for-rent/${apt.id}`}
-                          onClick={(e) => e.stopPropagation()}
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setExpandedIdx(expandedIdx === idx ? null : idx);
+                          }}
                           className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
                         >
-                          Schedule a Visit
-                        </Link>
+                          Click Here
+                        </button>
                       </div>
                     </td>
                   </tr>
@@ -527,21 +529,17 @@ export default function RentPage() {
                       <div className="text-gray-500">Available</div>
                       <div>{apt.available_from ? new Date(apt.available_from).toLocaleDateString() : '-'}</div>
                     </div>
-                    <Link
-                      href={`/bandra/apply-for-rent/${apt.id}`}
-                      onClick={(e) => e.stopPropagation()}
-                      className="mt-2 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs inline-block"
-                    >
-                      Schedule a Visit
-                    </Link>
-                    <a
-                      href="https://wa.me/919321314553"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg font-semibold text-xs inline-block"
-                    >
-                      WhatsApp
-                    </a>
+                    {expandedMobileIdx !== idx && (
+                      <button
+                        className="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-lg font-semibold text-sm"
+                        onClick={e => {
+                          e.stopPropagation();
+                          setExpandedMobileIdx(idx);
+                        }}
+                      >
+                        For details click here
+                      </button>
+                    )}
                   </div>
                   {expandedMobileIdx === idx && (
                     <div className="bg-gray-50 rounded-b-xl px-4 py-4">
@@ -605,6 +603,23 @@ export default function RentPage() {
                           </ul>
                         </div>
                       )}
+                      <div className="mt-4 flex flex-col gap-2">
+                        <Link
+                          href={`/bandra/apply-for-rent/${apt.id}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-lg font-semibold text-sm text-center"
+                        >
+                          Schedule a Visit
+                        </Link>
+                        <a
+                          href="https://wa.me/919321314553"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg font-semibold text-sm text-center"
+                        >
+                          WhatsApp
+                        </a>
+                      </div>
                     </div>
                   )}
                 </div>
