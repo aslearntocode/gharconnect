@@ -1,9 +1,10 @@
-import { supabase } from './supabaseClient';
+import { getSupabaseClient } from './supabase';
 import { Apartment } from '@/types/apartment';
 import { ApartmentFormData } from './apartment-schema';
 
 export async function createApartment(apartmentData: ApartmentFormData, userId: string, location?: string): Promise<{ success: boolean; data?: Apartment; error?: string }> {
   try {
+    const supabase = await getSupabaseClient();
     const { data, error } = await supabase
       .from('apartments')
       .insert({
@@ -29,6 +30,7 @@ export async function createApartment(apartmentData: ApartmentFormData, userId: 
 
 export async function getApartmentsByUser(userId: string): Promise<{ success: boolean; data?: Apartment[]; error?: string }> {
   try {
+    const supabase = await getSupabaseClient();
     const { data, error } = await supabase
       .from('apartments')
       .select('*')
@@ -49,6 +51,7 @@ export async function getApartmentsByUser(userId: string): Promise<{ success: bo
 
 export async function getAllActiveApartments(): Promise<{ success: boolean; data?: Apartment[]; error?: string }> {
   try {
+    const supabase = await getSupabaseClient();
     const { data, error } = await supabase
       .from('apartments')
       .select('*')
@@ -69,6 +72,7 @@ export async function getAllActiveApartments(): Promise<{ success: boolean; data
 
 export async function getApartmentById(id: string): Promise<{ success: boolean; data?: Apartment; error?: string }> {
   try {
+    const supabase = await getSupabaseClient();
     const { data, error } = await supabase
       .from('apartments')
       .select('*')
@@ -89,6 +93,7 @@ export async function getApartmentById(id: string): Promise<{ success: boolean; 
 
 export async function updateApartment(id: string, apartmentData: Partial<ApartmentFormData>): Promise<{ success: boolean; data?: Apartment; error?: string }> {
   try {
+    const supabase = await getSupabaseClient();
     const { data, error } = await supabase
       .from('apartments')
       .update(apartmentData)
@@ -110,6 +115,7 @@ export async function updateApartment(id: string, apartmentData: Partial<Apartme
 
 export async function deleteApartment(id: string): Promise<{ success: boolean; error?: string }> {
   try {
+    const supabase = await getSupabaseClient();
     const { error } = await supabase
       .from('apartments')
       .delete()
@@ -137,6 +143,7 @@ export async function searchApartments(filters: {
   parkingAvailable?: boolean;
 }): Promise<{ success: boolean; data?: Apartment[]; error?: string }> {
   try {
+    const supabase = await getSupabaseClient();
     let query = supabase
       .from('apartments')
       .select('*')
