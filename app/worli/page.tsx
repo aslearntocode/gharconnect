@@ -209,6 +209,18 @@ export default function Home() {
       buttonTextMobile: 'Repair'
     },
     {
+      id: 'physical-training',
+      title: 'Physical Training',
+      icon: FiTrendingUp,
+      iconBg: 'bg-orange-100',
+      iconColor: 'text-orange-600',
+      buttonBg: 'bg-orange-600',
+      buttonHover: 'hover:bg-orange-700',
+      href: '/worli/services/physical-training',
+      buttonText: 'Find Trainers',
+      buttonTextMobile: 'Trainers'
+    },
+    {
       id: 'neighbor-services',
       title: 'Neighbor Service Providers',
       icon: FiUsers,
@@ -491,19 +503,21 @@ export default function Home() {
                     const IconComponent = typeof card.icon === 'string' ? null : card.icon;
                     return (
                       <div key={card.id} className="w-1/2 flex-shrink-0 px-2">
-                        <div className="bg-white rounded-lg shadow-md p-2 border border-gray-200">
-                          <div className="text-center">
-                            <div className={`w-8 h-8 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-2`}>
-                              {IconComponent ? (
-                                <IconComponent className={`w-4 h-4 ${card.iconColor}`} />
-                              ) : (
-                                <span className="text-2xl">{card.icon as string}</span>
-                              )}
+                        <div className="bg-white rounded-lg shadow-md p-2 border border-gray-200 h-full flex flex-col">
+                          <div className="text-center flex-1 flex flex-col justify-between">
+                            <div>
+                              <div className={`w-8 h-8 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-2`}>
+                                {IconComponent ? (
+                                  <IconComponent className={`w-4 h-4 ${card.iconColor}`} />
+                                ) : (
+                                  <span className="text-2xl">{card.icon as string}</span>
+                                )}
+                              </div>
+                              <h3 className="text-xs font-bold text-gray-900 mb-1">{card.title}</h3>
                             </div>
-                            <h3 className="text-xs font-bold text-gray-900 mb-1">{card.title}</h3>
                             <a 
                               href={card.href}
-                              className={`inline-flex items-center px-2 py-1 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-xs`}
+                              className={`inline-flex items-center px-2 py-1 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-xs mt-auto`}
                             >
                               {card.buttonTextMobile}
                             </a>
