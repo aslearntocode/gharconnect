@@ -47,7 +47,7 @@ export const vendors: Vendor[] = [
       unit: 'session'
     }],
     mobile: '+91 97690 61443',
-    photo: '/images/vendors/Chanchal_PT.jpeg',
+    photo: '/images/vendors/Chanchal.jpeg',
     social_media: 'https://www.instagram.com/share/BBXf-y3bQP'
   }
 ];
