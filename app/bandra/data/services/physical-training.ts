@@ -10,6 +10,7 @@ export interface Vendor {
   products: Product[];
   mobile: string;
   photo: string;
+  social_media: string;
 }
 
 export const vendors: Vendor[] = [

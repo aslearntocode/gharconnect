@@ -10,6 +10,7 @@ export interface Vendor {
   products: Product[];
   mobile: string;
   photo: string;
+  social_media: string;
 }
 
 export const vendors: Vendor[] = [
@@ -22,7 +23,8 @@ export const vendors: Vendor[] = [
       unit: 'session'
     }],
     mobile: '+91 9920458339',
-    photo: '/images/vendors/Subodh_PT.jpeg'
+    photo: '/images/vendors/Subodh_PT.jpeg',
+    social_media: ''
   },
   {
     name: 'Ashok',
@@ -33,6 +35,19 @@ export const vendors: Vendor[] = [
       unit: 'session'
     }],
     mobile: '+91 9820886804',
-    photo: '/images/vendors/Ashok_PT.jpeg'
+    photo: '/images/vendors/Ashok_PT.jpeg',
+    social_media: ''
+  },
+  {
+    name: 'Chanchal',
+    products: [{
+      name: 'Personal Training',
+      description: 'Personal Training Indoor and Outdoor',
+      price: 'Call for price',
+      unit: 'session'
+    }],
+    mobile: '+91 97690 61443',
+    photo: '/images/vendors/Chanchal_PT.jpeg',
+    social_media: 'https://www.instagram.com/share/BBXf-y3bQP'
   }
 ];

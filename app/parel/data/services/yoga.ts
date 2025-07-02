@@ -10,6 +10,7 @@ export interface Vendor {
   products: Product[];
   mobile: string;
   photos: string[];
+  social_media: string;
 }
 
 export const vendors: Vendor[] = [
@@ -25,6 +26,7 @@ export const vendors: Vendor[] = [
     photos: [
       '/images/vendors/Padma_Yoga1.jpeg',
       '/images/vendors/Padma_Yoga2.jpeg'
-    ]
+    ],
+    social_media: ''
   }
 ]; 

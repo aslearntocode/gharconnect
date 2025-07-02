@@ -1,6 +1,6 @@
 'use client';
 
-import { FiChevronDown, FiChevronUp, FiPhone, FiX, FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { FiChevronDown, FiChevronUp, FiPhone, FiX, FiChevronLeft, FiChevronRight, FiGlobe } from 'react-icons/fi';
 import { VendorRating } from './VendorRating';
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -21,6 +21,7 @@ interface VendorCardProps {
     mobile_no?: string;
     photo?: string;
     photos?: string[];
+    social_media?: string;
   };
   type: 'service' | 'delivery';
 }
@@ -216,6 +217,20 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
               {mobileNumber}
             </a>
           )}
+          
+          {/* Social Media Handle */}
+          {vendor.social_media && vendor.social_media.trim() !== '' && (
+            <a 
+              href={vendor.social_media}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-green-600 text-sm font-medium hover:text-green-700 mb-3"
+            >
+              <FiGlobe className="w-4 h-4" />
+              <span>View Social</span>
+            </a>
+          )}
+          
           {vendorRatings && (
             <div className="flex items-center gap-1 text-yellow-500 mb-3">
               <span className="text-sm font-medium">
