@@ -499,6 +499,18 @@ export default function Home() {
       href: '/parel/services/laptop-repair',
       buttonText: 'Get Laptop Fixed',
       buttonTextMobile: 'Repair'
+    },
+    {
+      id: 'neighbor-services',
+      title: 'Neighbor Service Providers',
+      icon: FiUsers,
+      iconBg: 'bg-indigo-100',
+      iconColor: 'text-indigo-600',
+      buttonBg: 'bg-indigo-600',
+      buttonHover: 'hover:bg-indigo-700',
+      href: '/parel/home-service-provider',
+      buttonText: 'View Neighbors',
+      buttonTextMobile: 'View'
     }
   ];
 
@@ -595,26 +607,25 @@ export default function Home() {
             </div>
 
             {/* Desktop Grid */}
-            <div className="hidden md:grid md:grid-cols-4 gap-2 max-w-5xl mx-auto">
+            <div className="hidden md:flex md:overflow-x-auto md:gap-4 max-w-5xl mx-auto pb-4">
               {popularServicesCards.map((card) => {
                 const IconComponent = typeof card.icon === 'string' ? null : card.icon;
                 return (
-                  <div key={card.id} className="bg-white rounded-lg shadow-md p-2 md:p-4 border border-gray-200">
+                  <div key={card.id} className="bg-white rounded-xl shadow-md p-4 border border-gray-200 flex-shrink-0 w-64">
                     <div className="text-center">
-                      <div className={`w-8 h-8 md:w-12 md:h-12 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-2 md:mb-3`}>
+                      <div className={`w-12 h-12 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-3`}>
                         {IconComponent ? (
-                          <IconComponent className={`w-4 h-4 md:w-6 md:h-6 ${card.iconColor}`} />
+                          <IconComponent className={`w-6 h-6 ${card.iconColor}`} />
                         ) : (
-                          <span className="text-2xl md:text-3xl">{card.icon as string}</span>
+                          <span className="text-3xl">{card.icon as string}</span>
                         )}
                       </div>
-                      <h3 className="text-xs md:text-lg font-bold text-gray-900 mb-1">{card.title}</h3>
+                      <h3 className="text-sm font-bold text-gray-900 mb-1">{card.title}</h3>
                       <a 
                         href={card.href}
-                        className={`inline-flex items-center px-2 py-1 md:px-4 md:py-2 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-xs`}
+                        className={`inline-flex items-center px-3 py-1.5 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-sm`}
                       >
-                        <span className="hidden sm:inline">{card.buttonText}</span>
-                        <span className="sm:hidden">{card.buttonTextMobile}</span>
+                        {card.buttonText}
                       </a>
                     </div>
                   </div>
