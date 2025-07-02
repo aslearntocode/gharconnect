@@ -55,5 +55,15 @@ export const vendors: Vendor[] = [
       unit: 'per month'
     }],
     mobile: '+91 9819735090'
+  },
+  {
+    name: 'Sushil - Taekwondo Player',
+    services: [{
+      name: 'Taekwondo Classes',
+      description: 'Taekwondo classes for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 85918 61692'
   }
 ]; 
