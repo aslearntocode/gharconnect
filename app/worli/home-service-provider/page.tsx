@@ -6,12 +6,15 @@ import Header from '@/components/Header';
 import { FiSearch, FiStar, FiMapPin, FiPhone, FiMail, FiUser, FiAward, FiMusic, FiCamera, FiEdit3, FiCode, FiImage, FiBookOpen, FiHeart, FiTrendingUp } from 'react-icons/fi';
 import { Talent, TalentCategory } from '@/types/talent';
 import { getProvidersBySociety, searchProviders, getProvidersByCategory } from '@/data/home-service-providers';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export default function WorliNeighborhoodServiceProviderPage() {
   const [talents, setTalents] = useState<Talent[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTalents, setFilteredTalents] = useState<Talent[]>([]);
+  const [ratingsMap, setRatingsMap] = useState<Record<string, { avg: string, count: number }>>({});
+  const supabase = createClientComponentClient();
 
   useEffect(() => {
     fetchTalents();
@@ -21,12 +24,16 @@ export default function WorliNeighborhoodServiceProviderPage() {
     filterTalents();
   }, [talents, searchTerm]);
 
+  useEffect(() => {
+    if (talents.length > 0) {
+      fetchRatings();
+    }
+  }, [talents]);
+
   const fetchTalents = async () => {
     try {
       setLoading(true);
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 500));
-      
       const worliTalents = getProvidersBySociety('worli');
       setTalents(worliTalents);
     } catch (error) {
@@ -34,6 +41,27 @@ export default function WorliNeighborhoodServiceProviderPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const fetchRatings = async () => {
+    const ids = talents.map(t => t.id);
+    const { data, error } = await supabase
+      .from('reviews')
+      .select('card_id, rating')
+      .in('card_id', ids);
+    if (error) {
+      console.error('Error fetching ratings:', error);
+      return;
+    }
+    // Calculate avg/count per provider
+    const map: Record<string, { avg: string, count: number }> = {};
+    ids.forEach(id => {
+      const reviews = (data || []).filter(r => r.card_id === id);
+      const count = reviews.length;
+      const avg = count > 0 ? (reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / count).toFixed(1) : '';
+      map[id] = { avg, count };
+    });
+    setRatingsMap(map);
   };
 
   const filterTalents = () => {
@@ -115,9 +143,15 @@ export default function WorliNeighborhoodServiceProviderPage() {
                           {talent.name}
                         </h3>
                         <div className="flex items-center gap-1 text-yellow-500">
-                          <FiStar className="w-4 h-4 fill-current" />
-                          <span className="text-sm font-medium">{talent.rating}</span>
-                          <span className="text-xs text-gray-500">({talent.review_count})</span>
+                          {ratingsMap[talent.id]?.count > 0 ? (
+                            <>
+                              <FiStar className="w-4 h-4 fill-current" />
+                              <span className="text-sm font-medium">{ratingsMap[talent.id].avg}</span>
+                              <span className="text-xs text-gray-500">({ratingsMap[talent.id].count})</span>
+                            </>
+                          ) : (
+                            <span className="text-xs text-gray-500 italic">Not Rated Yet</span>
+                          )}
                         </div>
                       </div>
                       

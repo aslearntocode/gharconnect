@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import { FiStar, FiMapPin, FiPhone, FiMail, FiChevronLeft, FiHeart, FiShare2, FiZoomIn, FiX, FiChevronRight, FiChevronLeft as FiChevronLeftIcon } from 'react-icons/fi';
+import { VendorRating } from '@/components/VendorRating';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import Footer from '@/components/Footer';
 
 const HomeServiceProviderPage = ({ params }: { params: any }) => {
   const router = useRouter();
@@ -16,16 +19,19 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1);
+  const supabase = createClientComponentClient();
 
   const categories = {
-    music: 'Music & Arts',
-    photography: 'Photography',
-    writing: 'Writing & Content',
-    tech: 'Technology',
-    design: 'Design & Creative',
-    education: 'Education & Tutoring',
-    fitness: 'Health & Fitness',
-    business: 'Business & Consulting',
+    'artist': 'Artist',
+    'musician': 'Musician',
+    'lawyer': 'Lawyer',
+    'consultant': 'Consultant',
+    'teacher': 'Teacher',
+    'trainer': 'Trainer',
+    'designer': 'Designer',
+    'photographer': 'Photographer',
+    'cook': 'Cook',
+    'other': 'Other'
   };
 
   const societyNames = {
@@ -39,39 +45,45 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
     juhu: 'Juhu',
   };
 
+  const fetchReviews = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('reviews')
+        .select('*')
+        .eq('card_id', id)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching reviews:', error);
+        return;
+      }
+
+      setReviews(data || []);
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    }
+  };
+
   useEffect(() => {
-    setLoading(true);
-    const talentData = getProviderById(id);
-    if (!talentData) {
-      router.push(`/${society}/home-service-provider`);
-      return;
-    }
-    if (talentData.society !== society) {
-      router.push(`/${talentData.society}/home-service-provider/${id}`);
-      return;
-    }
-    setTalent(talentData);
-    setReviews([
-      {
-        id: '1',
-        talent_id: id,
-        user_name: 'Rahul Kumar',
-        rating: 5,
-        comment: 'Excellent service! Very professional and skilled.',
-        created_at: '2024-01-20T10:00:00Z',
-        updated_at: '2024-01-20T10:00:00Z',
-      },
-      {
-        id: '2',
-        talent_id: id,
-        user_name: 'Priya Singh',
-        rating: 4,
-        comment: 'Great experience, highly recommended!',
-        created_at: '2024-01-18T14:30:00Z',
-        updated_at: '2024-01-18T14:30:00Z',
-      },
-    ]);
-    setLoading(false);
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        const providerData = getProviderById(id);
+        if (providerData) {
+          setTalent(providerData);
+          await fetchReviews();
+        } else {
+          router.push(`/${society}/home-service-provider`);
+        }
+      } catch (error) {
+        console.error('Error loading provider data:', error);
+        router.push(`/${society}/home-service-provider`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
   }, [id, society, router]);
 
   const getBackLink = () => {
@@ -152,6 +164,11 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, [isModalOpen]);
 
+  const reviewCount = reviews.length;
+  const avgRating = reviewCount > 0
+    ? (reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviewCount).toFixed(1)
+    : null;
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -205,9 +222,15 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
                   <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
                     <h1 className="text-3xl font-bold text-gray-900 mr-2">{talent.name}</h1>
                     <div className="flex items-center gap-2 mt-2 sm:mt-0">
-                      <FiStar className="w-5 h-5 text-yellow-500 fill-current" />
-                      <span className="font-semibold text-lg text-gray-900">{talent.rating}</span>
-                      <span className="text-gray-500 text-base">({talent.review_count} reviews)</span>
+                      {reviewCount > 0 ? (
+                        <>
+                          <FiStar className="w-5 h-5 text-yellow-500 fill-current" />
+                          <span className="font-semibold text-lg text-gray-900">{avgRating}</span>
+                          <span className="text-gray-500 text-base">({reviewCount} review{reviewCount > 1 ? 's' : ''})</span>
+                        </>
+                      ) : (
+                        <span className="text-gray-500 text-base italic">Not Rated Yet</span>
+                      )}
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-2 mt-1">
@@ -292,34 +315,56 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
                 </div>
               )}
               {activeTab === 'reviews' && (
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-6 pt-2 pb-2 mt-4">Reviews</h3>
-                  {reviews.length > 0 ? (
+                <div className="space-y-6">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-xl font-semibold text-gray-900">Reviews</h3>
+                    <VendorRating 
+                      vendorId={id} 
+                      vendorName={talent.name} 
+                      vendorType="service"
+                      onRatingAdded={fetchReviews}
+                    />
+                  </div>
+                  
+                  {reviews.length === 0 ? (
+                    <div className="text-center py-8">
+                      <p className="text-gray-500">No reviews yet. Be the first to review!</p>
+                    </div>
+                  ) : (
                     <div className="space-y-4">
                       {reviews.map((review) => (
-                        <div key={review.id} className="border border-gray-200 rounded-lg p-4">
-                          <div className="flex items-center gap-2 mb-2">
-                            <div className="flex">
-                              {[...Array(5)].map((_, i) => (
-                                <FiStar
-                                  key={i}
-                                  className={`w-4 h-4 ${
-                                    i < review.rating ? 'text-yellow-500 fill-current' : 'text-gray-300'
-                                  }`}
-                                />
-                              ))}
+                        <div key={review.id} className="bg-gray-50 rounded-lg p-4">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center space-x-2">
+                              <div className="flex items-center">
+                                {[...Array(10)].map((_, i) => (
+                                  <FiStar
+                                    key={i}
+                                    className={`w-4 h-4 ${
+                                      i < review.rating
+                                        ? 'text-yellow-400 fill-current'
+                                        : 'text-gray-300'
+                                    }`}
+                                  />
+                                ))}
+                              </div>
+                              <span className="text-sm font-medium text-gray-900">
+                                {review.rating}/10
+                              </span>
+                              {review.user_name && (
+                                <span className="text-sm text-gray-600">by {review.user_name}</span>
+                              )}
                             </div>
-                            <span className="text-sm text-gray-500">{review.user_name}</span>
+                            <span className="text-xs text-gray-500">
+                              {new Date(review.created_at).toLocaleDateString()}
+                            </span>
                           </div>
-                          <p className="text-gray-700">{review.comment}</p>
-                          <p className="text-xs text-gray-500 mt-2">
-                            {new Date(review.created_at).toLocaleDateString()}
-                          </p>
+                          {review.comment && (
+                            <p className="text-gray-700 text-sm">{review.comment}</p>
+                          )}
                         </div>
                       ))}
                     </div>
-                  ) : (
-                    <p className="text-gray-500">No reviews yet.</p>
                   )}
                 </div>
               )}
@@ -431,6 +476,7 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 };
