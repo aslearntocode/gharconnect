@@ -1,3 +1,5 @@
+"use client";
+
 import { Talent } from '@/types/talent';
 import { getProvidersBySociety, searchProviders } from '@/data/home-service-providers';
 import { useState, useEffect } from 'react';
