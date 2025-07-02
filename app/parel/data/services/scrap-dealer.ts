@@ -35,4 +35,26 @@ export const vendors: Vendor[] = [
     mobile: '+91 70453 78869',
     social_media: ''
   },
+  {
+    name: 'Jayantilal Scrap Dealer',
+    services: [{
+      name: 'Newspaper Scrap',
+      description: 'Newspapers, magazines, cardboard boxes',
+      price: '₹8-12',
+      unit: 'kg'
+    }],
+    mobile: '+91 97730 47179',
+    social_media: ''
+  },
+  {
+    name: 'Kamal Scrap Dealer',
+    services: [{
+      name: 'Newspaper Scrap',
+      description: 'Newspapers, magazines, cardboard boxes',
+      price: '₹8-12',
+      unit: 'kg'
+    }],
+    mobile: '+91 98194 26119',
+    social_media: ''
+  }
 ];
