@@ -298,6 +298,14 @@ export default function Header() {
                       <span>Electronics Repair</span>
                     </Link>
                     <Link 
+                      href={`/${currentSociety}/services/scrap-dealer`}
+                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                      onClick={() => setIsCreditScoreDropdownOpen(false)}
+                    >
+                      <span className="w-5 h-5 text-orange-500 text-lg">♻️</span>
+                      <span>Scrap Dealer</span>
+                    </Link>
+                    <Link 
                       href={`/${currentSociety}/services/notary`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
@@ -621,6 +629,14 @@ export default function Header() {
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Electronics Repair
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/scrap-dealer`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    <span className="w-5 h-5 text-orange-500 text-lg">♻️</span>
+                    <span>Scrap Dealer</span>
                   </Link>
                   <Link 
                     href={`/${currentSociety}/services/notary`}

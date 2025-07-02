@@ -972,6 +972,13 @@ export default function Home() {
                   <p className="text-xs md:text-sm text-gray-600 text-center">Electronics repair & maintenance</p>
                 </div>
               </Link>
+              <Link href="/worli/services/scrap-dealer" className="block group">
+                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
+                  <span className="text-3xl md:text-4xl mb-2 md:mb-3 text-orange-500">♻️</span>
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Scrap Dealer</h3>
+                  <p className="text-xs md:text-sm text-gray-600 text-center">Recycling and scrap collection</p>
+                </div>
+              </Link>
               <Link href="/worli/services/notary" className="block group">
                 <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
                   <FiFileText className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-blue-500" />
