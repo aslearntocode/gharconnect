@@ -1,124 +1,151 @@
 # Supabase Storage Setup Guide
 
-## Fix for "row-level security policy" Error
+## Issue
+The add-service page is failing to upload images to Supabase Storage with the error: "Cannot access storage. Please check your authentication."
 
-The error you're encountering is due to missing or incorrect Row Level Security (RLS) policies for your Supabase storage bucket. Follow these steps to fix it:
+## Root Cause
+The Supabase Storage bucket `neighborhood-service-providers` either doesn't exist or doesn't have the correct policies set up for Firebase authentication.
 
-## 1. Supabase Dashboard Setup
+## Solution
 
-### Step 1: Go to Storage in Supabase Dashboard
-1. Open your Supabase project dashboard
-2. Navigate to **Storage** in the left sidebar
-3. Click on **Buckets**
+### Step 1: Create the Storage Bucket
 
-### Step 2: Create or Configure the Bucket
-1. If the `product-images` bucket doesn't exist, create it:
-   - Click **"New bucket"**
-   - Name: `product-images`
-   - **Public bucket**: ✅ Enable this
-   - **File size limit**: 10MB (or higher)
-   - **Allowed MIME types**: `image/*`
+1. Go to your Supabase Dashboard: https://supabase.com/dashboard
+2. Select your project
+3. Go to **Storage** in the left sidebar
+4. Click **Create a new bucket**
+5. Enter the following details:
+   - **Name**: `neighborhood-service-providers`
+   - **Public bucket**: ✅ Check this
+   - **File size limit**: `5MB`
+   - **Allowed MIME types**: `image/jpeg, image/png, image/gif, image/webp`
 
-2. If the bucket exists, click on it and go to **Settings**:
-   - Ensure **Public bucket** is enabled
-   - Set **File size limit** to 10MB or higher
-   - Add `image/*` to **Allowed MIME types**
+### Step 2: Set Up Storage Policies
 
-### Step 3: Set Up RLS Policies
+After creating the bucket, go to **Storage > Policies** and add the following policies:
 
-#### Policy 1: Allow Authenticated Users to Upload
-1. Go to **Storage** → **Policies**
-2. Find your `product-images` bucket
-3. Click **"New Policy"**
-4. Choose **"Create a policy from scratch"**
-5. Configure:
-   - **Policy name**: `Allow authenticated uploads`
-   - **Allowed operation**: `INSERT`
-   - **Target roles**: `authenticated`
-   - **Policy definition**:
-   ```sql
-   (bucket_id = 'product-images'::text)
-   ```
-6. Click **"Review"** and **"Save policy"**
+#### 1. Public Read Access
+```sql
+-- Allow public read access to all files
+CREATE POLICY "Public Read Access" ON storage.objects
+FOR SELECT USING (bucket_id = 'neighborhood-service-providers');
+```
 
-#### Policy 2: Allow Public Read Access
-1. Click **"New Policy"** again
-2. Choose **"Create a policy from scratch"**
-3. Configure:
-   - **Policy name**: `Allow public read access`
-   - **Allowed operation**: `SELECT`
-   - **Target roles**: `*` (public)
-   - **Policy definition**:
-   ```sql
-   (bucket_id = 'product-images'::text)
-   ```
-4. Click **"Review"** and **"Save policy"**
+#### 2. Authenticated Upload
+```sql
+-- Allow authenticated users to upload files
+CREATE POLICY "Authenticated Upload" ON storage.objects
+FOR INSERT WITH CHECK (bucket_id = 'neighborhood-service-providers');
+```
 
-#### Policy 3: Allow Users to Delete Their Own Files
-1. Click **"New Policy"** again
-2. Choose **"Create a policy from scratch"**
-3. Configure:
-   - **Policy name**: `Allow users to delete own files`
-   - **Allowed operation**: `DELETE`
-   - **Target roles**: `authenticated`
-   - **Policy definition**:
-   ```sql
-   (bucket_id = 'product-images'::text) AND (auth.uid()::text = (storage.foldername(name))[1])
-   ```
-4. Click **"Review"** and **"Save policy"**
+#### 3. User Update Own Files
+```sql
+-- Allow users to update their own files
+CREATE POLICY "User Update Own Files" ON storage.objects
+FOR UPDATE USING (bucket_id = 'neighborhood-service-providers');
+```
 
-## 2. Alternative: Disable RLS (Quick Fix)
+#### 4. User Delete Own Files
+```sql
+-- Allow users to delete their own files
+CREATE POLICY "User Delete Own Files" ON storage.objects
+FOR DELETE USING (bucket_id = 'neighborhood-service-providers');
+```
 
-If you want a quick fix for testing:
+### Step 3: Alternative Setup via SQL Editor
 
-1. Go to **Storage** → **Buckets**
-2. Click on your `product-images` bucket
-3. Go to **Settings**
-4. **Disable Row Level Security** (toggle off)
-5. Click **"Save"**
+If the above doesn't work, you can run this SQL in the Supabase SQL Editor:
 
-⚠️ **Warning**: This disables all security for the bucket. Only use for testing.
+```sql
+-- Create the storage bucket
+INSERT INTO storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+VALUES (
+  'neighborhood-service-providers',
+  'neighborhood-service-providers',
+  true,
+  5242880, -- 5MB
+  ARRAY['image/jpeg', 'image/png', 'image/gif', 'image/webp']
+) ON CONFLICT (id) DO NOTHING;
 
-## 3. Verify Setup
+-- Create policies
+CREATE POLICY "Public Read Access" ON storage.objects
+FOR SELECT USING (bucket_id = 'neighborhood-service-providers');
 
-After setting up the policies:
+CREATE POLICY "Authenticated Upload" ON storage.objects
+FOR INSERT WITH CHECK (bucket_id = 'neighborhood-service-providers');
 
-1. Try uploading an image through your marketplace
-2. Check the browser console for any remaining errors
-3. Verify the image appears in your Supabase storage bucket
-4. Confirm the image displays correctly on the marketplace page
+CREATE POLICY "User Update Own Files" ON storage.objects
+FOR UPDATE USING (bucket_id = 'neighborhood-service-providers');
 
-## 4. Troubleshooting
+CREATE POLICY "User Delete Own Files" ON storage.objects
+FOR DELETE USING (bucket_id = 'neighborhood-service-providers');
+```
 
-### If you still get RLS errors:
+### Step 4: Test the Setup
 
-1. **Check Authentication**: Ensure the user is properly logged in
-2. **Verify Bucket Name**: Make sure the bucket name in your code matches exactly
-3. **Check Policy Syntax**: Ensure the SQL policies are correctly formatted
-4. **Clear Browser Cache**: Sometimes cached authentication can cause issues
+1. Go to your add-service page: `/add-service`
+2. Log in with Google
+3. Try uploading an image
+4. Check the browser console for any errors
 
-### Common Issues:
+### Step 5: Fallback Option
 
-- **"bucket not found"**: Check if the bucket name is correct
-- **"permission denied"**: Ensure RLS policies are properly configured
-- **"authentication required"**: Make sure the user is logged in before uploading
+If storage upload still doesn't work, users can:
+1. Provide image URLs instead of uploading files
+2. The form will accept URLs in the "Or provide main image URL" field
+3. Additional images can also be provided as URLs
 
-## 5. Security Best Practices
+## Troubleshooting
 
-For production:
+### Common Issues
 
-1. **Keep RLS enabled** with proper policies
-2. **Limit file types** to only images
-3. **Set reasonable file size limits**
-4. **Use user-specific folders** (which the code already does)
-5. **Regularly audit** storage usage and policies
+1. **"Bucket not found" error**
+   - Make sure the bucket name is exactly `neighborhood-service-providers`
+   - Check that the bucket is created in the correct project
 
-## 6. Code Verification
+2. **"Permission denied" error**
+   - Verify that the storage policies are set up correctly
+   - Check that the user is properly authenticated
 
-The updated code now includes:
-- ✅ Proper authentication checks
-- ✅ Better error handling for RLS issues
-- ✅ Explicit session management
-- ✅ Detailed error logging
+3. **"Authentication failed" error**
+   - Ensure Firebase authentication is working
+   - Check that the user is logged in
 
-If you follow these steps, the image upload should work correctly! 
+### Debug Steps
+
+1. Open browser console
+2. Click the "Debug Auth" button on the add-service page
+3. Check the console output for detailed error information
+4. Look for Firebase token and Supabase client creation logs
+
+### Manual Testing
+
+You can test the storage setup manually:
+
+1. Go to Supabase Dashboard > Storage
+2. Navigate to the `neighborhood-service-providers` bucket
+3. Try uploading a test file manually
+4. Check if the file appears in the bucket
+
+## Environment Variables
+
+Make sure these environment variables are set in your `.env.local`:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+```
+
+## Next Steps
+
+After setting up storage:
+
+1. Test the add-service page
+2. Verify that images upload successfully
+3. Check that uploaded images appear in the Supabase Storage bucket
+4. Test the neighborhood talent pages to ensure images display correctly
+
+If you continue to have issues, consider:
+- Using image URLs as a fallback
+- Checking Supabase logs for more detailed error information
+- Verifying Firebase authentication is working correctly 

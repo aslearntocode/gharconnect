@@ -1110,6 +1110,16 @@ export default function Home() {
             </div>
           </div>
         </div>
+        {/* Home Service Providers Indigo Container */}
+        <div className="bg-indigo-700 py-12">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">Home Service Providers in Bandra</h2>
+            <p className="text-indigo-100 mb-6">Discover trusted, community-rated home service professionals for all your needs— artists, musicians, lawyers, consultants and more.</p>
+            <a href="/bandra/home-service-provider" className="inline-flex items-center px-6 py-3 bg-white text-indigo-700 font-semibold rounded-lg shadow-md hover:bg-indigo-50 transition-colors text-lg">
+              View All Home Service Providers
+            </a>
+          </div>
+        </div>
         {/* Travel Diaries Container */}
         {/* <TravelDiariesContainer /> */}
         
