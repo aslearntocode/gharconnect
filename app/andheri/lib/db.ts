@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import { getSupabaseClient } from '@/lib/supabase'
 
 interface DatabaseRecord {
   [key: string]: string | number | boolean;
@@ -6,6 +6,7 @@ interface DatabaseRecord {
 
 // Your database functions here
 export async function saveRecord(table: string, record: DatabaseRecord) {
+  const supabase = await getSupabaseClient();
   const { data, error } = await supabase
     .from(table)
     .insert([record])
@@ -15,6 +16,7 @@ export async function saveRecord(table: string, record: DatabaseRecord) {
 }
 
 export async function getRecord(table: string, query: DatabaseRecord) {
+  const supabase = await getSupabaseClient();
   const { data, error } = await supabase
     .from(table)
     .select('*')
