@@ -586,7 +586,7 @@ export default function Home() {
                             <h3 className="text-xs font-bold text-gray-900 mb-1">{card.title}</h3>
                             <a 
                               href={card.href}
-                              className={`inline-flex items-center px-2 py-1 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-xs`}
+                              className={`inline-flex items-center justify-center px-2 py-1 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-xs w-full`}
                             >
                               {card.buttonTextMobile}
                             </a>

@@ -607,7 +607,7 @@ export default function Home() {
                             </div>
                             <a 
                               href={card.href}
-                              className={`inline-flex items-center px-2 py-1 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-xs mt-auto`}
+                              className={`inline-flex items-center justify-center px-2 py-1 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-xs mt-auto w-full`}
                             >
                               {card.buttonTextMobile}
                             </a>
