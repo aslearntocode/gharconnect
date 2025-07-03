@@ -65,6 +65,13 @@ export default function SellPage() {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setUser(user)
+        // Sync Firebase token to Supabase session
+        const token = await user.getIdToken();
+        const supabase = await getSupabaseClient();
+        await supabase.auth.setSession({
+          access_token: token,
+          refresh_token: token, // or null if you don't have a refresh token
+        });
         await fetchUserProfile(user.uid)
       } else {
         setLoading(false)
@@ -106,10 +113,6 @@ export default function SellPage() {
   const onSubmit = async (data: FormData) => {
     if (!user) {
       router.push('/bandra/login?redirect=/bandra/marketplace/sell')
-      return
-    }
-    if (!userProfile) {
-      toast.error('Please log in to submit your listing')
       return
     }
 

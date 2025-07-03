@@ -62,6 +62,14 @@ export default function SellPage() {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         setUser(user)
+        // Sync Firebase token to Supabase session
+        const token = await user.getIdToken();
+        const supabase = await getSupabaseClient();
+        await supabase.auth.setSession({
+          access_token: token,
+          refresh_token: token, // or null if you don't have a refresh token
+        });
+        console.log('Supabase session set');
         await fetchUserProfile(user.uid)
       } else {
         setLoading(false)
@@ -101,12 +109,9 @@ export default function SellPage() {
   }
 
   const onSubmit = async (data: FormData) => {
+    console.log('onSubmit called', data, user, userProfile);
     if (!user) {
       router.push('/parel/login?redirect=/parel/marketplace/sell')
-      return
-    }
-    if (!userProfile) {
-      toast.error('Please log in to submit your listing')
       return
     }
 
@@ -116,21 +121,23 @@ export default function SellPage() {
       const supabase = await getSupabaseClient()
       
       // Create the product listing with images set to null
-      const { error } = await supabase
+      const insertPayload = {
+        user_id: user.uid,
+        area: 'parel',
+        title: data.title,
+        description: data.description,
+        price: data.price,
+        category: data.category,
+        condition: data.condition,
+        images: null,
+        contact_phone: data.contact_phone,
+        is_active: true,
+      };
+      console.log('Insert payload:', insertPayload);
+      const { error, data: insertData } = await supabase
         .from('marketplace_products')
-        .insert({
-          user_id: user.uid,
-          area: 'parel',
-          title: data.title,
-          description: data.description,
-          price: data.price,
-          category: data.category,
-          condition: data.condition,
-          images: null,
-          contact_phone: data.contact_phone,
-          is_active: true,
-        })
-
+        .insert(insertPayload)
+      console.log('Supabase insert result', insertData, error);
       if (error) {
         console.error('Error creating listing:', error)
         toast.error('Failed to create listing')

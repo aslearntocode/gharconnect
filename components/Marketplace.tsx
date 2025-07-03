@@ -224,10 +224,7 @@ export function Marketplace({ location }: { location: string }) {
       const supabase = await getSupabaseClient()
       const { data, error } = await supabase
         .from('marketplace_products')
-        .select(`
-          *,
-          user_profile:user_profiles(society_name, building_name)
-        `)
+        .select('*')
         .eq('is_active', true)
         .order('created_at', { ascending: false })
 
