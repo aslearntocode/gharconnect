@@ -67,10 +67,9 @@ export default function SellPage() {
         setUser(user)
         await fetchUserProfile(user.uid)
       } else {
-        router.push('/parel/login?redirect=/parel/marketplace/sell')
+        setLoading(false)
       }
     })
-
     return () => unsubscribe()
   }, [router])
 
@@ -84,8 +83,10 @@ export default function SellPage() {
         .single()
 
       if (error) {
-        console.error('Error fetching user profile:', error)
-        toast.error('Failed to load user profile')
+        if (error.message && !error.message.toLowerCase().includes('no rows')) {
+          console.error('Error fetching user profile:', error)
+          toast.error('Failed to load user profile')
+        }
         return
       }
 
@@ -103,7 +104,11 @@ export default function SellPage() {
   }
 
   const onSubmit = async (data: FormData) => {
-    if (!user || !userProfile) {
+    if (!user) {
+      router.push('/bandra/login?redirect=/bandra/marketplace/sell')
+      return
+    }
+    if (!userProfile) {
       toast.error('Please log in to submit your listing')
       return
     }
@@ -156,25 +161,6 @@ export default function SellPage() {
     )
   }
 
-  if (!user || !userProfile) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-lg font-semibold text-red-600">Error</p>
-          <p className="mt-2 text-gray-600">
-            Could not load user profile. You may need to complete your profile before you can sell items.
-          </p>
-          <Button
-            onClick={() => router.push('/parel')}
-            className="mt-4"
-          >
-            Go to Parel Homepage
-          </Button>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -218,6 +204,11 @@ export default function SellPage() {
                   {...register('title')}
                   placeholder="e.g., iPhone 12 Pro Max, Wooden Dining Table"
                   className={errors.title ? 'border-red-500' : ''}
+                  onFocus={() => {
+                    if (!user) {
+                      router.push('/bandra/login?redirect=/bandra/marketplace/sell')
+                    }
+                  }}
                 />
                 {errors.title && (
                   <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>
@@ -235,6 +226,11 @@ export default function SellPage() {
                   placeholder="Describe your item in detail. Include brand, model, age, any defects, etc."
                   rows={4}
                   className={errors.description ? 'border-red-500' : ''}
+                  onFocus={() => {
+                    if (!user) {
+                      router.push('/bandra/login?redirect=/bandra/marketplace/sell')
+                    }
+                  }}
                 />
                 {errors.description && (
                   <p className="mt-1 text-sm text-red-600">{errors.description.message}</p>

@@ -105,7 +105,7 @@ export default function SellPage() {
         setUser(user)
         await fetchUserProfile(user.uid)
       } else {
-        router.push('/worli/login?redirect=/worli/marketplace/sell')
+        setLoading(false)
       }
     })
 
@@ -122,8 +122,12 @@ export default function SellPage() {
         .single()
 
       if (error) {
-        console.error('Error fetching user profile:', error)
-        toast.error('Failed to load user profile')
+        // Only log and show toast if error has a message (i.e., a real error)
+        if (error.message) {
+          console.error('Error fetching user profile:', error)
+          toast.error('Failed to load user profile')
+        }
+        // If error is empty, just return silently (profile is optional)
         return
       }
 
@@ -276,7 +280,11 @@ export default function SellPage() {
   }
 
   const onSubmit = async (data: FormData) => {
-    if (!user || !userProfile) {
+    if (!user) {
+      router.push('/worli/login?redirect=/worli/marketplace/sell')
+      return
+    }
+    if (!userProfile) {
       toast.error('Please log in to submit your listing')
       return
     }
@@ -348,25 +356,6 @@ export default function SellPage() {
     )
   }
 
-  if (!user || !userProfile) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-lg font-semibold text-red-600">Error</p>
-          <p className="mt-2 text-gray-600">
-            Could not load user profile. You may need to complete your profile before you can sell items.
-          </p>
-          <Button
-            onClick={() => router.push('/worli')}
-            className="mt-4"
-          >
-            Go to Worli Homepage
-          </Button>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -410,6 +399,11 @@ export default function SellPage() {
                   {...register('title')}
                   placeholder="e.g., iPhone 12 Pro Max, Wooden Dining Table"
                   className={errors.title ? 'border-red-500' : ''}
+                  onFocus={() => {
+                    if (!user) {
+                      router.push('/worli/login?redirect=/worli/marketplace/sell')
+                    }
+                  }}
                 />
                 {errors.title && (
                   <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>
@@ -427,6 +421,11 @@ export default function SellPage() {
                   placeholder="Describe your item in detail. Include brand, model, age, any defects, etc."
                   rows={4}
                   className={errors.description ? 'border-red-500' : ''}
+                  onFocus={() => {
+                    if (!user) {
+                      router.push('/worli/login?redirect=/worli/marketplace/sell')
+                    }
+                  }}
                 />
                 {errors.description && (
                   <p className="mt-1 text-sm text-red-600">{errors.description.message}</p>
