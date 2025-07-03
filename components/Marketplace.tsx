@@ -19,6 +19,7 @@ import { Search, Filter, Plus, MessageCircle, Calendar, MapPin, ChevronDown, X, 
 import LoginModal from '@/components/LoginModal'
 import Header from '@/components/Header'
 import { toast } from 'sonner'
+import Head from 'next/head'
 
 interface MarketplaceProduct {
   id: string
@@ -342,324 +343,348 @@ export function Marketplace({ location }: { location: string }) {
   const totalActiveFilters = selectedCategories.length + selectedConditions.length + selectedPriceRanges.length
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Header />
-      
-      {/* Indigo Banner */}
-      <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-white">{location} Marketplace</h1>
-      </div>
+    <>
+      <Head>
+        <title>{`${location} Marketplace | GharConnect`}</title>
+        <meta name="description" content={`Buy and sell items in ${location} with GharConnect's trusted community marketplace.`} />
+        <meta property="og:title" content={`${location} Marketplace | GharConnect`} />
+        <meta property="og:description" content={`Buy and sell items in ${location} with GharConnect's trusted community marketplace.`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://gharconnect.com/${location.toLowerCase()}/marketplace`} />
+        <meta property="og:site_name" content="GharConnect" />
+        <meta property="og:image" content="/GC_Logo.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${location} Marketplace | GharConnect`} />
+        <meta name="twitter:description" content={`Buy and sell items in ${location} with GharConnect's trusted community marketplace.`} />
+        <meta name="twitter:image" content="/GC_Logo.png" />
+        <link rel="canonical" href={`https://gharconnect.com/${location.toLowerCase()}/marketplace`} />
+      </Head>
+      <div className="min-h-screen bg-gray-50">
+        <Header />
+        
+        {/* Indigo Banner */}
+        <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-white">{location} Marketplace</h1>
+        </div>
 
-      {/* Main Content */}
-      <main className="py-8 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          {/* Filters */}
-          <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              {/* Category Filter */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="flex justify-between">
-                    <span>Categories {selectedCategories.length > 0 && `(${selectedCategories.length})`}</span>
-                    <ChevronDown className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel>Filter by Category</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  {CATEGORIES.map(category => (
-                    <DropdownMenuItem key={category} onSelect={(e) => e.preventDefault()}>
-                      <Checkbox
-                        id={`cat-${category}`}
-                        checked={selectedCategories.includes(category)}
-                        onCheckedChange={() => handleFilterChange(setSelectedCategories, category, selectedCategories)}
-                        className="mr-2"
-                      />
-                      <label htmlFor={`cat-${category}`} className="w-full">{category}</label>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+        {/* SEO/Keyword Intro Paragraph */}
+        <div className="bg-white border-b border-gray-200 py-4 px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-base md:text-lg text-gray-700 max-w-5xl mx-auto">
+            Buy and sell used electronics, furniture, books, clothing, sports equipment, home & garden items, toys, automotive goods, and more in {location}. Find great deals on secondhand items or list your own for sale in the trusted GharConnect community marketplace. Perfect for anyone looking to buy or sell pre-owned items locally.
+          </p>
+        </div>
 
-              {/* Condition Filter */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="flex justify-between">
-                    <span>Condition {selectedConditions.length > 0 && `(${selectedConditions.length})`}</span>
-                    <ChevronDown className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel>Filter by Condition</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  {CONDITIONS.map(condition => (
-                    <DropdownMenuItem key={condition} onSelect={(e) => e.preventDefault()}>
-                       <Checkbox
-                        id={`con-${condition}`}
-                        checked={selectedConditions.includes(condition)}
-                        onCheckedChange={() => handleFilterChange(setSelectedConditions, condition, selectedConditions)}
-                        className="mr-2"
-                      />
-                      <label htmlFor={`con-${condition}`} className="w-full">{condition}</label>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+        {/* Main Content */}
+        <main className="py-8 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            {/* Filters */}
+            <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                {/* Category Filter */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="flex justify-between">
+                      <span>Categories {selectedCategories.length > 0 && `(${selectedCategories.length})`}</span>
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuLabel>Filter by Category</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {CATEGORIES.map(category => (
+                      <DropdownMenuItem key={category} onSelect={(e) => e.preventDefault()}>
+                        <Checkbox
+                          id={`cat-${category}`}
+                          checked={selectedCategories.includes(category)}
+                          onCheckedChange={() => handleFilterChange(setSelectedCategories, category, selectedCategories)}
+                          className="mr-2"
+                        />
+                        <label htmlFor={`cat-${category}`} className="w-full">{category}</label>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
-              {/* Price Range Filter */}
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="flex justify-between">
-                    <span>Price Range {selectedPriceRanges.length > 0 && `(${selectedPriceRanges.length})`}</span>
-                    <ChevronDown className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel>Filter by Price</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  {PRICE_RANGES.map(range => (
-                    <DropdownMenuItem key={range.value} onSelect={(e) => e.preventDefault()}>
-                      <Checkbox
-                        id={`pr-${range.value}`}
-                        checked={selectedPriceRanges.includes(range.value)}
-                        onCheckedChange={() => handleFilterChange(setSelectedPriceRanges, range.value, selectedPriceRanges)}
-                        className="mr-2"
-                      />
-                      <label htmlFor={`pr-${range.value}`} className="w-full">{range.label}</label>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                {/* Condition Filter */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="flex justify-between">
+                      <span>Condition {selectedConditions.length > 0 && `(${selectedConditions.length})`}</span>
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuLabel>Filter by Condition</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {CONDITIONS.map(condition => (
+                      <DropdownMenuItem key={condition} onSelect={(e) => e.preventDefault()}>
+                         <Checkbox
+                          id={`con-${condition}`}
+                          checked={selectedConditions.includes(condition)}
+                          onCheckedChange={() => handleFilterChange(setSelectedConditions, condition, selectedConditions)}
+                          className="mr-2"
+                        />
+                        <label htmlFor={`con-${condition}`} className="w-full">{condition}</label>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
-              <Button
-                variant="outline"
-                onClick={clearFilters}
-                className="flex items-center gap-2"
-                disabled={totalActiveFilters === 0}
-              >
-                <Filter className="w-4 h-4" />
-                Clear Filters {totalActiveFilters > 0 && `(${totalActiveFilters})`}
-              </Button>
-            </div>
+                {/* Price Range Filter */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="flex justify-between">
+                      <span>Price Range {selectedPriceRanges.length > 0 && `(${selectedPriceRanges.length})`}</span>
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuLabel>Filter by Price</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    {PRICE_RANGES.map(range => (
+                      <DropdownMenuItem key={range.value} onSelect={(e) => e.preventDefault()}>
+                        <Checkbox
+                          id={`pr-${range.value}`}
+                          checked={selectedPriceRanges.includes(range.value)}
+                          onCheckedChange={() => handleFilterChange(setSelectedPriceRanges, range.value, selectedPriceRanges)}
+                          className="mr-2"
+                        />
+                        <label htmlFor={`pr-${range.value}`} className="w-full">{range.label}</label>
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
 
-            {/* Filter Summary */}
-            {totalActiveFilters > 0 && (
-              <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Filter className="w-4 h-4 text-blue-600" />
-                    <span className="text-sm font-medium text-blue-800">
-                      Active Filters ({totalActiveFilters}):
-                    </span>
+                <Button
+                  variant="outline"
+                  onClick={clearFilters}
+                  className="flex items-center gap-2"
+                  disabled={totalActiveFilters === 0}
+                >
+                  <Filter className="w-4 h-4" />
+                  Clear Filters {totalActiveFilters > 0 && `(${totalActiveFilters})`}
+                </Button>
+              </div>
+
+              {/* Filter Summary */}
+              {totalActiveFilters > 0 && (
+                <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Filter className="w-4 h-4 text-blue-600" />
+                      <span className="text-sm font-medium text-blue-800">
+                        Active Filters ({totalActiveFilters}):
+                      </span>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={clearFilters}
+                      className="text-blue-600 hover:text-blue-800"
+                    >
+                      Clear All
+                    </Button>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={clearFilters}
-                    className="text-blue-600 hover:text-blue-800"
-                  >
-                    Clear All
-                  </Button>
-                </div>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {selectedCategories.map(category => (
-                    <span key={category} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-                      Category: {category}
-                      <button
-                        onClick={() => handleFilterChange(setSelectedCategories, category, selectedCategories)}
-                        className="hover:text-blue-600"
-                      >
-                        ×
-                      </button>
-                    </span>
-                  ))}
-                  {selectedConditions.map(condition => (
-                    <span key={condition} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-                      Condition: {condition}
-                      <button
-                        onClick={() => handleFilterChange(setSelectedConditions, condition, selectedConditions)}
-                        className="hover:text-blue-600"
-                      >
-                        ×
-                      </button>
-                    </span>
-                  ))}
-                  {selectedPriceRanges.map(range => {
-                    const rangeLabel = PRICE_RANGES.find(r => r.value === range)?.label || range
-                    return (
-                      <span key={range} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
-                        Price: {rangeLabel}
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {selectedCategories.map(category => (
+                      <span key={category} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                        Category: {category}
                         <button
-                          onClick={() => handleFilterChange(setSelectedPriceRanges, range, selectedPriceRanges)}
+                          onClick={() => handleFilterChange(setSelectedCategories, category, selectedCategories)}
                           className="hover:text-blue-600"
                         >
                           ×
                         </button>
                       </span>
-                    )
-                  })}
+                    ))}
+                    {selectedConditions.map(condition => (
+                      <span key={condition} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                        Condition: {condition}
+                        <button
+                          onClick={() => handleFilterChange(setSelectedConditions, condition, selectedConditions)}
+                          className="hover:text-blue-600"
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
+                    {selectedPriceRanges.map(range => {
+                      const rangeLabel = PRICE_RANGES.find(r => r.value === range)?.label || range
+                      return (
+                        <span key={range} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                          Price: {rangeLabel}
+                          <button
+                            onClick={() => handleFilterChange(setSelectedPriceRanges, range, selectedPriceRanges)}
+                            className="hover:text-blue-600"
+                          >
+                            ×
+                          </button>
+                        </span>
+                      )
+                    })}
+                  </div>
+                  <div className="mt-2 text-xs text-blue-600">
+                    Showing {filteredProducts.length} of {products.length} items
+                  </div>
                 </div>
-                <div className="mt-2 text-xs text-blue-600">
-                  Showing {filteredProducts.length} of {products.length} items
+              )}
+            </div>
+
+            {/* Products Grid */}
+            {loading ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                {[...Array(10)].map((_, i) => (
+                  <Card key={i} className="animate-pulse flex flex-col">
+                    <div className="bg-gray-200 rounded-t-lg h-32"></div>
+                    <CardContent className="p-3 flex-grow flex flex-col">
+                      <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                      <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
+                      <div className="flex-grow"></div>
+                      <div className="h-3 bg-gray-200 rounded w-1/2 mt-2"></div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            ) : filteredProducts.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="text-gray-400 mb-4">
+                  <Search className="w-16 h-16 mx-auto" />
                 </div>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No items found</h3>
+                <p className="text-gray-600">
+                  {selectedCategories.length > 0 || selectedConditions.length > 0 || selectedPriceRanges.length > 0
+                    ? 'Try adjusting your search or filters'
+                    : `Be the first to list an item in ${location} marketplace!`
+                  }
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                {filteredProducts.map((product) => (
+                  <Card key={product.id} className="hover:shadow-lg transition-shadow duration-200 flex flex-col">
+                    <div className="bg-gray-100 rounded-t-lg overflow-hidden relative group cursor-pointer h-32 flex items-center justify-center">
+                      {product.images && product.images.length > 0 ? (
+                        <>
+                          <img
+                            src={product.images[0]}
+                            alt={product.title}
+                            className="h-full w-auto max-w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement
+                              target.src = '/placeholder-image.svg'
+                            }}
+                            loading="lazy"
+                            onClick={(e) => {
+                              e.preventDefault()
+                              e.stopPropagation()
+                              openImageModal(product.images, 0)
+                            }}
+                          />
+                          {/* Zoom indicator overlay */}
+                          <div 
+                            className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center pointer-events-none"
+                          >
+                            <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          </div>
+                          {product.images.length > 1 && (
+                            <div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full pointer-events-none">
+                              +{product.images.length - 1}
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-gray-400">
+                          <Search className="w-10 h-10" />
+                        </div>
+                      )}
+                    </div>
+                    
+                    <CardContent className="p-3 flex flex-col flex-grow">
+                      <div className="flex items-start justify-between mb-1">
+                        <CardTitle className="text-base font-semibold line-clamp-2">
+                          {product.title}
+                        </CardTitle>
+                        <span className={`text-xs font-medium rounded-full px-2 py-0.5 whitespace-nowrap flex-shrink-0 ml-2 ${
+                          product.condition === 'New' 
+                            ? 'bg-green-100 text-green-800' 
+                            : product.condition === 'Like New'
+                            ? 'bg-blue-100 text-blue-800'
+                            : product.condition === 'Good'
+                            ? 'bg-yellow-100 text-yellow-800'
+                            : 'bg-gray-100 text-gray-800'
+                        }`}>
+                          {product.condition}
+                        </span>
+                      </div>
+                      
+                      <CardDescription className="text-xs text-gray-600 mb-2">
+                        {product.description}
+                      </CardDescription>
+                      
+                      <div className="flex-grow"></div>
+
+                      <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
+                        <MapPin className="w-3 h-3 flex-shrink-0" />
+                        <span className="truncate">
+                          {product.area}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
+                        <Calendar className="w-3 h-3 flex-shrink-0" />
+                        <span>{formatDate(product.created_at)}</span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="text-lg font-bold text-green-600">
+                          {formatPrice(product.price)}
+                        </div>
+                        <Button
+                          onClick={() => handleWhatsAppChat(product.contact_phone, product.title)}
+                          size="sm"
+                          className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 h-auto flex-shrink-0"
+                        >
+                          <MessageCircle className="w-3 h-3 mr-1" />
+                          Chat
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
               </div>
             )}
           </div>
+        </main>
 
-          {/* Products Grid */}
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {[...Array(10)].map((_, i) => (
-                <Card key={i} className="animate-pulse flex flex-col">
-                  <div className="bg-gray-200 rounded-t-lg h-32"></div>
-                  <CardContent className="p-3 flex-grow flex flex-col">
-                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
-                    <div className="flex-grow"></div>
-                    <div className="h-3 bg-gray-200 rounded w-1/2 mt-2"></div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          ) : filteredProducts.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-gray-400 mb-4">
-                <Search className="w-16 h-16 mx-auto" />
-              </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No items found</h3>
-              <p className="text-gray-600">
-                {selectedCategories.length > 0 || selectedConditions.length > 0 || selectedPriceRanges.length > 0
-                  ? 'Try adjusting your search or filters'
-                  : `Be the first to list an item in ${location} marketplace!`
-                }
-              </p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {filteredProducts.map((product) => (
-                <Card key={product.id} className="hover:shadow-lg transition-shadow duration-200 flex flex-col">
-                  <div className="bg-gray-100 rounded-t-lg overflow-hidden relative group cursor-pointer h-32 flex items-center justify-center">
-                    {product.images && product.images.length > 0 ? (
-                      <>
-                        <img
-                          src={product.images[0]}
-                          alt={product.title}
-                          className="h-full w-auto max-w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement
-                            target.src = '/placeholder-image.svg'
-                          }}
-                          loading="lazy"
-                          onClick={(e) => {
-                            e.preventDefault()
-                            e.stopPropagation()
-                            openImageModal(product.images, 0)
-                          }}
-                        />
-                        {/* Zoom indicator overlay */}
-                        <div 
-                          className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center pointer-events-none"
-                        >
-                          <ZoomIn className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        </div>
-                        {product.images.length > 1 && (
-                          <div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded-full pointer-events-none">
-                            +{product.images.length - 1}
-                          </div>
-                        )}
-                      </>
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-400">
-                        <Search className="w-10 h-10" />
-                      </div>
-                    )}
-                  </div>
-                  
-                  <CardContent className="p-3 flex flex-col flex-grow">
-                    <div className="flex items-start justify-between mb-1">
-                      <CardTitle className="text-base font-semibold line-clamp-2">
-                        {product.title}
-                      </CardTitle>
-                      <span className={`text-xs font-medium rounded-full px-2 py-0.5 whitespace-nowrap flex-shrink-0 ml-2 ${
-                        product.condition === 'New' 
-                          ? 'bg-green-100 text-green-800' 
-                          : product.condition === 'Like New'
-                          ? 'bg-blue-100 text-blue-800'
-                          : product.condition === 'Good'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-gray-100 text-gray-800'
-                      }`}>
-                        {product.condition}
-                      </span>
-                    </div>
-                    
-                    <CardDescription className="text-xs text-gray-600 mb-2">
-                      {product.description}
-                    </CardDescription>
-                    
-                    <div className="flex-grow"></div>
+        {/* Floating Sell Button */}
+        <Button 
+          onClick={handleSellItem}
+          className="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg px-6 py-4 flex items-center justify-center z-50"
+        >
+          <Plus className="w-6 h-6 mr-2" />
+          <span className="font-semibold">Sell Item</span>
+        </Button>
 
-                    <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                      <MapPin className="w-3 h-3 flex-shrink-0" />
-                      <span className="truncate">
-                        {product.area}
-                      </span>
-                    </div>
-                    
-                    <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
-                      <Calendar className="w-3 h-3 flex-shrink-0" />
-                      <span>{formatDate(product.created_at)}</span>
-                    </div>
-                    
-                    <div className="flex items-center justify-between">
-                      <div className="text-lg font-bold text-green-600">
-                        {formatPrice(product.price)}
-                      </div>
-                      <Button
-                        onClick={() => handleWhatsAppChat(product.contact_phone, product.title)}
-                        size="sm"
-                        className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 h-auto flex-shrink-0"
-                      >
-                        <MessageCircle className="w-3 h-3 mr-1" />
-                        Chat
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          )}
-        </div>
-      </main>
-
-      {/* Floating Sell Button */}
-      <Button 
-        onClick={handleSellItem}
-        className="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg px-6 py-4 flex items-center justify-center z-50"
-      >
-        <Plus className="w-6 h-6 mr-2" />
-        <span className="font-semibold">Sell Item</span>
-      </Button>
-
-      {/* Login Modal */}
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        onLoginSuccess={() => {
-          setShowLoginModal(false)
-          toast.success('Successfully logged in!')
-        }}
-      />
-
-      {/* Image Modal */}
-      {imageModal.isOpen && (
-        <ImageModal
-          images={imageModal.images}
-          isOpen={imageModal.isOpen}
-          onClose={closeImageModal}
-          initialIndex={imageModal.initialIndex}
+        {/* Login Modal */}
+        <LoginModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+          onLoginSuccess={() => {
+            setShowLoginModal(false)
+            toast.success('Successfully logged in!')
+          }}
         />
-      )}
-    </div>
+
+        {/* Image Modal */}
+        {imageModal.isOpen && (
+          <ImageModal
+            images={imageModal.images}
+            isOpen={imageModal.isOpen}
+            onClose={closeImageModal}
+            initialIndex={imageModal.initialIndex}
+          />
+        )}
+      </div>
+    </>
   )
 } 
