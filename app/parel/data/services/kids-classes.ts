@@ -111,5 +111,15 @@ export const vendors: Vendor[] = [
       unit: 'per month'
     }],
     mobile: '+91 85918 61692'
+  },
+  {
+    name: 'Bhaviraj House of Music',
+    services: [{
+      name: 'Music Lessons',
+      description: 'Music lessons for children including singing, piano, guitar, etc.',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 90825 03460'
   }
 ]; 
