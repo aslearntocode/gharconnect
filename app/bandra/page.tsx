@@ -1177,6 +1177,28 @@ export default function Home() {
             </div>
           </div>
         </div>
+        {/* GharCare+ Subscription Section */}
+        <div className="bg-gradient-to-br from-blue-50 to-green-50 py-10 px-4 md:px-0">
+          <div className="max-w-4xl mx-auto rounded-2xl shadow-lg bg-white/80 p-8 flex flex-col items-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-indigo-700 mb-2 text-center">GharCare+ Subscription</h2>
+            <p className="text-gray-700 text-center mb-6 max-w-2xl">Subscribe to <span className="font-semibold text-indigo-700">GharCare+</span> and get annual coverage for <span className="font-semibold">Pest Control</span>, <span className="font-semibold">AC Servicing</span>, and <span className="font-semibold">Water Purifier Servicing</span> at a special price. Hassle-free, reliable, and trusted by your community.</p>
+            <div className="flex flex-row gap-6 mb-6 w-full justify-center">
+              <div className="flex flex-col items-center flex-1">
+                <span className="bg-indigo-100 text-indigo-600 rounded-full p-4 mb-2"><FiShield className="w-7 h-7" /></span>
+                <span className="font-semibold text-gray-900 text-center">Pest<br/>Control</span>
+              </div>
+              <div className="flex flex-col items-center flex-1">
+                <span className="bg-blue-100 text-blue-600 rounded-full p-4 mb-2"><FiZap className="w-7 h-7" /></span>
+                <span className="font-semibold text-gray-900 text-center">AC<br/>Servicing</span>
+              </div>
+              <div className="flex flex-col items-center flex-1">
+                <span className="bg-green-100 text-green-600 rounded-full p-4 mb-2"><FiDroplet className="w-7 h-7" /></span>
+                <span className="font-semibold text-gray-900 text-center">Water Purifier<br/>Servicing</span>
+              </div>
+            </div>
+            <a href="https://wa.me/919321314553?text=I%20want%20to%20subscribe%20to%20GharCare%2B" target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-3 bg-indigo-600 text-white font-bold rounded-lg shadow-md hover:bg-indigo-700 transition-colors text-lg mt-2">Subscribe Now</a>
+          </div>
+        </div>
       </main>
     </>
   )
