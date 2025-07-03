@@ -1063,8 +1063,42 @@ export default function Home() {
         {/* Travel Diaries Container */}
         {/* <TravelDiariesContainer /> */}
         
-        {/* Community Poll */}
-        <Poll location="worli" />
+        {/* Metrics Section - Numbers Since Launch */}
+        <div className="bg-white py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-gray-900 text-center mb-10">Numbers Since Launch in Mar 2025</h2>
+            <div className="grid grid-cols-2 md:flex md:flex-row justify-center items-center gap-8 md:gap-0 md:divide-x md:divide-gray-200">
+              <div className="flex flex-col items-center px-8 md:px-12">
+                <span className="text-blue-700 text-4xl font-bold mb-1">50+</span>
+                <span className="text-gray-800 text-base text-center">
+                  <span className="block md:hidden">Apartments<br/>Rented</span>
+                  <span className="hidden md:block">Apartments Rented</span>
+                </span>
+              </div>
+              <div className="flex flex-col items-center px-8 md:px-12">
+                <span className="text-blue-700 text-4xl font-bold mb-1">500+</span>
+                <span className="text-gray-800 text-base text-center">
+                  <span className="block md:hidden">Service & Delivery<br/>Providers</span>
+                  <span className="hidden md:block">Service and Delivery<br/>Providers Listed</span>
+                </span>
+              </div>
+              <div className="flex flex-col items-center px-8 md:px-12">
+                <span className="text-blue-700 text-4xl font-bold mb-1">3</span>
+                <span className="text-gray-800 text-base text-center">
+                  <span className="block md:hidden">Areas Covered<br/>in Mumbai</span>
+                  <span className="hidden md:block">Areas Covered in <br/>Mumbai</span>
+                </span>
+              </div>
+              <div className="flex flex-col items-center px-8 md:px-12">
+                <span className="text-blue-700 text-4xl font-bold mb-1">200+</span>
+                <span className="text-gray-800 text-base text-center">
+                  <span className="block md:hidden">Marketplace<br/>Items Sold</span>
+                  <span className="hidden md:block">Items Sold through<br/>Marketplace</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </>
   )
