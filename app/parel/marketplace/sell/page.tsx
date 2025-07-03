@@ -87,13 +87,11 @@ export default function SellPage() {
         .eq('user_id', userId)
         .single()
 
-      if (error) {
-        if (typeof error.message === 'string' && !error.message.toLowerCase().includes('no rows')) {
-          console.error('Error fetching user profile:', error)
-          toast.error('Failed to load user profile')
-        }
-        return
+      if (error && typeof error.message === 'string' && !error.message.toLowerCase().includes('no rows')) {
+        console.error('Error fetching user profile:', error)
+        toast.error('Failed to load user profile')
       }
+      if (error) return
 
       setUserProfile(data)
       // Pre-fill contact phone if available
