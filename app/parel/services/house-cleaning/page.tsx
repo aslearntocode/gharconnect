@@ -28,7 +28,7 @@ export default function HouseCleaningPage() {
       {/* Blue Banner */}
       <div className="relative">
         <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white">House Cleaning Services</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-white">House Cleaning</h1>
         </div>
         {/* Filter/Search Bar */}
         <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-7 w-full max-w-2xl z-10">
