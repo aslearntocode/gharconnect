@@ -1156,22 +1156,29 @@ export default function Home() {
               <div className="flex flex-col items-center px-8 md:px-12">
                 <span className="text-blue-700 text-4xl font-bold mb-1">500+</span>
                 <span className="text-gray-800 text-base text-center">
-                  <span className="block md:hidden">Service & Delivery<br/>Providers</span>
+                  <span className="block md:hidden">Service<br/>Providers</span>
                   <span className="hidden md:block">Service and Delivery<br/>Providers Listed</span>
                 </span>
               </div>
               <div className="flex flex-col items-center px-8 md:px-12">
                 <span className="text-blue-700 text-4xl font-bold mb-1">3</span>
                 <span className="text-gray-800 text-base text-center">
-                  <span className="block md:hidden">Areas Covered<br/>in Mumbai</span>
-                  <span className="hidden md:block">Areas Covered in <br/>Mumbai</span>
+                  <span className="block md:hidden">Mumbai Areas<br/>Covered</span>
+                  <span className="hidden md:block">Mumbai Areas<br/>Covered</span>
                 </span>
               </div>
               <div className="flex flex-col items-center px-8 md:px-12">
                 <span className="text-blue-700 text-4xl font-bold mb-1">200+</span>
                 <span className="text-gray-800 text-base text-center">
                   <span className="block md:hidden">Marketplace<br/>Items Sold</span>
-                  <span className="hidden md:block">Items Sold through<br/>Marketplace</span>
+                  <span className="hidden md:block">Marketplace<br/>Items Sold</span>
+                </span>
+              </div>
+              <div className="flex flex-col items-center px-8 md:px-12">
+                <span className="text-blue-700 text-4xl font-bold mb-1">50+</span>
+                <span className="text-gray-800 text-base text-center">
+                  <span className="block md:hidden">GharCare+<br/>Subscribers</span>
+                  <span className="hidden md:block">GharCare+<br/>Subscribers</span>
                 </span>
               </div>
             </div>
