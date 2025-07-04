@@ -52,6 +52,7 @@ export default function BandraConnectPage() {
     const { data, error } = await supabase
       .from('posts')
       .select('*')
+      .eq('area', 'Bandra')
       .order('created_at', { ascending: false });
     if (!error) setPosts(data || []);
     setLoading(false);

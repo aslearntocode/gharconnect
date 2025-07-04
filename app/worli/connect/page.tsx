@@ -52,6 +52,7 @@ export default function WorliConnectPage() {
     const { data, error } = await supabase
       .from('posts')
       .select('*')
+      .eq('area', 'Worli')
       .order('created_at', { ascending: false });
     if (!error) setPosts(data || []);
     setLoading(false);

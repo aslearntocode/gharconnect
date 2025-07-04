@@ -52,6 +52,7 @@ export default function ParelConnectPage() {
     const { data, error } = await supabase
       .from('posts')
       .select('*')
+      .eq('area', 'Parel')
       .order('created_at', { ascending: false });
     if (!error) setPosts(data || []);
     setLoading(false);
