@@ -33,6 +33,7 @@ interface MarketplaceProduct {
   images: string[]
   contact_phone: string
   created_at: string
+  building_name?: string
   user_profile?: {
     society_name: string
     building_name: string
@@ -626,7 +627,10 @@ export function Marketplace({ location }: { location: string }) {
                       <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
                         <MapPin className="w-3 h-3 flex-shrink-0" />
                         <span className="truncate">
-                          {product.area}
+                          {product.building_name
+                            ? `${product.building_name}, ${product.area.charAt(0).toUpperCase() + product.area.slice(1)}, Mumbai`
+                            : `${product.area.charAt(0).toUpperCase() + product.area.slice(1)}, Mumbai`
+                          }
                         </span>
                       </div>
                       

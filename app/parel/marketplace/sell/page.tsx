@@ -23,6 +23,7 @@ const formSchema = z.object({
   category: z.string().min(1, 'Category is required'),
   condition: z.string().min(1, 'Condition is required'),
   contact_phone: z.string().min(10, 'Phone number must be at least 10 digits').max(15, 'Phone number must be less than 15 digits'),
+  building_name: z.string().min(1, 'Building name is required').max(100, 'Building name must be less than 100 characters'),
 })
 
 type FormData = z.infer<typeof formSchema>
@@ -43,7 +44,6 @@ const CONDITIONS = ['New', 'Like New', 'Good', 'Fair', 'Used']
 
 export default function SellPage() {
   const [user, setUser] = useState<any>(null)
-  const [userProfile, setUserProfile] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const router = useRouter()
@@ -70,7 +70,7 @@ export default function SellPage() {
           refresh_token: token, // or null if you don't have a refresh token
         });
         console.log('Supabase session set');
-        await fetchUserProfile(user.uid)
+        setLoading(false)
       } else {
         setLoading(false)
       }
@@ -78,36 +78,8 @@ export default function SellPage() {
     return () => unsubscribe()
   }, [router])
 
-  const fetchUserProfile = async (userId: string) => {
-    try {
-      const supabase = await getSupabaseClient()
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('user_id', userId)
-        .single()
-
-      if (error && typeof error.message === 'string' && !error.message.toLowerCase().includes('no rows')) {
-        console.error('Error fetching user profile:', error)
-        toast.error('Failed to load user profile')
-      }
-      if (error) return
-
-      setUserProfile(data)
-      // Pre-fill contact phone if available
-      if (data?.phone) {
-        setValue('contact_phone', data.phone)
-      }
-    } catch (error) {
-      console.error('Error fetching user profile:', error)
-      toast.error('Failed to load user profile')
-    } finally {
-      setLoading(false)
-    }
-  }
-
   const onSubmit = async (data: FormData) => {
-    console.log('onSubmit called', data, user, userProfile);
+    console.log('onSubmit called', data, user);
     if (!user) {
       router.push('/parel/login?redirect=/parel/marketplace/sell')
       return
@@ -129,6 +101,7 @@ export default function SellPage() {
         condition: data.condition,
         images: null,
         contact_phone: data.contact_phone,
+        building_name: data.building_name,
         is_active: true,
       };
       console.log('Insert payload:', insertPayload);
@@ -314,6 +287,22 @@ export default function SellPage() {
                 <p className="mt-1 text-sm text-gray-500">
                   This number will be used for WhatsApp chat. It won't be displayed publicly.
                 </p>
+              </div>
+
+              {/* Building Name */}
+              <div>
+                <label htmlFor="building_name" className="block text-sm font-medium text-gray-700 mb-2">
+                  Building Name *
+                </label>
+                <Input
+                  id="building_name"
+                  {...register('building_name')}
+                  placeholder="e.g., Crescent Bay, Lodha World One"
+                  className={errors.building_name ? 'border-red-500' : ''}
+                />
+                {errors.building_name && (
+                  <p className="mt-1 text-sm text-red-600">{errors.building_name.message}</p>
+                )}
               </div>
 
               {/* Images */}
