@@ -1,0 +1,182 @@
+"use client";
+import { useEffect, useState } from 'react';
+import { useRouter, useParams } from 'next/navigation';
+import { getSupabaseClient } from '@/lib/supabase';
+import { auth } from '@/lib/firebase';
+import { Button } from '@/components/ui/button';
+import Header from '@/components/Header';
+import Link from 'next/link';
+
+interface Post {
+  id: string;
+  title: string;
+  body: string;
+  user_id: string;
+  created_at: string;
+  area?: string;
+}
+
+interface Comment {
+  id: string;
+  post_id: string;
+  body: string;
+  user_id: string;
+  created_at: string;
+  parent_comment_id?: string;
+  area?: string;
+}
+
+export default function PostDetailPage() {
+  const router = useRouter();
+  const params = useParams();
+  const postId = params?.postId as string;
+  const [user, setUser] = useState<any>(null);
+  const [post, setPost] = useState<Post | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [newComment, setNewComment] = useState('');
+  const [commentLoading, setCommentLoading] = useState(false);
+  const [replyTo, setReplyTo] = useState<string | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => setUser(user));
+    fetchPostAndComments();
+    return () => unsubscribe();
+  }, [postId]);
+
+  const fetchPostAndComments = async () => {
+    setLoading(true);
+    const supabase = await getSupabaseClient();
+    const { data: postData } = await supabase.from('posts').select('*').eq('id', postId).single();
+    const { data: commentsData } = await supabase.from('comments').select('*').eq('post_id', postId).order('created_at', { ascending: true });
+    setPost(postData || null);
+    setComments(commentsData || []);
+    setLoading(false);
+  };
+
+  function groupComments(comments: Comment[]) {
+    const map: { [key: string]: Comment[] } = {};
+    comments.forEach((c) => {
+      const parent = c.parent_comment_id || 'root';
+      if (!map[parent]) map[parent] = [];
+      map[parent].push(c);
+    });
+    return map;
+  }
+  const grouped = groupComments(comments);
+
+  const handleNewComment = async (e: React.FormEvent, parentId?: string | null) => {
+    e.preventDefault();
+    if (!user || !post) return;
+    setCommentLoading(true);
+    const supabase = await getSupabaseClient();
+    const firebaseUid = user.uid;
+    const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
+    const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
+    const { error } = await supabase.from('comments').insert([
+      {
+        post_id: post.id,
+        body: newComment,
+        user_id: formattedUuid,
+        parent_comment_id: parentId || null,
+        area: 'Worli',
+      },
+    ]);
+    setCommentLoading(false);
+    if (!error) {
+      setNewComment('');
+      setReplyTo(null);
+      fetchPostAndComments();
+    } else {
+      console.error('Error creating comment:', error);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <div className="max-w-2xl mx-auto py-8 px-4">
+        <Link href="/worli/connect" className="text-blue-600 hover:underline mb-4 inline-block">&larr; Back to all posts</Link>
+        {loading ? (
+          <div>Loading...</div>
+        ) : !post ? (
+          <div className="text-gray-500">Post not found.</div>
+        ) : (
+          <>
+            <div className="bg-white p-4 rounded shadow mb-6">
+              <div className="font-semibold text-lg mb-1">{post.title}</div>
+              <div className="text-gray-700 mb-2">{post.body}</div>
+              <div className="text-xs text-gray-400">{new Date(post.created_at).toLocaleString()}</div>
+            </div>
+            <div className="mb-2 font-semibold">Comments</div>
+            {grouped['root']?.length === 0 ? (
+              <div className="text-gray-500 mb-2">No comments yet.</div>
+            ) : (
+              <ul className="mb-2 space-y-2">
+                {grouped['root']?.map(comment => (
+                  <li key={comment.id} className="bg-gray-50 p-2 rounded">
+                    <div className="text-gray-800 text-sm">{comment.body}</div>
+                    <div className="text-xs text-gray-400">{new Date(comment.created_at).toLocaleString()}</div>
+                    <button
+                      className="text-xs text-blue-600 mt-1 hover:underline"
+                      onClick={() => setReplyTo(comment.id)}
+                    >
+                      Reply
+                    </button>
+                    {/* Replies */}
+                    {grouped[comment.id]?.length > 0 && (
+                      <ul className="ml-4 mt-2 space-y-2">
+                        {grouped[comment.id].map(reply => (
+                          <li key={reply.id} className="bg-gray-100 p-2 rounded">
+                            <div className="text-gray-800 text-sm">{reply.body}</div>
+                            <div className="text-xs text-gray-400">{new Date(reply.created_at).toLocaleString()}</div>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    {/* Reply input */}
+                    {replyTo === comment.id && user && (
+                      <form
+                        onSubmit={e => handleNewComment(e, comment.id)}
+                        className="flex gap-2 mt-2"
+                      >
+                        <input
+                          className="flex-1 border rounded p-2"
+                          placeholder="Reply..."
+                          value={newComment}
+                          onChange={e => setNewComment(e.target.value)}
+                          required
+                        />
+                        <Button type="submit" disabled={commentLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+                          {commentLoading ? 'Posting...' : 'Reply'}
+                        </Button>
+                        <Button type="button" onClick={() => setReplyTo(null)} className="bg-gray-200 text-gray-700">
+                          Cancel
+                        </Button>
+                      </form>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+            {/* Top-level comment input */}
+            {user && replyTo === null && (
+              <form onSubmit={e => handleNewComment(e, null)} className="flex gap-2 mt-2">
+                <input
+                  className="flex-1 border rounded p-2"
+                  placeholder="Add a comment..."
+                  value={newComment}
+                  onChange={e => setNewComment(e.target.value)}
+                  required
+                />
+                <Button type="submit" disabled={commentLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+                  {commentLoading ? 'Posting...' : 'Comment'}
+                </Button>
+              </form>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+} 
