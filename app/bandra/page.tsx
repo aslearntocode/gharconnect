@@ -139,7 +139,7 @@ export default function Home() {
     {
       id: 'rent',
       title: 'Tenant',
-      description: 'Find your perfect rental property',
+      description: 'Find your rental apartment',
       icon: FiHome,
       href: '/bandra/rent/',
       gradient: 'from-blue-500 to-cyan-500'
@@ -164,11 +164,27 @@ export default function Home() {
     {
       id: 'delivery',
       title: 'Local Delivery',
-      description: 'Get essentials delivered to your door',
+      description: 'Get essentials delivered',
       icon: FiTruck,
       href: '#',
       onClick: (e: React.MouseEvent) => { e.preventDefault(); document.getElementById('delivery-categories')?.scrollIntoView({ behavior: 'smooth' }); },
       gradient: 'from-green-500 to-teal-500'
+    },
+    {
+      id: 'marketplace',
+      title: 'Marketplace',
+      description: 'Buy & sell pre-loved items',
+      icon: FiDollarSign,
+      href: '/bandra/marketplace',
+      gradient: 'from-pink-500 to-yellow-500'
+    },
+    {
+      id: 'connect',
+      title: 'Connect',
+      description: 'Community Q&A & discussions',
+      icon: FiUsers,
+      href: '/bandra/connect',
+      gradient: 'from-indigo-500 to-blue-500'
     }
   ];
 
@@ -488,18 +504,6 @@ export default function Home() {
       buttonTextMobile: 'Order'
     },
     {
-      id: 'laptop-repair',
-      title: 'Laptop Repair',
-      icon: FiTool,
-      iconBg: 'bg-purple-100',
-      iconColor: 'text-purple-600',
-      buttonBg: 'bg-purple-600',
-      buttonHover: 'hover:bg-purple-700',
-      href: '/bandra/services/laptop-repair',
-      buttonText: 'Get Laptop Fixed',
-      buttonTextMobile: 'Repair'
-    },
-    {
       id: 'neighbor-services',
       title: 'Neighbor Service Providers',
       icon: FiUsers,
@@ -673,8 +677,8 @@ export default function Home() {
                         onClick={card.onClick}
                         className="group"
                       >
-                        <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 p-4 md:p-6 flex items-center gap-x-3 md:gap-x-5 group hover:bg-gray-50 cursor-pointer h-full">
-                          <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br ${card.gradient} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 p-3 md:p-4 flex items-center gap-x-2 md:gap-x-3 group hover:bg-gray-50 cursor-pointer h-full">
+                          <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br ${card.gradient} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                             <IconComponent className="w-6 h-6 md:w-8 md:h-8 text-white" />
                           </div>
                           <div className="text-left">

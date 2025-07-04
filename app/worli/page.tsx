@@ -8,7 +8,7 @@ import { User } from "firebase/auth"
 import Header from "@/components/Header"
 import { getSupabaseClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
-import { FiDroplet, FiTrendingUp, FiHome, FiTruck, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiUsers, FiScissors } from 'react-icons/fi'
+import { FiDroplet, FiTrendingUp, FiHome, FiTruck, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiUsers, FiScissors, FiDollarSign } from 'react-icons/fi'
 import DoctorsContainer from "@/components/DoctorsContainer"
 import TravelDiariesContainer from "@/components/TravelDiariesContainer"
 import Head from 'next/head'
@@ -115,7 +115,7 @@ export default function Home() {
     {
       id: 'rent',
       title: 'Tenant',
-      description: 'Find your perfect rental property',
+      description: 'Find your rental apartment',
       icon: FiHome,
       href: '/worli/rent/',
       gradient: 'from-blue-500 to-cyan-500'
@@ -140,11 +140,27 @@ export default function Home() {
     {
       id: 'delivery',
       title: 'Local Delivery',
-      description: 'Get essentials delivered to your door',
+      description: 'Get essentials delivered',
       icon: FiTruck,
       href: '#',
       onClick: (e: React.MouseEvent) => { e.preventDefault(); document.getElementById('delivery-categories')?.scrollIntoView({ behavior: 'smooth' }); },
       gradient: 'from-green-500 to-teal-500'
+    },
+    {
+      id: 'marketplace',
+      title: 'Marketplace',
+      description: 'Buy & sell pre-loved items',
+      icon: FiDollarSign,
+      href: '/worli/marketplace',
+      gradient: 'from-pink-500 to-yellow-500'
+    },
+    {
+      id: 'connect',
+      title: 'Connect',
+      description: 'Community Q&A & discussions',
+      icon: FiUsers,
+      href: '/worli/connect',
+      gradient: 'from-indigo-500 to-blue-500'
     }
   ];
 
@@ -195,18 +211,6 @@ export default function Home() {
       href: '/worli/delivery/pharmacy',
       buttonText: 'Order Medicines',
       buttonTextMobile: 'Order'
-    },
-    {
-      id: 'laptop-repair',
-      title: 'Laptop Repair',
-      icon: FiTool,
-      iconBg: 'bg-purple-100',
-      iconColor: 'text-purple-600',
-      buttonBg: 'bg-purple-600',
-      buttonHover: 'hover:bg-purple-700',
-      href: '/worli/services/laptop-repair',
-      buttonText: 'Get Laptop Fixed',
-      buttonTextMobile: 'Repair'
     },
     {
       id: 'physical-training',
@@ -596,8 +600,8 @@ export default function Home() {
                         onClick={card.onClick}
                         className="group"
                       >
-                        <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 p-4 md:p-6 flex items-center gap-x-3 md:gap-x-5 group hover:bg-gray-50 cursor-pointer h-full">
-                          <div className={`w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br ${card.gradient} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                        <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 p-3 md:p-4 flex items-center gap-x-2 md:gap-x-3 group hover:bg-gray-50 cursor-pointer h-full">
+                          <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br ${card.gradient} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                             <IconComponent className="w-6 h-6 md:w-8 md:h-8 text-white" />
                           </div>
                           <div className="text-left">
@@ -704,7 +708,7 @@ export default function Home() {
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Spotlight</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Watch video to learn how to register as a domestic help or driver
+                Watch this video to learn how to register as a domestic help or driver
               </p>
             </div>
             
