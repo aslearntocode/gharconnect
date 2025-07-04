@@ -289,7 +289,7 @@ export default function BandraConnectPage() {
               </form>
             </section>
           ) : (
-            <div className="mb-8 text-center text-gray-600">Login to post or comment</div>
+            <div className="mb-8 text-center text-gray-600 text-lg">Login to post or comment</div>
           )}
           {/* Posts List */}
           <section>
