@@ -196,26 +196,30 @@ export default function PostDetailPage() {
                             </ul>
                           )}
                           {/* Reply input */}
-                          {replyTo === comment.id && user && (
-                            <form
-                              onSubmit={e => handleNewComment(e, comment.id)}
-                              className="flex gap-2 mt-2"
-                            >
-                              <input
-                                className="flex-1 border rounded p-2"
-                                placeholder="Reply..."
-                                value={newComment}
-                                onChange={e => setNewComment(e.target.value)}
-                                required
-                                aria-label="Reply to comment"
-                              />
-                              <Button type="submit" disabled={commentLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
-                                {commentLoading ? 'Posting...' : 'Reply'}
-                              </Button>
-                              <Button type="button" onClick={() => setReplyTo(null)} className="bg-gray-200 text-gray-700">
-                                Cancel
-                              </Button>
-                            </form>
+                          {replyTo === comment.id && (
+                            user ? (
+                              <form
+                                onSubmit={e => handleNewComment(e, comment.id)}
+                                className="flex gap-2 mt-2"
+                              >
+                                <input
+                                  className="flex-1 border rounded p-2"
+                                  placeholder="Reply..."
+                                  value={newComment}
+                                  onChange={e => setNewComment(e.target.value)}
+                                  required
+                                  aria-label="Reply to comment"
+                                />
+                                <Button type="submit" disabled={commentLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+                                  {commentLoading ? 'Posting...' : 'Reply'}
+                                </Button>
+                                <Button type="button" onClick={() => setReplyTo(null)} className="bg-gray-200 text-gray-700">
+                                  Cancel
+                                </Button>
+                              </form>
+                            ) : (
+                              <div className="text-center text-gray-600 my-2 font-semibold">Login to View or Post Comments</div>
+                            )
                           )}
                         </article>
                       </li>
@@ -224,23 +228,27 @@ export default function PostDetailPage() {
                 )}
               </section>
               {/* Top-level comment input */}
-              {user && replyTo === null && (
-                <section>
-                  <h3 className="mb-2 font-semibold">Add a Comment</h3>
-                  <form onSubmit={e => handleNewComment(e, null)} className="flex gap-2 mt-2">
-                    <input
-                      className="flex-1 border rounded p-2"
-                      placeholder="Add a comment..."
-                      value={newComment}
-                      onChange={e => setNewComment(e.target.value)}
-                      required
-                      aria-label="Add a comment"
-                    />
-                    <Button type="submit" disabled={commentLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
-                      {commentLoading ? 'Posting...' : 'Comment'}
-                    </Button>
-                  </form>
-                </section>
+              {replyTo === null && (
+                user ? (
+                  <section>
+                    <h3 className="mb-2 font-semibold">Add a Comment</h3>
+                    <form onSubmit={e => handleNewComment(e, null)} className="flex gap-2 mt-2">
+                      <input
+                        className="flex-1 border rounded p-2"
+                        placeholder="Add a comment..."
+                        value={newComment}
+                        onChange={e => setNewComment(e.target.value)}
+                        required
+                        aria-label="Add a comment"
+                      />
+                      <Button type="submit" disabled={commentLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+                        {commentLoading ? 'Posting...' : 'Comment'}
+                      </Button>
+                    </form>
+                  </section>
+                ) : (
+                  <div className="text-center text-gray-600 my-6 font-semibold">Login to View or Post Comments</div>
+                )
               )}
             </>
           )}

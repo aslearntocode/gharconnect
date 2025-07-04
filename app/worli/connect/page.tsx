@@ -244,7 +244,7 @@ export default function WorliConnectPage() {
             <p className="text-gray-700 mb-4">
               Join our vibrant community forum where residents share local insights, recommendations, and connect with neighbors. 
               Whether you're looking for local service recommendations, or want to discuss community events, 
-              this is the perfect place to engage with the Parel community.
+              this is the perfect place to engage with the Worli community.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
               <div className="bg-indigo-50 p-3 rounded">
