@@ -781,7 +781,7 @@ export default function Home() {
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Spotlight</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Watch video to learn how to register as a vendor
+                Watch this video to learn how to register as a domestic help or driver
               </p>
             </div>
             
