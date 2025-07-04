@@ -21,5 +21,15 @@ export const vendors: Vendor[] = [
       unit: 'per repair'
     }],
     mobile: '+91 9892660223'
+  },
+  {
+    name: 'Dayanand',
+    services: [{
+      name: 'Electronics Repair',
+      description: 'Fan, Geyser, Grinder etc. repair',
+      price: 'Call for price',
+      unit: 'per repair'
+    }],
+    mobile: '+91 79777 74528'
   }
 ];
