@@ -24,6 +24,8 @@ const formSchema = z.object({
   category: z.string().min(1, 'Category is required'),
   condition: z.string().min(1, 'Condition is required'),
   contact_phone: z.string().min(10, 'Phone number must be at least 10 digits').max(15, 'Phone number must be less than 15 digits'),
+  event_date: z.string().optional(),
+  building_name: z.string().min(1, 'Building name is required').max(100, 'Building name must be less than 100 characters'),
 })
 
 type FormData = z.infer<typeof formSchema>
@@ -305,20 +307,24 @@ export default function SellPage() {
       }
 
       // Create the product listing
+      const insertPayload = {
+        user_id: user.uid,
+        area: 'worli',
+        title: data.title,
+        description: data.description,
+        price: data.price,
+        category: data.category,
+        condition: data.condition,
+        images: imageUrls,
+        contact_phone: data.contact_phone,
+        is_active: true,
+        event_date: data.category === 'Event or Movie Tickets' ? data.event_date : null,
+        building_name: data.building_name,
+      }
+
       const { error } = await supabase
         .from('marketplace_products')
-        .insert({
-          user_id: user.uid,
-          area: 'worli',
-          title: data.title,
-          description: data.description,
-          price: data.price,
-          category: data.category,
-          condition: data.condition,
-          images: imageUrls,
-          contact_phone: data.contact_phone,
-          is_active: true,
-        })
+        .insert(insertPayload)
 
       if (error) {
         console.error('Error creating listing:', error)
@@ -511,6 +517,22 @@ export default function SellPage() {
                 <p className="mt-1 text-sm text-gray-500">
                   This number will be used for WhatsApp chat. It won't be displayed publicly.
                 </p>
+              </div>
+
+              {/* Building Name */}
+              <div>
+                <label htmlFor="building_name" className="block text-sm font-medium text-gray-700 mb-2">
+                  Building Name *
+                </label>
+                <Input
+                  id="building_name"
+                  {...register('building_name')}
+                  placeholder="e.g., Crescent Bay, Lodha World One"
+                  className={errors.building_name ? 'border-red-500' : ''}
+                />
+                {errors.building_name && (
+                  <p className="mt-1 text-sm text-red-600">{errors.building_name.message}</p>
+                )}
               </div>
 
               {/* Images */}
