@@ -496,24 +496,12 @@ export function Marketplace({ location }: { location: string }) {
 
               {/* Filter Summary */}
               {totalActiveFilters > 0 && (
-                <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <Filter className="w-4 h-4 text-blue-600" />
-                      <span className="text-sm font-medium text-blue-800">
-                        Active Filters ({totalActiveFilters}):
-                      </span>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={clearFilters}
-                      className="text-blue-600 hover:text-blue-800"
-                    >
-                      Clear All
-                    </Button>
-                  </div>
-                  <div className="mt-2 flex flex-wrap gap-2">
+                <div className="flex items-center justify-between bg-blue-50 rounded-lg border border-blue-200 px-3 py-2 mt-3 mb-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <Filter className="w-4 h-4 text-blue-600" />
+                    <span className="text-sm font-medium text-blue-800">
+                      Active Filters ({totalActiveFilters}):
+                    </span>
                     {selectedCategories.map(category => (
                       <span key={category} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
                         Category: {category}
@@ -550,10 +538,18 @@ export function Marketplace({ location }: { location: string }) {
                         </span>
                       )
                     })}
+                    <span className="text-xs text-blue-600 ml-2">
+                      Showing {filteredProducts.length} of {products.length} items
+                    </span>
                   </div>
-                  <div className="mt-2 text-xs text-blue-600">
-                    Showing {filteredProducts.length} of {products.length} items
-                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={clearFilters}
+                    className="text-blue-600 hover:text-blue-800"
+                  >
+                    Clear All
+                  </Button>
                 </div>
               )}
             </div>
