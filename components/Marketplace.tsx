@@ -38,6 +38,7 @@ interface MarketplaceProduct {
     society_name: string
     building_name: string
   }
+  event_date?: string
 }
 
 const CATEGORIES = [
@@ -49,6 +50,7 @@ const CATEGORIES = [
   'Home & Garden',
   'Toys & Games',
   'Automotive',
+  'Event or Movie Tickets',
   'Other'
 ]
 
@@ -370,7 +372,7 @@ export function Marketplace({ location }: { location: string }) {
 
         {/* SEO/Keyword Intro Paragraph */}
         <div className="bg-white border-b border-gray-200 py-4 px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-base md:text-lg text-gray-700 max-w-5xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 max-w-5xl mx-auto">
             Buy and sell used electronics, furniture, books, clothing, sports equipment, home & garden items, toys, automotive goods, and more in {location}. Find great deals on secondhand items or list your own for sale in the trusted GharConnect community marketplace. Perfect for anyone looking to buy or sell pre-owned items locally.
           </p>
         </div>
@@ -378,6 +380,31 @@ export function Marketplace({ location }: { location: string }) {
         {/* Main Content */}
         <main className="py-8 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
+            {/* Event/Movie Tickets Filter Button */}
+            <div className="mb-3 sm:mb-6">
+              <Button
+                onClick={() => {
+                  if (selectedCategories.includes('Event or Movie Tickets')) {
+                    setSelectedCategories(selectedCategories.filter(cat => cat !== 'Event or Movie Tickets'))
+                  } else {
+                    setSelectedCategories(['Event or Movie Tickets'])
+                  }
+                }}
+                variant={selectedCategories.includes('Event or Movie Tickets') ? "default" : "outline"}
+                className={`w-full md:w-auto px-4 sm:px-6 py-2 sm:py-3 text-base sm:text-lg font-semibold transition-all duration-200 ${
+                  selectedCategories.includes('Event or Movie Tickets')
+                    ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg'
+                    : 'bg-white hover:bg-purple-50 border-purple-200 text-purple-700 hover:border-purple-300'
+                }`}
+              >
+                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+                {selectedCategories.includes('Event or Movie Tickets') 
+                  ? '🎫 Showing Event & Movie Tickets' 
+                  : '🎫 Show Only Event & Movie Tickets'
+                }
+              </Button>
+            </div>
+
             {/* Filters */}
             <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -621,7 +648,13 @@ export function Marketplace({ location }: { location: string }) {
                       <CardDescription className="text-xs text-gray-600 mb-2">
                         {product.description}
                       </CardDescription>
-                      
+                      {/* Event Date for Event or Movie Tickets */}
+                      {product.category === 'Event or Movie Tickets' && product.event_date && (
+                        <div className="flex items-center gap-2 text-xs text-blue-700 mb-2">
+                          <Calendar className="w-3 h-3 flex-shrink-0" />
+                          <span>Event Date: {formatDate(product.event_date)}</span>
+                        </div>
+                      )}
                       <div className="flex-grow"></div>
 
                       <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">

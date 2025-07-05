@@ -37,6 +37,7 @@ const CATEGORIES = [
   'Home & Garden',
   'Toys & Games',
   'Automotive',
+  'Event or Movie Tickets',
   'Other'
 ]
 

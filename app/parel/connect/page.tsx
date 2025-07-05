@@ -242,7 +242,7 @@ export default function ParelConnectPage() {
           <section className="mb-8 bg-white p-6 rounded-lg shadow-sm">
             {/* <h2 className="text-xl font-semibold text-gray-900 mb-3">Welcome to Parel Community Discussions</h2> */}
             <p className="text-gray-700 mb-4">
-              Join our vibrant community forum where residents share local insights, recommendations, and connect with neighbors. 
+              Join our vibrant community forum where residents share local insights, recommendations, and reach out for urgent help. 
               Whether you're looking for local service recommendations, or want to discuss community events, 
               this is the perfect place to engage with the Parel community.
             </p>
@@ -256,8 +256,8 @@ export default function ParelConnectPage() {
                 <p className="text-green-700">Stay updated on local events, festivals, and community gatherings in Parel.</p>
               </div>
               <div className="bg-purple-50 p-3 rounded">
-                <h3 className="font-semibold text-purple-800 mb-1">Neighbor Connect</h3>
-                <p className="text-purple-700">Build meaningful connections with your neighbors and strengthen the community bond.</p>
+                <h3 className="font-semibold text-purple-800 mb-1">Urgent Help</h3>
+                <p className="text-purple-700">Use the community to get help with urgent needs. Together we can make a difference.</p>
               </div>
             </div>
           </section>

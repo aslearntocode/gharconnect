@@ -24,6 +24,7 @@ const formSchema = z.object({
   condition: z.string().min(1, 'Condition is required'),
   contact_phone: z.string().min(10, 'Phone number must be at least 10 digits').max(15, 'Phone number must be less than 15 digits'),
   building_name: z.string().min(1, 'Building name is required').max(100, 'Building name must be less than 100 characters'),
+  event_date: z.string().optional(),
 })
 
 type FormData = z.infer<typeof formSchema>
@@ -37,6 +38,7 @@ const CATEGORIES = [
   'Home & Garden',
   'Toys & Games',
   'Automotive',
+  'Event or Movie Tickets',
   'Other'
 ]
 
@@ -103,6 +105,7 @@ export default function SellPage() {
         contact_phone: data.contact_phone,
         building_name: data.building_name,
         is_active: true,
+        event_date: data.category === 'Event or Movie Tickets' ? data.event_date : null,
       };
       console.log('Insert payload:', insertPayload);
       const { error, data: insertData } = await supabase
@@ -124,6 +127,8 @@ export default function SellPage() {
       setSubmitting(false)
     }
   }
+
+  const selectedCategory = watch('category');
 
   if (loading) {
     return (
@@ -269,6 +274,24 @@ export default function SellPage() {
                   )}
                 </div>
               </div>
+
+              {/* Event Date (only for Event or Movie Tickets) */}
+              {selectedCategory === 'Event or Movie Tickets' && (
+                <div>
+                  <label htmlFor="event_date" className="block text-sm font-medium text-gray-700 mb-2">
+                    Event Date *
+                  </label>
+                  <Input
+                    id="event_date"
+                    type="date"
+                    {...register('event_date', { required: true })}
+                    className={errors.event_date ? 'border-red-500' : ''}
+                  />
+                  {errors.event_date && (
+                    <p className="mt-1 text-sm text-red-600">Event date is required for tickets</p>
+                  )}
+                </div>
+              )}
 
               {/* Contact Phone */}
               <div>
