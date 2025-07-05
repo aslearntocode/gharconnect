@@ -492,16 +492,16 @@ export default function Home() {
       buttonTextMobile: 'Browse'
     },
     {
-      id: 'pharmacy',
-      title: 'Pharmacy Delivery',
-      icon: '💊',
-      iconBg: 'bg-red-100',
-      iconColor: 'text-red-600',
-      buttonBg: 'bg-red-600',
-      buttonHover: 'hover:bg-red-700',
-      href: '/bandra/delivery/pharmacy',
-      buttonText: 'Order Medicines',
-      buttonTextMobile: 'Order'
+      id: 'physical-training',
+      title: 'Physical Training',
+      icon: FiTrendingUp,
+      iconBg: 'bg-orange-100',
+      iconColor: 'text-orange-600',
+      buttonBg: 'bg-orange-600',
+      buttonHover: 'hover:bg-orange-700',
+      href: '/worli/services/physical-training',
+      buttonText: 'Find Trainers',
+      buttonTextMobile: 'Trainers'
     },
     {
       id: 'neighbor-services',
