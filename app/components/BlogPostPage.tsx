@@ -46,12 +46,12 @@ const customComponents: Components = {
     </p>
   ),
   ul: ({ children }) => (
-    <ul className="list-disc list-inside mb-4 space-y-1">
+    <ul className="list-disc list-inside mb-4 space-y-3">
       {children}
     </ul>
   ),
   ol: ({ children }) => (
-    <ol className="list-decimal list-inside mb-4 space-y-1">
+    <ol className="list-decimal list-inside mb-4 space-y-3">
       {children}
     </ol>
   ),
