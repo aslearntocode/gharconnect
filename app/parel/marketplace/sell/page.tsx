@@ -25,6 +25,11 @@ const formSchema = z.object({
   contact_phone: z.string().min(10, 'Phone number must be at least 10 digits').max(15, 'Phone number must be less than 15 digits'),
   building_name: z.string().min(1, 'Building name is required').max(100, 'Building name must be less than 100 characters'),
   event_date: z.string().optional(),
+  number_of_tickets: z.preprocess(
+    (val) => val === '' ? undefined : Number(val),
+    z.number().int().min(1, 'Number of tickets is required').optional()
+  ),
+  event_location: z.string().optional(),
 })
 
 type FormData = z.infer<typeof formSchema>
@@ -106,6 +111,8 @@ export default function SellPage() {
         building_name: data.building_name,
         is_active: true,
         event_date: data.category === 'Event or Movie Tickets' ? data.event_date : null,
+        number_of_tickets: data.category === 'Event or Movie Tickets' ? data.number_of_tickets : null,
+        event_location: data.category === 'Event or Movie Tickets' ? data.event_location : null,
       };
       console.log('Insert payload:', insertPayload);
       const { error, data: insertData } = await supabase
@@ -275,22 +282,53 @@ export default function SellPage() {
                 </div>
               </div>
 
-              {/* Event Date (only for Event or Movie Tickets) */}
+              {/* Event Date, Number of Tickets, Event Location (only for Event or Movie Tickets) */}
               {selectedCategory === 'Event or Movie Tickets' && (
-                <div>
-                  <label htmlFor="event_date" className="block text-sm font-medium text-gray-700 mb-2">
-                    Event Date *
-                  </label>
-                  <Input
-                    id="event_date"
-                    type="date"
-                    {...register('event_date', { required: true })}
-                    className={errors.event_date ? 'border-red-500' : ''}
-                  />
-                  {errors.event_date && (
-                    <p className="mt-1 text-sm text-red-600">Event date is required for tickets</p>
-                  )}
-                </div>
+                <>
+                  <div>
+                    <label htmlFor="event_date" className="block text-sm font-medium text-gray-700 mb-2">
+                      Event Date *
+                    </label>
+                    <Input
+                      id="event_date"
+                      type="date"
+                      {...register('event_date', { required: true })}
+                      className={errors.event_date ? 'border-red-500' : ''}
+                    />
+                    {errors.event_date && (
+                      <p className="mt-1 text-sm text-red-600">Event date is required for tickets</p>
+                    )}
+                  </div>
+                  <div>
+                    <label htmlFor="number_of_tickets" className="block text-sm font-medium text-gray-700 mb-2">
+                      Number of Tickets *
+                    </label>
+                    <Input
+                      id="number_of_tickets"
+                      type="number"
+                      min={1}
+                      {...register('number_of_tickets', { required: true, valueAsNumber: true })}
+                      className={errors.number_of_tickets ? 'border-red-500' : ''}
+                    />
+                    {errors.number_of_tickets && (
+                      <p className="mt-1 text-sm text-red-600">Number of tickets is required</p>
+                    )}
+                  </div>
+                  <div>
+                    <label htmlFor="event_location" className="block text-sm font-medium text-gray-700 mb-2">
+                      Event Location *
+                    </label>
+                    <Input
+                      id="event_location"
+                      type="text"
+                      {...register('event_location', { required: true })}
+                      className={errors.event_location ? 'border-red-500' : ''}
+                    />
+                    {errors.event_location && (
+                      <p className="mt-1 text-sm text-red-600">Event location is required</p>
+                    )}
+                  </div>
+                </>
               )}
 
               {/* Contact Phone */}

@@ -39,6 +39,8 @@ interface MarketplaceProduct {
     building_name: string
   }
   event_date?: string
+  number_of_tickets?: number
+  event_location?: string
 }
 
 const CATEGORIES = [
@@ -646,9 +648,21 @@ export function Marketplace({ location }: { location: string }) {
                       </CardDescription>
                       {/* Event Date for Event or Movie Tickets */}
                       {product.category === 'Event or Movie Tickets' && product.event_date && (
-                        <div className="flex items-center gap-2 text-xs text-blue-700 mb-2">
+                        <div className="flex items-center gap-2 text-xs text-blue-700 mb-1">
                           <Calendar className="w-3 h-3 flex-shrink-0" />
                           <span>Event Date: {formatDate(product.event_date)}</span>
+                        </div>
+                      )}
+                      {/* Number of Tickets for Event or Movie Tickets */}
+                      {product.category === 'Event or Movie Tickets' && product.number_of_tickets && (
+                        <div className="flex items-center gap-2 text-xs text-blue-700 mb-1">
+                          <span>Tickets: {product.number_of_tickets}</span>
+                        </div>
+                      )}
+                      {/* Event Location for Event or Movie Tickets */}
+                      {product.category === 'Event or Movie Tickets' && product.event_location && (
+                        <div className="flex items-center gap-2 text-xs text-blue-700 mb-2">
+                          <span>Event Location: {product.event_location}</span>
                         </div>
                       )}
                       <div className="flex-grow"></div>
