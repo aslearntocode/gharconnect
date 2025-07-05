@@ -299,23 +299,21 @@ export default function WorliConnectPage() {
             ) : filteredPosts.length === 0 ? (
               <div className="text-gray-500">No results found.</div>
             ) : (
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
                 {filteredPosts.map(post => (
-                  <li key={post.id} className="bg-white p-4 rounded shadow">
-                    <article>
-                      <header className="flex justify-between items-start">
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-lg">{post.title}</h3>
-                          <p className="text-gray-700 mb-2">{post.body}</p>
-                          <time className="text-xs text-gray-400" dateTime={post.created_at}>
-                            {new Date(post.created_at).toLocaleString()}
-                          </time>
-                        </div>
-                        <Button size="sm" asChild className="ml-4 bg-blue-100 text-blue-700 hover:bg-blue-200">
-                          <Link href={`/worli/connect/${post.id}`}>View Comments</Link>
-                        </Button>
-                      </header>
-                    </article>
+                  <li key={post.id} className="bg-white p-4 rounded shadow h-full flex flex-col justify-between">
+                    <div className="flex-1 w-full">
+                      <h3 className="font-semibold text-lg">{post.title}</h3>
+                      <p className="text-gray-700 mb-2">{post.body}</p>
+                      <time className="text-xs text-gray-400" dateTime={post.created_at}>
+                        {new Date(post.created_at).toLocaleString()}
+                      </time>
+                    </div>
+                    <div className="mt-4 flex-shrink-0">
+                      <Button size="sm" asChild className="bg-blue-100 text-blue-700 hover:bg-blue-200 w-full">
+                        <Link href={`/worli/connect/${post.id}`}>View Comments</Link>
+                      </Button>
+                    </div>
                   </li>
                 ))}
               </ul>
