@@ -195,6 +195,7 @@ export function Marketplace({ location }: { location: string }) {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [selectedConditions, setSelectedConditions] = useState<string[]>([])
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<string[]>([])
+  const [locationFilter, setLocationFilter] = useState('')
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [user, setUser] = useState<any>(null)
   
@@ -250,29 +251,17 @@ export function Marketplace({ location }: { location: string }) {
   const filteredProducts = products.filter(product => {
     const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category)
     const matchesCondition = selectedConditions.length === 0 || selectedConditions.includes(product.condition)
-    
     const matchesPrice = selectedPriceRanges.length === 0 || selectedPriceRanges.some(range => {
       const [min, max] = range.split('-').map(Number)
       return product.price >= min && product.price <= max
     })
-
-    // Debug logging
-    if (selectedCategories.length > 0 || selectedConditions.length > 0 || selectedPriceRanges.length > 0) {
-      console.log('Filtering product:', {
-        title: product.title,
-        category: product.category,
-        condition: product.condition,
-        price: product.price,
-        matchesCategory,
-        matchesCondition,
-        matchesPrice,
-        selectedCategories,
-        selectedConditions,
-        selectedPriceRanges
-      })
-    }
-
-    return matchesCategory && matchesCondition && matchesPrice
+    const locationFilterValue = locationFilter.toLowerCase().trim();
+    const matchesLocation =
+      !locationFilterValue ||
+      'mumbai'.includes(locationFilterValue) ||
+      (product.area && product.area.toLowerCase().includes(locationFilterValue)) ||
+      (product.building_name && product.building_name.toLowerCase().includes(locationFilterValue));
+    return matchesCategory && matchesCondition && matchesPrice && matchesLocation
   })
   
   const handleFilterChange = (setter: Function, value: string, currentValues: string[]) => {
@@ -286,6 +275,7 @@ export function Marketplace({ location }: { location: string }) {
     setSelectedCategories([])
     setSelectedConditions([])
     setSelectedPriceRanges([])
+    setLocationFilter('')
   }
 
   const handleWhatsAppChat = (phone: string, title: string) => {
@@ -407,7 +397,7 @@ export function Marketplace({ location }: { location: string }) {
 
             {/* Filters */}
             <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                 {/* Category Filter */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -483,24 +473,35 @@ export function Marketplace({ location }: { location: string }) {
                   </DropdownMenuContent>
                 </DropdownMenu>
 
+                {/* Location Filter */}
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Location (e.g. Mumbai, Parel, Worli)"
+                    value={locationFilter}
+                    onChange={e => setLocationFilter(e.target.value)}
+                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
+                  />
+                </div>
+
                 <Button
                   variant="outline"
                   onClick={clearFilters}
                   className="flex items-center gap-2"
-                  disabled={totalActiveFilters === 0}
+                  disabled={totalActiveFilters === 0 && !locationFilter}
                 >
                   <Filter className="w-4 h-4" />
-                  Clear Filters {totalActiveFilters > 0 && `(${totalActiveFilters})`}
+                  Clear Filters{(totalActiveFilters > 0 || locationFilter) && ` (${totalActiveFilters + (locationFilter ? 1 : 0)})`}
                 </Button>
               </div>
 
               {/* Filter Summary */}
-              {totalActiveFilters > 0 && (
+              {(totalActiveFilters > 0 || locationFilter) ? (
                 <div className="flex items-center justify-between bg-blue-50 rounded-lg border border-blue-200 px-3 py-2 mt-3 mb-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <Filter className="w-4 h-4 text-blue-600" />
                     <span className="text-sm font-medium text-blue-800">
-                      Active Filters ({totalActiveFilters}):
+                      Active Filters ({totalActiveFilters + (locationFilter ? 1 : 0)}):
                     </span>
                     {selectedCategories.map(category => (
                       <span key={category} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
@@ -538,6 +539,17 @@ export function Marketplace({ location }: { location: string }) {
                         </span>
                       )
                     })}
+                    {locationFilter && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
+                        Location: {locationFilter}
+                        <button
+                          onClick={() => setLocationFilter('')}
+                          className="hover:text-blue-600"
+                        >
+                          ×
+                        </button>
+                      </span>
+                    )}
                     <span className="text-xs text-blue-600 ml-2">
                       Showing {filteredProducts.length} of {products.length} items
                     </span>
@@ -545,13 +557,13 @@ export function Marketplace({ location }: { location: string }) {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={clearFilters}
+                    onClick={() => { clearFilters(); setLocationFilter('') }}
                     className="text-blue-600 hover:text-blue-800"
                   >
                     Clear All
                   </Button>
                 </div>
-              )}
+              ) : null}
             </div>
 
             {/* Products Grid */}
