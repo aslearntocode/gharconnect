@@ -73,7 +73,7 @@ export default function BandraNeighborhoodTalentPage() {
       <div className="relative">
         <div className="w-full h-40 bg-indigo-600 flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">🏠 Home Service Providers in Bandra</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">Neighbors Providing Services</h1>
             <p className="text-indigo-100 text-lg">Discover amazing local talent in your community</p>
           </div>
         </div>

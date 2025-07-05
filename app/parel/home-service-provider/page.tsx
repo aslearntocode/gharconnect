@@ -81,7 +81,7 @@ export default function ParelNeighborhoodServiceProviderPage() {
       <div className="relative">
         <div className="w-full h-40 bg-indigo-600 flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">🏠 Neighbors Providing Service in Parel</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">🏠 Neighbors Providing Services</h1>
             <p className="text-indigo-100 text-lg">Discover amazing local talent in your community</p>
           </div>
         </div>
@@ -128,11 +128,11 @@ export default function ParelNeighborhoodServiceProviderPage() {
                 <Link href={`/parel/home-service-provider/${talent.id}`} key={talent.id} className="block group">
                   <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group-hover:border-indigo-200">
                     {/* Image */}
-                    <div className="w-full h-48 overflow-hidden bg-gray-100">
+                    <div className="w-full h-48 overflow-hidden bg-white flex items-center justify-center">
                       <img
                         src={talent.main_image}
                         alt={talent.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
                     

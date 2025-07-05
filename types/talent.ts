@@ -19,7 +19,7 @@ export interface Talent {
   created_at: string;
   updated_at: string;
   skills: string[];
-  about: string;
+  about?: string;
   portfolio: string[];
   is_verified: boolean;
   is_active: boolean;

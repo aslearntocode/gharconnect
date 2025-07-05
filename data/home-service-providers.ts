@@ -2,33 +2,45 @@ import { Talent } from '@/types/talent';
 
 export const neighborhoodServiceProviders: Talent[] = [
   {
-    id: 'priya-sharma',
+    id: 'the-inkables',
     society: 'parel',
-    name: 'Priya Sharma',
-    category: 'music',
-    description: 'Professional classical vocalist with 8+ years of experience. Specializes in Hindustani classical music and Bollywood songs.',
-    main_image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face',
+    name: 'The Inkables',
+    category: 'Art & Craft',
+    description: `✨ From Smiles to Stationery!
+I'm a Dentist turned Entrepreneur with a passion for creativity, kids, and all things personalized! What began as a love for making children smile has grown into a vibrant venture offering a wide range of personalized gifting, stationery, and school supplies — perfect for kids and adults alike.
+
+🎁 From quirky gifts to practical school essentials, we bring joy to every age with custom-designed products that are thoughtful, fun, and full of personality. Whether it's for a birthday, return gift, teacher's hamper, office desk, or just because — we've got something special for everyone.
+
+Let's turn everyday essentials into something extra special!`,
+    main_image: '/images/neighbors/Inkables Logo.jpg',
     images: [
-      'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=400&h=400&fit=crop&crop=face',
-      'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=400&h=400&fit=crop',
+      '/images/neighbors/inkables/Img_1.jpg',
+      '/images/neighbors/inkables/Img_2.jpg',
+      '/images/neighbors/inkables/Img_3.jpg',
+      '/images/neighbors/inkables/Img_4.jpg',
+      '/images/neighbors/inkables/Img_5.jpg',
+      '/images/neighbors/inkables/Img_6.jpg',
+      '/images/neighbors/inkables/Img_7.jpg',
+      '/images/neighbors/inkables/Img_8.jpg',
+      '/images/neighbors/inkables/Img_9.jpg',
+      '/images/neighbors/inkables/Img_10.jpg'
     ],
     contact: {
-      phone: '+91 98765 43210',
-      email: 'priya.sharma@email.com',
-      location: 'Parel East, Mumbai'
+      phone: '+91 88796 06458',
+      email: 'theinkables@gmail.com',
+      location: 'Sewri, Mumbai'
     },
-    experience: '8+ years',
-    pricing: '₹1500/hour',
-    availability: 'Weekdays 6-9 PM, Weekends 10 AM-6 PM',
-    skills: ['Classical Vocal', 'Bollywood Songs', 'Music Theory', 'Voice Training'],
-    about: 'I am a passionate classical vocalist with over 8 years of experience in teaching and performing. I specialize in Hindustani classical music and can also teach Bollywood songs. I have performed at various cultural events and have trained students of all age groups.',
-    portfolio: ['https://soundcloud.com/priya-sharma', 'https://youtube.com/@priyasharma'],
+    experience: '3 years',
+    pricing: 'Contact for pricing',
+    availability: 'Anytime',
+    skills: ['Stationery', 'Gifting', 'Personalized Products', 'Custom Designs'],
+    portfolio: ['https://www.instagram.com/the.inkables/'],
     is_verified: true,
     is_active: true,
     rating: 4.8,
     review_count: 23,
-    created_at: '2024-01-15T10:00:00Z',
-    updated_at: '2024-01-15T10:00:00Z',
+    created_at: '2025-06-15T10:00:00Z',
+    updated_at: '2025-06-15T10:00:00Z',
   },
   {
     id: 'rahul-patel',
@@ -87,41 +99,13 @@ export const neighborhoodServiceProviders: Talent[] = [
     review_count: 31,
     created_at: '2024-01-08T09:15:00Z',
     updated_at: '2024-01-08T09:15:00Z',
-  },
-  {
-    id: 'vikram-singh',
-    society: 'worli',
-    name: 'Vikram Singh',
-    category: 'fitness',
-    description: 'Certified personal trainer and yoga instructor. Specializes in weight loss, muscle building, and stress relief through yoga.',
-    main_image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face',
-    images: [
-      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face',
-      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop',
-    ],
-    contact: {
-      phone: '+91 98765 43213',
-      email: 'vikram.singh@email.com',
-      location: 'Worli Naka, Mumbai'
-    },
-    experience: '4+ years',
-    pricing: '₹1200/session',
-    availability: 'Morning 6-9 AM, Evening 6-9 PM',
-    skills: ['Personal Training', 'Yoga', 'Weight Loss', 'Muscle Building', 'Nutrition'],
-    about: 'I am a certified personal trainer and yoga instructor with 4+ years of experience. I help clients achieve their fitness goals through personalized workout plans and yoga sessions. I specialize in weight loss, muscle building, and stress relief.',
-    portfolio: ['https://instagram.com/vikramfitness', 'https://youtube.com/@vikramyoga'],
-    is_verified: true,
-    is_active: true,
-    rating: 4.6,
-    review_count: 27,
-    created_at: '2024-01-12T16:45:00Z',
-    updated_at: '2024-01-12T16:45:00Z',
   }
 ];
 
 // Helper functions to filter data
 export const getProvidersBySociety = (society: string): Talent[] => {
-  return neighborhoodServiceProviders.filter(provider => provider.society === society);
+  // Return all providers regardless of society to make them visible across all locations
+  return neighborhoodServiceProviders;
 };
 
 export const getProviderById = (id: string): Talent | undefined => {
@@ -129,11 +113,8 @@ export const getProviderById = (id: string): Talent | undefined => {
 };
 
 export const searchProviders = (query: string, society?: string): Talent[] => {
-  const filtered = society 
-    ? neighborhoodServiceProviders.filter(provider => provider.society === society)
-    : neighborhoodServiceProviders;
-  
-  return filtered.filter(provider => 
+  // Search across all providers regardless of society to make them visible across all locations
+  return neighborhoodServiceProviders.filter(provider => 
     provider.name.toLowerCase().includes(query.toLowerCase()) ||
     provider.description.toLowerCase().includes(query.toLowerCase()) ||
     provider.contact.location.toLowerCase().includes(query.toLowerCase()) ||
@@ -142,9 +123,6 @@ export const searchProviders = (query: string, society?: string): Talent[] => {
 };
 
 export const getProvidersByCategory = (category: string, society?: string): Talent[] => {
-  const filtered = society 
-    ? neighborhoodServiceProviders.filter(provider => provider.society === society)
-    : neighborhoodServiceProviders;
-  
-  return filtered.filter(provider => provider.category === category);
+  // Return providers across all societies regardless of society parameter
+  return neighborhoodServiceProviders.filter(provider => provider.category === category);
 }; 

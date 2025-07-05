@@ -4,7 +4,7 @@ import { getProviderById } from '@/data/home-service-providers';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
-import { FiStar, FiMapPin, FiPhone, FiMail, FiChevronLeft, FiHeart, FiShare2, FiZoomIn, FiX, FiChevronRight, FiChevronLeft as FiChevronLeftIcon } from 'react-icons/fi';
+import { FiStar, FiMapPin, FiPhone, FiMail, FiChevronLeft, FiHeart, FiShare2, FiZoomIn, FiX, FiChevronRight, FiChevronLeft as FiChevronLeftIcon, FiInstagram } from 'react-icons/fi';
 import { VendorRating } from '@/components/VendorRating';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Footer from '@/components/Footer';
@@ -96,16 +96,6 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
     return societyNames[society as keyof typeof societyNames] || society;
   };
 
-  // Sample portfolio images - replace with actual data from talent.portfolio_images
-  const portfolioImages = [
-    '/portfolio/sample1.jpg',
-    '/portfolio/sample2.jpg', 
-    '/portfolio/sample3.jpg',
-    '/portfolio/sample4.jpg',
-    '/portfolio/sample5.jpg',
-    '/portfolio/sample6.jpg'
-  ];
-
   // Photo gallery functions
   const openModal = (index: number) => {
     setCurrentImageIndex(index);
@@ -119,12 +109,12 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
   };
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % portfolioImages.length);
+    setCurrentImageIndex((prev) => (prev + 1) % talent.images.length);
     setZoomLevel(1);
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + portfolioImages.length) % portfolioImages.length);
+    setCurrentImageIndex((prev) => (prev - 1 + talent.images.length) % talent.images.length);
     setZoomLevel(1);
   };
 
@@ -168,6 +158,11 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
   const avgRating = reviewCount > 0
     ? (reviews.reduce((sum, r) => sum + (r.rating || 0), 0) / reviewCount).toFixed(1)
     : null;
+
+  // Helper function to extract Instagram handles from portfolio
+  const getInstagramHandles = (portfolio: string[]) => {
+    return portfolio.filter(url => url.includes('instagram.com'));
+  };
 
   if (loading) {
     return (
@@ -277,7 +272,7 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
               {activeTab === 'about' && (
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-4 pt-2 pb-2 mt-4">About {talent.name}</h3>
-                  <p className="text-gray-700 leading-relaxed mb-6">{talent.about}</p>
+                  <p className="text-gray-700 leading-relaxed mb-6 whitespace-pre-line">{talent.description}</p>
                   <h4 className="text-lg font-semibold text-gray-900 mb-3">Skills & Expertise</h4>
                   <div className="flex flex-wrap gap-2">
                     {talent.skills.map((skill: string, index: number) => (
@@ -295,7 +290,7 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
                 <div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-6 pt-2 pb-2 mt-4">Portfolio</h3>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {portfolioImages.map((image, index) => (
+                    {talent.images.map((image: string, index: number) => (
                       <div 
                         key={index}
                         className="relative group cursor-pointer overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300"
@@ -380,7 +375,7 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
                       </div>
                       <button
                         onClick={() => window.open(`tel:${talent.contact.phone}`)}
-                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                        className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
                       >
                         Call Now
                       </button>
@@ -393,7 +388,7 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
                       </div>
                       <button
                         onClick={() => window.open(`mailto:${talent.contact.email}`)}
-                        className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                        className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
                       >
                         Send Email
                       </button>
@@ -405,6 +400,31 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
                         <p className="font-semibold text-gray-900">{talent.contact.location}</p>
                       </div>
                     </div>
+                    {getInstagramHandles(talent.portfolio).length > 0 && (
+                      <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                        <FiInstagram className="w-5 h-5 text-indigo-600" />
+                        <div className="flex-1">
+                          <p className="text-sm text-gray-600">Instagram</p>
+                          <p className="font-semibold text-gray-900">
+                            {getInstagramHandles(talent.portfolio).map((url, index) => {
+                              const handle = url.split('instagram.com/')[1]?.split('/')[0];
+                              return (
+                                <span key={index}>
+                                  @{handle}
+                                  {index < getInstagramHandles(talent.portfolio).length - 1 && ', '}
+                                </span>
+                              );
+                            })}
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => window.open(getInstagramHandles(talent.portfolio)[0])}
+                          className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
+                        >
+                          View Profile
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -461,16 +481,15 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
 
             {/* Image Counter */}
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-10 bg-black bg-opacity-50 text-white px-4 py-2 rounded-lg">
-              {currentImageIndex + 1} / {portfolioImages.length}
+              {currentImageIndex + 1} / {talent.images.length}
             </div>
 
             {/* Main Image */}
-            <div className="w-full h-full flex items-center justify-center overflow-hidden">
+            <div className="w-full h-full flex items-center justify-center bg-white">
               <img
-                src={portfolioImages[currentImageIndex]}
+                src={talent.images[currentImageIndex]}
                 alt={`Portfolio ${currentImageIndex + 1}`}
-                className="max-w-full max-h-full object-contain transition-transform duration-200"
-                style={{ transform: `scale(${zoomLevel})` }}
+                className="max-w-[95vw] max-h-[95vh] object-contain"
               />
             </div>
           </div>
