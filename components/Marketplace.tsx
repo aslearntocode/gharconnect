@@ -360,8 +360,8 @@ export function Marketplace({ location }: { location: string }) {
           <h1 className="text-3xl md:text-4xl font-bold text-white">{location} Marketplace</h1>
         </div>
 
-        {/* SEO/Keyword Intro Paragraph */}
-        <div className="bg-white border-b border-gray-200 py-4 px-4 sm:px-6 lg:px-8 text-center">
+        {/* SEO/Keyword Intro Paragraph (hidden visually, present for SEO) */}
+        <div className="sr-only">
           <p className="text-sm sm:text-base md:text-lg text-gray-700 max-w-5xl mx-auto">
             Buy and sell used electronics, furniture, books, clothing, sports equipment, home & garden items, toys, automotive goods, and more in {location}. Find great deals on secondhand items or list your own for sale in the trusted GharConnect community marketplace. Perfect for anyone looking to buy or sell pre-owned items locally.
           </p>
