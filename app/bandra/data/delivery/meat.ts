@@ -60,6 +60,6 @@ export const vendors: Vendor[] = [
     }],
     mobile: '+91 70213 58630',
     photo: ''
-  },
+  }
 ];
 

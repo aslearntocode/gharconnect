@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { auth } from "@/lib/firebase"
 import { User } from "firebase/auth"
 import { ProfileDropdown } from "@/components/ProfileDropdown"
@@ -38,6 +38,23 @@ interface ReportData {
   };
 }
 
+interface MarketplaceProduct {
+  id: string;
+  title: string;
+  price: number;
+  condition: string;
+  images: string[];
+  created_at: string;
+  building_name?: string;
+}
+
+interface ConnectPost {
+  id: string;
+  title: string;
+  body: string;
+  created_at: string;
+}
+
 export default function Home() {
   const router = useRouter()
   const [activeSection, setActiveSection] = useState('distribution') // 'distribution' or 'offer'
@@ -62,13 +79,12 @@ export default function Home() {
   const [reportData, setReportData] = useState<ReportData | null>(null)
   const [activeCard, setActiveCard] = useState<'investment' | 'credit'>('investment')
   const [touchStartTime, setTouchStartTime] = useState(0)
-  const [touchStartX, setTouchStartX] = useState(0)
   const [touchStartY, setTouchStartY] = useState(0)
   const [lastTouchTime, setLastTouchTime] = useState(0)
   const TOUCH_DELAY = 500 // Minimum time between touches in milliseconds
   const TOUCH_THRESHOLD = 10 // Pixel threshold to determine if it's a tap or scroll
   const [activeServiceCard, setActiveServiceCard] = useState('credit') // Add this new state
-  const [isMobile, setIsMobile] = useState(true)
+  const [isMobile, setIsMobile] = useState(false)
   const [currentSlide, setCurrentSlide] = useState(0)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const [formData, setFormData] = useState({
@@ -90,6 +106,10 @@ export default function Home() {
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
   const [currentAdCarouselIndex, setCurrentAdCarouselIndex] = useState(0);
   const [currentPopularServicesIndex, setCurrentPopularServicesIndex] = useState(0);
+  const [marketplaceProducts, setMarketplaceProducts] = useState<MarketplaceProduct[]>([]);
+  const [connectPosts, setConnectPosts] = useState<ConnectPost[]>([]);
+  const [carouselIndex, setCarouselIndex] = useState(0);
+  const carouselRef = useRef<HTMLDivElement>(null);
 
   const testimonials = [
     {
@@ -206,15 +226,11 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -364,20 +380,6 @@ export default function Home() {
     e.preventDefault()
     // Handle chat submission
     setChatForm({ name: '', message: '' })
-  }
-
-  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
-    setTouchStart(e.touches[0].clientX)
-    setTouchMoved(false)
-  }
-
-  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    setTouchEnd(e.touches[0].clientX)
-    setTouchMoved(true)
-  }
-
-  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (!touchMoved) return
   }
 
   const handleCardClick = (e: React.MouseEvent) => {
@@ -548,6 +550,53 @@ export default function Home() {
     } else if (isRightSwipe) {
       prevPopularService();
     }
+  };
+
+  useEffect(() => {
+    // Fetch latest 4 marketplace products for Parel
+    const fetchMarketplaceProducts = async () => {
+      const { getSupabaseClient } = await import("@/lib/supabase");
+      const supabase = await getSupabaseClient();
+      const { data, error } = await supabase
+        .from("marketplace_products")
+        .select("id,title,price,condition,images,created_at,building_name")
+        .eq("is_active", true)
+        .eq("area", "parel")
+        .order("created_at", { ascending: false })
+        .limit(4);
+      if (!error && data) setMarketplaceProducts(data);
+    };
+    fetchMarketplaceProducts();
+  }, []);
+
+  useEffect(() => {
+    // Fetch latest 3 connect posts for Parel
+    const fetchConnectPosts = async () => {
+      const { getSupabaseClient } = await import("@/lib/supabase");
+      const supabase = await getSupabaseClient();
+      const { data, error } = await supabase
+        .from("posts")
+        .select("id,title,body,created_at")
+        .eq("area", "Parel")
+        .order("created_at", { ascending: false })
+        .limit(3);
+      if (!error && data) setConnectPosts(data);
+    };
+    fetchConnectPosts();
+  }, []);
+
+  // Carousel navigation handlers
+  const numSlides = 2;
+  const handlePrev = () => setCarouselIndex((prev) => (prev - 1 + numSlides) % numSlides);
+  const handleNext = () => setCarouselIndex((prev) => (prev + 1) % numSlides);
+
+  // Touch handlers for mobile swipe
+  const [touchEndX, setTouchEndX] = useState(0);
+  const handleTouchStart = (e: React.TouchEvent) => setTouchStart(e.touches[0].clientX);
+  const handleTouchMove = (e: React.TouchEvent) => setTouchEndX(e.touches[0].clientX);
+  const handleTouchEnd = () => {
+    if (touchStart - touchEndX > 50) handleNext();
+    if (touchEndX - touchStart > 50) handlePrev();
   };
 
   return (
@@ -806,65 +855,163 @@ export default function Home() {
         </div>
 
         {/* Property Management Services Section */}
-        <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-0 pt-2 md:pt-3">
+        <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-0 pt-1 md:pt-2">
           <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="py-12 flex flex-col md:flex-row items-center justify-between gap-8 relative">
-              {/* Left Content */}
-              <div className="flex-1 text-center md:text-left">
-                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4">
-                  Why Collaborate With Us?
-                </h3>
-                <p className="text-lg text-white/90 mb-6 max-w-4xl">
-                Community outreach is a powerful way to connect with neighbors and strengthen the sense of belonging.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 items-stretch gap-8 w-full">
-                  <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center text-center w-full h-full min-h-[340px] justify-between">
-                    <span className="text-3xl mb-2">🏠</span>
-                    <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">List Your Property With Us</h4>
-                    <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
-                      <li>Save on brokerage fees – We charge only 10% of one month's rent.</li>
-                      <li>Find genuine tenants from within your community.</li>
-                      <li>Renovation support – Get the property ready for the next tenant with our expert services.</li>
-                    </ul>
-                    <div className="flex flex-row justify-center items-end gap-3 md:gap-4 mt-4 w-full grow">
-                      <a 
-                        href="/parel/rent-apartment" 
-                        className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white hover:bg-blue-700 rounded text-xs font-semibold transition-all duration-300 shadow-md"
-                        style={{ minHeight: '36px' }}
-                      >
-                        <span className="hidden md:inline">List Your Property With Us</span>
-                        <span className="md:hidden">List Property</span>
-                        <svg className="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                      </a>
+          <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+            <div className="py-6 flex flex-col items-center justify-center gap-4 relative">
+              {/* Content */}
+              <div className="flex-1 text-center w-full">
+                {carouselIndex === 0 ? (
+                  <>
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 break-words w-full max-w-full">
+                      Marketplace
+                    </h3>
+                    <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
+                      Discover items for sale from your community. Browse, buy, or list your own items for neighbors to see.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 break-words w-full max-w-full">
+                      Connect
+                    </h3>
+                    <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
+                      Join the conversation! Ask questions, share updates, and connect with your neighbors in Parel.
+                    </p>
+                  </>
+                )}
+                <div className="w-full max-w-xl mx-auto my-4 overflow-x-hidden">
+                  <div
+                    className="relative overflow-hidden rounded-lg w-full max-w-full"
+                    ref={carouselRef}
+                    onTouchStart={e => { if (!isMobile) handleTouchStart(e); }}
+                    onTouchMove={e => { if (!isMobile) handleTouchMove(e); }}
+                    onTouchEnd={() => { if (!isMobile) handleTouchEnd(); }}
+                  >
+                    <div
+                      className="flex transition-transform duration-500 w-full max-w-full"
+                      style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
+                    >
+                      {/* Marketplace Slide */}
+                      <div className="min-w-full w-full max-w-full bg-gradient-to-br from-blue-50 to-indigo-100 p-3 flex flex-col items-center text-center">
+                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-md">
+                          <span className="text-lg">🛍️</span>
+                        </div>
+                        <h4 className="text-sm font-bold text-gray-900 mb-1 leading-none">Marketplace</h4>
+                        <div className="w-full overflow-x-auto">
+                          <div className="flex flex-row gap-2 w-full justify-center md:justify-start flex-nowrap">
+                            {marketplaceProducts.length === 0 ? (
+                              <div className="flex-1 text-center text-gray-500 py-3">No products listed yet.</div>
+                            ) : (
+                              (isMobile ? marketplaceProducts.slice(0, 2) : marketplaceProducts).map((product) => (
+                                <div key={product.id} className="bg-white rounded-md shadow p-1 flex flex-col items-center text-center border border-gray-100 hover:shadow-md transition-all min-w-[110px] max-w-[140px] w-full">
+                                  <div className="w-full h-14 flex items-center justify-center mb-1 overflow-hidden rounded">
+                                    {product.images && product.images.length > 0 ? (
+                                      <img
+                                        src={product.images[0]}
+                                        alt={product.title}
+                                        className="object-cover w-full h-full"
+                                        onError={e => (e.currentTarget.src = '/placeholder-image.svg')}
+                                      />
+                                    ) : (
+                                      <div className="w-full h-full flex items-center justify-center text-gray-300 bg-gray-100 text-xs">No Image</div>
+                                    )}
+                                  </div>
+                                  <div className="font-semibold text-[11px] text-gray-900 line-clamp-2 mb-0.5">{product.title}</div>
+                                  <div className="text-[9px] text-gray-500 mb-0.5">{product.condition}</div>
+                                  <div className="text-xs font-bold text-green-600 mb-0.5">₹{product.price.toLocaleString('en-IN')}</div>
+                                  {product.building_name && (
+                                    <div className="text-[8px] text-gray-400 mb-0.5 truncate">{product.building_name}</div>
+                                  )}
+                                </div>
+                              ))
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex flex-row justify-center items-end gap-2 md:gap-3 mt-2 w-full grow">
+                          <a 
+                            href="/parel/marketplace" 
+                            className="inline-flex items-center px-2 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 rounded text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
+                            style={{ minHeight: '24px' }}
+                          >
+                            <span>Browse</span>
+                            <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                      {/* Connect Slide */}
+                      <div className="min-w-full w-full max-w-full bg-gradient-to-br from-blue-50 to-indigo-100 p-3 flex flex-col items-center text-center">
+                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-md">
+                          <span className="text-lg">💬</span>
+                        </div>
+                        <h4 className="text-sm font-bold text-gray-900 mb-1 leading-none">Connect</h4>
+                        <div className="w-full overflow-x-auto">
+                          <div className="flex flex-row gap-2 w-full justify-center md:justify-start flex-nowrap">
+                            {connectPosts.length === 0 ? (
+                              <div className="flex-1 text-center text-gray-500 py-3">No posts yet.</div>
+                            ) : (
+                              (isMobile ? connectPosts.slice(0, 2) : connectPosts).map((post) => (
+                                <div key={post.id} className="p-1 bg-white rounded-md shadow-sm border border-gray-100 hover:shadow-md transition-shadow mb-0 w-full min-w-[140px] max-w-[180px] flex-shrink-0 flex flex-col items-start">
+                                  <div className="flex items-center justify-between mb-0.5 w-full">
+                                    <span className="text-xs font-bold text-gray-800 bg-blue-100 px-1 py-0.5 rounded-full truncate max-w-[70%]">{post.title}</span>
+                                    <span className="text-xs text-gray-500 bg-gray-100 px-1 py-0.5 rounded-full">{new Date(post.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
+                                  </div>
+                                  <p className="text-xs text-gray-600 leading-relaxed line-clamp-4 w-full">{post.body}</p>
+                                </div>
+                              ))
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex flex-row justify-center items-end gap-2 md:gap-3 mt-1 w-full grow">
+                          <a 
+                            href="/parel/connect" 
+                            className="inline-flex items-center px-2 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 rounded text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
+                            style={{ minHeight: '24px' }}
+                          >
+                            <span>Join</span>
+                            <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="bg-white rounded-2xl shadow-xl p-8 flex flex-col items-center text-center w-full h-full min-h-[340px] justify-between">
-                    <span className="text-3xl mb-2">🧑‍💼</span>
-                    <h4 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 leading-none">List Your Business With Us</h4>
-                    <ul className="text-gray-600 text-md list-disc pl-4 text-left mt-2 space-y-1">
-                      <li>Reach more customers right where they live.</li>
-                      <li>Build trust by getting rated and reviewed by the community.</li>
-                      <li>Zero commission – You keep 100% of your earnings.</li>
-                    </ul>
-                    <div className="flex flex-row justify-center items-end gap-3 md:gap-4 mt-4 w-full grow">
-                      <a 
-                        href="https://wa.me/919321314553?text=I%20want%20to%20list%20my%20business%20in%20Parel" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center px-3 py-1.5 bg-green-600 text-white hover:bg-green-700 rounded text-xs font-semibold transition-all duration-300 shadow-md"
-                        style={{ minHeight: '36px' }}
-                      >
-                        <span className="hidden md:inline">WhatsApp Details on 9321314553</span>
-                        <span className="md:hidden">WhatsApp to List</span>
-                        <svg className="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/>
-                        </svg>
-                      </a>
-                    </div>
+                    {/* Carousel Arrows (mobile only) */}
+                    <button
+                      className="block md:hidden absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-3 shadow hover:bg-opacity-100 transition z-30 pointer-events-auto"
+                      onClick={handlePrev}
+                      aria-label="Previous"
+                      style={{ left: 4 }}
+                    >
+                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                    </button>
+                    <button
+                      className="block md:hidden absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-3 shadow hover:bg-opacity-100 transition z-30 pointer-events-auto"
+                      onClick={handleNext}
+                      aria-label="Next"
+                    >
+                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                    </button>
+                    {/* Carousel Arrows (desktop only) */}
+                    <button
+                      className="hidden md:block absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-opacity-100 transition z-10"
+                      onClick={handlePrev}
+                      aria-label="Previous"
+                      style={{ left: 4 }}
+                    >
+                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                    </button>
+                    <button
+                      className="hidden md:block absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-opacity-100 transition z-10"
+                      onClick={handleNext}
+                      aria-label="Next"
+                      style={{ right: 4 }}
+                    >
+                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1135,7 +1282,7 @@ export default function Home() {
           </div>
         </div>
         {/* Home Service Providers Indigo Container */}
-        <div className="bg-indigo-700 py-12">
+        <div className="bg-indigo-600 py-12">
           <div className="max-w-4xl mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold text-white mb-4">Neighbors Providing Services</h2>
             <p className="text-indigo-100 mb-6">Discover trusted, community-rated neighbors for all your needs - artists, musicians, lawyers, consultants and more. Let Your Neighbors Know You!</p>
