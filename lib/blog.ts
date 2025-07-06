@@ -13,6 +13,52 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'community-discussion-board-launch',
+    title: '🗣️ Moved to a New Location: Post, Comment & Connect With Your Neighborhood!',
+    excerpt: 'GharConnect.in has launched a new community discussion board where you can post, comment, and connect with your neighborhood, not just your building. Discover how this feature helps you ask questions, get recommendations, promote services, and build real community.',
+    content: `
+We're excited to announce a brand-new feature on GharConnect.in — a community discussion board where residents can post, comment, and connect with others in their area.
+
+Unlike apps like MyGate, which limit conversations within individual gated societies, GharConnect goes a step further. Our platform allows you to interact with people across your neighborhood, not just your building.
+
+## 💬 What Can You Do With This New Feature?
+- **Ask questions** — "Know any good plumbers in Parel?"
+- **Get recommendations** — "Which yoga trainer do you use?"
+- **Promote services** — "I teach music to kids at home – slots open!"
+- **Buy/sell locally** — "Selling a cycle in Worli, great condition."
+- **Share updates** — "Water supply cut in our lane today?"
+
+It's like a digital noticeboard for your neighborhood — but smarter and more engaging.
+
+## 🌟 Why This Matters
+
+✔️ **Open, Hyperlocal Conversations**
+Chat not just with your society, but the wider area — whether it's Parel, Worli, or elsewhere in Mumbai.
+
+✔️ **Support Local Freelancers & Home Businesses**
+Get to know your talented neighbors and support their work — from tiffin services to tuition classes.
+
+✔️ **Stay Informed**
+Be the first to know about community events, alerts, and happenings around your area.
+
+✔️ **Build Real Community**
+Move beyond silent elevators and locked doors — connect meaningfully with those who live nearby.
+
+## 🔗 Try It Now
+Just go to your locality page (like gharconnect.in/parel) and scroll to the "Community Chat" section.
+Post something. Reply to someone. Start a conversation.
+
+At GharConnect.in, we're not just about listings — we're about building stronger, smarter, and more connected neighborhoods.
+
+Let's talk, Mumbai. 🏙️💬
+`,
+    author: 'GharConnect Team',
+    date: '2025-07-06',
+    readTime: '3 min read',
+    category: 'Platform Updates',
+    image: '/blog/community-discussion-board.jpg'
+  },
+  {
     slug: 'gharconnect-vs-nobroker-housing-rental-listing',
     title: 'Why Listing Your Rental Property on GharConnect.in is Smarter Than Using NoBroker or Housing.com',
     excerpt: 'Looking to rent out your flat? Discover why GharConnect.in is better than NoBroker and Housing.com. Trusted tenants, faster deals, zero brokerage.',
