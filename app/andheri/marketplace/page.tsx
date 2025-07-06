@@ -178,7 +178,7 @@ export default function MarketplacePage() {
       
       {/* Indigo Banner */}
       <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
-        <h1 className="text-3xl md:text-4xl font-bold text-white">Parel Marketplace</h1>
+        <h1 className="text-3xl md:text-4xl font-bold text-white">Marketplace</h1>
       </div>
 
       {/* Main Content */}

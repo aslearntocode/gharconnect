@@ -189,7 +189,7 @@ export default function SellPage() {
             </Button>
             <div>
               <h1 className="text-2xl font-bold text-gray-900">Sell Your Item</h1>
-              <p className="text-gray-600">List your item in the Parel marketplace</p>
+              <p className="text-gray-600">List your item in the marketplace</p>
             </div>
           </div>
         </div>
