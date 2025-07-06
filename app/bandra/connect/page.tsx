@@ -239,25 +239,27 @@ export default function BandraConnectPage() {
         </div>
         <div className="max-w-6xl mx-auto py-8 px-4">
           {/* SEO Content Section */}
-          <section className="mb-8 bg-white p-6 rounded-lg shadow-sm">
+          <section className="sr-only mb-8 bg-white p-6 rounded-lg shadow-sm">
             <h2 className="text-xl font-semibold text-gray-900 mb-3">Welcome to Bandra Community Discussions</h2>
-            <p className="text-gray-700 mb-4">
-              Join our vibrant community forum where residents share local insights, recommendations, and reach out for urgent help. 
-              Whether you're looking for local service recommendations, or want to discuss community events, 
-              this is the perfect place to engage with the Parel community.
-            </p>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-              <div className="bg-indigo-50 p-3 rounded">
-                <h3 className="font-semibold text-indigo-800 mb-1">Local Recommendations</h3>
-                <p className="text-indigo-700">Share and discover the best local restaurants, services, and hidden gems in Bandra.</p>
-              </div>
-              <div className="bg-green-50 p-3 rounded">
-                <h3 className="font-semibold text-green-800 mb-1">Community Events</h3>
-                <p className="text-green-700">Stay updated on local events, festivals, and community gatherings in Bandra.</p>
-              </div>
-              <div className="bg-purple-50 p-3 rounded">
-                <h3 className="font-semibold text-purple-800 mb-1">Urgent Help</h3>
-                <p className="text-purple-700">Use the community to get help with urgent needs. Together we can make a difference.</p>
+            <div className="sr-only">
+              <p className="text-gray-700 mb-4">
+                Join our vibrant community forum where residents share local insights, recommendations, and reach out for urgent help. 
+                Whether you're looking for local service recommendations, or want to discuss community events, 
+                this is the perfect place to engage with the Bandra community.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div className="bg-indigo-50 p-3 rounded">
+                  <h3 className="font-semibold text-indigo-800 mb-1">Local Recommendations</h3>
+                  <p className="text-indigo-700">Share and discover the best local restaurants, services, and hidden gems in Bandra.</p>
+                </div>
+                <div className="bg-green-50 p-3 rounded">
+                  <h3 className="font-semibold text-green-800 mb-1">Community Events</h3>
+                  <p className="text-green-700">Stay updated on local events, festivals, and community gatherings in Bandra.</p>
+                </div>
+                <div className="bg-purple-50 p-3 rounded">
+                  <h3 className="font-semibold text-purple-800 mb-1">Urgent Help</h3>
+                  <p className="text-purple-700">Use the community to get help with urgent needs. Together we can make a difference.</p>
+                </div>
               </div>
             </div>
           </section>
