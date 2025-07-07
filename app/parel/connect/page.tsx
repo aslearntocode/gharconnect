@@ -7,6 +7,8 @@ import Header from '@/components/Header';
 import Link from 'next/link';
 import { FiSearch } from 'react-icons/fi';
 import Head from 'next/head';
+import LoginModal from '@/components/LoginModal'
+import { usePathname } from 'next/navigation'
 
 interface Post {
   id: string;
@@ -14,6 +16,7 @@ interface Post {
   body: string;
   user_id: string;
   created_at: string;
+  comment_count?: number;
 }
 
 interface Comment {
@@ -37,6 +40,8 @@ export default function ParelConnectPage() {
   const [commentLoading, setCommentLoading] = useState(false);
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [search, setSearch] = useState('');
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const pathname = usePathname();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -51,10 +56,20 @@ export default function ParelConnectPage() {
     const supabase = await getSupabaseClient();
     const { data, error } = await supabase
       .from('posts')
-      .select('*')
+      .select(`
+        *,
+        comment_count:comments(count)
+      `)
       .eq('area', 'Parel')
       .order('created_at', { ascending: false });
-    if (!error) setPosts(data || []);
+    if (!error) {
+      // Transform the data to flatten the comment_count
+      const transformedData = (data || []).map(post => ({
+        ...post,
+        comment_count: post.comment_count?.[0]?.count || 0
+      }));
+      setPosts(transformedData);
+    }
     setLoading(false);
   };
 
@@ -217,6 +232,7 @@ export default function ParelConnectPage() {
           }}
         />
       </Head>
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} redirectPath={pathname} />
       <main className="min-h-screen bg-gray-50">
         <Header />
         {/* Indigo Banner */}
@@ -291,7 +307,11 @@ export default function ParelConnectPage() {
               </form>
             </section>
           ) : (
-            <div className="mb-8 text-center text-gray-600 text-lg">Login to post or comment</div>
+            <div className="mb-8 text-center">
+              <Button onClick={() => setIsLoginModalOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white text-lg px-6 py-3 rounded">
+                Login to post or comment
+              </Button>
+            </div>
           )}
           {/* Posts List */}
           <section>
@@ -303,17 +323,22 @@ export default function ParelConnectPage() {
             ) : (
               <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
                 {filteredPosts.map(post => (
-                  <li key={post.id} className="bg-white p-4 rounded shadow h-full flex flex-col justify-between">
+                  <li key={post.id} className="bg-white p-4 rounded shadow h-full flex flex-col justify-between relative">
                     <div className="flex-1 w-full">
-                      <h3 className="font-semibold text-lg">{post.title}</h3>
-                      <p className="text-gray-700 mb-2">{post.body}</p>
+                      <div className="flex justify-between items-start gap-2 mb-2">
+                        <h3 className="font-semibold text-lg break-words flex-1">{post.title}</h3>
+                        <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full whitespace-nowrap">
+                          {post.comment_count && post.comment_count > 0 ? `${post.comment_count} comments` : 'No Comment Yet'}
+                        </span>
+                      </div>
+                      <p className="text-gray-700 mb-3 line-clamp-2">{post.body}</p>
                       <time className="text-xs text-gray-400" dateTime={post.created_at}>
                         {new Date(post.created_at).toLocaleString()}
                       </time>
                     </div>
                     <div className="mt-4 flex-shrink-0">
-                      <Button size="sm" asChild className="bg-blue-100 text-blue-700 hover:bg-blue-200 w-full">
-                        <Link href={`/parel/connect/${post.id}`}>View Comments</Link>
+                      <Button size="sm" asChild className="bg-indigo-600 hover:bg-indigo-700 text-white w-full">
+                        <Link href={`/parel/connect/${post.id}`}>Read More</Link>
                       </Button>
                     </div>
                   </li>
