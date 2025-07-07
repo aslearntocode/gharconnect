@@ -57,6 +57,7 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
   const handleGoogleLogin = async () => {
     setError('')
     setLoading(true)
+    console.log('Starting Google login process...')
 
     try {
       const provider = new GoogleAuthProvider()
@@ -64,12 +65,18 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
         prompt: 'select_account'
       })
       
+      console.log('Initiating sign in with popup...')
       const result = await signInWithPopup(auth, provider)
+      console.log('Sign in successful:', result.user?.email)
+      
       if (result.user) {
+        console.log('Checking if first time user...')
         const isFirstTime = await checkIfFirstTimeUser(result.user.uid)
+        console.log('Is first time user:', isFirstTime)
         setIsFirstTimeUser(isFirstTime)
         
         if (!isFirstTime) {
+          console.log('Not first time user, closing modal and redirecting...')
           onClose()
           if (onLoginSuccess) {
             onLoginSuccess()
@@ -83,6 +90,7 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
       setError(error.message)
     } finally {
       setLoading(false)
+      console.log('Login process completed')
     }
   }
 
@@ -97,19 +105,31 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
 
   // If user is already authenticated, close the modal and redirect
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+    
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user && isOpen) {
-        onClose()
-        if (onLoginSuccess) {
-          onLoginSuccess()
-        } else {
-          router.push(redirectPath)
-        }
+      // Only auto-close if the modal is open and we're not in the middle of a login process
+      if (user && isOpen && !loading) {
+        console.log('User authenticated, closing login modal');
+        // Add a small delay to prevent race conditions
+        timeoutId = setTimeout(() => {
+          onClose()
+          if (onLoginSuccess) {
+            onLoginSuccess()
+          } else {
+            router.push(redirectPath)
+          }
+        }, 100);
       }
     });
     
-    return () => unsubscribe();
-  }, [isOpen, onClose, redirectPath, router, onLoginSuccess])
+    return () => {
+      unsubscribe();
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isOpen, onClose, redirectPath, router, onLoginSuccess, loading])
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

@@ -8,10 +8,9 @@ export default function DashboardDropdown() {
 
   const handleSignOut = async () => {
     try {
-      await auth.signOut();
-      router.push('/parel/login');
+      router.push('/logout');
     } catch (error) {
-      console.error('Error signing out:', error);
+      console.error('Error redirecting to logout:', error);
     }
   };
 

@@ -61,15 +61,11 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
 
   const handleSignOut = async () => {
     try {
-      await signOut(auth)
-      // Check if we're on the vendor page and redirect accordingly
-      if (window.location.pathname === '/vendor') {
-        router.push('/vendor')
-      } else {
-        router.push('/')
-      }
+      // Get current pathname and pass it to logout page
+      const currentPath = window.location.pathname;
+      router.push(`/logout?from=${encodeURIComponent(currentPath)}`)
     } catch (error) {
-      console.error('Error signing out:', error)
+      console.error('Error redirecting to logout:', error)
     }
   }
 

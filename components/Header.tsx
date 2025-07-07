@@ -35,6 +35,7 @@ export default function Header() {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      console.log('Header: Auth state changed, user:', user?.email || 'null');
       setUser(user)
       if (user?.uid) {
         try {
@@ -74,10 +75,11 @@ export default function Header() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth)
-      router.push('/')
+      // Get current pathname and pass it to logout page
+      const currentPath = window.location.pathname;
+      router.push(`/logout?from=${encodeURIComponent(currentPath)}`)
     } catch (error) {
-      console.error('Error signing out:', error)
+      console.error('Error redirecting to logout:', error)
     }
   }
 

@@ -21,7 +21,8 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
+      // Only redirect to login if user is not authenticated and not already on login page
+      if (!user && !pathname.includes('/login') && !pathname.includes('/logout')) {
         const society = getSocietyFromPath(pathname)
         router.push(`/${society}/login`)
       }
@@ -37,14 +38,14 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     window.addEventListener('click', handleActivity)
     window.addEventListener('scroll', handleActivity)
 
-    // Check for inactivity
-    const interval = setInterval(() => {
-      if (Date.now() - lastActivity >= TIMEOUT_DURATION) {
-        signOut(auth)
-        const society = getSocietyFromPath(pathname)
-        router.push(`/${society}/login`)
-      }
-    }, 1000) // Check every second
+    // Check for inactivity - DISABLED for now to prevent auto-logout issues
+    // const interval = setInterval(() => {
+    //   if (Date.now() - lastActivity >= TIMEOUT_DURATION) {
+    //     signOut(auth)
+    //     const society = getSocietyFromPath(pathname)
+    //     router.push(`/${society}/login`)
+    //   }
+    // }, 1000) // Check every second
 
     return () => {
       unsubscribe()
@@ -52,7 +53,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
       window.removeEventListener('keydown', handleActivity)
       window.removeEventListener('click', handleActivity)
       window.removeEventListener('scroll', handleActivity)
-      clearInterval(interval)
+      // clearInterval(interval)
     }
   }, [router, lastActivity, pathname])
 
