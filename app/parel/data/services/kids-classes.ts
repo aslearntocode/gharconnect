@@ -121,5 +121,15 @@ export const vendors: Vendor[] = [
       unit: 'per month'
     }],
     mobile: '+91 90825 03460'
+  },
+  {
+    name: 'Siddharth',
+    services: [{
+      name: 'Badminton Coaching',
+      description: 'Badminton lessons for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 99673 51381'
   }
 ]; 

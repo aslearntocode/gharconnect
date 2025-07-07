@@ -201,7 +201,7 @@ export default function Home() {
     },
     {
       id: 'connect',
-      title: 'Connect',
+      title: 'Social',
       description: 'Community Q&A & discussions',
       icon: FiUsers,
       href: '/parel/connect',
@@ -890,7 +890,7 @@ export default function Home() {
                 ) : (
                   <>
                     <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 break-words w-full max-w-full">
-                      Connect
+                      Social
                     </h3>
                     <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
                       Join the conversation! Ask questions, share updates, and connect with your neighbors in Parel.
