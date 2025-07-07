@@ -56,10 +56,17 @@ export default function BandraConnectPage() {
     const supabase = await getSupabaseClient();
     const { data, error } = await supabase
       .from('posts')
-      .select('*')
+      .select(`*, comment_count:comments(count)`)
       .eq('area', 'Bandra')
       .order('created_at', { ascending: false });
-    if (!error) setPosts(data || []);
+    if (!error) {
+      // Transform the data to flatten the comment_count
+      const transformedData = (data || []).map(post => ({
+        ...post,
+        comment_count: post.comment_count?.[0]?.count || 0
+      }));
+      setPosts(transformedData);
+    }
     setLoading(false);
   };
 
