@@ -21,5 +21,15 @@ export const vendors: Vendor[] = [
       unit: 'kg'
     }],
     mobile: '+91 9892826805'
-  }
+  },
+{
+  name: 'Bubble Drycleaning',
+  services: [{
+    name: 'Dryclean & Steam Press',
+    description: 'Dryclean & Steam Press',
+    price: 'Call for price',
+    unit: 'kg'
+  }],
+  mobile: '+91 98670 52464'
+}
 ]; 

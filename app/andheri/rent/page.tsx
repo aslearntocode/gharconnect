@@ -296,7 +296,7 @@ export default function RentPage() {
                 <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Location</th>
                 <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Size</th>
                 <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Area</th>
-                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Rent</th>
+                <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Rent<br/><span className="text-xs font-normal normal-case">negotiable with <br/>varied payment terms</span></th>
                 <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Furnished</th>
                 <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Available From</th>
                 <th className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Contact</th>
@@ -431,7 +431,7 @@ export default function RentPage() {
                       <div>{apt.location || '-'}</div>
                       <div className="text-gray-500">Area</div>
                       <div>{apt.carpet_area ? `${apt.carpet_area} sq.ft` : '-'}</div>
-                      <div className="text-gray-500">Rent</div>
+                      <div className="text-gray-500">Rent<br/><span className="text-xs">negotiable with <br/>varied payment terms</span></div>
                       <div>{apt.rent_amount ? `₹${apt.rent_amount.toLocaleString()}` : '-'}</div>
                       <div className="text-gray-500">Furnished</div>
                       <div>{apt.furnishing_status ? apt.furnishing_status.charAt(0).toUpperCase() + apt.furnishing_status.slice(1) : '-'}</div>

@@ -23,32 +23,13 @@ export const vendors: Vendor[] = [
     mobile: '+91 9892826805'
   },
   {
-    name: 'Vijay',
+    name: 'Bubble Drycleaning',
     services: [{
-      name: 'Wash & Fold',
-      description: 'Clothes washed and folded',
+      name: 'Dryclean & Steam Press',
+      description: 'Dryclean & Steam Press',
       price: 'Call for price',
       unit: 'kg'
     }],
-    mobile: '+91 7710940252'
-  },
-  {
-    name: 'Santosh',
-    services: [{
-      name: 'Wash & Fold',
-      description: 'Clothes washed and folded',
-      price: 'Call for price',
-      unit: 'kg'
-    }],
-    mobile: '+91 9651143603'
-  },
-  {
-    name: 'Sukhmilal Rajak',
-    services: [{
-      name: 'Wash & Fold',
-      description: 'Clothes washed and folded',
-      price: 'Call for price',
-      unit: 'kg'
-    }],
-  mobile: '+91 9324326757'}
+    mobile: '+91 98670 52464'
+  }
 ]; 
