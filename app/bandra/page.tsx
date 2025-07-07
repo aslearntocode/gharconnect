@@ -899,7 +899,7 @@ export default function Home() {
                     </p>
                   </>
                 )}
-                <div className="w-full max-w-xl mx-auto my-4 overflow-x-hidden">
+                <div className="w-full max-w-xl md:max-w-4xl mx-auto my-4 overflow-x-hidden">
                   <div
                     className="relative overflow-hidden rounded-lg w-full max-w-full"
                     ref={carouselRef}
@@ -916,15 +916,15 @@ export default function Home() {
                         <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-md">
                           <span className="text-lg">🛍️</span>
                         </div>
-                        <h4 className="text-sm font-bold text-gray-900 mb-1 leading-none">Marketplace</h4>
+                        {/* <h4 className="text-sm font-bold text-gray-900 mb-1 leading-none">Marketplace</h4> */}
                         <div className="w-full overflow-x-auto">
-                          <div className="flex flex-row gap-2 w-full justify-center md:justify-start flex-nowrap">
+                          <div className="flex flex-row gap-2 w-full justify-center flex-nowrap">
                             {marketplaceProducts.length === 0 ? (
                               <div className="flex-1 text-center text-gray-500 py-3">No products listed yet.</div>
                             ) : (
                               (isMobile ? marketplaceProducts.slice(0, 2) : marketplaceProducts).map((product) => (
-                                <div key={product.id} className="bg-white rounded-md shadow p-1 flex flex-col items-center text-center border border-gray-100 hover:shadow-md transition-all min-w-[110px] max-w-[140px] w-full">
-                                  <div className="w-full h-14 flex items-center justify-center mb-1 overflow-hidden rounded">
+                                <div key={product.id} className="bg-white rounded-md shadow p-1 flex flex-col items-center text-center border border-gray-100 hover:shadow-md transition-all min-w-[110px] md:min-w-[160px] max-w-[140px] md:max-w-[200px] w-full">
+                                  <div className="w-full h-14 md:h-20 flex items-center justify-center mb-1 overflow-hidden rounded">
                                     {product.images && product.images.length > 0 ? (
                                       <img
                                         src={product.images[0]}
@@ -936,11 +936,11 @@ export default function Home() {
                                       <div className="w-full h-full flex items-center justify-center text-gray-300 bg-gray-100 text-xs">No Image</div>
                                     )}
                                   </div>
-                                  <div className="font-semibold text-[11px] text-gray-900 line-clamp-2 mb-0.5">{product.title}</div>
-                                  <div className="text-[9px] text-gray-500 mb-0.5">{product.condition}</div>
-                                  <div className="text-xs font-bold text-green-600 mb-0.5">₹{product.price.toLocaleString('en-IN')}</div>
+                                  <div className="font-semibold text-[11px] md:text-sm text-gray-900 line-clamp-2 mb-0.5">{product.title}</div>
+                                  <div className="text-[9px] md:text-xs text-gray-500 mb-0.5">{product.condition}</div>
+                                  <div className="text-xs md:text-sm font-bold text-green-600 mb-0.5">₹{product.price.toLocaleString('en-IN')}</div>
                                   {product.building_name && (
-                                    <div className="text-[8px] text-gray-400 mb-0.5 truncate">{product.building_name}</div>
+                                    <div className="text-[8px] md:text-xs text-gray-400 mb-0.5 truncate">{product.building_name}</div>
                                   )}
                                 </div>
                               ))
@@ -965,19 +965,19 @@ export default function Home() {
                         <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-md">
                           <span className="text-lg">💬</span>
                         </div>
-                        <h4 className="text-sm font-bold text-gray-900 mb-1 leading-none">Connect</h4>
+                        {/* <h4 className="text-sm font-bold text-gray-900 mb-1 leading-none">Connect</h4> */}
                         <div className="w-full overflow-x-auto">
-                          <div className="flex flex-row gap-2 w-full justify-center md:justify-start flex-nowrap">
+                          <div className="flex flex-row gap-2 w-full justify-center flex-nowrap">
                             {connectPosts.length === 0 ? (
                               <div className="flex-1 text-center text-gray-500 py-3">No posts yet.</div>
                             ) : (
                               (isMobile ? connectPosts.slice(0, 2) : connectPosts).map((post) => (
-                                <div key={post.id} className="p-1 bg-white rounded-md shadow-sm border border-gray-100 hover:shadow-md transition-shadow mb-0 w-full min-w-[140px] max-w-[180px] flex-shrink-0 flex flex-col items-start">
+                                <div key={post.id} className="p-1 bg-white rounded-md shadow-sm border border-gray-100 hover:shadow-md transition-shadow mb-0 w-full min-w-[140px] md:min-w-[200px] max-w-[180px] md:max-w-[280px] flex-shrink-0 flex flex-col items-start">
                                   <div className="flex items-center justify-between mb-0.5 w-full">
-                                    <span className="text-xs font-bold text-gray-800 bg-blue-100 px-1 py-0.5 rounded-full truncate max-w-[70%]">{post.title}</span>
-                                    <span className="text-xs text-gray-500 bg-gray-100 px-1 py-0.5 rounded-full">{new Date(post.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
+                                    <span className="text-xs md:text-sm font-bold text-gray-800 bg-blue-100 px-1 py-0.5 rounded-full truncate max-w-[70%]">{post.title}</span>
+                                    <span className="text-xs md:text-sm text-gray-500 bg-gray-100 px-1 py-0.5 rounded-full">{new Date(post.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
                                   </div>
-                                  <p className="text-xs text-gray-600 leading-relaxed line-clamp-4 w-full">{post.body}</p>
+                                  <p className="text-xs md:text-sm text-gray-600 leading-relaxed line-clamp-4 w-full">{post.body}</p>
                                 </div>
                               ))
                             )}
