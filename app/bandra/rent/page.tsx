@@ -17,6 +17,7 @@ import "yet-another-react-lightbox/styles.css";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import PropertyInquiryModal from '@/components/PropertyInquiryModal';
 
 export default function RentPage() {
   // Data states
@@ -37,6 +38,8 @@ export default function RentPage() {
   const [expandedMobileIdx, setExpandedMobileIdx] = useState<number | null>(null);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
+  const [selectedApartment, setSelectedApartment] = useState<Apartment | null>(null);
 
   // Fetch apartments from Supabase and their media manifests
   useEffect(() => {
@@ -385,7 +388,7 @@ export default function RentPage() {
                     <td className="px-4 py-3 align-middle" style={{ minWidth: 180, maxWidth: 200, width: 180 }}>
                       <div className="flex items-center justify-center w-full h-full">
                         <button
-                          onClick={(e) => {
+                          onClick={e => {
                             e.stopPropagation();
                             setExpandedIdx(expandedIdx === idx ? null : idx);
                           }}
@@ -476,20 +479,15 @@ export default function RentPage() {
                               {/* Add other details you want to show */}
                             </div>
                             <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                              <Link
-                                href={`/bandra/apply-for-rent/${apt.id}`}
-                                onClick={(e) => e.stopPropagation()}
-                                className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
-                              >
-                                Schedule a Visit
-                              </Link>
                               <a 
-                                href="https://wa.me/919321314553"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+                                onClick={e => {
+                                  e.stopPropagation();
+                                  setSelectedApartment(apt);
+                                  setInquiryModalOpen(true);
+                                }}
+                                className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out cursor-pointer"
                               >
-                                WhatsApp
+                                Get Owner's Contact
                               </a>
                             </div>
                           </div>
@@ -604,20 +602,15 @@ export default function RentPage() {
                         </div>
                       )}
                       <div className="mt-4 flex flex-col gap-2">
-                        <Link
-                          href={`/bandra/apply-for-rent/${apt.id}`}
-                          onClick={(e) => e.stopPropagation()}
-                          className="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-lg font-semibold text-sm text-center"
-                        >
-                          Schedule a Visit
-                        </Link>
                         <a
-                          href="https://wa.me/919321314553"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg font-semibold text-sm text-center"
+                          onClick={e => {
+                            e.stopPropagation();
+                            setSelectedApartment(apt);
+                            setInquiryModalOpen(true);
+                          }}
+                          className="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg font-semibold text-sm text-center cursor-pointer"
                         >
-                          WhatsApp
+                          Get Owner's Contact
                         </a>
                       </div>
                     </div>
@@ -727,6 +720,12 @@ export default function RentPage() {
       
       {/* SEO Structured Data */}
       <SEOScript location="Bandra" type="rent" />
+
+      <PropertyInquiryModal
+        isOpen={inquiryModalOpen}
+        onClose={() => setInquiryModalOpen(false)}
+        apartment={selectedApartment}
+      />
     </div>
   );
 }
