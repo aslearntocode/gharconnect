@@ -157,5 +157,29 @@ export const vendors: Vendor[] = [
     mobile: '+91 99673 51381',
     areaServed: ['South Bombay'],
     buildingServed: ['All']
+  },
+  {
+    name: 'Shailesh Badminton Coach',
+    services: [{
+      name: 'Badminton Coaching',
+      description: 'Badminton coaching for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 86521 11423',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
+  },
+  {
+    name: 'Siddharth',
+    services: [{
+      name: 'Badminton Coaching',
+      description: 'Badminton coaching for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 99673 51381',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   }
 ]; 
