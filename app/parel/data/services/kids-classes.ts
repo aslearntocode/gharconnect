@@ -59,8 +59,8 @@ export const vendors: Vendor[] = [
       unit: 'per month'
     }],
     mobile: '+91 79000 84119',
-    areaServed: 'Parel',
-    buildingServed: 'L&T Crescent Bay'
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Hetal Paleja',
