@@ -40,8 +40,8 @@ export const vendors: Vendor[] = [
     }],
     mobile: '+91 90000 00002',
     photo: '',
-    areaServed: '',
-    buildingServed: ''
+    areaServed: [],
+    buildingServed: []
   },
   {
     name: 'Figo Fresh Meat',
@@ -53,8 +53,8 @@ export const vendors: Vendor[] = [
     }],
     mobile: '+91 98679 72116',
     photo: '/images/vendors/Figo_Fresh_Meat.jpeg',
-    areaServed: '',
-    buildingServed: ''
+    areaServed: [],
+    buildingServed: []
   },
   {
     name: 'Bombay Fish Supplier',
@@ -66,8 +66,8 @@ export const vendors: Vendor[] = [
     }],
     mobile: '+91 70213 58630',
     photo: '',
-    areaServed: '',
-    buildingServed: ''
+    areaServed: [],
+    buildingServed: []
   }
 ];
  

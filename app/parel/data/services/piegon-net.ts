@@ -9,8 +9,8 @@ export interface Vendor {
   name: string;
   products: Product[];
   mobile: string;
-  areaServed?: string;
-  buildingServed?: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -23,8 +23,8 @@ export const vendors: Vendor[] = [
       unit: 'service'
     }],
     mobile: '+91 9619161616',
-    areaServed: '',
-    buildingServed: ''
+    areaServed: [],
+    buildingServed: []
   },
   {
     name: 'Pigeon Net Service',
@@ -35,7 +35,7 @@ export const vendors: Vendor[] = [
       unit: 'job'
     }],
     mobile: '+91 9876543215',
-    areaServed: '',
-    buildingServed: ''
+    areaServed: [],
+    buildingServed: []
   }
 ];

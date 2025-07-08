@@ -10,8 +10,8 @@ export interface GardenerService {
     price: number | string;
     unit: string;
   }[];
-  areaServed?: string;
-  buildingServed?: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const gardenerServices: GardenerService[] = [
@@ -29,8 +29,8 @@ export const gardenerServices: GardenerService[] = [
         unit: 'service'
       }
     ],
-    areaServed: '',
-    buildingServed: ''
+    areaServed: [],
+    buildingServed: []
   },
   {
     id: 'maintenance-2',

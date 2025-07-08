@@ -134,18 +134,18 @@ export default function Home() {
   const mainActionCards = [
     {
       id: 'rent',
-      title: 'Tenant',
-      description: 'Find your rental apartment',
+      title: 'Search Rentals',
+      description: 'Find rental apartments with No Brokerage',
       icon: FiHome,
-      href: '/worli/rent/',
+      href: '/parel/rent',
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
       id: 'list-property',
-      title: 'Landlord',
-      description: 'List Your Property for Rent',
+      title: 'List Your Property',
+      description: 'List Property for Rent with No Brokerage',
       icon: FiHome,
-      href: '/worli/rent-apartment',
+      href: '/parel/rent-apartment',
       gradient: 'from-purple-500 to-pink-500'
     },
     {
