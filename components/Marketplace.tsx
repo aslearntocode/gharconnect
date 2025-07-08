@@ -39,6 +39,11 @@ interface MarketplaceProduct {
     building_name: string
   }
   event_date?: string
+  price_history?: {
+    old_price: number
+    new_price: number
+    changed_at: string
+  }[]
 }
 
 const CATEGORIES = [
@@ -229,7 +234,14 @@ export function Marketplace({ location }: { location: string }) {
       const supabase = await getSupabaseClient()
       const { data, error } = await supabase
         .from('marketplace_products')
-        .select('*')
+        .select(`
+          *,
+          price_history:marketplace_price_history(
+            old_price,
+            new_price,
+            changed_at
+          )
+        `)
         .eq('is_active', true)
         .order('created_at', { ascending: false })
 
@@ -261,6 +273,7 @@ export function Marketplace({ location }: { location: string }) {
       'mumbai'.includes(locationFilterValue) ||
       (product.area && product.area.toLowerCase().includes(locationFilterValue)) ||
       (product.building_name && product.building_name.toLowerCase().includes(locationFilterValue));
+    
     return matchesCategory && matchesCondition && matchesPrice && matchesLocation
   })
   
@@ -330,6 +343,32 @@ export function Marketplace({ location }: { location: string }) {
       month: 'short',
       year: 'numeric'
     })
+  }
+
+  // Calculate price drop information
+  const getPriceDropInfo = (product: MarketplaceProduct) => {
+    if (!product.price_history || product.price_history.length === 0) {
+      return null
+    }
+
+    // Get the most recent price change
+    const latestPriceChange = product.price_history[0]
+    
+    // Check if it's a price drop (new price < old price)
+    if (latestPriceChange.old_price && latestPriceChange.new_price < latestPriceChange.old_price) {
+      const priceDrop = latestPriceChange.old_price - latestPriceChange.new_price
+      const priceDropPercentage = Math.round((priceDrop / latestPriceChange.old_price) * 100)
+      
+      return {
+        oldPrice: latestPriceChange.old_price,
+        newPrice: latestPriceChange.new_price,
+        priceDrop,
+        priceDropPercentage,
+        changedAt: latestPriceChange.changed_at
+      }
+    }
+    
+    return null
   }
 
   // Calculate total active filters
@@ -627,6 +666,18 @@ export function Marketplace({ location }: { location: string }) {
                               +{product.images.length - 1}
                             </div>
                           )}
+                          {/* Price Drop Badge */}
+                          {(() => {
+                            const priceDropInfo = getPriceDropInfo(product)
+                            if (priceDropInfo) {
+                              return (
+                                <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full pointer-events-none shadow-lg">
+                                  -{priceDropInfo.priceDropPercentage}%
+                                </div>
+                              )
+                            }
+                            return null
+                          })()}
                         </>
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-400">
@@ -681,8 +732,30 @@ export function Marketplace({ location }: { location: string }) {
                       </div>
                       
                       <div className="flex items-center justify-between">
-                        <div className="text-lg font-bold text-green-600">
-                          {formatPrice(product.price)}
+                        <div className="flex flex-col">
+                          <div className="text-lg font-bold text-green-600">
+                            {formatPrice(product.price)}
+                          </div>
+                          {/* Price Drop Display */}
+                          {(() => {
+                            const priceDropInfo = getPriceDropInfo(product)
+                            if (priceDropInfo) {
+                              return (
+                                <div className="flex items-center gap-2 mt-1">
+                                  <span className="text-xs text-gray-500 line-through">
+                                    {formatPrice(priceDropInfo.oldPrice)}
+                                  </span>
+                                  <span className="text-xs font-medium text-red-600 bg-red-50 px-1.5 py-0.5 rounded">
+                                    -{priceDropInfo.priceDropPercentage}%
+                                  </span>
+                                  <span className="text-xs text-gray-500">
+                                    {formatPrice(priceDropInfo.priceDrop)} off
+                                  </span>
+                                </div>
+                              )
+                            }
+                            return null
+                          })()}
                         </div>
                         <Button
                           onClick={() => handleWhatsAppChat(product.contact_phone, product.title)}
