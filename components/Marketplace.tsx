@@ -203,6 +203,7 @@ export function Marketplace({ location }: { location: string }) {
   const [locationFilter, setLocationFilter] = useState('')
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [user, setUser] = useState<any>(null)
+  const [showFreeOnly, setShowFreeOnly] = useState(false)
   
   // Image modal state
   const [imageModal, setImageModal] = useState<{
@@ -274,7 +275,10 @@ export function Marketplace({ location }: { location: string }) {
       (product.area && product.area.toLowerCase().includes(locationFilterValue)) ||
       (product.building_name && product.building_name.toLowerCase().includes(locationFilterValue));
     
-    return matchesCategory && matchesCondition && matchesPrice && matchesLocation
+    // Filter for free items only
+    const matchesFree = !showFreeOnly || product.price === 0
+    
+    return matchesCategory && matchesCondition && matchesPrice && matchesLocation && matchesFree
   })
   
   const handleFilterChange = (setter: Function, value: string, currentValues: string[]) => {
@@ -289,6 +293,7 @@ export function Marketplace({ location }: { location: string }) {
     setSelectedConditions([])
     setSelectedPriceRanges([])
     setLocationFilter('')
+    setShowFreeOnly(false)
   }
 
   const handleWhatsAppChat = (phone: string, title: string) => {
@@ -371,8 +376,13 @@ export function Marketplace({ location }: { location: string }) {
     return null
   }
 
+  // Check if item is free (price is 0)
+  const isItemFree = (product: MarketplaceProduct) => {
+    return product.price === 0
+  }
+
   // Calculate total active filters
-  const totalActiveFilters = selectedCategories.length + selectedConditions.length + selectedPriceRanges.length
+  const totalActiveFilters = selectedCategories.length + selectedConditions.length + selectedPriceRanges.length + (showFreeOnly ? 1 : 0)
 
   return (
     <>
@@ -409,38 +419,58 @@ export function Marketplace({ location }: { location: string }) {
         {/* Main Content */}
         <main className="py-8 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto">
-            {/* Event/Movie Tickets Filter Button */}
-            <div className="mb-3 sm:mb-6">
-              <Button
-                onClick={() => {
-                  if (selectedCategories.includes('Event or Movie Tickets')) {
-                    setSelectedCategories(selectedCategories.filter(cat => cat !== 'Event or Movie Tickets'))
-                  } else {
-                    setSelectedCategories(['Event or Movie Tickets'])
+            {/* Filter Buttons Row */}
+            <div className="mb-3 sm:mb-6 flex flex-wrap gap-2">
+              {/* Event/Movie Tickets Filter Button */}
+              <div>
+                <Button
+                  onClick={() => {
+                    if (selectedCategories.includes('Event or Movie Tickets')) {
+                      setSelectedCategories(selectedCategories.filter(cat => cat !== 'Event or Movie Tickets'))
+                    } else {
+                      setSelectedCategories(['Event or Movie Tickets'])
+                    }
+                  }}
+                  variant={selectedCategories.includes('Event or Movie Tickets') ? "default" : "outline"}
+                  className={`w-auto px-2 sm:px-6 py-1.5 sm:py-3 text-xs sm:text-lg font-semibold transition-all duration-200 ${
+                    selectedCategories.includes('Event or Movie Tickets')
+                      ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg'
+                      : 'bg-white hover:bg-purple-50 border-purple-200 text-purple-700 hover:border-purple-300'
+                  }`}
+                >
+                  {selectedCategories.includes('Event or Movie Tickets') 
+                    ? '🎫 Event Tickets' 
+                    : '🎫 Event Tickets'
                   }
-                }}
-                variant={selectedCategories.includes('Event or Movie Tickets') ? "default" : "outline"}
-                className={`w-full md:w-auto px-4 sm:px-6 py-2 sm:py-3 text-base sm:text-lg font-semibold transition-all duration-200 ${
-                  selectedCategories.includes('Event or Movie Tickets')
-                    ? 'bg-purple-600 hover:bg-purple-700 text-white shadow-lg'
-                    : 'bg-white hover:bg-purple-50 border-purple-200 text-purple-700 hover:border-purple-300'
-                }`}
-              >
-                <Calendar className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-                {selectedCategories.includes('Event or Movie Tickets') 
-                  ? '🎫 Showing Event & Movie Tickets' 
-                  : '🎫 Show Only Event & Movie Tickets'
-                }
-              </Button>
+                </Button>
+              </div>
+
+              {/* Free Items Filter Button */}
+              <div>
+                <Button
+                  onClick={() => setShowFreeOnly(!showFreeOnly)}
+                  variant={showFreeOnly ? "default" : "outline"}
+                  className={`w-auto px-2 sm:px-6 py-1.5 sm:py-3 text-xs sm:text-lg font-semibold transition-all duration-200 ${
+                    showFreeOnly
+                      ? 'bg-green-600 hover:bg-green-700 text-white shadow-lg'
+                      : 'bg-white hover:bg-green-50 border-green-200 text-green-700 hover:border-green-300'
+                  }`}
+                >
+                  {showFreeOnly 
+                    ? '🎁 Free Items' 
+                    : '🎁 Free Items'
+                  }
+                </Button>
+              </div>
             </div>
 
             {/* Filters */}
-            <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="bg-white rounded-lg shadow-sm border p-2 sm:p-6 mb-6">
+              <div className="grid grid-cols-1 sm:grid-cols-5 gap-1 sm:gap-4">
                 {/* Category Filter */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="flex justify-between">
+                    <Button variant="outline" className="flex justify-between w-full text-xs sm:text-base py-1 sm:py-3 px-2 sm:px-4">
                       <span>Categories {selectedCategories.length > 0 && `(${selectedCategories.length})`}</span>
                       <ChevronDown className="h-4 w-4" />
                     </Button>
@@ -465,7 +495,7 @@ export function Marketplace({ location }: { location: string }) {
                 {/* Condition Filter */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="flex justify-between">
+                    <Button variant="outline" className="flex justify-between w-full text-xs sm:text-base py-1 sm:py-3 px-2 sm:px-4">
                       <span>Condition {selectedConditions.length > 0 && `(${selectedConditions.length})`}</span>
                       <ChevronDown className="h-4 w-4" />
                     </Button>
@@ -490,7 +520,7 @@ export function Marketplace({ location }: { location: string }) {
                 {/* Price Range Filter */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="flex justify-between">
+                    <Button variant="outline" className="flex justify-between w-full text-xs sm:text-base py-1 sm:py-3 px-2 sm:px-4">
                       <span>Price Range {selectedPriceRanges.length > 0 && `(${selectedPriceRanges.length})`}</span>
                       <ChevronDown className="h-4 w-4" />
                     </Button>
@@ -519,14 +549,14 @@ export function Marketplace({ location }: { location: string }) {
                     placeholder="Location (e.g. Mumbai, Parel, Worli)"
                     value={locationFilter}
                     onChange={e => setLocationFilter(e.target.value)}
-                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    className="w-full border rounded px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-base focus:outline-none focus:ring-2 focus:ring-blue-200"
                   />
                 </div>
 
                 <Button
                   variant="outline"
                   onClick={clearFilters}
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-1 sm:gap-2 w-full text-xs sm:text-base py-1 sm:py-3 px-2 sm:px-4"
                   disabled={totalActiveFilters === 0 && !locationFilter}
                 >
                   <Filter className="w-4 h-4" />
@@ -578,6 +608,17 @@ export function Marketplace({ location }: { location: string }) {
                         </span>
                       )
                     })}
+                    {showFreeOnly && (
+                      <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full">
+                        🎁 Free Items Only
+                        <button
+                          onClick={() => setShowFreeOnly(false)}
+                          className="hover:text-green-600"
+                        >
+                          ×
+                        </button>
+                      </span>
+                    )}
                     {locationFilter && (
                       <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">
                         Location: {locationFilter}
@@ -670,9 +711,26 @@ export function Marketplace({ location }: { location: string }) {
                           {(() => {
                             const priceDropInfo = getPriceDropInfo(product)
                             if (priceDropInfo) {
+                              // Special case: Item is now free
+                              if (isItemFree(product)) {
+                                return (
+                                  <div className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full pointer-events-none shadow-lg">
+                                    Free!
+                                  </div>
+                                )
+                              }
+                              // Regular price drop
                               return (
                                 <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full pointer-events-none shadow-lg">
                                   -{priceDropInfo.priceDropPercentage}%
+                                </div>
+                              )
+                            }
+                            // Show "Free" badge even if no price history (item was created as free)
+                            if (isItemFree(product)) {
+                              return (
+                                <div className="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full pointer-events-none shadow-lg">
+                                  Free!
                                 </div>
                               )
                             }
@@ -734,12 +792,26 @@ export function Marketplace({ location }: { location: string }) {
                       <div className="flex items-center justify-between">
                         <div className="flex flex-col">
                           <div className="text-lg font-bold text-green-600">
-                            {formatPrice(product.price)}
+                            {isItemFree(product) ? 'Free' : formatPrice(product.price)}
                           </div>
                           {/* Price Drop Display */}
                           {(() => {
                             const priceDropInfo = getPriceDropInfo(product)
                             if (priceDropInfo) {
+                              // Special case: Item is now free
+                              if (isItemFree(product)) {
+                                return (
+                                  <div className="flex items-center gap-2 mt-1">
+                                    <span className="text-xs text-gray-500 line-through">
+                                      {formatPrice(priceDropInfo.oldPrice)}
+                                    </span>
+                                    <span className="text-xs font-medium text-green-600 bg-green-50 px-1.5 py-0.5 rounded">
+                                      Now Free!
+                                    </span>
+                                  </div>
+                                )
+                              }
+                              // Regular price drop
                               return (
                                 <div className="flex items-center gap-2 mt-1">
                                   <span className="text-xs text-gray-500 line-through">
