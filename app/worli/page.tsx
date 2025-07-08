@@ -91,7 +91,7 @@ export default function Home() {
       initial: 'R',
       name: 'Rahul Sharma',
       role: 'Software Engineer',
-      color: 'bg-blue-600',
+      color: 'bg-indigo-600',
       text: 'I appreciate that this app doesn\'t share my data with other companies. Unlike other platforms, I haven\'t received any unsolicited calls from lenders. It\'s refreshing to use a service that respects user privacy!'
     },
     {
@@ -212,10 +212,10 @@ export default function Home() {
       id: 'rental',
       title: 'Find Rental Property',
       icon: FiHome,
-      iconBg: 'bg-blue-100',
+      iconBg: 'bg-indigo-100',
       iconColor: 'text-blue-600',
-      buttonBg: 'bg-blue-600',
-      buttonHover: 'hover:bg-blue-700',
+      buttonBg: 'bg-indigo-600',
+      buttonHover: 'hover:bg-indigo-700',
       href: '/worli/rent/',
       buttonText: 'Browse Properties',
       buttonTextMobile: 'Browse'
@@ -884,7 +884,7 @@ export default function Home() {
                               (isMobile ? connectPosts.slice(0, 2) : connectPosts).map((post) => (
                                 <div key={post.id} className="p-1 bg-white rounded-md shadow-sm border border-gray-100 hover:shadow-md transition-shadow mb-0 w-full min-w-[140px] md:min-w-[200px] max-w-[180px] md:max-w-[280px] flex-shrink-0 flex flex-col items-start">
                                   <div className="flex items-center justify-between mb-0.5 w-full">
-                                    <span className="text-xs md:text-sm font-bold text-gray-800 bg-blue-100 px-1 py-0.5 rounded-full truncate max-w-[70%]">{post.title}</span>
+                                    <span className="text-xs md:text-sm font-bold text-gray-800 bg-indigo-100 px-1 py-0.5 rounded-full truncate max-w-[70%]">{post.title}</span>
                                     <span className="text-xs md:text-sm text-gray-500 bg-gray-100 px-1 py-0.5 rounded-full">{new Date(post.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
                                   </div>
                                   <p className="text-xs md:text-sm text-gray-600 leading-relaxed line-clamp-4 w-full">{post.body}</p>
@@ -1203,7 +1203,7 @@ export default function Home() {
             <div className="flex-1 flex flex-col items-center justify-center text-center z-10 w-full min-h-[180px] md:pl-[260px] md:pr-[260px] p-6 md:p-0">
               <h2 className="text-2xl font-bold mb-2 text-gray-900">Have a property to rent?</h2>
               <p className="text-gray-600 mb-4">List your property & connect with clients faster!</p>
-              <a href="/worli/rent-apartment" className="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-base shadow-lg">
+              <a href="/worli/rent-apartment" className="inline-flex items-center px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors text-base shadow-lg">
                 List Your Property
               </a>
             </div>
@@ -1276,7 +1276,7 @@ export default function Home() {
                 <span className="font-semibold text-gray-900 text-center">Pest<br/>Control</span>
               </div>
               <div className="flex flex-col items-center flex-1">
-                <span className="bg-blue-100 text-blue-600 rounded-full p-4 mb-2"><FiZap className="w-7 h-7" /></span>
+                <span className="bg-indigo-100 text-blue-600 rounded-full p-4 mb-2"><FiZap className="w-7 h-7" /></span>
                 <span className="font-semibold text-gray-900 text-center">AC<br/>Servicing</span>
               </div>
               <div className="flex flex-col items-center flex-1">

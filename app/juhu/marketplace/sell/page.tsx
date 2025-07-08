@@ -639,7 +639,7 @@ export default function SellPage() {
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-indigo-600 hover:bg-indigo-700"
                 >
                   {submitting ? 'Creating Listing...' : 'Create Listing'}
                 </Button>

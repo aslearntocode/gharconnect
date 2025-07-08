@@ -163,7 +163,7 @@ function LearningCenter() {
                       className={`
                         w-full px-4 py-3 text-left transition-colors duration-200
                         ${selectedCategory === category
-                          ? 'bg-blue-50 text-blue-600 font-medium'
+                          ? 'bg-indigo-50 text-blue-600 font-medium'
                           : 'text-gray-700 hover:bg-gray-50'
                         }
                       `}
@@ -187,7 +187,7 @@ function LearningCenter() {
                       className={`
                         px-4 py-3 rounded-lg text-left transition-all duration-200
                         ${selectedCategory === category
-                          ? 'bg-blue-600 text-white shadow-md transform translate-x-2'
+                          ? 'bg-indigo-600 text-white shadow-md transform translate-x-2'
                           : 'text-gray-700 hover:bg-gray-50 hover:text-blue-600'
                         }
                         ${selectedCategory === category ? 'font-medium' : 'font-normal'}
@@ -211,7 +211,7 @@ function LearningCenter() {
                     <div className="bg-white border rounded-xl p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 h-full flex flex-col">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-3">
-                          <span className="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm font-medium">
+                          <span className="px-3 py-1 bg-indigo-100 text-blue-600 rounded-full text-sm font-medium">
                             {article.category}
                           </span>
                           <span className="text-gray-500 text-sm">{article.readTime}</span>

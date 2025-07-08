@@ -179,7 +179,7 @@ export default function BlogPostPage({ params, society }: BlogPostPageProps) {
         <div className="bg-white border-b border-gray-100">
           <div className="max-w-6xl mx-auto px-4 py-6">
             <div className="flex items-center gap-2 mb-4">
-              <span className="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
+              <span className="bg-indigo-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">
                 {post.category}
               </span>
             </div>

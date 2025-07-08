@@ -753,7 +753,7 @@ export default function SearchPage() {
                   onClick={() => setActiveFilter('all')}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                     activeFilter === 'all'
-                      ? 'bg-blue-600 text-white'
+                      ? 'bg-indigo-600 text-white'
                       : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
                   }`}
                 >
@@ -768,7 +768,7 @@ export default function SearchPage() {
                       onClick={() => setActiveFilter(type)}
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
                         activeFilter === type
-                          ? 'bg-blue-600 text-white'
+                          ? 'bg-indigo-600 text-white'
                           : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
                       }`}
                     >
@@ -819,7 +819,7 @@ export default function SearchPage() {
                         <h3 className="text-lg font-semibold text-gray-900 truncate">
                           {result.title}
                         </h3>
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-blue-800">
                           {getTypeLabel(result.type)}
                         </span>
                       </div>

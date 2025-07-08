@@ -270,7 +270,7 @@ export default function RentApartmentPage() {
       </p>
       <Button
         onClick={() => setIsLoginModalOpen(true)}
-        className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white"
+        className="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white"
       >
         Login / Register
       </Button>
@@ -786,7 +786,7 @@ export default function RentApartmentPage() {
                 <PhotoIcon className="h-5 w-5 mr-2" />
                 Apartment Photos
               </h2>
-              <div className="rounded-md bg-blue-50 p-4">
+              <div className="rounded-md bg-indigo-50 p-4">
                 <div className="flex">
                   <div className="flex-shrink-0">
                     <svg className="h-5 w-5 text-blue-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

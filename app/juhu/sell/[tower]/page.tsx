@@ -67,7 +67,7 @@ export default function TowerPage() {
       <Header />
       <div className="relative">
         {/* Blue hero box */}
-        <div className="bg-blue-600 text-white py-8 px-4 rounded-b-3xl text-center">
+        <div className="bg-indigo-600 text-white py-8 px-4 rounded-b-3xl text-center">
           <h1 className="text-3xl md:text-4xl font-bold mb-2">{tower} Properties for Sale</h1>
         </div>
         {/* Filter bar, overlapping the blue box */}

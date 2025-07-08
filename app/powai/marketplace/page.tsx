@@ -340,7 +340,7 @@ export default function MarketplacePage() {
                         product.condition === 'New' 
                           ? 'bg-green-100 text-green-800' 
                           : product.condition === 'Like New'
-                          ? 'bg-blue-100 text-blue-800'
+                          ? 'bg-indigo-100 text-blue-800'
                           : product.condition === 'Good'
                           ? 'bg-yellow-100 text-yellow-800'
                           : 'bg-gray-100 text-gray-800'
@@ -391,7 +391,7 @@ export default function MarketplacePage() {
       {/* Floating Sell Button */}
       <Button 
         onClick={handleSellItem}
-        className="fixed bottom-8 right-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg px-6 py-4 flex items-center justify-center z-50"
+        className="fixed bottom-8 right-8 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full shadow-lg px-6 py-4 flex items-center justify-center z-50"
       >
         <Plus className="w-6 h-6 mr-2" />
         <span className="font-semibold">Sell Item</span>

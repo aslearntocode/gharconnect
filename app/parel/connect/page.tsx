@@ -327,7 +327,7 @@ export default function ParelConnectPage() {
                     <div className="flex-1 w-full">
                       <div className="flex justify-between items-start gap-2 mb-2">
                         <h3 className="font-semibold text-lg break-words flex-1">{post.title}</h3>
-                        <span className="inline-flex items-center px-2 py-1 bg-blue-100 text-blue-600 text-xs font-semibold rounded-full whitespace-nowrap">
+                        <span className="inline-flex items-center px-2 py-1 bg-indigo-100 text-blue-600 text-xs font-semibold rounded-full whitespace-nowrap">
                           {post.comment_count && post.comment_count > 0 ? `${post.comment_count} comments` : 'No Comment Yet'}
                         </span>
                       </div>

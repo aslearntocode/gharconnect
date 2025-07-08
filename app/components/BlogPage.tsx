@@ -44,7 +44,7 @@ export default function BlogPage({ society }: BlogPageProps) {
             <article key={post.slug} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
               <div className="p-5">
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
+                  <span className="bg-indigo-100 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
                     {post.category}
                   </span>
                 </div>
@@ -98,7 +98,7 @@ export default function BlogPage({ society }: BlogPageProps) {
               placeholder="Enter your email"
               className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none"
             />
-            <button className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-md hover:shadow-lg">
+            <button className="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors font-semibold shadow-md hover:shadow-lg">
               Subscribe
             </button>
           </div>

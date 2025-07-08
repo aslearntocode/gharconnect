@@ -394,7 +394,7 @@ export default function VendorDashboard() {
         {/* HERO SECTION END */}
         <main className="max-w-xl mx-auto mt-1 p-6">
           <Card className="p-8 rounded-3xl shadow-xl border border-gray-100">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div className="bg-indigo-50 border border-blue-200 rounded-lg p-4 mb-6">
               <p className="text-blue-800 text-center font-medium">
                 Agar aap kuch extra income kamana chahte hain ya phir permanent kaam dhoondh rahe hain to yahan pe login karein aur apna free time use karein!
               </p>

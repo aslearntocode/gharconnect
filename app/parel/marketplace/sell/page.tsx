@@ -333,7 +333,7 @@ export default function SellPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Images
                 </label>
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="bg-indigo-50 border border-blue-200 rounded-lg p-4">
                   <div className="flex items-start space-x-3">
                     <div className="flex-shrink-0">
                       <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
@@ -370,7 +370,7 @@ export default function SellPage() {
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-indigo-600 hover:bg-indigo-700"
                 >
                   {submitting ? 'Creating Listing...' : 'Create Listing'}
                 </Button>

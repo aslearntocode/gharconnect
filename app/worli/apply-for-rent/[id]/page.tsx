@@ -157,7 +157,7 @@ export default function ApplyForRentPage() {
             </p>
             <Button
               onClick={() => setIsLoginModalOpen(true)}
-              className="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white"
+              className="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white"
             >
               Login / Register
             </Button>

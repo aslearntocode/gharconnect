@@ -17,7 +17,7 @@ export default function PhysicalTrainingPage() {
     <div className="min-h-screen bg-gray-50">
       <Header />
       <div className="relative">
-        <div className="w-full h-32 bg-blue-600 flex items-center justify-center">
+        <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
           <h1 className="text-3xl md:text-4xl font-bold text-white">Physical Training</h1>
         </div>
         <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-7 w-full max-w-2xl z-10">

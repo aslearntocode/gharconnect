@@ -95,7 +95,7 @@ export default function Home() {
       initial: 'R',
       name: 'Rahul Sharma',
       role: 'Software Engineer',
-      color: 'bg-blue-600',
+      color: 'bg-indigo-600',
       text: 'I appreciate that this app doesn\'t share my data with other companies. Unlike other platforms, I haven\'t received any unsolicited calls from lenders. It\'s refreshing to use a service that respects user privacy!'
     },
     {
@@ -467,10 +467,10 @@ export default function Home() {
       id: 'rental',
       title: 'Find Rental Property',
       icon: FiHome,
-      iconBg: 'bg-blue-100',
+      iconBg: 'bg-indigo-100',
       iconColor: 'text-blue-600',
-      buttonBg: 'bg-blue-600',
-      buttonHover: 'hover:bg-blue-700',
+      buttonBg: 'bg-indigo-600',
+      buttonHover: 'hover:bg-indigo-700',
       href: '/juhu/rent/',
       buttonText: 'Browse Properties',
       buttonTextMobile: 'Browse'
@@ -790,7 +790,7 @@ export default function Home() {
                     <div className="flex flex-row justify-center items-end gap-3 md:gap-4 mt-4 w-full grow">
                       <a 
                         href="/juhu/rent-apartment" 
-                        className="inline-flex items-center px-3 py-1.5 bg-blue-600 text-white hover:bg-blue-700 rounded text-xs font-semibold transition-all duration-300 shadow-md"
+                        className="inline-flex items-center px-3 py-1.5 bg-indigo-600 text-white hover:bg-indigo-700 rounded text-xs font-semibold transition-all duration-300 shadow-md"
                         style={{ minHeight: '36px' }}
                       >
                         <span className="hidden md:inline">List Your Property With Us</span>
@@ -1080,7 +1080,7 @@ export default function Home() {
             <div className="flex-1 flex flex-col items-center justify-center text-center z-10 w-full min-h-[180px] md:pl-[260px] md:pr-[260px] p-6 md:p-0">
               <h2 className="text-2xl font-bold mb-2 text-gray-900">Have a property to rent?</h2>
               <p className="text-gray-600 mb-4">List your property & connect with clients faster!</p>
-              <a href="/juhu/rent-apartment" className="inline-flex items-center px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors text-base shadow-lg">
+              <a href="/juhu/rent-apartment" className="inline-flex items-center px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors text-base shadow-lg">
                 List Your Property
               </a>
             </div>

@@ -70,7 +70,7 @@ export default function RentalProcedurePage() {
           </div>
 
           <div className="bg-white rounded-xl shadow-md p-6 text-center">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <FiFileText className="w-8 h-8 text-blue-600" />
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-2">3. GharConnect Prepares Everything</h3>
@@ -96,7 +96,7 @@ export default function RentalProcedurePage() {
             Once the Deal is Finalized - Third Party Paperwork
           </h3>
           
-          <div className="bg-blue-50 rounded-lg p-6 mb-8">
+          <div className="bg-indigo-50 rounded-lg p-6 mb-8">
             <h4 className="text-xl font-semibold text-blue-900 mb-4">
               We Connect with Third Party to Finish All Paperwork
             </h4>
@@ -257,7 +257,7 @@ export default function RentalProcedurePage() {
           {/* Tenant Responsibilities */}
           <div className="bg-white rounded-xl shadow-lg p-8">
             <div className="flex items-center mb-6">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+              <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mr-4">
                 <FiUser className="w-6 h-6 text-blue-600" />
               </div>
               <h3 className="text-2xl font-bold text-gray-900">Tenant - Just 3 Simple Steps</h3>
@@ -288,7 +288,7 @@ export default function RentalProcedurePage() {
                 </div>
               </div>
               
-              <div className="bg-blue-50 rounded-lg p-4 mt-6">
+              <div className="bg-indigo-50 rounded-lg p-4 mt-6">
                 <p className="text-blue-800 text-sm font-medium">
                   <strong>That's it!</strong> GharConnect handles everything else - document preparation, legal compliance, and all paperwork.
                 </p>
