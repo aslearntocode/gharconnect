@@ -1174,7 +1174,7 @@ export default function Home() {
               </Link>
               <Link href="/bandra/services/car-clean" className="block group">
                 <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiEdit className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-pink-500" />
+                  <span className="text-3xl md:text-4xl mb-2 md:mb-3 text-blue-500">🚗</span>
                   <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Car Clean</h3>
                   <p className="text-xs md:text-sm text-gray-600 text-center">Daily Car Cleaning</p>
                 </div>
