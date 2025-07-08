@@ -9,7 +9,7 @@ import Link from "next/link"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { signOut } from 'firebase/auth'
-import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiSearch, FiPlus } from 'react-icons/fi'
+import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiSearch, FiPlus, FiHeart } from 'react-icons/fi'
 import { FaBuilding } from 'react-icons/fa'
 
 export default function Header() {
@@ -348,6 +348,14 @@ export default function Header() {
                     >
                       <FiAward className="w-5 h-5 text-green-500" />
                       <span>Yoga</span>
+                    </Link>
+                    <Link 
+                      href={`/${currentSociety}/services/massage`}
+                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                      onClick={() => setIsCreditScoreDropdownOpen(false)}
+                    >
+                      <FiHeart className="w-5 h-5 text-pink-500" />
+                      <span>Massage</span>
                     </Link>
                     <Link 
                       href={`/${currentSociety}/services/kids-classes`}
@@ -724,6 +732,13 @@ export default function Header() {
                     onClick={() => setIsCreditScoreDropdownOpen(false)}
                   >
                     Yoga
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/massage`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Massage
                   </Link>
                   <Link 
                     href={`/${currentSociety}/services/kids-classes`}

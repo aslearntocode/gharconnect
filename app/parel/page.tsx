@@ -12,7 +12,7 @@ import Header from "@/components/Header"
 import { getSupabaseClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { Dialog } from '@headlessui/react'
-import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiUsers } from 'react-icons/fi'
+import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiUsers, FiHeart } from 'react-icons/fi'
 import DoctorsContainer from "@/components/DoctorsContainer"
 import TravelDiariesContainer from "@/components/TravelDiariesContainer"
 import Head from 'next/head'
@@ -1259,6 +1259,13 @@ export default function Home() {
                   <FiAward className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-green-500" />
                   <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Yoga</h3>
                   <p className="text-xs md:text-sm text-gray-600 text-center">Yoga classes and workshops</p>
+                </div>
+              </Link>
+              <Link href="/parel/services/massage" className="block group">
+                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
+                  <FiHeart className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-pink-500" />
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Massage</h3>
+                  <p className="text-xs md:text-sm text-gray-600 text-center">Massage for stress relief</p>
                 </div>
               </Link>
               <Link href="/parel/services/kids-classes" className="block group">
