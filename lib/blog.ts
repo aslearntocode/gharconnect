@@ -13,6 +13,44 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'sell-unused-event-tickets-on-gharconnect',
+    title: 'Sell Unused Event Tickets to Neighbors on GharConnect.in - The Smarter, Faster Way!',
+    excerpt: `Got last-minute changes and can't attend an event? Don't let your tickets go to waste! Sell them quickly, safely, and easily to your neighbors on GharConnect.in. Discover why listing within your community is the fastest, most trusted way to recover your costs and help a neighbor enjoy a great event.`,
+    content: `
+We've all been there - you buy tickets to an exciting event, and then suddenly plans change. Maybe a work trip pops up, your child falls sick, or a family commitment comes in the way. The tickets, often non-refundable, go to waste. But what if there was a simple way to ensure they're not just lost money but instead become a great opportunity for someone next door?
+
+That's where GharConnect.in steps in.
+
+## Why Sell Tickets Within Your Community?
+Instead of going through sketchy resale sites or spamming WhatsApp groups hoping someone bites, listing your unused tickets on GharConnect brings these advantages:
+
+### 1. Quick Response, Faster Sale
+Since GharConnect is community-driven, your listing is visible to residents in your own apartment complex or neighborhood or nearby areas. These are people physically close to you so chances are high that someone looking for last-minute plans will grab it quickly.
+
+### 2. Trusted Buyers
+No more worries about fraud, fake payments, or endless back-and-forth with strangers. You're selling to verified members of your own gated community or neighboring apartments - people you may even bump into at the event!
+
+### 3. No Delivery Hassles
+Selling within your community means no shipping, couriering, or scanning documents. Just hand over the tickets in person, sometimes within minutes of posting.
+
+### 4. More Visibility Than Generic Groups
+Instead of your message getting lost in hundreds of messages in a WhatsApp or Telegram group, your ticket listing stays live and organized in the GharConnect marketplace, easily searchable by date, event type, or location.
+
+### 5. Last-Minute Sales Made Easy
+Got a concert at 7 PM and realized at 5 PM you can't go? Post it on GharConnect as someone nearby might be looking for that exact opportunity. The proximity makes impulse or last-minute buys far more likely.
+
+## Real Community, Real Convenience
+Whether it's a cricket match, stand-up show, music festival, or a kids' workshop, tickets are time-sensitive. Instead of letting them go to waste, post them in your GharConnect community portal. It helps a neighbor have a good time, and helps you recover your costs. Win-win.
+
+So next time plans change then don't cancel, just list your ticket on GharConnect.in and let your neighbors make the most of it.
+`,
+    author: 'GharConnect Team',
+    date: '2025-07-08',
+    readTime: '3 min read',
+    category: 'Platform Updates',
+    image: '/blog/community-discussion-board.jpg'
+  },
+  {
     slug: 'community-discussion-board-launch',
     title: '🗣️ Moved to a New Location: Post, Comment & Connect With Your Neighborhood!',
     excerpt: 'GharConnect.in has launched a new community discussion board where you can post, comment, and connect with your neighborhood, not just your building. Discover how this feature helps you ask questions, get recommendations, promote services, and build real community.',
