@@ -2,32 +2,16 @@
 
 import { useState } from 'react';
 import Header from '@/components/Header';
-import { FiSearch } from 'react-icons/fi';
-import { painterServices } from '@/app/bandra/data/services/painter';
+import { vendors } from '@/app/bandra/data/services/painter';
 import { VendorCard } from '@/components/VendorCard';
-
-// Group services by brand to show as vendors
-const vendors = Array.from(new Set(painterServices.map(p => p.brand))).map(brand => ({
-  name: brand,
-  services: painterServices.filter(p => p.brand === brand),
-  mobile: '+91 98765 43210' // This should come from your data
-}));
+import { FiSearch } from 'react-icons/fi';
+import { searchVendors } from '@/utils/searchUtils';
 
 export default function PainterPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Filter vendors based on search query
-  const filteredVendors = vendors.filter(vendor => {
-    const searchLower = searchQuery.toLowerCase();
-    return (
-      vendor.name.toLowerCase().includes(searchLower) ||
-      vendor.mobile.includes(searchQuery) ||
-      vendor.services.some(service =>
-        service.name.toLowerCase().includes(searchLower) ||
-        service.description.toLowerCase().includes(searchLower)
-      )
-    );
-  });
+  const filteredVendors = searchVendors(vendors, searchQuery);
 
   return (
     <div className="min-h-screen bg-gray-50">

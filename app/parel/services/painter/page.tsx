@@ -2,17 +2,10 @@
 
 import { useState } from 'react';
 import Header from '@/components/Header';
-import { FiSearch } from 'react-icons/fi';
-import { painterServices } from '@/app/parel/data/services/painter';
+import { vendors } from '@/app/parel/data/services/painter';
 import { VendorCard } from '@/components/VendorCard';
+import { FiSearch } from 'react-icons/fi';
 import { searchVendors } from '@/utils/searchUtils';
-
-// Group services by brand to show as vendors
-const vendors = Array.from(new Set(painterServices.map(p => p.brand))).map(brand => ({
-  name: brand,
-  services: painterServices.filter(p => p.brand === brand),
-  mobile: '+91 98765 43210' // This should come from your data
-}));
 
 export default function PainterPage() {
   const [searchQuery, setSearchQuery] = useState('');
