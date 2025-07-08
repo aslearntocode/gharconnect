@@ -10,6 +10,8 @@ export interface Vendor {
   services: Service[];
   mobile: string;
   photo?: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -21,7 +23,9 @@ export const vendors: Vendor[] = [
       price: 'MRP',
       unit: 'per item'
     }],
-    mobile: '+91 7304970351'
+    mobile: '+91 73049 70351',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Shraddha medical and General Store',
@@ -31,17 +35,21 @@ export const vendors: Vendor[] = [
       price: 'MRP',
       unit: 'per item'
     }],
-    mobile: '+91 7738227893'
+    mobile: '+91 77382 27893',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
-    name: 'Wellness Forever',
+    name: 'Wellness Forever - Parel',
     services: [{
       name: 'OTC Medicines',
       description: 'Over the counter medicines available',
       price: 'MRP',
       unit: 'per item'
     }],
-    mobile: '+91 9326713512'
+    mobile: '+91 93267 13512',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Ganpati Medicals',
@@ -51,7 +59,9 @@ export const vendors: Vendor[] = [
       price: 'MRP',
       unit: 'per item'
     }],
-    mobile: '+91 8433995732'
+    mobile: '+91 84339 95732',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Swastik Medical',
@@ -61,6 +71,8 @@ export const vendors: Vendor[] = [
       price: 'MRP',
       unit: 'per item'
     }],
-    mobile: '+91 7738915300'
+    mobile: '+91 77389 15300',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   }
 ]; 

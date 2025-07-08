@@ -10,6 +10,8 @@ export interface Vendor {
   products: Product[];
   mobile: string;
   photo?: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -24,6 +26,8 @@ export const vendors: Vendor[] = [
       }
     ],
     mobile: '+91 9004660290',
-    photo: '/images/vendors/Urban_Tray.jpeg'
+    photo: '/images/vendors/Urban_Tray.jpeg',
+    areaServed: ['All'],
+    buildingServed: ['All']
   }
 ];

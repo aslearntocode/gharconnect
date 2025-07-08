@@ -9,6 +9,8 @@ export interface Vendor {
   name: string;
   services: Service[];
   mobile: string;
+  areaServed?: string[];
+  buildingServed?: string[];
   photo?: string;
 }
 
@@ -22,7 +24,9 @@ export const vendors: Vendor[] = [
       unit: 'per document'
     }],
     mobile: '+91 7738666394 / 9869149880',
-    photo: '/Notary_CGBafna.jpeg'
+    photo: '/Notary_CGBafna.jpeg',
+    areaServed: ['Parel','Worli','Dadar','Sion'],
+    buildingServed: ['L&T Crescent Bay','Ashok Gardens','ICC']
   },
   {
     name: 'R K Gupta',
@@ -33,5 +37,7 @@ export const vendors: Vendor[] = [
       unit: 'per document'
     }],
     mobile: '+91 9870138183',
+    areaServed: ['Parel','Worli','Dadar','Sion'],
+    buildingServed: ['L&T Crescent Bay','Ashok Gardens','ICC']
   }
 ];

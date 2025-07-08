@@ -5,22 +5,13 @@ import Header from '@/components/Header';
 import { vendors } from '@/app/parel/data/services/car-clean';
 import { VendorCard } from '@/components/VendorCard';
 import { FiSearch } from 'react-icons/fi';
+import { searchVendors } from '@/utils/searchUtils';
 
 export default function CarCleanPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Filter vendors based on search query
-  const filteredVendors = vendors.filter(vendor => {
-    const searchLower = searchQuery.toLowerCase();
-    return (
-      vendor.name.toLowerCase().includes(searchLower) ||
-      vendor.mobile.toLowerCase().includes(searchLower) ||
-      vendor.services.some(service => 
-        service.name.toLowerCase().includes(searchLower) ||
-        service.description.toLowerCase().includes(searchLower)
-      )
-    );
-  });
+  const filteredVendors = searchVendors(vendors, searchQuery);
 
   return (
     <div className="min-h-screen bg-gray-50">

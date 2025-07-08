@@ -9,6 +9,8 @@ export interface Vendor {
   name: string;
   services: Service[];
   mobile: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -20,16 +22,20 @@ export const vendors: Vendor[] = [
       price: '₹99',
       unit: 'kg'
     }],
-    mobile: '+91 9892826805'
+    mobile: '+91 98928 26805',
+    areaServed: [],
+    buildingServed: []
   },
-{
-  name: 'Bubble Drycleaning',
-  services: [{
-    name: 'Dryclean & Steam Press',
-    description: 'Dryclean & Steam Press',
-    price: 'Call for price',
-    unit: 'kg'
-  }],
-  mobile: '+91 98670 52464'
-}
+  {
+    name: 'Bubble Drycleaning',
+    services: [{
+      name: 'Dryclean & Steam Press',
+      description: 'Dryclean & Steam Press',
+      price: 'Call for price',
+      unit: 'kg'
+    }],
+    mobile: '+91 98670 52464',
+    areaServed: [],
+    buildingServed: []
+  }
 ]; 

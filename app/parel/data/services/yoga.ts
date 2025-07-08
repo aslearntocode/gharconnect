@@ -11,6 +11,8 @@ export interface Vendor {
   mobile: string;
   photos: string[];
   social_media: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -27,6 +29,8 @@ export const vendors: Vendor[] = [
       '/images/vendors/Padma_Yoga1.jpeg',
       '/images/vendors/Padma_Yoga2.jpeg'
     ],
-    social_media: ''
+    social_media: '',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   }
 ]; 

@@ -10,6 +10,8 @@ export interface Vendor {
   services: Service[];
   mobile: string;
   social_media?: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -22,7 +24,9 @@ export const vendors: Vendor[] = [
       unit: 'kg'
     }],
     mobile: '+91 90044 56294',
-    social_media: ''
+    social_media: '',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Shubham Scrap Dealer',
@@ -33,7 +37,9 @@ export const vendors: Vendor[] = [
       unit: 'kg'
     }],
     mobile: '+91 70453 78869',
-    social_media: ''
+    social_media: '',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Jayantilal Scrap Dealer',
@@ -44,7 +50,9 @@ export const vendors: Vendor[] = [
       unit: 'kg'
     }],
     mobile: '+91 97730 47179',
-    social_media: ''
+    social_media: '',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Kamal Scrap Dealer',
@@ -55,6 +63,8 @@ export const vendors: Vendor[] = [
       unit: 'kg'
     }],
     mobile: '+91 98194 26119',
-    social_media: ''
+    social_media: '',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   }
 ];

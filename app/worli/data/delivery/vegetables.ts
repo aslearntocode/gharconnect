@@ -10,17 +10,21 @@ export interface Vendor {
   products: Product[];
   mobile: string;
   photo?: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
   {
-    name: 'Veggie Basket',
+    name: 'Manilal Vegetable Shop',
     products: [{
-      name: 'Tomatoes',
-      description: 'Farm fresh tomatoes',
-      price: 40,
-      unit: 'kg'
+      name: 'Vegetables',
+      description: 'Farm fresh vegetables',
+      price: "Call for price",
+      unit: 'gms'
     }],
-    mobile: '+91 90000 00003'
+    mobile: '+91 98923 53874 / 79923 34717',
+    areaServed: ['Parel','Worli','Byculla','Dadar'],
+    buildingServed: ['All']
   }
 ]; 

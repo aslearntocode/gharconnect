@@ -9,6 +9,8 @@ export interface Vendor {
   name: string;
   services: Service[];
   mobile: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -20,7 +22,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'piece'
     }],
-    mobile: '+91 91109 58850'
+    mobile: '+91 91109 58850',
+    areaServed: [],
+    buildingServed: []
   }, 
   {
     name: 'Saroj',
@@ -30,6 +34,20 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'piece'
     }],
-    mobile: '+91 79850 90256'
+    mobile: '+91 79850 90256',
+    areaServed: [],
+    buildingServed: []
+  },
+  {
+    name: 'Ramesh Tailor',
+    services: [{
+      name: 'Tailoring',
+      description: 'Custom tailoring for men and women',
+      price: 'Call for price',
+      unit: 'piece'
+    }],
+    mobile: '+91 9876543211',
+    areaServed: [],
+    buildingServed: []
   }
 ];

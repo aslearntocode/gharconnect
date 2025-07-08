@@ -32,7 +32,7 @@ export default function PestControlPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pestControlServices && pestControlServices.map((service) => (
               <VendorCard
-                key={service.id}
+                key={service.name}
                 vendor={{
                   name: service.name,
                   services: [service],

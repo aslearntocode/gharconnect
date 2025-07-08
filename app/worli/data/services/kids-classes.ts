@@ -10,6 +10,8 @@ export interface Vendor {
   services: Service[];
   mobile: string;
   photo?: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -21,8 +23,10 @@ export const vendors: Vendor[] = [
       price: '₹1500',
       unit: 'per month'
     }],
-    mobile: '+91 9876543211',
-    photo: '/images/services/art-class.jpg'
+    mobile: '+91 98765 43211',
+    photo: '/images/services/art-class.jpg',
+    areaServed: [],
+    buildingServed: []
   },
   {
     name: 'Worli Music School',
@@ -32,8 +36,10 @@ export const vendors: Vendor[] = [
       price: '₹1800',
       unit: 'per month'
     }],
-    mobile: '+91 8765432110',
-    photo: '/images/services/music-class.jpg'
+    mobile: '+91 87654 32110',
+    photo: '/images/services/music-class.jpg',
+    areaServed: [],
+    buildingServed: []
   },
   {
     name: 'Worli Sports Academy',
@@ -43,8 +49,10 @@ export const vendors: Vendor[] = [
       price: '₹2200',
       unit: 'per month'
     }],
-    mobile: '+91 7654321109',
-    photo: '/images/services/sports-class.jpg'
+    mobile: '+91 76543 21109',
+    photo: '/images/services/sports-class.jpg',
+    areaServed: [],
+    buildingServed: []
   },
   {
     name: 'Rushi Kapadia - State Level Tennis Player',
@@ -54,7 +62,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 9819735090'
+    mobile: '+91 98197 35090',
+    areaServed: [],
+    buildingServed: []
   },
   {
     name: 'Sushil - Taekwondo Player',
@@ -64,7 +74,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 85918 61692'
+    mobile: '+91 85918 61692',
+    areaServed: [],
+    buildingServed: []
   },
   {
     name: 'Bhaviraj House of Music',
@@ -74,6 +86,8 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 90825 03460'
+    mobile: '+91 90825 03460',
+    areaServed: [],
+    buildingServed: []
   }
 ]; 

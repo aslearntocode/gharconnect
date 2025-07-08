@@ -11,6 +11,8 @@ export interface PainterService {
   category: 'interior' | 'exterior' | 'special' | 'other';
   brand: string;
   inStock: boolean;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const painterServices: PainterService[] = [

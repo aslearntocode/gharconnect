@@ -22,6 +22,8 @@ interface VendorCardProps {
     photo?: string;
     photos?: string[];
     social_media?: string;
+    areaServed?: string | string[];
+    buildingServed?: string | string[];
   };
   type: 'service' | 'delivery';
 }
@@ -217,6 +219,16 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
               {mobileNumber}
             </a>
           )}
+          
+          {/* Area Served and Building Served */}
+          <div className="mb-3 space-y-1">
+            <div className="text-sm text-gray-600">
+              <span className="font-medium">Area Served:</span> {Array.isArray(vendor.areaServed) && vendor.areaServed.length > 0 ? vendor.areaServed.join(', ') : ''}
+            </div>
+            <div className="text-sm text-gray-600">
+              <span className="font-medium">Building Served:</span> {Array.isArray(vendor.buildingServed) && vendor.buildingServed.length > 0 ? vendor.buildingServed.join(', ') : ''}
+            </div>
+          </div>
           
           {/* Social Media Handle */}
           {vendor.social_media && vendor.social_media.trim() !== '' && (

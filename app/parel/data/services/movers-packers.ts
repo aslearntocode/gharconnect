@@ -9,6 +9,8 @@ export interface Vendor {
   name: string;
   services: Service[];
   mobile: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -20,7 +22,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per shift'
     }],
-    mobile: '+91 96573 00088'
+    mobile: '+91 96573 00088',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Pack N',
@@ -30,6 +34,20 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per shift'
     }],
-    mobile: '+91 80806 56767'
+    mobile: '+91 80806 56767',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
+  },
+  {
+    name: 'Ravi Packers',
+    services: [{
+      name: 'Moving',
+      description: 'Household moving and packing',
+      price: 'Call for price',
+      unit: 'job'
+    }],
+    mobile: '+91 9876543210',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   }
 ];

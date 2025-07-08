@@ -10,7 +10,11 @@ export interface Doctor {
   society: string;
   consultationFee: string;
   languages: string[];
+  areaServed?: string[];
+  buildingServed?: string[];
 }
+
+
 
 export const doctors: Doctor[] = [
   {
@@ -24,7 +28,9 @@ export const doctors: Doctor[] = [
     timing: "Mon-Sat: 9 AM - 1 PM, 4 PM - 8 PM",
     society: "Parel",
     consultationFee: "Call for appointment",
-    languages: ["English", "Hindi", "Marathi"]
+    languages: ["English", "Hindi", "Marathi"],
+    areaServed: ['All'],
+    buildingServed: ['All']
   },
   {
     id: "2",
@@ -37,7 +43,9 @@ export const doctors: Doctor[] = [
     timing: "Mon-Sat: 10 AM - 2 PM, 5 PM - 9 PM",
     society: "Dadar",
     consultationFee: "Call for appointment",
-    languages: ["English", "Hindi", "Gujarati"]
+    languages: ["English", "Hindi", "Gujarati"],
+    areaServed: ['All'],
+    buildingServed: ['All']
   },
   {
     id: "3",
@@ -50,7 +58,9 @@ export const doctors: Doctor[] = [
     timing: "Mon-Sun",
     society: "Parel",
     consultationFee: "Call for appointment",
-    languages: ["English", "Hindi", "Marathi"]
+    languages: ["English", "Hindi", "Marathi"],
+    areaServed: ['All'],
+    buildingServed: ['All']
   },
   {
     id: "4",
@@ -63,9 +73,12 @@ export const doctors: Doctor[] = [
     timing: "Mon-Sat",
     society: "Parel",
     consultationFee: "Call for appointment",
-    languages: ["English", "Hindi", "Marathi"]
+    languages: ["English", "Hindi", "Marathi"],
+    areaServed: ['All'],
+    buildingServed: ['All']
   },
-  {id: "5",
+  {
+    id: "5",
     name: "Sunanda D",
     specialization: "Nutrition",
     qualification: "M.S. (USA)",
@@ -75,7 +88,9 @@ export const doctors: Doctor[] = [
     timing: "Mon-Sat",
     society: "Online",
     consultationFee: "Call for appointment",
-    languages: ["English", "Hindi", "Marathi"]
+    languages: ["English", "Hindi", "Marathi"],
+    areaServed: ['All'],
+    buildingServed: ['All']
   },
   {
     id: "6",
@@ -88,7 +103,9 @@ export const doctors: Doctor[] = [
     timing: "Mon-Sat",
     society: "Online",
     consultationFee: "Call for appointment",
-    languages: ["English", "Hindi", "Marathi"]
+    languages: ["English", "Hindi", "Marathi"],
+    areaServed: ['All'],
+    buildingServed: ['All']
   },
   {
     id: "7",
@@ -101,6 +118,9 @@ export const doctors: Doctor[] = [
     timing: "Mon-Fri",
     society: "Online or Parel, Mumbai",
     consultationFee: "Call for appointment",
-    languages: ["English", "Hindi"]
+    languages: ["English", "Hindi"],
+    areaServed: ['All'],
+    buildingServed: ['All']
   }
-]; 
+];
+

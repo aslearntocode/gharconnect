@@ -709,7 +709,7 @@ export default function Home() {
                   <span className="text-black">Welcome to GharConnect </span>
                   <span className="text-indigo-600">@Parel</span>
                   <Link href="/" className="ml-2 text-indigo-600 text-xs md:text-sm font-semibold underline hover:no-underline transition-all">
-                    Click here to go to other areas
+                    Click here to go to other cities
                   </Link>
                 </h1>
                 <p className="text-lg text-gray-600 mb-4 md:mb-8">

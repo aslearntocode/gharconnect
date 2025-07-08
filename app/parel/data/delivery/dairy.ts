@@ -10,6 +10,8 @@ export interface Vendor {
   products: Product[];
   mobile: string;
   photo?: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -21,7 +23,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'litre'
     }],
-    mobile: '+91 9820180456 / 9930494032'
+    mobile: '+91 9820180456 / 9930494032',
+    areaServed: ['Parel', 'Worli'],
+    buildingServed: ['All']
   },
   {
     name: 'Gautam Dairy',
@@ -31,6 +35,8 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'litre'
     }],
-    mobile: '+91 9221568717'
+    mobile: '+91 9221568717',
+    areaServed: ['Parel', 'Worli'],
+    buildingServed: ['L&T Crescent Bay']
   }
 ]; 

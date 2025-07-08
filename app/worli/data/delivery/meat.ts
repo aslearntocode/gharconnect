@@ -10,6 +10,8 @@ export interface Vendor {
   products: Product[];
   mobile: string;
   photo: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export interface MeatProduct {
@@ -37,7 +39,9 @@ export const vendors: Vendor[] = [
       unit: 'kg'
     }],
     mobile: '+91 90000 00002',
-    photo: ''
+    photo: '',
+    areaServed: [],
+    buildingServed: []
   },
   {
     name: 'Figo Fresh Meat',
@@ -48,7 +52,9 @@ export const vendors: Vendor[] = [
       unit: 'per kg'
     }],
     mobile: '+91 98679 72116',
-    photo: '/images/vendors/Figo_Fresh_Meat.jpeg'
+    photo: '/images/vendors/Figo_Fresh_Meat.jpeg',
+    areaServed: [],
+    buildingServed: []
   },
   {
     name: 'Bombay Fish Supplier',
@@ -59,7 +65,9 @@ export const vendors: Vendor[] = [
       unit: 'per kg'
     }],
     mobile: '+91 70213 58630',
-    photo: ''
+    photo: '',
+    areaServed: [],
+    buildingServed: []
   }
 ];
 

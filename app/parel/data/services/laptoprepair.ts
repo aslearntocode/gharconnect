@@ -9,6 +9,8 @@ export interface Vendor {
   name: string;
   products: Product[];
   mobile: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -20,7 +22,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'service'
     }],
-    mobile: '+91 9930952258'
+    mobile: '+91 9930952258',
+    areaServed: ['All'],
+    buildingServed: ['All']
   },
   {
     name: 'Born Computers Sailesh',
@@ -30,7 +34,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'service'
     }],
-    mobile: '+91 98210 52256'
+    mobile: '+91 98210 52256',
+    areaServed: ['All'],
+    buildingServed: ['All']
   },
   {
     name: 'Vijay',
@@ -40,7 +46,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'service'
     }],
-    mobile: '+91 98673 21454'
+    mobile: '+91 98673 21454',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Jay Shroff',
@@ -50,6 +58,20 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'service'
     }],
-    mobile: '+91 98210 91121'
+    mobile: '+91 98210 91121',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
+  },
+  {
+    name: 'Laptop Repair Center',
+    products: [{
+      name: 'Laptop Repair',
+      description: 'All brands laptop repair',
+      price: 'Call for price',
+      unit: 'job'
+    }],
+    mobile: '+91 9876543212',
+    areaServed: ['All'],
+    buildingServed: ['All']
   }
 ];

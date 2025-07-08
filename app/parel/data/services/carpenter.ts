@@ -9,6 +9,8 @@ export interface Vendor {
   name: string;
   products: Product[];
   mobile: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -16,10 +18,12 @@ export const vendors: Vendor[] = [
     name: 'Ajay Sharma',
     products: [{
       name: 'Carpentry',
-      description: 'Carpentry services',
+      description: 'All types of carpentry work',
       price: 'Call for price',
       unit: 'job'
     }],
-    mobile: '+91 9821314516'
+    mobile: '+91 9821314516',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   }
 ];

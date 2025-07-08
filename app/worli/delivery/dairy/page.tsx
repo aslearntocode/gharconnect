@@ -1,11 +1,18 @@
 'use client';
 
+import { useState } from 'react';
 import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
-import { vendors } from '@/app/parel/data/delivery/dairy';
+import { vendors } from '@/app/worli/data/delivery/dairy';
 import { VendorCard } from '@/components/VendorCard';
+import { searchVendors } from '@/utils/searchUtils';
 
 export default function DairyPage() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Filter vendors based on search query
+  const filteredVendors = searchVendors(vendors, searchQuery);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -22,22 +29,29 @@ export default function DairyPage() {
               type="text"
               placeholder="Search for dairy vendors..."
               className="flex-1 outline-none bg-transparent text-gray-700 text-base"
-              disabled
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         </div>
       </div>
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {vendors.map((vendor, index) => (
-              <VendorCard
-                key={index}
-                vendor={vendor}
-                type="delivery"
-              />
-            ))}
-          </div>
+          {filteredVendors.length === 0 ? (
+            <div className="text-center text-gray-500 mt-8">
+              No results found for "{searchQuery}"
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {filteredVendors.map((vendor, index) => (
+                <VendorCard
+                  key={index}
+                  vendor={vendor}
+                  type="delivery"
+                />
+              ))}
+            </div>
+          )}
         </div>
       </main>
     </div>

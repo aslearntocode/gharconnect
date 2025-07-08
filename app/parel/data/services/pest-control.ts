@@ -1,22 +1,30 @@
-export interface PestControlService {
-  id: string;
+export interface Service {
   name: string;
   description: string;
-  price: number;
-  duration: string;
-  mobile: string;
-  category: 'termite' | 'rodent' | 'general' | 'other';
+  price: number | string;
+  unit: string;
 }
 
-export const pestControlServices: PestControlService[] = [
+export interface Vendor {
+  name: string;
+  services: Service[];
+  mobile: string;
+  areaServed?: string[];
+  buildingServed?: string[];
+}
+
+export const pestControlServices: Vendor[] = [
   {
-    id: 'pest_control',
     name: 'Pest Control',
-    description: 'Subscribe to get effective termite removal and prevention',
-    price: 3000,
-    duration: '1 year',
-    mobile: '9867898920',
-    category: 'termite'
+    services: [{
+      name: 'Pest Control',
+      description: 'All types of pest control',
+      price: 'Call for price',
+      unit: 'job'
+    }],
+  mobile: '+91 98678 98920',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   }
   // Add more services as needed
 ];

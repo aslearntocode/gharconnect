@@ -9,6 +9,8 @@ export interface Vendor {
   name: string;
   services: Service[];
   mobile: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -20,7 +22,9 @@ export const vendors: Vendor[] = [
       price: '₹600-₹900',
       unit: 'per class'
     }],
-    mobile: '+91 '
+    mobile: '+91 ',
+    areaServed: ['South Bombay'],
+    buildingServed: ['All']
   },
   {
     name: 'Brijesh Joshi',
@@ -30,7 +34,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 73583 65827'
+    mobile: '+91 73583 65827',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Rajesh',
@@ -40,7 +46,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 99676 55503'
+    mobile: '+91 99676 55503',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Noel',
@@ -50,7 +58,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 79000 84119'
+    mobile: '+91 79000 84119',
+    areaServed: 'Parel',
+    buildingServed: 'L&T Crescent Bay'
   },
   {
     name: 'Hetal Paleja',
@@ -60,7 +70,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 88798 13233'
+    mobile: '+91 88798 13233',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Hemini Lakdawala',
@@ -70,7 +82,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per class'
     }],
-    mobile: '+91 93242 60874'
+    mobile: '+91 93242 60874',
+    areaServed: ['South Bombay'],
+    buildingServed: ['All']
   },
   {
     name: 'Sonesh Sir',
@@ -80,7 +94,9 @@ export const vendors: Vendor[] = [
       price: '₹3500/2500',
       unit: 'per month'
     }],
-    mobile: '+91 91671 79484'
+    mobile: '+91 91671 79484',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Rushi Kapadia - State Level Player',
@@ -90,7 +106,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 98197 35090'
+    mobile: '+91 98197 35090',
+    areaServed: ['South Bombay'],
+    buildingServed: ['All']
   },
   {
     name: 'Ranjeet Tambe',
@@ -100,7 +118,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 98707 96928'
+    mobile: '+91 98707 96928',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay','Ashok Gardens']
   },
   {
     name: 'Sushil - Taekwondo Player',
@@ -110,7 +130,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 85918 61692'
+    mobile: '+91 85918 61692',
+    areaServed: ['South Bombay'],
+    buildingServed: ['All']
   },
   {
     name: 'Bhaviraj House of Music',
@@ -120,7 +142,9 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 90825 03460'
+    mobile: '+91 90825 03460',
+    areaServed: ['All'],
+    buildingServed: ['All']
   },
   {
     name: 'Siddharth',
@@ -130,6 +154,8 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'per month'
     }],
-    mobile: '+91 99673 51381'
+    mobile: '+91 99673 51381',
+    areaServed: ['South Bombay'],
+    buildingServed: ['All']
   }
 ]; 

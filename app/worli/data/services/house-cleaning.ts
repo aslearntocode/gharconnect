@@ -9,6 +9,8 @@ export interface Vendor {
   name: string;
   services: Service[];
   mobile: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -20,7 +22,9 @@ export const vendors: Vendor[] = [
       price: '₹999',
       unit: 'visit'
     }],
-    mobile: '+91 9000000001'
+    mobile: '+91 9000000001',
+    areaServed: [],
+    buildingServed: []
   },
   {
     name: 'Sparkle & Shine',
@@ -30,6 +34,8 @@ export const vendors: Vendor[] = [
       price: '₹1999',
       unit: 'visit'
     }],
-    mobile: '+91 9000000002'
+    mobile: '+91 9000000002',
+    areaServed: [],
+    buildingServed: []
   }
 ]; 

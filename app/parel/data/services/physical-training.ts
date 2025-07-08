@@ -9,8 +9,10 @@ export interface Vendor {
   name: string;
   products: Product[];
   mobile: string;
-  photo: string;
-  social_media: string;
+  photo?: string;
+  social_media?: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -22,9 +24,11 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'session'
     }],
-    mobile: '+91 9920458339',
+    mobile: '+91 99204 58339',
     photo: '/images/vendors/Subodh_PT.jpeg',
-    social_media: ''
+    social_media: '',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Ashok',
@@ -34,9 +38,11 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'session'
     }],
-    mobile: '+91 9820886804',
-    photo: '/images/vendors/Ashok_PT.jpeg',
-    social_media: ''
+    mobile: '+91 98208 86804',
+    photo: '',
+    social_media: '',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
   },
   {
     name: 'Chanchal',
@@ -48,6 +54,8 @@ export const vendors: Vendor[] = [
     }],
     mobile: '+91 97690 61443',
     photo: '/images/vendors/Chanchal.jpeg',
-    social_media: 'https://www.instagram.com/share/BBXf-y3bQP'
+    social_media: 'https://www.instagram.com/share/BBXf-y3bQP',
+    areaServed: ['All'],
+    buildingServed: ['All']
   }
 ];

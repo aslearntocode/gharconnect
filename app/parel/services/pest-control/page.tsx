@@ -5,20 +5,13 @@ import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
 import { pestControlServices } from '@/app/parel/data/services/pest-control';
 import { VendorCard } from '@/components/VendorCard';
+import { searchVendors } from '@/utils/searchUtils';
 
 export default function PestControlPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Filter vendors based on search query
-  const filteredVendors = pestControlServices.filter(service => {
-    const searchLower = searchQuery.toLowerCase();
-    return (
-      service.name.toLowerCase().includes(searchLower) ||
-      service.mobile.toLowerCase().includes(searchLower) ||
-      service.description.toLowerCase().includes(searchLower) ||
-      service.category.toLowerCase().includes(searchLower)
-    );
-  });
+  const filteredVendors = searchVendors(pestControlServices, searchQuery);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -50,14 +43,10 @@ export default function PestControlPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredVendors.map((service) => (
+              {filteredVendors.map((service, idx) => (
                 <VendorCard
-                  key={service.id}
-                  vendor={{
-                    name: service.name,
-                    services: [service],
-                    mobile: service.mobile
-                  }}
+                  key={service.name + '-' + idx}
+                  vendor={service}
                   type="service"
                 />
               ))}

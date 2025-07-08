@@ -5,22 +5,13 @@ import Header from '@/components/Header';
 import { FiSearch } from 'react-icons/fi';
 import { vendors } from '@/app/parel/data/delivery/dairy';
 import { VendorCard } from '@/components/VendorCard';
+import { searchVendors } from '@/utils/searchUtils';
 
 export default function DairyPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   // Filter vendors based on search query
-  const filteredVendors = vendors.filter(vendor => {
-    const searchLower = searchQuery.toLowerCase();
-    return (
-      vendor.name.toLowerCase().includes(searchLower) ||
-      vendor.mobile.toLowerCase().includes(searchLower) ||
-      vendor.products.some(product => 
-        product.name.toLowerCase().includes(searchLower) ||
-        product.description.toLowerCase().includes(searchLower)
-      )
-    );
-  });
+  const filteredVendors = searchVendors(vendors, searchQuery);
 
   return (
     <div className="min-h-screen bg-gray-50">

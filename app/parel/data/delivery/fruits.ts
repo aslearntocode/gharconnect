@@ -9,22 +9,8 @@ export interface Vendor {
   name: string;
   products: Product[];
   mobile: string;
-  photo?: string;
-}
-
-export interface FruitProduct {
-  id: string;
-  name: string;
-  description: string;
-  sizes: {
-    size: string;
-    price: number;
-    unit: string;
-  }[];
-  image: string;
-  category: 'citrus' | 'tropical' | 'berries' | 'stone' | 'other';
-  brand: string;
-  inStock: boolean;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
@@ -58,4 +44,4 @@ export const vendors: Vendor[] = [
     }],
     mobile: '+91 9987066551 / 9004336536'
   }
-]; 
+];
