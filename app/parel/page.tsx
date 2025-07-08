@@ -160,7 +160,7 @@ export default function Home() {
     {
       id: 'rent',
       title: 'Search Rentals',
-      description: 'Find rental apartments with No Brokerage',
+      description: 'Find Rental Apartments with No Brokerage',
       icon: FiHome,
       href: '/parel/rent',
       gradient: 'from-blue-500 to-cyan-500'
