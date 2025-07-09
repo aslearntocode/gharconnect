@@ -658,8 +658,8 @@ export default function RentPage() {
               </span>
             </div>
             <div className="md:w-2/3 text-left">
-              <h3 className="text-3xl font-bold mb-4">Eliminate the struggle of house hunting</h3>
-              <p className="text-gray-700 text-lg leading-relaxed">With our community based approach, finding the right rental property that meets your needs and preferences is easier. We provide you with a list of properties within your vicinity that meet your requirements, saving you time and effort in your search.</p>
+              <h3 className="text-3xl font-bold mb-4">Eliminate the struggle of paying brokerage</h3>
+              <p className="text-gray-700 text-lg leading-relaxed">With our community based approach, finding the right rental property that meets your needs and preferences is easier. We provide you with a list of properties within your vicinity that meet your requirements and connect you directly with the owner.</p>
             </div>
           </motion.div>
           {/* Card 2: Icon Right, Text Left */}
