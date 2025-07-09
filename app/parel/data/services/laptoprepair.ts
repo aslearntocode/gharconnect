@@ -22,7 +22,7 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'service'
     }],
-    mobile: '+91 9930952258',
+    mobile: '+91 99309 52258',
     areaServed: ['All'],
     buildingServed: ['All']
   },
@@ -70,7 +70,19 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'job'
     }],
-    mobile: '+91 9876543212',
+    mobile: '+91 98765 43212',
+    areaServed: ['All'],
+    buildingServed: ['All']
+  },
+  {
+    name: 'Techno Laptop',
+    products: [{
+      name: 'Laptop Repair',
+      description: 'All brands laptop repair',
+      price: 'Call for price',
+      unit: 'job'
+    }],
+    mobile: '+91 98709 37946',
     areaServed: ['All'],
     buildingServed: ['All']
   }

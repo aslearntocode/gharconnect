@@ -27,7 +27,7 @@ export const vendors: Vendor[] = [
     buildingServed: ['All']
   },
   {
-    name: 'Brijesh Joshi',
+    name: 'Brijesh Joshi - Music Classes',
     services: [{
       name: 'Music Classes',
       description: 'Guitar lessons for children and adults',
@@ -39,9 +39,9 @@ export const vendors: Vendor[] = [
     buildingServed: ['L&T Crescent Bay']
   },
   {
-    name: 'Rajesh',
+    name: 'Rajesh - Guitar Lessons',
     services: [{
-      name: 'Sports Coaching',
+      name: 'Guitar Lessons',
       description: 'Guitar lessons for children and adults',
       price: 'Call for price',
       unit: 'per month'
@@ -51,7 +51,7 @@ export const vendors: Vendor[] = [
     buildingServed: ['L&T Crescent Bay']
   },
   {
-    name: 'Noel',
+    name: 'Noel - Swimming Coach',
     services: [{
       name: 'Swimming Coaching',
       description: 'Swimming lessons for children and adults',
@@ -63,7 +63,7 @@ export const vendors: Vendor[] = [
     buildingServed: ['L&T Crescent Bay']
   },
   {
-    name: 'Hetal Paleja',
+    name: 'Hetal Paleja - Swimming Coach',
     services: [{
       name: 'Swimming Coaching',
       description: 'Swimming lessons for children and adults',
@@ -75,7 +75,7 @@ export const vendors: Vendor[] = [
     buildingServed: ['L&T Crescent Bay']
   },
   {
-    name: 'Hemini Lakdawala',
+    name: 'Hemini Lakdawala - Speech & Drama',
     services: [{
       name: 'Speech & Drama',
       description: 'Speech & Drama classes for children. Affiliated to Trinity College London',
@@ -87,7 +87,7 @@ export const vendors: Vendor[] = [
     buildingServed: ['All']
   },
   {
-    name: 'Sonesh Sir',
+    name: 'Sonesh Sir - Basketball Coach',
     services: [{
       name: 'Basketball Classes',
       description: 'Basketball classes for children',
@@ -99,7 +99,7 @@ export const vendors: Vendor[] = [
     buildingServed: ['L&T Crescent Bay']
   },
   {
-    name: 'Rushi Kapadia - State Level Player',
+    name: 'Rushi Kapadia - State Level TT Player',
     services: [{
       name: 'Table Tennis Classes',
       description: 'Table Tennis classes for children and adults',
@@ -111,7 +111,7 @@ export const vendors: Vendor[] = [
     buildingServed: ['All']
   },
   {
-    name: 'Ranjeet Tambe',
+    name: 'Ranjeet Tambe - Swimming Coach',
     services: [{
       name: 'Swimming Classes',
       description: 'Swimming classes for children and adults',
@@ -147,18 +147,6 @@ export const vendors: Vendor[] = [
     buildingServed: ['All']
   },
   {
-    name: 'Siddharth',
-    services: [{
-      name: 'Badminton Coaching',
-      description: 'Badminton lessons for children and adults',
-      price: 'Call for price',
-      unit: 'per month'
-    }],
-    mobile: '+91 99673 51381',
-    areaServed: ['South Bombay'],
-    buildingServed: ['All']
-  },
-  {
     name: 'Shailesh Badminton Coach',
     services: [{
       name: 'Badminton Coaching',
@@ -171,7 +159,7 @@ export const vendors: Vendor[] = [
     buildingServed: ['L&T Crescent Bay']
   },
   {
-    name: 'Siddharth',
+    name: 'Siddharth Badminton Coach',
     services: [{
       name: 'Badminton Coaching',
       description: 'Badminton coaching for children and adults',
@@ -179,6 +167,42 @@ export const vendors: Vendor[] = [
       unit: 'per month'
     }],
     mobile: '+91 99673 51381',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
+  },
+  {
+    name: 'Dilip - Chess Coach',
+    services: [{
+      name: 'Chess Coaching',
+      description: 'Chess coaching for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 97691 13120',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
+  },
+  {
+    name: 'Laksh - Chess Coach',
+    services: [{
+      name: 'Chess Coaching',
+      description: 'Chess coaching for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 98674 42247',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay']
+  },
+  {
+    name: 'Irfan - Skating Coach',
+    services: [{
+      name: 'Chess Coaching',
+      description: 'Chess coaching for children and adults',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 81498 17757',
     areaServed: ['Parel'],
     buildingServed: ['L&T Crescent Bay']
   }
