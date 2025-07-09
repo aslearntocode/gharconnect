@@ -21,7 +21,7 @@ export const vendors: Vendor[] = [
       {
         name: 'Farm (Desi) Eggs',
         description: 'Fresh farm eggs delivered daily',
-        price: '₹144',
+        price: '₹156',
         unit: 'dozen'
       },
       {

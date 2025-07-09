@@ -1080,14 +1080,14 @@ export default function Home() {
                 <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
                   <span className="text-4xl md:text-5xl mb-2 md:mb-3">🥜</span>
                   <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Dry Fruits</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Premium quality dry fruits and nuts</p>
+                  <p className="text-xs md:text-sm text-gray-600 text-center">Premium quality dry fruits and nuts delivered</p>
                 </div>
               </Link>
               <Link href="/parel/delivery/pharmacy" className="block group">
                 <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
                   <span className="text-4xl md:text-5xl mb-2 md:mb-3">💊</span>
                   <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Pharmacy</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">All types of medicines available</p>
+                  <p className="text-xs md:text-sm text-gray-600 text-center">All types of prescription medicines available</p>
                 </div>
               </Link>
             </div>
