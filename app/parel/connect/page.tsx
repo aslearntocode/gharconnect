@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Link from 'next/link';
 import { FiSearch } from 'react-icons/fi';
+import { FiHeart } from 'react-icons/fi';
 import Head from 'next/head';
 import LoginModal from '@/components/LoginModal'
 import { usePathname } from 'next/navigation'
@@ -17,6 +18,7 @@ interface Post {
   user_id: string;
   created_at: string;
   comment_count?: number;
+  likes?: number;
 }
 
 interface Comment {
@@ -179,6 +181,20 @@ export default function ParelConnectPage() {
     }
   };
 
+  // Like handler
+  const handleLikePost = async (post: Post) => {
+    if (!user) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    const supabase = await getSupabaseClient();
+    const { data, error } = await supabase
+      .from('posts')
+      .update({ likes: (post.likes || 0) + 1 })
+      .eq('id', post.id);
+    if (!error) fetchPosts();
+  };
+
   // Filter posts by search
   const filteredPosts = posts.filter(post =>
     post.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -336,9 +352,19 @@ export default function ParelConnectPage() {
                         {new Date(post.created_at).toLocaleString()}
                       </time>
                     </div>
-                    <div className="mt-4 flex-shrink-0">
+                    <div className="mt-4 flex-shrink-0 flex items-center gap-2">
                       <Button size="sm" asChild className="bg-indigo-600 hover:bg-indigo-700 text-white w-full">
                         <Link href={`/parel/connect/${post.id}`}>Read More</Link>
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="flex items-center gap-1 text-gray-500 hover:text-red-500"
+                        aria-label="Like post"
+                        onClick={() => handleLikePost(post)}
+                      >
+                        <FiHeart />
+                        <span>{post.likes || 0}</span>
                       </Button>
                     </div>
                   </li>
