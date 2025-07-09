@@ -13,6 +13,88 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'eggs-types',
+    title: 'Desi Eggs vs White Eggs: Understanding the Difference in India',
+    excerpt: 'Discover the key differences between desi eggs (country eggs) and white eggs (farm eggs) in India. Learn about their nutritional value, taste, farming methods, and why many Indian households prefer desi eggs.',
+    content: `
+# Desi Eggs vs White Eggs: Understanding the Difference in India
+
+In India, "desi egg" typically refers to an egg laid by local, free-range (country) hens, while a "normal white egg" usually comes from commercial, farm-bred hens (often White Leghorns) raised in controlled environments. Here's a comprehensive comparison between the two:
+
+## 🥚 Desi Egg (Country Egg)
+
+**Origin:** Laid by indigenous or local breeds (e.g., Kadaknath, Aseel, or backyard hens).
+
+**Color:** Usually brown, sometimes speckled or with a rougher shell.
+
+**Farming Style:** Free-range or semi-free-range, with hens often feeding on natural grains, insects, and kitchen scraps.
+
+**Taste:** Richer, more flavorful due to varied diet.
+
+**Nutrition:** Often considered more nutritious—slightly higher in protein, omega-3 fatty acids, and vitamins like A and E.
+
+**Price:** More expensive due to smaller supply and slower-laying hens.
+
+**Perception:** Seen as more natural and healthier by many Indian households.
+
+## 🥚 Normal White Egg (Farm Egg)
+
+**Origin:** Laid by commercial breeds like White Leghorn.
+
+**Color:** White, smooth and uniform.
+
+**Farming Style:** Mass-produced in poultry farms with controlled diet (grains, soy, supplements).
+
+**Taste:** Milder or blander.
+
+**Nutrition:** Standardized nutrition, but adequate for daily needs.
+
+**Price:** Cheaper and widely available.
+
+**Perception:** Practical and accessible for daily consumption.
+
+## 📊 Comparison Summary
+
+| Feature | Desi Egg | White Egg |
+|---------|----------|-----------|
+| Shell Color | Brown/speckled | White |
+| Hen Type | Country/free-range hens | Commercial farm hens |
+| Nutrition | Slightly richer | Standard |
+| Taste | More flavorful | Mild |
+| Cost | Higher | Lower |
+| Popularity | Preferred for health/nature lovers | Preferred for affordability |
+
+## 🏠 Why Many Indian Households Choose Desi Eggs
+
+In rural and many urban Indian homes, desi eggs are preferred especially for:
+
+- **Children:** For their perceived higher nutritional value
+- **Elderly:** Due to better protein quality and natural farming
+- **Those recovering from illness:** Believed to have superior healing properties
+- **Health-conscious individuals:** Who prefer natural, free-range products
+
+## 🛒 Making the Right Choice
+
+When choosing between desi and white eggs, consider:
+
+1. **Budget:** White eggs are more affordable for daily consumption
+2. **Health priorities:** Desi eggs may offer slightly better nutrition
+3. **Availability:** White eggs are more widely available
+4. **Taste preference:** Desi eggs have a richer, more distinct flavor
+
+## 🥚 Conclusion
+
+Both desi and white eggs have their place in Indian cuisine. While desi eggs are often preferred for their perceived health benefits and richer taste, white eggs provide an affordable and accessible option for daily consumption. The choice ultimately depends on your budget, health priorities, and taste preferences.
+
+Whether you choose desi eggs for their natural farming methods or white eggs for their affordability, both can be part of a healthy, balanced diet when sourced from reliable suppliers.
+`,
+    author: 'GharConnect Team',
+    date: '2025-07-09',
+    readTime: '4 min read',
+    category: 'Health & Nutrition',
+    image: '/blog/eggs-types-comparison.jpg'
+  },
+  {
     slug: 'sell-unused-event-tickets-on-gharconnect',
     title: 'Sell Unused Event Tickets to Neighbors on GharConnect.in - The Smarter, Faster Way!',
     excerpt: `Got last-minute changes and can't attend an event? Don't let your tickets go to waste! Sell them quickly, safely, and easily to your neighbors on GharConnect.in. Discover why listing within your community is the fastest, most trusted way to recover your costs and help a neighbor enjoy a great event.`,

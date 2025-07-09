@@ -1055,6 +1055,13 @@ export default function Home() {
                   <p className="text-xs md:text-sm text-gray-600 text-center">Quality meat and poultry, hygienically packed</p>
                 </div>
               </Link>
+              <Link href="/parel/delivery/eggs" className="block group">
+                <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
+                  <span className="text-4xl md:text-5xl mb-2 md:mb-3">🥚</span>
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Eggs</h3>
+                  <p className="text-xs md:text-sm text-gray-600 text-center">Country and Farm eggs delivered daily</p>
+                </div>
+              </Link>
               <Link href="/parel/delivery/vegetables" className="block group">
                 <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
                   <span className="text-4xl md:text-5xl mb-2 md:mb-3">🥦</span>

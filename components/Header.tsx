@@ -9,7 +9,7 @@ import Link from "next/link"
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { signOut } from 'firebase/auth'
-import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiSearch, FiPlus, FiHeart } from 'react-icons/fi'
+import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiSearch, FiPlus, FiHeart, FiCircle } from 'react-icons/fi'
 import { FaBuilding } from 'react-icons/fa'
 
 export default function Header() {
@@ -411,6 +411,10 @@ export default function Header() {
                       <FiTruck className="w-5 h-5 text-red-500" />
                       <span>Meat</span>
                     </Link>
+                    <Link href={`/${currentSociety}/delivery/eggs`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                      <FiCircle className="w-5 h-5 text-yellow-500" />
+                      <span>Eggs</span>
+                    </Link>
                     <Link href={`/${currentSociety}/delivery/vegetables`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
                       <FiTruck className="w-5 h-5 text-green-500" />
                       <span>Vegetables</span>
@@ -573,6 +577,9 @@ export default function Header() {
                   </Link>
                   <Link href={`/${currentSociety}/delivery/meat`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
                     Meat
+                  </Link>
+                  <Link href={`/${currentSociety}/delivery/eggs`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                    Eggs
                   </Link>
                   <Link href={`/${currentSociety}/delivery/vegetables`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
                     Vegetables

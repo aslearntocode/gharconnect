@@ -4,7 +4,7 @@ import { FiChevronDown, FiChevronUp, FiPhone, FiX, FiChevronLeft, FiChevronRight
 import { VendorRating } from './VendorRating';
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import LoginModal from './LoginModal';
 
 interface ServiceRating {
@@ -42,6 +42,15 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const supabase = createClientComponentClient();
   const router = useRouter();
+  const pathname = usePathname();
+
+  // Extract society from pathname
+  const getSocietyFromPath = () => {
+    const pathParts = pathname.split('/')
+    return pathParts[1] || 'parel' // Default to parel if no society in path
+  }
+
+  const currentSociety = getSocietyFromPath();
 
   // Get all available photos (only include defined, non-empty strings)
   const photos = (vendor.photos && Array.isArray(vendor.photos) && vendor.photos.length > 0)
@@ -217,6 +226,28 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
               className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3"
             >
               {mobileNumber}
+            </a>
+          )}
+          
+          {/* WhatsApp Group Link for Eggs */}
+          {type === 'delivery' && vendor.name.includes('Egg') && (
+            <a 
+              href="https://chat.whatsapp.com/HjgzZ8awaP63Hz1ncunFZW"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-green-600 text-sm font-medium hover:text-green-700 block mb-3 underline focus:outline-none"
+            >
+              or Join WhatsApp Group Here
+            </a>
+          )}
+          
+          {/* Learn More About Eggs Link */}
+          {type === 'delivery' && vendor.name.includes('Egg') && (
+            <a 
+              href={`/${currentSociety}/blog/eggs-types`}
+              className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3 underline focus:outline-none"
+            >
+              Learn about the difference between farm and country eggs
             </a>
           )}
           
