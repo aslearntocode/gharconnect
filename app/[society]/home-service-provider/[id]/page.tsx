@@ -4,7 +4,7 @@ import { getProviderById } from '@/data/home-service-providers';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
-import { FiStar, FiMapPin, FiPhone, FiMail, FiChevronLeft, FiHeart, FiShare2, FiZoomIn, FiX, FiChevronRight, FiChevronLeft as FiChevronLeftIcon, FiInstagram } from 'react-icons/fi';
+import { FiStar, FiMapPin, FiPhone, FiMail, FiChevronLeft, FiHeart, FiShare2, FiZoomIn, FiX, FiChevronRight, FiChevronLeft as FiChevronLeftIcon, FiInstagram, FiFacebook, FiLinkedin, FiTwitter, FiYoutube, FiGlobe } from 'react-icons/fi';
 import { VendorRating } from '@/components/VendorRating';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Footer from '@/components/Footer';
@@ -162,6 +162,59 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
   // Helper function to extract Instagram handles from portfolio
   const getInstagramHandles = (portfolio: string[]) => {
     return portfolio.filter(url => url.includes('instagram.com'));
+  };
+
+  // Helper function to extract Facebook handles from portfolio
+  const getFacebookHandles = (portfolio: string[]) => {
+    return portfolio.filter(url => url.includes('facebook.com'));
+  };
+
+  // Helper function to extract LinkedIn handles from portfolio
+  const getLinkedInHandles = (portfolio: string[]) => {
+    return portfolio.filter(url => url.includes('linkedin.com'));
+  };
+
+  // Helper function to extract Twitter/X handles from portfolio
+  const getTwitterHandles = (portfolio: string[]) => {
+    return portfolio.filter(url => url.includes('twitter.com') || url.includes('x.com'));
+  };
+
+  // Helper function to extract YouTube handles from portfolio
+  const getYouTubeHandles = (portfolio: string[]) => {
+    return portfolio.filter(url => url.includes('youtube.com'));
+  };
+
+  // Helper function to extract website URLs from portfolio
+  const getWebsiteHandles = (portfolio: string[]) => {
+    return portfolio.filter(url => 
+      !url.includes('instagram.com') && 
+      !url.includes('facebook.com') && 
+      !url.includes('linkedin.com') && 
+      !url.includes('twitter.com') && 
+      !url.includes('x.com') && 
+      !url.includes('youtube.com') &&
+      (url.startsWith('http://') || url.startsWith('https://'))
+    );
+  };
+
+  // Helper function to get platform name from URL
+  const getPlatformName = (url: string) => {
+    if (url.includes('instagram.com')) return 'Instagram';
+    if (url.includes('facebook.com')) return 'Facebook';
+    if (url.includes('linkedin.com')) return 'LinkedIn';
+    if (url.includes('twitter.com') || url.includes('x.com')) return 'Twitter/X';
+    if (url.includes('youtube.com')) return 'YouTube';
+    return 'Website';
+  };
+
+  // Helper function to get platform icon
+  const getPlatformIcon = (url: string) => {
+    if (url.includes('instagram.com')) return FiInstagram;
+    if (url.includes('facebook.com')) return FiFacebook;
+    if (url.includes('linkedin.com')) return FiLinkedin;
+    if (url.includes('twitter.com') || url.includes('x.com')) return FiTwitter;
+    if (url.includes('youtube.com')) return FiYoutube;
+    return FiGlobe;
   };
 
   if (loading) {
@@ -400,29 +453,159 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
                         <p className="font-semibold text-gray-900">{talent.contact.location}</p>
                       </div>
                     </div>
-                    {getInstagramHandles(talent.portfolio).length > 0 && (
-                      <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                        <FiInstagram className="w-5 h-5 text-indigo-600" />
-                        <div className="flex-1">
-                          <p className="text-sm text-gray-600">Instagram</p>
-                          <p className="font-semibold text-gray-900">
-                            {getInstagramHandles(talent.portfolio).map((url, index) => {
-                              const handle = url.split('instagram.com/')[1]?.split('/')[0];
-                              return (
-                                <span key={index}>
-                                  @{handle}
-                                  {index < getInstagramHandles(talent.portfolio).length - 1 && ', '}
-                                </span>
-                              );
-                            })}
-                          </p>
+                    {talent.portfolio && talent.portfolio.length > 0 && (
+                      <div className="space-y-3">
+                        <h4 className="text-lg font-semibold text-gray-900 mb-3">Social Media</h4>
+                        {/* Show Facebook button if Facebook link exists */}
+                        {talent.portfolio.some((url: string) => url.includes('facebook.com')) && (
+                          <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                            <FiFacebook className="w-5 h-5 text-indigo-600" />
+                            <div className="flex-1">
+                              <p className="text-sm text-gray-600">Facebook</p>
+                              <p className="font-semibold text-gray-900">Follow us on Facebook</p>
+                            </div>
+                            <button
+                              onClick={() => {
+                                const facebookUrl = talent.portfolio.find((url: string) => url.includes('facebook.com'));
+                                if (facebookUrl) {
+                                  window.open(facebookUrl, '_blank');
+                                }
+                              }}
+                              className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
+                            >
+                              Visit Facebook
+                            </button>
+                          </div>
+                        )}
+                        {/* Show Instagram button if Instagram link exists */}
+                        {talent.portfolio.some((url: string) => url.includes('instagram.com')) && (
+                          <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                            <FiInstagram className="w-5 h-5 text-indigo-600" />
+                            <div className="flex-1">
+                              <p className="text-sm text-gray-600">Instagram</p>
+                              <p className="font-semibold text-gray-900">Follow us on Instagram</p>
+                            </div>
+                            <button
+                              onClick={() => {
+                                const instagramUrl = talent.portfolio.find((url: string) => url.includes('instagram.com'));
+                                if (instagramUrl) {
+                                  window.open(instagramUrl, '_blank');
+                                }
+                              }}
+                              className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
+                            >
+                              Visit Instagram
+                            </button>
+                          </div>
+                        )}
+                        {/* Show LinkedIn button if LinkedIn link exists */}
+                        {talent.portfolio.some((url: string) => url.includes('linkedin.com')) && (
+                          <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                            <FiLinkedin className="w-5 h-5 text-indigo-600" />
+                            <div className="flex-1">
+                              <p className="text-sm text-gray-600">LinkedIn</p>
+                              <p className="font-semibold text-gray-900">Connect on LinkedIn</p>
+                            </div>
+                            <button
+                              onClick={() => {
+                                const linkedinUrl = talent.portfolio.find((url: string) => url.includes('linkedin.com'));
+                                if (linkedinUrl) {
+                                  window.open(linkedinUrl, '_blank');
+                                }
+                              }}
+                              className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
+                            >
+                              Visit LinkedIn
+                            </button>
+                          </div>
+                        )}
+                        {/* Show Twitter/X button if Twitter/X link exists */}
+                        {talent.portfolio.some((url: string) => url.includes('twitter.com') || url.includes('x.com')) && (
+                          <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                            <FiTwitter className="w-5 h-5 text-indigo-600" />
+                            <div className="flex-1">
+                              <p className="text-sm text-gray-600">Twitter/X</p>
+                              <p className="font-semibold text-gray-900">Follow us on Twitter/X</p>
+                            </div>
+                            <button
+                              onClick={() => {
+                                const twitterUrl = talent.portfolio.find((url: string) => url.includes('twitter.com') || url.includes('x.com'));
+                                if (twitterUrl) {
+                                  window.open(twitterUrl, '_blank');
+                                }
+                              }}
+                              className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
+                            >
+                              Visit Twitter/X
+                            </button>
+                          </div>
+                        )}
+                        {/* Show YouTube button if YouTube link exists */}
+                        {talent.portfolio.some((url: string) => url.includes('youtube.com')) && (
+                          <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                            <FiYoutube className="w-5 h-5 text-indigo-600" />
+                            <div className="flex-1">
+                              <p className="text-sm text-gray-600">YouTube</p>
+                              <p className="font-semibold text-gray-900">Subscribe to our YouTube</p>
+                            </div>
+                            <button
+                              onClick={() => {
+                                const youtubeUrl = talent.portfolio.find((url: string) => url.includes('youtube.com'));
+                                if (youtubeUrl) {
+                                  window.open(youtubeUrl, '_blank');
+                                }
+                              }}
+                              className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
+                            >
+                              Visit YouTube
+                            </button>
+                          </div>
+                        )}
+                        {/* Show Website button if other website links exist */}
+                        {talent.portfolio.some((url: string) => 
+                          !url.includes('instagram.com') && 
+                          !url.includes('facebook.com') && 
+                          !url.includes('linkedin.com') && 
+                          !url.includes('twitter.com') && 
+                          !url.includes('x.com') && 
+                          !url.includes('youtube.com') &&
+                          (url.startsWith('http://') || url.startsWith('https://'))
+                        ) && (
+                          <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                            <FiGlobe className="w-5 h-5 text-indigo-600" />
+                            <div className="flex-1">
+                              <p className="text-sm text-gray-600">Website</p>
+                              <p className="font-semibold text-gray-900">Visit our website</p>
+                            </div>
+                            <button
+                              onClick={() => {
+                                const websiteUrl = talent.portfolio.find((url: string) => 
+                                  !url.includes('instagram.com') && 
+                                  !url.includes('facebook.com') && 
+                                  !url.includes('linkedin.com') && 
+                                  !url.includes('twitter.com') && 
+                                  !url.includes('x.com') && 
+                                  !url.includes('youtube.com') &&
+                                  (url.startsWith('http://') || url.startsWith('https://'))
+                                );
+                                if (websiteUrl) {
+                                  window.open(websiteUrl, '_blank');
+                                }
+                              }}
+                              className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
+                            >
+                              Visit Website
+                            </button>
+                          </div>
+                        )}
+                        {/* Hidden div with all social media links for background access */}
+                        <div className="hidden">
+                          {talent.portfolio.map((url: string, index: number) => (
+                            <a key={index} href={url} target="_blank" rel="noopener noreferrer">
+                              {getPlatformName(url)} - {url}
+                            </a>
+                          ))}
                         </div>
-                        <button
-                          onClick={() => window.open(getInstagramHandles(talent.portfolio)[0])}
-                          className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
-                        >
-                          View Profile
-                        </button>
                       </div>
                     )}
                   </div>
