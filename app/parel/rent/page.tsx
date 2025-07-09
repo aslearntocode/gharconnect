@@ -677,7 +677,7 @@ export default function RentPage() {
             </div>
             <div className="md:w-2/3 text-left">
               <h3 className="text-3xl font-bold mb-4">Hassle-free experience</h3>
-              <p className="text-gray-700 text-lg leading-relaxed">We will ensure that you have a hassle-free experience by getting your proprty ready at the right time. We handle all the paperwork, rental agreements, and apartemnt readiness on your behalf, making the rental process more streamlined and convenient for you.</p>
+              <p className="text-gray-700 text-lg leading-relaxed">We will ensure that you have a hassle-free experience by getting your property ready at the right time. We handle all tasks like painting, cleaning etc. and get the apartemnt ready on owner's behalf.</p>
             </div>
           </motion.div>
           {/* Card 3: Icon Left, Text Right */}
