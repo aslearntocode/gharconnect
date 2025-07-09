@@ -205,19 +205,19 @@ export default function Home() {
       buttonBg: 'bg-green-600',
       buttonHover: 'hover:bg-green-700',
       href: '/worli/services/domestic-help',
-      buttonText: 'Find Domestic Help or Driver',
+      buttonText: 'Find Help',
       buttonTextMobile: 'Find Help'
     },
     {
       id: 'rental',
-      title: 'Find Rental Property',
+      title: 'Rental Properties with No Brokerage',
       icon: FiHome,
       iconBg: 'bg-indigo-100',
       iconColor: 'text-blue-600',
       buttonBg: 'bg-indigo-600',
       buttonHover: 'hover:bg-indigo-700',
       href: '/worli/rent/',
-      buttonText: 'Browse Properties',
+      buttonText: 'Browse',
       buttonTextMobile: 'Browse'
     },
     {
@@ -229,20 +229,44 @@ export default function Home() {
       buttonBg: 'bg-orange-600',
       buttonHover: 'hover:bg-orange-700',
       href: '/worli/services/physical-training',
-      buttonText: 'Find Trainers',
+      buttonText: 'Trainers',
       buttonTextMobile: 'Trainers'
     },
     {
       id: 'neighbor-services',
       title: 'Neighbor Service Providers',
       icon: FiUsers,
+      iconBg: 'bg-green-100',
+      iconColor: 'text-green-600',
+      buttonBg: 'bg-green-600',
+      buttonHover: 'hover:bg-green-700',
+      href: '/worli/home-service-provider',
+      buttonText: 'View',
+      buttonTextMobile: 'View'
+    },
+    {
+      id: 'sell-item-tickets',
+      title: 'Sell Items & Tickets',
+      icon: FiUsers,
       iconBg: 'bg-indigo-100',
       iconColor: 'text-indigo-600',
       buttonBg: 'bg-indigo-600',
       buttonHover: 'hover:bg-indigo-700',
-      href: '/worli/home-service-provider',
-      buttonText: 'View Neighbors',
+      href: '/worli/marketplace/sell',
+      buttonText: 'View',
       buttonTextMobile: 'View'
+    },
+    {
+      id: 'egg-delivery',
+      title: 'Farm Fresh Eggs',
+      icon: FiUsers,
+      iconBg: 'bg-orange-100',
+      iconColor: 'text-orange-600',
+      buttonBg: 'bg-orange-600',
+      buttonHover: 'hover:bg-orange-700',
+      href: '/worli/delivery/eggs',
+      buttonText: 'Order Now',
+      buttonTextMobile: 'Order Now'
     }
   ];
 
@@ -593,23 +617,23 @@ export default function Home() {
               {popularServicesCards.map((card) => {
                 const IconComponent = typeof card.icon === 'string' ? null : card.icon;
                 return (
-                  <div key={card.id} className="bg-white rounded-xl shadow-md p-4 border border-gray-200 flex-shrink-0 w-64">
-                    <div className="text-center">
-                      <div className={`w-12 h-12 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-3`}>
+                  <div key={card.id} className="bg-white rounded-xl shadow-md p-3 border border-gray-200 flex-shrink-0 w-52 h-36 flex flex-col justify-between">
+                    <div>
+                      <div className={`w-8 h-8 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-1`}>
                         {IconComponent ? (
-                          <IconComponent className={`w-6 h-6 ${card.iconColor}`} />
+                          <IconComponent className={`w-4 h-4 ${card.iconColor}`} />
                         ) : (
-                          <span className="text-3xl">{card.icon as string}</span>
+                          <span className="text-2xl">{card.icon as string}</span>
                         )}
                       </div>
-                      <h3 className="text-sm font-bold text-gray-900 mb-1">{card.title}</h3>
-                      <a 
-                        href={card.href}
-                        className={`inline-flex items-center px-3 py-1.5 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-sm`}
-                      >
-                        {card.buttonText}
-                      </a>
+                      <h3 className="text-[15px] font-bold text-gray-900 mb-1 leading-tight text-center">{card.title}</h3>
                     </div>
+                    <a 
+                      href={card.href}
+                      className={`inline-flex items-center justify-center px-3 py-1.5 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-sm w-full`}
+                    >
+                      {card.buttonText}
+                    </a>
                   </div>
                 );
               })}
@@ -638,7 +662,7 @@ export default function Home() {
                   </Link>
                 </h1>
                 <p className="text-lg text-gray-600 mb-4 md:mb-8">
-                  Your one-stop community platform for renting, selling, services, and delivery in your society. Explore all the services available in your society.
+                GharConnect is a community-based platform to find rental homes, trusted local services, marketplace deals and to connect with neighbors. It is a one stop destination for all the community requirements.
                 </p>
               </div>
               {/* Right Content - Main Offerings */}

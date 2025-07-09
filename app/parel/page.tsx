@@ -484,7 +484,7 @@ export default function Home() {
     },
     {
       id: 'rental',
-      title: 'Find Rental Property with No Brokerage',
+      title: 'Rental Properties with No Brokerage',
       icon: FiHome,
       iconBg: 'bg-indigo-100',
       iconColor: 'text-blue-600',
@@ -510,11 +510,23 @@ export default function Home() {
       id: 'neighbor-services',
       title: 'Neighbor Service Providers',
       icon: FiUsers,
+      iconBg: 'bg-green-100',
+      iconColor: 'text-green-600',
+      buttonBg: 'bg-green-600',
+      buttonHover: 'hover:bg-green-700',
+      href: '/parel/home-service-provider',
+      buttonText: 'View',
+      buttonTextMobile: 'View'
+    },
+    {
+      id: 'sell-item-tickets',
+      title: 'Sell Items & Tickets',
+      icon: FiUsers,
       iconBg: 'bg-indigo-100',
       iconColor: 'text-indigo-600',
       buttonBg: 'bg-indigo-600',
       buttonHover: 'hover:bg-indigo-700',
-      href: '/parel/home-service-provider',
+      href: '/parel/marketplace/sell',
       buttonText: 'View',
       buttonTextMobile: 'View'
     },
@@ -522,10 +534,10 @@ export default function Home() {
       id: 'egg-delivery',
       title: 'Farm Fresh Eggs',
       icon: FiUsers,
-      iconBg: 'bg-indigo-100',
-      iconColor: 'text-indigo-600',
-      buttonBg: 'bg-indigo-600',
-      buttonHover: 'hover:bg-indigo-700',
+      iconBg: 'bg-orange-100',
+      iconColor: 'text-orange-600',
+      buttonBg: 'bg-orange-600',
+      buttonHover: 'hover:bg-orange-700',
       href: '/parel/delivery/eggs',
       buttonText: 'Order Now',
       buttonTextMobile: 'Order Now'
@@ -726,7 +738,7 @@ export default function Home() {
                   </Link>
                 </h1>
                 <p className="text-lg text-gray-600 mb-4 md:mb-8">
-                  Your one-stop community platform for renting, selling, services, and delivery in your society. Explore all the services available in your society.
+                GharConnect is a community-based platform to find rental homes, trusted local services, marketplace deals and to connect with neighbors. It is a one stop destination for all the community requirements.
                 </p>
               </div>
               {/* Right Content - Main Offerings */}

@@ -262,22 +262,22 @@ export function Marketplace({ location }: { location: string }) {
   }
 
   const filteredProducts = products.filter(product => {
+    const isTicket = product.category === 'Event or Movie Tickets';
     const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category)
-    const matchesCondition = selectedConditions.length === 0 || selectedConditions.includes(product.condition)
+    const matchesCondition = isTicket || selectedConditions.length === 0 || selectedConditions.includes(product.condition)
     const matchesPrice = selectedPriceRanges.length === 0 || selectedPriceRanges.some(range => {
       const [min, max] = range.split('-').map(Number)
       return product.price >= min && product.price <= max
     })
     const locationFilterValue = locationFilter.toLowerCase().trim();
-    const matchesLocation =
+    const matchesLocation = isTicket ||
       !locationFilterValue ||
       'mumbai'.includes(locationFilterValue) ||
       (product.area && product.area.toLowerCase().includes(locationFilterValue)) ||
       (product.building_name && product.building_name.toLowerCase().includes(locationFilterValue));
-    
     // Filter for free items only
     const matchesFree = !showFreeOnly || product.price === 0
-    
+
     return matchesCategory && matchesCondition && matchesPrice && matchesLocation && matchesFree
   })
   
