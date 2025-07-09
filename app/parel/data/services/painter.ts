@@ -25,5 +25,17 @@ export const vendors: Vendor[] = [
     mobile: '+91 99303 97796',
     areaServed: ['All'],
     buildingServed: ['All']
+  },
+  {
+    name: 'Shoeb',
+    services: [{
+      name: 'Painting',
+      description: 'All types of painting work',
+      price: 'Call for price',
+      unit: 'job'
+    }],
+    mobile: '+91 91672 28070',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay','Ashok Tower','Ashok Garden']
   }
 ]; 

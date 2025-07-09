@@ -121,6 +121,21 @@ export const doctors: Doctor[] = [
     languages: ["English", "Hindi"],
     areaServed: ['All'],
     buildingServed: ['All']
+  },
+  {
+    id: "8",
+    name: "Dentist Mitesh Jain",
+    specialization: "Dental Surgeon",
+    qualification: "BDS",
+    experience: "10+ years",
+    address: "Parel, Mumbai",
+    phone: "+91 80800 09944",
+    timing: "Mon-Sat",
+    society: "Parel, Mumbai",
+    consultationFee: "Call for appointment",
+    languages: ["English", "Hindi", "Marathi"],
+    areaServed: ['All'],
+    buildingServed: ['All']
   }
 ];
 
