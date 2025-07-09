@@ -5,8 +5,8 @@ import { Toaster } from '@/components/ui/toaster';
 <link rel="icon" href="/GC_Logo.png" />
 
 export const metadata: Metadata = {
-  title: 'GharConnect - Connect with Your Neighbors | Find Apartments & Local Services',
-  description: 'Connect with your neighbors, find apartments for rent or sale, and discover local services in your community. Join GharConnect to make your society living better and more convenient.',
+  title: 'GharConnect - Find Apartments & Local Services | Connect with Your Neighbors',
+  description: 'Find apartments for rent, connect with your neighbors and discover local services and marketplace in your community.',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
