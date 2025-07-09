@@ -275,7 +275,7 @@ export default function RentPage() {
         <div className="w-full bg-indigo-600 flex flex-col items-center justify-center py-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white text-center">Rental Apartments with No Brokerage</h1>
           <p className="text-indigo-100 text-base md:text-lg mt-2 text-center max-w-5xl">
-            Discover premium rental apartments with transparent pricing and minimal brokerage fees.
+            Discover premium rental apartments within your neighborhood.
           </p>
         </div>
       </div>
