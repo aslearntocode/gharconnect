@@ -16,7 +16,7 @@ export interface Vendor {
 
 export const vendors: Vendor[] = [
   {
-    name: 'GharConnect - Fresh Eggs',
+    name: 'Farm Fresh Eggs',
     products: [
       {
         name: 'Farm (Desi) Eggs',
