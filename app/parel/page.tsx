@@ -479,19 +479,19 @@ export default function Home() {
       buttonBg: 'bg-green-600',
       buttonHover: 'hover:bg-green-700',
       href: '/parel/services/domestic-help',
-      buttonText: 'Find Domestic Help or Driver',
+      buttonText: 'Find Help',
       buttonTextMobile: 'Find Help'
     },
     {
       id: 'rental',
-      title: 'Find Rental Property',
+      title: 'Find Rental Property with No Brokerage',
       icon: FiHome,
       iconBg: 'bg-indigo-100',
       iconColor: 'text-blue-600',
       buttonBg: 'bg-indigo-600',
       buttonHover: 'hover:bg-indigo-700',
       href: '/parel/rent/',
-      buttonText: 'Browse Properties',
+      buttonText: 'Browse',
       buttonTextMobile: 'Browse'
     },
     {
@@ -503,7 +503,7 @@ export default function Home() {
       buttonBg: 'bg-orange-600',
       buttonHover: 'hover:bg-orange-700',
       href: '/parel/services/physical-training',
-      buttonText: 'Find Trainers',
+      buttonText: 'Trainers',
       buttonTextMobile: 'Trainers'
     },
     {
@@ -515,8 +515,20 @@ export default function Home() {
       buttonBg: 'bg-indigo-600',
       buttonHover: 'hover:bg-indigo-700',
       href: '/parel/home-service-provider',
-      buttonText: 'View Neighbors',
+      buttonText: 'View',
       buttonTextMobile: 'View'
+    },
+    {
+      id: 'egg-delivery',
+      title: 'Farm Fresh Eggs',
+      icon: FiUsers,
+      iconBg: 'bg-indigo-100',
+      iconColor: 'text-indigo-600',
+      buttonBg: 'bg-indigo-600',
+      buttonHover: 'hover:bg-indigo-700',
+      href: '/parel/delivery/eggs',
+      buttonText: 'Order Now',
+      buttonTextMobile: 'Order Now'
     }
   ];
 
@@ -634,14 +646,14 @@ export default function Home() {
                     const IconComponent = typeof card.icon === 'string' ? null : card.icon;
                     return (
                       <div key={card.id} className="w-1/2 flex-shrink-0 px-2">
-                        <div className="bg-white rounded-lg shadow-md p-2 border border-gray-200 h-full flex flex-col">
+                        <div className="bg-white rounded-lg shadow-md p-2 border border-gray-200 h-full flex flex-col justify-between">
                           <div className="text-center flex-1 flex flex-col justify-between">
                             <div>
-                              <div className={`w-8 h-8 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-2`}>
+                              <div className={`w-6 h-6 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-2`}>
                                 {IconComponent ? (
-                                  <IconComponent className={`w-4 h-4 ${card.iconColor}`} />
+                                  <IconComponent className={`w-3 h-3 ${card.iconColor}`} />
                                 ) : (
-                                  <span className="text-2xl">{card.icon as string}</span>
+                                  <span className="text-xl">{card.icon as string}</span>
                                 )}
                               </div>
                               <h3 className="text-xs font-bold text-gray-900 mb-1">{card.title}</h3>
@@ -649,6 +661,7 @@ export default function Home() {
                             <a 
                               href={card.href}
                               className={`inline-flex items-center justify-center px-2 py-1 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-xs mt-auto w-full`}
+                              style={{ marginTop: 'auto' }}
                             >
                               {card.buttonTextMobile}
                             </a>
@@ -666,23 +679,23 @@ export default function Home() {
               {popularServicesCards.map((card) => {
                 const IconComponent = typeof card.icon === 'string' ? null : card.icon;
                 return (
-                  <div key={card.id} className="bg-white rounded-xl shadow-md p-4 border border-gray-200 flex-shrink-0 w-64">
-                    <div className="text-center">
-                      <div className={`w-12 h-12 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-3`}>
+                  <div key={card.id} className="bg-white rounded-xl shadow-md p-3 border border-gray-200 flex-shrink-0 w-52 h-36 flex flex-col justify-between">
+                    <div>
+                      <div className={`w-8 h-8 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-1`}>
                         {IconComponent ? (
-                          <IconComponent className={`w-6 h-6 ${card.iconColor}`} />
+                          <IconComponent className={`w-4 h-4 ${card.iconColor}`} />
                         ) : (
-                          <span className="text-3xl">{card.icon as string}</span>
+                          <span className="text-2xl">{card.icon as string}</span>
                         )}
                       </div>
-                      <h3 className="text-sm font-bold text-gray-900 mb-1">{card.title}</h3>
-                      <a 
-                        href={card.href}
-                        className={`inline-flex items-center px-3 py-1.5 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-sm`}
-                      >
-                        {card.buttonText}
-                      </a>
+                      <h3 className="text-[15px] font-bold text-gray-900 mb-1 leading-tight text-center">{card.title}</h3>
                     </div>
+                    <a 
+                      href={card.href}
+                      className={`inline-flex items-center justify-center px-3 py-1.5 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-sm w-full`}
+                    >
+                      {card.buttonText}
+                    </a>
                   </div>
                 );
               })}
