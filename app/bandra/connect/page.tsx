@@ -46,6 +46,8 @@ export default function BandraConnectPage() {
   const pathname = usePathname();
   const [likesLoading, setLikesLoading] = useState<string | null>(null);
   const [userLikedPosts, setUserLikedPosts] = useState<{ [postId: string]: boolean }>({});
+  const [activeFilter, setActiveFilter] = useState<string>('All');
+  const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -231,11 +233,44 @@ export default function BandraConnectPage() {
     setLikesLoading(null);
   }
 
-  // Filter posts by search
-  const filteredPosts = posts.filter(post =>
-    post.title.toLowerCase().includes(search.toLowerCase()) ||
-    post.body.toLowerCase().includes(search.toLowerCase())
-  );
+  // Filter posts by search and active filter
+  const filteredPosts = posts.filter(post => {
+    const matchesSearch = post.title.toLowerCase().includes(search.toLowerCase()) ||
+                         post.body.toLowerCase().includes(search.toLowerCase());
+    
+    if (activeFilter === 'All') {
+      return matchesSearch;
+    }
+    
+    const postText = (post.title + ' ' + post.body).toLowerCase();
+    const filterKeywords = getFilterKeywords(activeFilter);
+    const matchesFilter = filterKeywords.some(keyword => 
+      postText.includes(keyword.toLowerCase())
+    );
+    
+    return matchesSearch && matchesFilter;
+  });
+
+  // Helper function to get keywords for each filter
+  function getFilterKeywords(filter: string): string[] {
+    const filterMap: { [key: string]: string[] } = {
+      'Schools': ['school', 'education', 'college', 'university', 'student', 'teacher', 'academic', 'study', 'exam', 'class', 'tuition', 'coaching'],
+      'Cleanliness': ['clean', 'dirty', 'garbage', 'waste', 'sweep', 'dustbin', 'sanitation', 'hygiene', 'maintenance', 'rubbish', 'trash', 'litter'],
+      'Food': ['food', 'restaurant', 'cafe', 'dining', 'kitchen', 'cook', 'eat', 'meal', 'cuisine', 'delivery', 'takeaway', 'chef', 'menu'],
+      'Transport': ['bus', 'train', 'metro', 'taxi', 'auto', 'transport', 'commute', 'travel', 'road', 'traffic', 'parking', 'vehicle', 'car'],
+      'Safety': ['safety', 'security', 'police', 'crime', 'theft', 'robbery', 'emergency', 'helpline', 'guard', 'cctv', 'patrol', 'law'],
+      'Events': ['event', 'festival', 'celebration', 'party', 'function', 'gathering', 'meetup', 'ceremony', 'program', 'show', 'performance'],
+      'Services': ['service', 'repair', 'maintenance', 'electrician', 'plumber', 'carpenter', 'painter', 'cleaning', 'laundry', 'tailor', 'shop'],
+      'Health': ['hospital', 'clinic', 'doctor', 'medical', 'health', 'medicine', 'pharmacy', 'dental', 'emergency', 'ambulance', 'treatment'],
+      'Governance': ['council', 'ward', 'municipal', 'corporation', 'government', 'administration', 'policy', 'legislation', 'complaint', 'suggestion', 'improvement', 'development'],
+      'Crime': ['crime', 'theft', 'robbery', 'assault', 'violence', 'fight', 'murder', 'accident', 'incident', 'emergency', 'helpline', 'police', 'security', 'law'],
+      'Education': ['school', 'college', 'university', 'education', 'academic', 'study', 'exam', 'class', 'tuition', 'coaching', 'institute', 'learning', 'knowledge', 'research'],
+      'Environment': ['environment', 'pollution', 'waste', 'garbage', 'litter', 'clean', 'green', 'sustainability', 'recycling', 'eco-friendly', 'climate', 'nature', 'wildlife', 'noise', 'noise pollution'],
+      'Entertainment': ['entertainment', 'movie', 'theater', 'music', 'dance', 'art', 'culture', 'festival', 'celebration', 'party', 'function', 'gathering', 'show', 'performance'],
+      'Religion': ['religion', 'faith', 'temple', 'church', 'mosque', 'synagogue', 'worship', 'prayer', 'spiritual', 'meditation', 'yoga', 'zen', 'satsang', 'guru', 'gurugram'],
+    };
+    return filterMap[filter] || [];
+  }
 
   // Compute top liked and top commented posts
   const topLikedPosts = [...filteredPosts]
@@ -324,7 +359,68 @@ export default function BandraConnectPage() {
             />
           </div>
         </div>
-        <div className="max-w-6xl mx-auto py-8 px-4 flex flex-col md:flex-row gap-8">
+        <div className="max-w-7xl mx-auto py-8 px-2 lg:px-4 flex flex-col lg:flex-row gap-4 lg:gap-6">
+          {/* Mobile Filter Dropdown */}
+          <div className="lg:hidden mb-4">
+            <div className="relative">
+              <button
+                onClick={() => setIsFilterDropdownOpen(!isFilterDropdownOpen)}
+                className="w-full bg-white rounded-lg shadow border border-gray-200 px-4 py-3 text-left flex items-center justify-between"
+              >
+                <span className="text-sm font-medium text-gray-700">
+                  Filter: {activeFilter}
+                </span>
+                <svg className={`w-5 h-5 text-gray-400 transition-transform ${isFilterDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {isFilterDropdownOpen && (
+                <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
+                  <div className="p-2 max-h-64 overflow-y-auto space-y-1">
+                    {['All', 'Cleanliness', 'Food', 'Transport', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Religion'].map(filter => (
+                      <button
+                        key={filter}
+                        onClick={() => {
+                          setActiveFilter(filter);
+                          setIsFilterDropdownOpen(false);
+                        }}
+                        className={`w-full text-left px-3 py-2 rounded text-sm font-medium transition-colors ${
+                          activeFilter === filter
+                            ? 'bg-indigo-100 text-indigo-700'
+                            : 'text-gray-700 hover:bg-gray-50'
+                        }`}
+                      >
+                        {filter}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Desktop Floating Filters */}
+          <aside className="hidden lg:block w-64 flex-shrink-0 sticky top-8 self-start">
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4">
+              <h3 className="text-lg font-bold mb-4 text-indigo-700">Filter by Topic</h3>
+              <div className="space-y-2">
+                {['All', 'Cleanliness', 'Food', 'Transport', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Religion'].map(filter => (
+                  <button
+                    key={filter}
+                    onClick={() => setActiveFilter(filter)}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      activeFilter === filter
+                        ? 'bg-indigo-100 text-indigo-700 border border-indigo-200'
+                        : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    {filter}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </aside>
+          
           {/* Main Content */}
           <div className="flex-1">
             {/* SEO Content Section */}
@@ -438,7 +534,7 @@ export default function BandraConnectPage() {
             </section>
           </div>
           {/* Right Sidebar (Desktop only) */}
-          <aside className="hidden md:block w-80 flex-shrink-0 sticky top-8 self-start">
+          <aside className="hidden lg:block w-72 flex-shrink-0 sticky top-8 self-start">
             <div className="bg-white rounded-xl shadow border border-gray-100 p-4 mb-6">
               <h3 className="text-lg font-bold mb-3 text-indigo-700">Top Liked Posts</h3>
               <ul className="space-y-3">
