@@ -622,12 +622,12 @@ export default function ParelConnectPage() {
                       {/* Action row: like, comment, read more */}
                       <div className="flex gap-3 mt-2">
                         <button
-                          className={`flex items-center gap-1 px-3 md:px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold text-xs md:text-sm ${userLikedPosts[post.id] ? 'text-red-500' : 'text-gray-700'} ${likesLoading === post.id ? 'opacity-50 cursor-wait' : ''}`}
+                          className={`flex items-center gap-1 px-3 md:px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold text-xs md:text-sm ${(post.likes || 0) > 0 ? 'text-red-500' : 'text-gray-700'} ${likesLoading === post.id ? 'opacity-50 cursor-wait' : ''}`}
                           onClick={() => handleLikePost(post.id)}
                           disabled={userLikedPosts[post.id] || likesLoading === post.id}
                           aria-label={userLikedPosts[post.id] ? 'Liked' : 'Like'}
                         >
-                          <FiHeart fill={userLikedPosts[post.id] ? 'currentColor' : 'none'} />
+                          <FiHeart fill={(post.likes || 0) > 0 ? 'currentColor' : 'none'} />
                           {post.likes || 0}
                         </button>
                         <Link href={`/parel/connect/${post.id}`} className="flex items-center gap-1 px-3 md:px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
