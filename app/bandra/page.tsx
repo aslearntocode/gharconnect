@@ -669,19 +669,22 @@ export default function Home() {
                     const IconComponent = typeof card.icon === 'string' ? null : card.icon;
                     return (
                       <div key={card.id} className="w-1/2 flex-shrink-0 px-2">
-                        <div className="bg-white rounded-lg shadow-md p-2 border border-gray-200">
-                          <div className="text-center">
-                            <div className={`w-8 h-8 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-2`}>
-                              {IconComponent ? (
-                                <IconComponent className={`w-4 h-4 ${card.iconColor}`} />
-                              ) : (
-                                <span className="text-2xl">{card.icon as string}</span>
-                              )}
+                        <div className="bg-white rounded-lg shadow-md p-2 border border-gray-200 h-full flex flex-col justify-between">
+                          <div className="text-center flex-1 flex flex-col justify-between">
+                            <div>
+                              <div className={`w-6 h-6 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-2`}>
+                                {IconComponent ? (
+                                  <IconComponent className={`w-3 h-3 ${card.iconColor}`} />
+                                ) : (
+                                  <span className="text-xl">{card.icon as string}</span>
+                                )}
+                              </div>
+                              <h3 className="text-xs font-bold text-gray-900 mb-1">{card.title}</h3>
                             </div>
-                            <h3 className="text-xs font-bold text-gray-900 mb-1">{card.title}</h3>
                             <a 
                               href={card.href}
-                              className={`inline-flex items-center justify-center px-2 py-1 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-xs w-full`}
+                              className={`inline-flex items-center justify-center px-2 py-1 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-xs mt-auto w-full`}
+                              style={{ marginTop: 'auto' }}
                             >
                               {card.buttonTextMobile}
                             </a>
@@ -1066,47 +1069,47 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-center mb-2 md:mb-3">Delivery Categories</h2>
             <p className="text-lg text-gray-600 text-center mb-8">Order fresh essentials delivered to your door</p>
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-2 md:gap-6">
               <Link href="/bandra/delivery/dairy" className="block group">
-                <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <span className="text-4xl md:text-5xl mb-2 md:mb-3">🥛</span>
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Dairy</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Fresh milk, cheese, paneer, butter, and more</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">🥛</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Dairy</h3>
                 </div>
               </Link>
               <Link href="/bandra/delivery/meat" className="block group">
-                <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <span className="text-4xl md:text-5xl mb-2 md:mb-3">🍗</span>
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Meat</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Quality meat and poultry, hygienically packed</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">🍗</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Meat</h3>
+                </div>
+              </Link>
+              <Link href="/bandra/delivery/eggs" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">🥚</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Eggs</h3>
                 </div>
               </Link>
               <Link href="/bandra/delivery/vegetables" className="block group">
-                <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <span className="text-4xl md:text-5xl mb-2 md:mb-3">🥦</span>
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Vegetables</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Farm-fresh vegetables delivered daily/weekly</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">🥦</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Vegetables</h3>
                 </div>
               </Link>
               <Link href="/bandra/delivery/fruits" className="block group">
-                <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <span className="text-4xl md:text-5xl mb-2 md:mb-3">🍎</span>
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Fruits</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Seasonal and exotic fruits, handpicked for you</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">🍎</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Fruits</h3>
                 </div>
               </Link>
               <Link href="/bandra/delivery/dry-fruits" className="block group">
-                <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <span className="text-4xl md:text-5xl mb-2 md:mb-3">🥜</span>
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Dry Fruits</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Premium quality dry fruits and nuts</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">🥜</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Dry Fruits</h3>
                 </div>
               </Link>
               <Link href="/bandra/delivery/pharmacy" className="block group">
-                <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <span className="text-4xl md:text-5xl mb-2 md:mb-3">💊</span>
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Pharmacy</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">All types of medicines available</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">💊</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Pharmacy</h3>
                 </div>
               </Link>
             </div>
@@ -1153,152 +1156,131 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 className="text-3xl font-bold text-center mb-2 md:mb-3">Services Categories</h2>
             <p className="text-lg text-gray-600 text-center mb-8">Book trusted home and personal services</p>
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-2 md:gap-6">
               <Link href="/bandra/services/laundry" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiDroplet className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-blue-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Laundry</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Professional laundry and dry cleaning</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiDroplet className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Laundry</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/carpenter" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiTool className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-yellow-600" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Carpenter</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Woodwork, repairs, and furniture</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiTool className="w-7 h-7 mb-2 text-yellow-600 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Carpenter</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/tailor" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiScissors className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-purple-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Tailor</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Clothing alterations & stitching</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiEdit className="w-7 h-7 mb-2 text-pink-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Tailor</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/plumber" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiTool className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-blue-600" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Plumber</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Leak repairs, fittings, and more</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiTool className="w-7 h-7 mb-2 text-blue-600 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Plumber</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/electrician" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiZap className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-yellow-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Electrician</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Wiring, repairs, and installations</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiZap className="w-7 h-7 mb-2 text-yellow-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Electrician</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/domestic-help" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center justify-center md:items-center md:justify-start">
-                  <FiUsers className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-green-600" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Domestic Help & Drivers</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Helpers for urgent needs</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiUsers className="w-7 h-7 mb-2 text-green-600 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Domestic Help & Drivers</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/car-clean" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <span className="text-3xl md:text-4xl mb-2 md:mb-3 text-blue-500">🚗</span>
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Car Clean</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Daily Car Cleaning</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl text-blue-500 lg:mb-3 lg:text-4xl">🚗</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Car Clean</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/painter" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiEdit className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-pink-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Painter</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Wall painting and touch-ups</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiEdit className="w-7 h-7 mb-2 text-pink-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Painter</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/gardener" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiHome className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-green-600" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Gardener</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Garden care and landscaping</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiHome className="w-7 h-7 mb-2 text-green-600 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Gardener</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/ac-service" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiZap className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-blue-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">AC Service</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">AC repair and maintenance</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiZap className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">AC Service</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/pest-control" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiShield className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-red-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Pest Control</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Termite and pest removal</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiShield className="w-7 h-7 mb-2 text-red-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Pest Control</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/laptop-repair" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiTool className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-red-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Laptop Repair</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Laptop repair & maintenance</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiTool className="w-7 h-7 mb-2 text-red-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Laptop Repair</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/electronics-repair" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiTool className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-red-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Electronics Repair</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Electronics repair & maintenance</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiTool className="w-7 h-7 mb-2 text-red-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Electronics Repair</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/scrap-dealer" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <span className="text-3xl md:text-4xl mb-2 md:mb-3 text-orange-500">♻️</span>
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Scrap Dealer</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Recycling and scrap collection</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl text-orange-500 lg:mb-3 lg:text-4xl">♻️</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Scrap Dealer</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/notary" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiFileText className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-blue-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Notary</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Legal document notarization</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiFileText className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Notary</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/piegon-net" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiGrid className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-green-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Pigeon Net</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Pigeon net installation</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiGrid className="w-7 h-7 mb-2 text-green-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Pigeon Net</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/movers-packers" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiTruck className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-blue-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Movers & Packers</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Movers & Packers</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiTruck className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Movers & Packers</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/physical-training" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiTrendingUp className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-indigo-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Physical Training</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Personal and group training</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiTrendingUp className="w-7 h-7 mb-2 text-indigo-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Physical Training</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/yoga" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiAward className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-green-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Yoga</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Yoga classes and workshops</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiAward className="w-7 h-7 mb-2 text-green-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Yoga</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/massage" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiHeart className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-pink-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Massage</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Massage for stress relief</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiHeart className="w-7 h-7 mb-2 text-pink-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Massage</h3>
                 </div>
               </Link>
               <Link href="/bandra/services/kids-classes" className="block group">
-                <div className="bg-gray-50 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-4 md:p-6 flex flex-col items-center">
-                  <FiBookOpen className="w-8 h-8 md:w-10 md:h-10 mb-2 md:mb-3 text-orange-500" />
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors">Kids Classes</h3>
-                  <p className="text-xs md:text-sm text-gray-600 text-center">Learning and fun for kids</p>
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiBookOpen className="w-7 h-7 mb-2 text-orange-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Kids Classes</h3>
                 </div>
               </Link>
             </div>
