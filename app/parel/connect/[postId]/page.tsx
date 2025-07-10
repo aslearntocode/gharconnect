@@ -40,12 +40,31 @@ export default function PostDetailPage() {
   const [search, setSearch] = useState('');
   // Add state to track likes loading
   const [likesLoading, setLikesLoading] = useState<string | null>(null);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [userLikedComments, setUserLikedComments] = useState<{ [commentId: string]: boolean }>({});
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => setUser(user));
     fetchPostAndComments();
     return () => unsubscribe();
   }, [postId]);
+
+  useEffect(() => {
+    if (!user) return;
+    const fetchLikedComments = async () => {
+      const supabase = await getSupabaseClient();
+      const { data, error } = await supabase
+        .from('comment_likes')
+        .select('comment_id')
+        .eq('user_id', user.uid);
+      if (!error && data) {
+        const liked: Record<string, boolean> = {};
+        data.forEach((row: { comment_id: string }) => { liked[row.comment_id] = true; });
+        setUserLikedComments(liked);
+      }
+    };
+    fetchLikedComments();
+  }, [user]);
 
   const fetchPostAndComments = async () => {
     setLoading(true);
@@ -94,21 +113,41 @@ export default function PostDetailPage() {
     }
   };
 
-  // Add handler to like a comment
+  // Add handler to like a comment (per-user)
   async function handleLikeComment(commentId: string) {
+    if (!user) {
+      setIsLoginModalOpen(true);
+      return;
+    }
     setLikesLoading(commentId);
     const supabase = await getSupabaseClient();
-    // Increment likes by 1
-    const { data, error } = await supabase
-      .from('comments')
-      .update({ likes: (comments.find(c => c.id === commentId)?.likes || 0) + 1 })
-      .eq('id', commentId)
-      .select();
-    setLikesLoading(null);
-    if (!error) {
-      // Update local state for instant feedback
-      setComments(prev => prev.map(c => c.id === commentId ? { ...c, likes: (c.likes || 0) + 1 } : c));
+    const firebaseUid = user.uid;
+    // Check if already liked
+    const { data: likeRows, error: likeError } = await supabase
+      .from('comment_likes')
+      .select('id')
+      .eq('user_id', firebaseUid)
+      .eq('comment_id', commentId);
+    if (likeRows && likeRows.length > 0) {
+      setLikesLoading(null);
+      return; // Already liked
     }
+    // Insert like
+    const { error: insertError } = await supabase
+      .from('comment_likes')
+      .insert([{ user_id: firebaseUid, comment_id: commentId }]);
+    if (!insertError) {
+      // Increment comment likes
+      const currentComment = comments.find(c => c.id === commentId);
+      const currentLikes = currentComment?.likes || 0;
+      await supabase
+        .from('comments')
+        .update({ likes: currentLikes + 1 })
+        .eq('id', commentId);
+      setComments(prev => prev.map(c => c.id === commentId ? { ...c, likes: (c.likes || 0) + 1 } : c));
+      setUserLikedComments(prev => ({ ...prev, [commentId]: true }));
+    }
+    setLikesLoading(null);
   }
 
   // Helper to recursively render comments
@@ -131,11 +170,11 @@ export default function PostDetailPage() {
               <p className="text-gray-800 text-sm mb-2">{comment.body}</p>
               <div className="flex items-center gap-4 text-xs text-gray-500">
                 <button
-                  className={`flex items-center gap-1 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold ${likesLoading === comment.id ? 'opacity-50 cursor-wait' : ''}`}
+                  className={`flex items-center gap-1 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold ${userLikedComments[comment.id] ? 'text-red-500' : 'text-gray-700'} ${likesLoading === comment.id ? 'opacity-50 cursor-wait' : ''}`}
                   onClick={() => handleLikeComment(comment.id)}
-                  disabled={likesLoading === comment.id}
+                  disabled={userLikedComments[comment.id] || likesLoading === comment.id}
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  <svg className="w-5 h-5" fill={userLikedComments[comment.id] ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
                   {comment.likes || 0}
                 </button>
                 <button className="flex items-center gap-1 hover:text-blue-600 focus:outline-none" onClick={() => setReplyTo(comment.id)} aria-label="Reply to comment">

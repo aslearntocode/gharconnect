@@ -53,6 +53,23 @@ export default function BandraConnectPage() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setUser(user);
+      if (user) {
+        // Fetch liked posts for this user from Supabase
+        const supabase = await getSupabaseClient();
+        // Convert Firebase UID to UUID format
+        const firebaseUid = user.uid;
+        const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
+        const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
+        const { data, error } = await supabase
+          .from('post_likes')
+          .select('post_id')
+          .eq('user_id', formattedUuid);
+        if (!error && data) {
+          const liked: Record<string, boolean> = {};
+          data.forEach((row: { post_id: string }) => { liked[row.post_id] = true; });
+          setUserLikedPosts(liked);
+        }
+      }
     });
     fetchPosts();
     return () => unsubscribe();
@@ -190,8 +207,6 @@ export default function BandraConnectPage() {
   async function handleLikePost(postId: string) {
     console.log('handleLikePost called with postId:', postId);
     console.log('user:', user);
-    console.log('userLikedPosts:', userLikedPosts);
-    console.log('userLikedPosts[postId]:', userLikedPosts[postId]);
     
     if (!user) {
       console.log('No user found, opening login modal');
@@ -207,25 +222,68 @@ export default function BandraConnectPage() {
     setLikesLoading(postId);
     const supabase = await getSupabaseClient();
     
+    // Test if post_likes table exists and show its structure
+    console.log('Testing post_likes table...');
+    const { data: tableTest, error: tableError } = await supabase
+      .from('post_likes')
+      .select('*')
+      .limit(1);
+    console.log('post_likes table test:', { tableTest, tableError });
+    
+    // Convert Firebase UID to UUID format
+    const firebaseUid = user.uid;
+    console.log('Firebase UID:', firebaseUid);
+    const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
+    const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
+    console.log('Formatted UUID:', formattedUuid);
+    
     try {
-      // Update the posts table directly
-      const currentPost = posts.find(p => p.id === postId);
-      const currentLikes = currentPost?.likes || 0;
-      console.log('Current likes:', currentLikes);
+      // Check if already liked in DB
+      const { data: likeRows, error: likeError } = await supabase
+        .from('post_likes')
+        .select('id')
+        .eq('user_id', formattedUuid)
+        .eq('post_id', postId);
       
-      const { error: updateError } = await supabase
-        .from('posts')
-        .update({ likes: currentLikes + 1 })
-        .eq('id', postId);
+      console.log('Check like result:', { likeRows, likeError });
       
-      console.log('posts update result:', { updateError });
-      
-      if (!updateError) {
-        setPosts(prev => prev.map(p => p.id === postId ? { ...p, likes: (p.likes || 0) + 1 } : p));
+      if (likeRows && likeRows.length > 0) {
+        console.log('User already liked this post in DB');
         setUserLikedPosts(prev => ({ ...prev, [postId]: true }));
-        console.log('Successfully liked post, updated state');
+        setLikesLoading(null);
+        return;
+      }
+      
+      // Insert like
+      const { error: insertError } = await supabase
+        .from('post_likes')
+        .insert([{ user_id: formattedUuid, post_id: postId }]);
+      
+      console.log('Insert like result:', { insertError });
+      console.log('Full insert error details:', JSON.stringify(insertError, null, 2));
+      
+      if (!insertError) {
+        // Increment post likes
+        const currentPost = posts.find(p => p.id === postId);
+        const currentLikes = currentPost?.likes || 0;
+        console.log('Current likes:', currentLikes);
+        
+        const { error: updateError } = await supabase
+          .from('posts')
+          .update({ likes: currentLikes + 1 })
+          .eq('id', postId);
+        
+        console.log('Update post result:', { updateError });
+        
+        if (!updateError) {
+          setPosts(prev => prev.map(p => p.id === postId ? { ...p, likes: (p.likes || 0) + 1 } : p));
+          setUserLikedPosts(prev => ({ ...prev, [postId]: true }));
+          console.log('Successfully liked post');
+        } else {
+          console.error('Error updating post likes:', updateError);
+        }
       } else {
-        console.error('Error updating posts table:', updateError);
+        console.error('Error inserting like:', insertError);
       }
     } catch (error) {
       console.error('Error in handleLikePost:', error);
