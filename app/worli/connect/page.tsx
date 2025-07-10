@@ -8,8 +8,8 @@ import Link from 'next/link';
 import { FiSearch } from 'react-icons/fi';
 import { FiHeart } from 'react-icons/fi';
 import Head from 'next/head';
+import LoginModal from '@/components/LoginModal'
 import { usePathname } from 'next/navigation'
-import LoginModal from '@/components/LoginModal';
 
 interface Post {
   id: string;
@@ -17,7 +17,7 @@ interface Post {
   body: string;
   user_id: string;
   created_at: string;
-  comment_count: number;
+  comment_count?: number;
   likes?: number;
 }
 
@@ -42,8 +42,10 @@ export default function WorliConnectPage() {
   const [commentLoading, setCommentLoading] = useState(false);
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [search, setSearch] = useState('');
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const pathname = usePathname();
+  const [likesLoading, setLikesLoading] = useState<string | null>(null);
+  const [userLikedPosts, setUserLikedPosts] = useState<{ [postId: string]: boolean }>({});
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -58,7 +60,10 @@ export default function WorliConnectPage() {
     const supabase = await getSupabaseClient();
     const { data, error } = await supabase
       .from('posts')
-      .select(`*, comment_count:comments(count)`)
+      .select(`
+        *,
+        comment_count:comments(count)
+      `)
       .eq('area', 'Worli')
       .order('created_at', { ascending: false });
     if (!error) {
@@ -178,25 +183,78 @@ export default function WorliConnectPage() {
     }
   };
 
-  // Like handler
-  const handleLikePost = async (post: Post) => {
+  // Add handler to like a post (per-user)
+  async function handleLikePost(postId: string) {
+    console.log('handleLikePost called with postId:', postId);
+    console.log('user:', user);
+    console.log('userLikedPosts:', userLikedPosts);
+    console.log('userLikedPosts[postId]:', userLikedPosts[postId]);
+    
     if (!user) {
+      console.log('No user found, opening login modal');
       setIsLoginModalOpen(true);
       return;
     }
+    
+    if (userLikedPosts[postId]) {
+      console.log('User already liked this post');
+      return;
+    }
+    
+    setLikesLoading(postId);
     const supabase = await getSupabaseClient();
-    const { data, error } = await supabase
-      .from('posts')
-      .update({ likes: (post.likes || 0) + 1 })
-      .eq('id', post.id);
-    if (!error) fetchPosts();
-  };
+    
+    try {
+      // Update the posts table directly
+      const currentPost = posts.find(p => p.id === postId);
+      const currentLikes = currentPost?.likes || 0;
+      console.log('Current likes:', currentLikes);
+      
+      const { error: updateError } = await supabase
+        .from('posts')
+        .update({ likes: currentLikes + 1 })
+        .eq('id', postId);
+      
+      console.log('posts update result:', { updateError });
+      
+      if (!updateError) {
+        setPosts(prev => prev.map(p => p.id === postId ? { ...p, likes: (p.likes || 0) + 1 } : p));
+        setUserLikedPosts(prev => ({ ...prev, [postId]: true }));
+        console.log('Successfully liked post, updated state');
+      } else {
+        console.error('Error updating posts table:', updateError);
+      }
+    } catch (error) {
+      console.error('Error in handleLikePost:', error);
+    }
+    
+    setLikesLoading(null);
+  }
 
   // Filter posts by search
   const filteredPosts = posts.filter(post =>
     post.title.toLowerCase().includes(search.toLowerCase()) ||
     post.body.toLowerCase().includes(search.toLowerCase())
   );
+
+  // Compute top liked and top commented posts
+  const topLikedPosts = [...filteredPosts]
+    .sort((a, b) => (b.likes || 0) - (a.likes || 0))
+    .slice(0, 2);
+  const topCommentedPosts = [...filteredPosts]
+    .sort((a, b) => (b.comment_count || 0) - (a.comment_count || 0))
+    .slice(0, 2);
+
+  // Helper to get time ago
+  function timeAgo(dateString: string) {
+    const now = new Date();
+    const date = new Date(dateString);
+    const diff = Math.floor((now.getTime() - date.getTime()) / 1000);
+    if (diff < 60) return `${diff} sec. ago`;
+    if (diff < 3600) return `${Math.floor(diff / 60)} min. ago`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)} hr. ago`;
+    return date.toLocaleDateString();
+  }
 
   // Structured data for FAQ
   const structuredData = {
@@ -266,109 +324,144 @@ export default function WorliConnectPage() {
             />
           </div>
         </div>
-        <div className="max-w-6xl mx-auto py-8 px-4">
-          {/* SEO Content Section */}
-          <section className="sr-only mb-8 bg-white p-6 rounded-lg shadow-sm">
-            <h2 className="text-xl font-semibold text-gray-900 mb-3">Welcome to Worli Community Discussions</h2>
-            <div className="sr-only">
-              <p className="text-gray-700 mb-4">
-                Join our vibrant community forum where residents share local insights, recommendations, and reach out for urgent help. 
-                Whether you're looking for local service recommendations, or want to discuss community events, 
-                this is the perfect place to engage with the Worli community.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                <div className="bg-indigo-50 p-3 rounded">
-                  <h3 className="font-semibold text-indigo-800 mb-1">Local Recommendations</h3>
-                  <p className="text-indigo-700">Share and discover the best local restaurants, services, and hidden gems in Worli.</p>
-                </div>
-                <div className="bg-green-50 p-3 rounded">
-                  <h3 className="font-semibold text-green-800 mb-1">Community Events</h3>
-                  <p className="text-green-700">Stay updated on local events, festivals, and community gatherings in Worli.</p>
-                </div>
-                <div className="bg-purple-50 p-3 rounded">
-                  <h3 className="font-semibold text-purple-800 mb-1">Urgent Help</h3>
-                  <p className="text-purple-700">Use the community to get help with urgent needs. Together we can make a difference.</p>
+        <div className="max-w-6xl mx-auto py-8 px-4 flex flex-col md:flex-row gap-8">
+          {/* Main Content */}
+          <div className="flex-1">
+            {/* SEO Content Section */}
+            <section className="sr-only mb-8 bg-white p-6 rounded-lg shadow-sm">
+              <h2 className="text-xl font-semibold text-gray-900 mb-3">Welcome to Worli Community Discussions</h2>
+              <div className="sr-only">
+                <p className="text-gray-700 mb-4">
+                  Join our vibrant community forum where residents share local insights, recommendations, and reach out for urgent help. 
+                  Whether you're looking for local service recommendations, or want to discuss community events, 
+                  this is the perfect place to engage with the Worli community.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                  <div className="bg-indigo-50 p-3 rounded">
+                    <h3 className="font-semibold text-indigo-800 mb-1">Local Recommendations</h3>
+                    <p className="text-indigo-700">Share and discover the best local restaurants, services, and hidden gems in Worli.</p>
+                  </div>
+                  <div className="bg-green-50 p-3 rounded">
+                    <h3 className="font-semibold text-green-800 mb-1">Community Events</h3>
+                    <p className="text-green-700">Stay updated on local events, festivals, and community gatherings in Worli.</p>
+                  </div>
+                  <div className="bg-purple-50 p-3 rounded">
+                    <h3 className="font-semibold text-purple-800 mb-1">Urgent Help</h3>
+                    <p className="text-purple-700">Use the community to get help with urgent needs. Together we can make a difference.</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-          {/* New Post Form */}
-          {user ? (
-            <section className="mb-8 space-y-2 bg-white p-4 rounded shadow">
-              <h2 className="text-lg font-semibold mb-3">Start a New Discussion</h2>
-              <form onSubmit={handleNewPost}>
-                <input
-                  className="w-full border rounded p-2 mb-2"
-                  placeholder="Title"
-                  value={newPost.title}
-                  onChange={e => setNewPost({ ...newPost, title: e.target.value })}
-                  required
-                  aria-label="Post title"
-                />
-                <textarea
-                  className="w-full border rounded p-2 mb-2"
-                  placeholder="What's on your mind?"
-                  value={newPost.body}
-                  onChange={e => setNewPost({ ...newPost, body: e.target.value })}
-                  required
-                  aria-label="Post content"
-                  rows={4}
-                />
-                <Button type="submit" disabled={submitting} className="bg-indigo-600 hover:bg-indigo-700 text-white">
-                  {submitting ? 'Posting...' : 'Post'}
-                </Button>
-              </form>
             </section>
-          ) : (
-            <div className="mb-8 text-center">
-              <Button onClick={() => setIsLoginModalOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white text-lg px-6 py-3 rounded">
-                Login to post or comment
-              </Button>
-            </div>
-          )}
-          {/* Posts List */}
-          <section>
-            <h2 className="text-xl font-semibold mb-4">Recent Discussions</h2>
-            {loading ? (
-              <div>Loading posts...</div>
-            ) : filteredPosts.length === 0 ? (
-              <div className="text-gray-500">No results found.</div>
+            {/* New Post Form */}
+            {user ? (
+              <section className="mb-8 space-y-2 bg-white p-4 rounded shadow">
+                <h2 className="text-lg font-semibold mb-3">Start a New Discussion</h2>
+                <form onSubmit={handleNewPost}>
+                  <input
+                    className="w-full border rounded p-2 mb-2"
+                    placeholder="Title"
+                    value={newPost.title}
+                    onChange={e => setNewPost({ ...newPost, title: e.target.value })}
+                    required
+                    aria-label="Post title"
+                  />
+                  <textarea
+                    className="w-full border rounded p-2 mb-2"
+                    placeholder="What's on your mind?"
+                    value={newPost.body}
+                    onChange={e => setNewPost({ ...newPost, body: e.target.value })}
+                    required
+                    aria-label="Post content"
+                    rows={4}
+                  />
+                  <Button type="submit" disabled={submitting} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+                    {submitting ? 'Posting...' : 'Post'}
+                  </Button>
+                </form>
+              </section>
             ) : (
-              <ul className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
-                {filteredPosts.map(post => (
-                  <li key={post.id} className="bg-white p-4 rounded shadow h-full flex flex-col justify-between relative">
-                    <div className="flex-1 w-full">
-                      <div className="flex justify-between items-start gap-2 mb-2">
-                        <h3 className="font-semibold text-lg break-words flex-1">{post.title}</h3>
-                        <span className="inline-flex items-center px-2 py-1 bg-indigo-100 text-blue-600 text-xs font-semibold rounded-full whitespace-nowrap">
-                          {post.comment_count && post.comment_count > 0 ? `${post.comment_count} comments` : 'No Comment Yet'}
-                        </span>
+              <div className="mb-8 text-center">
+                <Button onClick={() => setIsLoginModalOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white text-lg px-6 py-3 rounded">
+                  Login to post or comment
+                </Button>
+              </div>
+            )}
+            {/* Posts List */}
+            <section>
+              <h2 className="text-xl font-semibold mb-4">Recent Discussions</h2>
+              {loading ? (
+                <div>Loading posts...</div>
+              ) : filteredPosts.length === 0 ? (
+                <div className="text-gray-500">No results found.</div>
+              ) : (
+                <ul className="flex flex-col gap-6">
+                  {filteredPosts.map(post => (
+                    <li key={post.id} className="bg-white rounded-xl shadow border border-gray-100 p-5 flex flex-col gap-2">
+                      {/* Top row: area, avatar, time */}
+                      <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">
+                        <img src="/GC_Logo.png" alt="avatar" className="w-8 h-8 rounded-full border object-cover" />
+                        <span className="font-semibold text-gray-800">r/Worli</span>
+                        <span className="mx-1">•</span>
+                        <span>{timeAgo(post.created_at)}</span>
                       </div>
-                      <p className="text-gray-700 mb-3 line-clamp-2">{post.body}</p>
-                      <time className="text-xs text-gray-400" dateTime={post.created_at}>
-                        {new Date(post.created_at).toLocaleString()}
-                      </time>
-                    </div>
-                    <div className="mt-4 flex-shrink-0 flex items-center gap-2">
-                      <Button size="sm" asChild className="bg-indigo-600 hover:bg-indigo-700 text-white w-full">
-                        <Link href={`/worli/connect/${post.id}`}>Read More</Link>
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="flex items-center gap-1 text-gray-500 hover:text-red-500"
-                        aria-label="Like post"
-                        onClick={() => handleLikePost(post)}
-                      >
-                        <FiHeart />
-                        <span>{post.likes || 0}</span>
-                      </Button>
-                    </div>
+                      {/* Title and body */}
+                      <div>
+                        <h3 className="text-lg font-bold text-gray-900 mb-1">{post.title}</h3>
+                        <p className="text-gray-800 text-base mb-2 line-clamp-4">{post.body}</p>
+                      </div>
+                      {/* Action row: like, comment, read more */}
+                      <div className="flex gap-3 mt-2">
+                        <button
+                          className={`flex items-center gap-1 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold ${userLikedPosts[post.id] ? 'text-red-500' : 'text-gray-700'} ${likesLoading === post.id ? 'opacity-50 cursor-wait' : ''}`}
+                          onClick={() => handleLikePost(post.id)}
+                          disabled={userLikedPosts[post.id] || likesLoading === post.id}
+                          aria-label={userLikedPosts[post.id] ? 'Liked' : 'Like'}
+                        >
+                          <FiHeart fill={userLikedPosts[post.id] ? 'currentColor' : 'none'} />
+                          {post.likes || 0}
+                        </button>
+                        <Link href={`/worli/connect/${post.id}`} className="flex items-center gap-1 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold">
+                          {/* Speech bubble icon */}
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                          {post.comment_count || 0}
+                        </Link>
+                        <Link href={`/worli/connect/${post.id}`} className="flex items-center gap-1 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold">
+                          {/* Arrow right icon */}
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                          Read More
+                        </Link>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          </div>
+          {/* Right Sidebar (Desktop only) */}
+          <aside className="hidden md:block w-80 flex-shrink-0 sticky top-8 self-start">
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-4 mb-6">
+              <h3 className="text-lg font-bold mb-3 text-indigo-700">Top Liked Posts</h3>
+              <ul className="space-y-3">
+                {topLikedPosts.map(post => (
+                  <li key={post.id} className="flex items-center justify-between">
+                    <Link href={`/worli/connect/${post.id}`} className="text-blue-700 font-medium hover:underline line-clamp-1 flex-1">{post.title}</Link>
+                    <span className="ml-2 flex items-center text-gray-500 text-sm"><svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>{post.likes || 0}</span>
                   </li>
                 ))}
               </ul>
-            )}
-          </section>
+            </div>
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-4">
+              <h3 className="text-lg font-bold mb-3 text-indigo-700">Top Commented Posts</h3>
+              <ul className="space-y-3">
+                {topCommentedPosts.map(post => (
+                  <li key={post.id} className="flex items-center justify-between">
+                    <Link href={`/worli/connect/${post.id}`} className="text-blue-700 font-medium hover:underline line-clamp-1 flex-1">{post.title}</Link>
+                    <span className="ml-2 flex items-center text-gray-500 text-sm"><svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>{post.comment_count || 0}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
         </div>
       </main>
     </>

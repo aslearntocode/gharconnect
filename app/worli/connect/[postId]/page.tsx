@@ -14,7 +14,6 @@ interface Post {
   body: string;
   user_id: string;
   created_at: string;
-  area?: string;
 }
 
 interface Comment {
@@ -24,7 +23,7 @@ interface Comment {
   user_id: string;
   created_at: string;
   parent_comment_id?: string;
-  area?: string;
+  likes?: number; // Added likes to the interface
 }
 
 export default function PostDetailPage() {
@@ -38,6 +37,9 @@ export default function PostDetailPage() {
   const [newComment, setNewComment] = useState('');
   const [commentLoading, setCommentLoading] = useState(false);
   const [replyTo, setReplyTo] = useState<string | null>(null);
+  const [search, setSearch] = useState('');
+  // Add state to track likes loading
+  const [likesLoading, setLikesLoading] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => setUser(user));
@@ -92,6 +94,94 @@ export default function PostDetailPage() {
       console.error('Error creating comment:', error);
     }
   };
+
+  // Add handler to like a comment
+  async function handleLikeComment(commentId: string) {
+    setLikesLoading(commentId);
+    const supabase = await getSupabaseClient();
+    // Increment likes by 1
+    const { data, error } = await supabase
+      .from('comments')
+      .update({ likes: (comments.find(c => c.id === commentId)?.likes || 0) + 1 })
+      .eq('id', commentId)
+      .select();
+    setLikesLoading(null);
+    if (!error) {
+      // Update local state for instant feedback
+      setComments(prev => prev.map(c => c.id === commentId ? { ...c, likes: (c.likes || 0) + 1 } : c));
+    }
+  }
+
+  // Helper to recursively render comments
+  function renderComments(
+    grouped: { [key: string]: Comment[] },
+    parentId: string,
+    level: number = 0
+  ) {
+    return (
+      <ul className={level === 0 ? 'mb-2 space-y-2' : `ml-${Math.min(level * 4, 24)} mt-2 space-y-2`}>
+        {grouped[parentId]?.map(comment => (
+          <li key={comment.id} className={`bg-white p-3 rounded shadow-sm border border-gray-100 relative` + (level > 0 ? ' mt-2' : '')}>
+            <article>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="font-semibold text-sm text-indigo-700">User</span>
+                <time className="text-xs text-gray-400" dateTime={comment.created_at}>
+                  {new Date(comment.created_at).toLocaleString()}
+                </time>
+              </div>
+              <p className="text-gray-800 text-sm mb-2">{comment.body}</p>
+              <div className="flex items-center gap-4 text-xs text-gray-500">
+                <button
+                  className={`flex items-center gap-1 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold ${likesLoading === comment.id ? 'opacity-50 cursor-wait' : ''}`}
+                  onClick={() => handleLikeComment(comment.id)}
+                  disabled={likesLoading === comment.id}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                  {comment.likes || 0}
+                </button>
+                <button className="flex items-center gap-1 hover:text-blue-600 focus:outline-none" onClick={() => setReplyTo(comment.id)} aria-label="Reply to comment">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 10h7V6l7 7-7 7v-4H3z"/></svg>
+                  Reply
+                </button>
+                <button className="flex items-center gap-1 hover:text-gray-700 focus:outline-none">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405M19 17V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2h8"/></svg>
+                  Share
+                </button>
+              </div>
+              {/* Reply input */}
+              {replyTo === comment.id && (
+                user ? (
+                  <form
+                    onSubmit={e => handleNewComment(e, comment.id)}
+                    className="flex gap-2 mt-2"
+                  >
+                    <input
+                      className="flex-1 border rounded p-2"
+                      placeholder="Reply..."
+                      value={newComment}
+                      onChange={e => setNewComment(e.target.value)}
+                      required
+                      aria-label="Reply to comment"
+                    />
+                    <Button type="submit" disabled={commentLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+                      {commentLoading ? 'Posting...' : 'Reply'}
+                    </Button>
+                    <Button type="button" onClick={() => setReplyTo(null)} className="bg-gray-200 text-gray-700">
+                      Cancel
+                    </Button>
+                  </form>
+                ) : (
+                  <div className="text-center text-gray-600 my-2 font-semibold">Login to View or Post Comments</div>
+                )
+              )}
+              {/* Render replies recursively */}
+              {grouped[comment.id]?.length > 0 && renderComments(grouped, comment.id, level + 1)}
+            </article>
+          </li>
+        ))}
+      </ul>
+    );
+  }
 
   // Structured data for the post
   const structuredData = post ? {
@@ -161,70 +251,27 @@ export default function PostDetailPage() {
                 </header>
               </article>
               <section>
-                <h2 className="mb-2 font-semibold">Comments ({comments.length})</h2>
+                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2 gap-2">
+                  <h2 className="font-semibold">Comments ({comments.length})</h2>
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      placeholder="Search comments..."
+                      className="border rounded px-2 py-1 text-sm"
+                      value={search}
+                      onChange={e => setSearch(e.target.value)}
+                    />
+                    <select className="border rounded px-2 py-1 text-sm">
+                      <option>Sort by Best</option>
+                      <option>Sort by Newest</option>
+                      <option>Sort by Oldest</option>
+                    </select>
+                  </div>
+                </div>
                 {grouped['root']?.length === 0 ? (
                   <div className="text-gray-500 mb-2">No comments yet.</div>
                 ) : (
-                  <ul className="mb-2 space-y-2">
-                    {grouped['root']?.map(comment => (
-                      <li key={comment.id} className="bg-gray-50 p-2 rounded">
-                        <article>
-                          <p className="text-gray-800 text-sm">{comment.body}</p>
-                          <time className="text-xs text-gray-400" dateTime={comment.created_at}>
-                            {new Date(comment.created_at).toLocaleString()}
-                          </time>
-                          <button
-                            className="text-xs text-blue-600 mt-1 hover:underline"
-                            onClick={() => setReplyTo(comment.id)}
-                            aria-label={`Reply to comment`}
-                          >
-                            Reply
-                          </button>
-                          {/* Replies */}
-                          {grouped[comment.id]?.length > 0 && (
-                            <ul className="ml-4 mt-2 space-y-2">
-                              {grouped[comment.id].map(reply => (
-                                <li key={reply.id} className="bg-gray-100 p-2 rounded">
-                                  <article>
-                                    <p className="text-gray-800 text-sm">{reply.body}</p>
-                                    <time className="text-xs text-gray-400" dateTime={reply.created_at}>
-                                      {new Date(reply.created_at).toLocaleString()}
-                                    </time>
-                                  </article>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                          {/* Reply input */}
-                          {replyTo === comment.id && (
-                            user ? (
-                              <form
-                                onSubmit={e => handleNewComment(e, comment.id)}
-                                className="flex gap-2 mt-2"
-                              >
-                                <input
-                                  className="flex-1 border rounded p-2"
-                                  placeholder="Reply..."
-                                  value={newComment}
-                                  onChange={e => setNewComment(e.target.value)}
-                                  required
-                                  aria-label="Reply to comment"
-                                />
-                                <Button type="submit" disabled={commentLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
-                                  {commentLoading ? 'Posting...' : 'Reply'}
-                                </Button>
-                                <Button type="button" onClick={() => setReplyTo(null)} className="bg-gray-200 text-gray-700">
-                                  Cancel
-                                </Button>
-                              </form>
-                            ) : (
-                              <div className="text-center text-gray-600 my-2 font-semibold">Login to View or Post Comments</div>
-                            )
-                          )}
-                        </article>
-                      </li>
-                    ))}
-                  </ul>
+                  renderComments(grouped, 'root', 0)
                 )}
               </section>
               {/* Top-level comment input */}
