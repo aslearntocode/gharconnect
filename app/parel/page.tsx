@@ -167,7 +167,7 @@ export default function Home() {
     },
     {
       id: 'list-property',
-      title: 'List Your Property',
+      title: 'List Property',
       description: 'List Property for Rent with No Brokerage',
       icon: FiHome,
       href: '/parel/rent-apartment',
@@ -762,7 +762,7 @@ export default function Home() {
                             <h3 className="font-bold text-gray-900 text-sm md:text-lg">
                               {card.title}
                             </h3>
-                            <p className="text-xs md:text-sm text-gray-600 mt-1">
+                            <p className="hidden md:block text-xs md:text-sm text-gray-600 mt-1">
                               {card.description}
                             </p>
                           </div>
