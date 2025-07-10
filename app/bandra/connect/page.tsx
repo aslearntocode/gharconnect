@@ -308,15 +308,15 @@ export default function BandraConnectPage() {
         <Header />
         {/* Indigo Banner */}
         <section className="w-full bg-indigo-600 py-1 md:py-4 flex flex-col items-center justify-center text-center mb-4">
-          <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">Connect with your neighbors</h1>
-          <p className="text-white text-base md:text-lg mb-3">Share your thoughts, ask questions, and get to know your neighbors</p>
+          <h1 className="text-xl md:text-3xl font-bold text-white mb-1">Connect with your neighbors</h1>
+          <p className="text-white text-sm md:text-lg mb-3">Share your thoughts, ask questions, and get to know your neighbors</p>
         </section>
         {/* Overlapping Search Box */}
         <div className="w-full flex justify-center -mt-8 mb-6">
           <div className="flex items-center w-full max-w-xl bg-white rounded-full shadow-lg px-6 py-3">
-            <FiSearch className="text-2xl text-gray-400 mr-3" />
+            <FiSearch className="text-xl md:text-2xl text-gray-400 mr-3" />
             <input
-              className="flex-1 bg-transparent outline-none text-base md:text-lg placeholder-gray-400"
+              className="flex-1 bg-transparent outline-none text-sm md:text-lg placeholder-gray-400"
               placeholder="Search for discussions..."
               value={search}
               onChange={e => setSearch(e.target.value)}
@@ -355,10 +355,10 @@ export default function BandraConnectPage() {
             {/* New Post Form */}
             {user ? (
               <section className="mb-8 space-y-2 bg-white p-4 rounded shadow">
-                <h2 className="text-lg font-semibold mb-3">Start a New Discussion</h2>
+                <h2 className="text-base md:text-lg font-semibold mb-3">Start a New Discussion</h2>
                 <form onSubmit={handleNewPost}>
                   <input
-                    className="w-full border rounded p-2 mb-2"
+                    className="w-full border rounded p-2 mb-2 text-sm md:text-base"
                     placeholder="Title"
                     value={newPost.title}
                     onChange={e => setNewPost({ ...newPost, title: e.target.value })}
@@ -366,7 +366,7 @@ export default function BandraConnectPage() {
                     aria-label="Post title"
                   />
                   <textarea
-                    className="w-full border rounded p-2 mb-2"
+                    className="w-full border rounded p-2 mb-2 text-sm md:text-base"
                     placeholder="What's on your mind?"
                     value={newPost.body}
                     onChange={e => setNewPost({ ...newPost, body: e.target.value })}
@@ -374,21 +374,21 @@ export default function BandraConnectPage() {
                     aria-label="Post content"
                     rows={4}
                   />
-                  <Button type="submit" disabled={submitting} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+                  <Button type="submit" disabled={submitting} className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm md:text-base">
                     {submitting ? 'Posting...' : 'Post'}
                   </Button>
                 </form>
               </section>
             ) : (
               <div className="mb-8 text-center">
-                <Button onClick={() => setIsLoginModalOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white text-lg px-6 py-3 rounded">
+                <Button onClick={() => setIsLoginModalOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white text-base md:text-lg px-6 py-3 rounded">
                   Login to post or comment
                 </Button>
               </div>
             )}
             {/* Posts List */}
             <section>
-              <h2 className="text-xl font-semibold mb-4">Recent Discussions</h2>
+              <h2 className="text-lg md:text-xl font-semibold mb-4">Recent Discussions</h2>
               {loading ? (
                 <div>Loading posts...</div>
               ) : filteredPosts.length === 0 ? (
@@ -398,7 +398,7 @@ export default function BandraConnectPage() {
                   {filteredPosts.map(post => (
                     <li key={post.id} className="bg-white rounded-xl shadow border border-gray-100 p-5 flex flex-col gap-2">
                       {/* Top row: area, avatar, time */}
-                      <div className="flex items-center gap-2 text-sm text-gray-500 mb-1">
+                      <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500 mb-1">
                         <img src="/GC_Logo.png" alt="avatar" className="w-8 h-8 rounded-full border object-cover" />
                         <span className="font-semibold text-gray-800">r/Bandra</span>
                         <span className="mx-1">•</span>
@@ -406,13 +406,13 @@ export default function BandraConnectPage() {
                       </div>
                       {/* Title and body */}
                       <div>
-                        <h3 className="text-lg font-bold text-gray-900 mb-1">{post.title}</h3>
-                        <p className="text-gray-800 text-base mb-2 line-clamp-4">{post.body}</p>
+                        <h3 className="text-base md:text-lg font-bold text-gray-900 mb-1">{post.title}</h3>
+                        <p className="text-gray-800 text-sm md:text-base mb-2 line-clamp-4">{post.body}</p>
                       </div>
                       {/* Action row: like, comment, read more */}
                       <div className="flex gap-3 mt-2">
                         <button
-                          className={`flex items-center gap-1 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold ${userLikedPosts[post.id] ? 'text-red-500' : 'text-gray-700'} ${likesLoading === post.id ? 'opacity-50 cursor-wait' : ''}`}
+                          className={`flex items-center gap-1 px-3 md:px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold text-xs md:text-sm ${userLikedPosts[post.id] ? 'text-red-500' : 'text-gray-700'} ${likesLoading === post.id ? 'opacity-50 cursor-wait' : ''}`}
                           onClick={() => handleLikePost(post.id)}
                           disabled={userLikedPosts[post.id] || likesLoading === post.id}
                           aria-label={userLikedPosts[post.id] ? 'Liked' : 'Like'}
@@ -420,14 +420,14 @@ export default function BandraConnectPage() {
                           <FiHeart fill={userLikedPosts[post.id] ? 'currentColor' : 'none'} />
                           {post.likes || 0}
                         </button>
-                        <Link href={`/bandra/connect/${post.id}`} className="flex items-center gap-1 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold">
+                        <Link href={`/bandra/connect/${post.id}`} className="flex items-center gap-1 px-3 md:px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
                           {/* Speech bubble icon */}
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                          <svg className="w-4 md:w-5 h-4 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                           {post.comment_count || 0}
                         </Link>
-                        <Link href={`/bandra/connect/${post.id}`} className="flex items-center gap-1 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold">
+                        <Link href={`/bandra/connect/${post.id}`} className="flex items-center gap-1 px-3 md:px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
                           {/* Arrow right icon */}
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                          <svg className="w-4 md:w-5 h-4 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                           Read More
                         </Link>
                       </div>
