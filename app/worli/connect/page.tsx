@@ -48,6 +48,7 @@ export default function WorliConnectPage() {
   const [userLikedPosts, setUserLikedPosts] = useState<{ [postId: string]: boolean }>({});
   const [activeFilter, setActiveFilter] = useState<string>('All');
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
+  const [isPostFormOpen, setIsPostFormOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -450,30 +451,79 @@ export default function WorliConnectPage() {
             </section>
             {/* New Post Form */}
             {user ? (
-              <section className="mb-8 space-y-2 bg-white p-4 rounded shadow">
-                <h2 className="text-base md:text-lg font-semibold mb-3">Start a New Discussion</h2>
-                <form onSubmit={handleNewPost}>
-                  <input
-                    className="w-full border rounded p-2 mb-2 text-sm md:text-base"
-                    placeholder="Title"
-                    value={newPost.title}
-                    onChange={e => setNewPost({ ...newPost, title: e.target.value })}
-                    required
-                    aria-label="Post title"
-                  />
-                  <textarea
-                    className="w-full border rounded p-2 mb-2 text-sm md:text-base"
-                    placeholder="What's on your mind?"
-                    value={newPost.body}
-                    onChange={e => setNewPost({ ...newPost, body: e.target.value })}
-                    required
-                    aria-label="Post content"
-                    rows={4}
-                  />
-                  <Button type="submit" disabled={submitting} className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm md:text-base">
-                    {submitting ? 'Posting...' : 'Post'}
-                  </Button>
-                </form>
+              <section className="mb-8 bg-white rounded-xl shadow border border-gray-100 overflow-hidden">
+                {!isPostFormOpen ? (
+                  <button
+                    onClick={() => setIsPostFormOpen(true)}
+                    className="w-full p-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                        <svg className="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h2 className="text-base md:text-lg font-semibold text-gray-900">Start a New Discussion</h2>
+                        <p className="text-sm text-gray-500">Share your thoughts with the community</p>
+                      </div>
+                    </div>
+                    <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7 7" />
+                    </svg>
+                  </button>
+                ) : (
+                  <div className="p-4">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-base md:text-lg font-semibold text-gray-900">Start a New Discussion</h2>
+                      <button
+                        onClick={() => {
+                          setIsPostFormOpen(false);
+                          setNewPost({ title: '', body: '' });
+                        }}
+                        className="text-gray-400 hover:text-gray-600 transition-colors"
+                      >
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                    <form onSubmit={handleNewPost}>
+                      <input
+                        className="w-full border rounded-lg p-3 mb-3 text-sm md:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Title"
+                        value={newPost.title}
+                        onChange={e => setNewPost({ ...newPost, title: e.target.value })}
+                        required
+                        aria-label="Post title"
+                      />
+                      <textarea
+                        className="w-full border rounded-lg p-3 mb-4 text-sm md:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="What's on your mind?"
+                        value={newPost.body}
+                        onChange={e => setNewPost({ ...newPost, body: e.target.value })}
+                        required
+                        aria-label="Post content"
+                        rows={4}
+                      />
+                      <div className="flex gap-3">
+                        <Button type="submit" disabled={submitting} className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm md:text-base px-6 py-2">
+                          {submitting ? 'Posting...' : 'Post'}
+                        </Button>
+                        <Button 
+                          type="button" 
+                          onClick={() => {
+                            setIsPostFormOpen(false);
+                            setNewPost({ title: '', body: '' });
+                          }}
+                          className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm md:text-base px-6 py-2"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                )}
               </section>
             ) : (
               <div className="mb-8 text-center">
