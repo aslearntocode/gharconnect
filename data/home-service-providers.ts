@@ -104,7 +104,11 @@ Let's turn everyday essentials into something extra special!`,
     society: 'parel',
     name: 'Linguist Corner - French & Spanish Tutor',
     category: 'Language',
-    description: 'French & Spanish Tutor',
+    description: `Spanish and French Online and Offline Classes. 
+    Teaching all board from 1st to 12th Grade. SSC, ICSE, CBSE, IB and IGSCE, IBDP & A-Levels.
+    Conducting Conversation Classes for all age groups.
+    Training for TEF and DELF International Exams.
+    Coached 1,000+ students already.`,
     main_image: '/images/neighbors/linguistcorner/linguistcorner.png',
     images: [
       '/images/neighbors/linguistcorner/linguistcorner.png',
@@ -117,11 +121,13 @@ Let's turn everyday essentials into something extra special!`,
       email: 'linguistcorner1@gmail.com',
       location: 'Online or Parel, Mumbai'
     },
-    experience: '5+ years',
+    experience: '20 years',
     pricing: 'Contact for pricing',
     availability: '9 AM -7 PM',
     skills: ['French','Spanish','Language','Spoken Language'],
-    about: 'I am a passionate mathematics teacher with 6+ years of experience teaching students from grades 6-12. I specialize in CBSE and ICSE curriculum and have helped many students improve their grades significantly. My teaching approach focuses on building strong fundamentals and problem-solving skills.',
+    about: `Spanish and French Online and Offline Classes. 
+    Teaching all board from 1st to 12th Grade. SSC, ICSE, CBSE, IB and IGSCE, IBDP & A-Levels.
+    Conducting Conversation Classes for all age groups.`,
     portfolio: ['https://www.facebook.com/profile.php?id=100089758497665','https://www.instagram.com/linguistcorner1/'],
     is_verified: true,
     is_active: true,
