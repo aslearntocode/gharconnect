@@ -402,7 +402,7 @@ export default function BandraConnectPage() {
         <Header />
         {/* Indigo Banner */}
         <section className="w-full bg-indigo-600 py-1 md:py-4 flex flex-col items-center justify-center text-center mb-4">
-          <h1 className="text-xl md:text-3xl font-bold text-white mb-1">Connect with your neighbors</h1>
+          <h1 className="text-xl md:text-3xl font-bold text-white mb-1">👋 Welcome to Bandra's Own Social Network</h1>
           <p className="text-white text-sm md:text-lg mb-3">Share your thoughts, ask questions, and get to know your neighbors</p>
         </section>
         {/* Overlapping Search Box */}
