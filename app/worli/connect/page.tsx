@@ -321,7 +321,7 @@ export default function WorliConnectPage() {
       'Events': ['event', 'festival', 'celebration', 'party', 'function', 'gathering', 'meetup', 'ceremony', 'program', 'show', 'performance'],
       'Services': ['service', 'repair', 'maintenance', 'electrician', 'plumber', 'carpenter', 'painter', 'cleaning', 'laundry', 'tailor', 'shop'],
       'Health': ['hospital', 'clinic', 'doctor', 'medical', 'health', 'medicine', 'pharmacy', 'dental', 'emergency', 'ambulance', 'treatment'],
-      'Governance': ['council', 'ward', 'municipal', 'corporation', 'government', 'administration', 'policy', 'legislation', 'complaint', 'suggestion', 'improvement', 'development'],
+      'Governance': ['council', 'ward', 'municipal', 'corporation', 'government', 'administration', 'policy', 'legislation', 'complaint', 'suggestion', 'improvement', 'development','police','bmc'],
       'Crime': ['crime', 'theft', 'robbery', 'assault', 'violence', 'fight', 'murder', 'accident', 'incident', 'emergency', 'helpline', 'police', 'security', 'law'],
       'Education': ['school', 'college', 'university', 'education', 'academic', 'study', 'exam', 'class', 'tuition', 'coaching', 'institute', 'learning', 'knowledge', 'research'],
       'Environment': ['environment', 'pollution', 'waste', 'garbage', 'litter', 'clean', 'green', 'sustainability', 'recycling', 'eco-friendly', 'climate', 'nature', 'wildlife', 'noise', 'noise pollution'],
