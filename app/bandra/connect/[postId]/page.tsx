@@ -283,7 +283,7 @@ export default function PostDetailPage() {
               <article className="bg-white p-4 rounded shadow mb-6">
                 <header>
                   <h1 className="font-semibold text-lg mb-1">{post.title}</h1>
-                  <p className="text-gray-700 mb-2">{post.body}</p>
+                  <div className="text-gray-700 mb-2 whitespace-pre-line">{post.body}</div>
                   <time className="text-xs text-gray-400" dateTime={post.created_at}>
                     {new Date(post.created_at).toLocaleString()}
                   </time>

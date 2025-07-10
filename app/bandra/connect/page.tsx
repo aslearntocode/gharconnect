@@ -611,7 +611,13 @@ export default function BandraConnectPage() {
                       {/* Title and body */}
                       <div>
                         <h3 className="text-base md:text-lg font-bold text-gray-900 mb-1">{post.title}</h3>
-                        <p className="text-gray-800 text-sm md:text-base mb-2 line-clamp-4">{post.body}</p>
+                        <p className="text-gray-800 text-sm md:text-base mb-2 line-clamp-4 whitespace-pre-line">
+                          {(() => {
+                            // Split by line breaks, show only first 2-3 lines/paragraphs
+                            const lines = post.body.split(/\r?\n/).filter(l => l.trim() !== '');
+                            return lines.slice(0, 3).join('\n') + (lines.length > 3 ? '...' : '');
+                          })()}
+                        </p>
                       </div>
                       {/* Action row: like, comment, read more */}
                       <div className="flex gap-3 mt-2">

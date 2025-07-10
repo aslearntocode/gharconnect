@@ -12,7 +12,7 @@ I'm a Dentist turned Entrepreneur with a passion for creativity, kids, and all t
 🎁 From quirky gifts to practical school essentials, we bring joy to every age with custom-designed products that are thoughtful, fun, and full of personality. Whether it's for a birthday, return gift, teacher's hamper, office desk, or just because — we've got something special for everyone.
 
 Let's turn everyday essentials into something extra special!`,
-    main_image: '/images/neighbors/Inkables Logo.jpg',
+    main_image: '/images/neighbors/inkables/Inkables Logo.jpg',
     images: [
       '/images/neighbors/inkables/Img_1.jpg',
       '/images/neighbors/inkables/Img_2.jpg',
@@ -105,9 +105,12 @@ Let's turn everyday essentials into something extra special!`,
     name: 'Linguist Corner - French & Spanish Tutor',
     category: 'Language',
     description: 'French & Spanish Tutor',
-    main_image: '/images/neighbors/linguistcorner.png',
+    main_image: '/images/neighbors/linguistcorner/linguistcorner.png',
     images: [
-      '/images/neighbors/linguistcorner.png'
+      '/images/neighbors/linguistcorner/linguistcorner.png',
+      '/images/neighbors/linguistcorner/IMG_1.jpeg',
+      '/images/neighbors/linguistcorner/IMG_2.jpeg',
+      '/images/neighbors/linguistcorner/IMG_3.jpeg'
     ],
     contact: {
       phone: '+91 99874 21224',
