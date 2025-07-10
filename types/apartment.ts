@@ -29,7 +29,7 @@ export interface Apartment {
   contact_phone: string;
   contact_email?: string;
   images?: string[];
-  status?: string;
+  status?: string; // 'active' or 'inactive' - inactive means already rented
   created_at?: string;
   updated_at?: string;
 }

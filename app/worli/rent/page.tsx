@@ -387,15 +387,21 @@ export default function RentPage() {
                     <td className="px-4 py-3">{apt.available_from ? new Date(apt.available_from).toLocaleDateString() : '-'}</td>
                     <td className="px-4 py-3 align-middle" style={{ minWidth: 180, maxWidth: 200, width: 180 }}>
                       <div className="flex items-center justify-center w-full h-full">
-                        <button
-                          onClick={e => {
-                            e.stopPropagation();
-                            setExpandedIdx(expandedIdx === idx ? null : idx);
-                          }}
-                          className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
-                        >
-                          Click Here
-                        </button>
+                        {apt.status === 'inactive' ? (
+                          <span className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-gray-300 text-gray-600 font-medium text-xs leading-normal uppercase rounded shadow-md cursor-not-allowed select-none">
+                            Already Rented
+                          </span>
+                        ) : (
+                          <button
+                            onClick={e => {
+                              e.stopPropagation();
+                              setExpandedIdx(expandedIdx === idx ? null : idx);
+                            }}
+                            className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-indigo-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-indigo-700 hover:shadow-lg focus:bg-indigo-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-indigo-800 active:shadow-lg transition duration-150 ease-in-out"
+                          >
+                            Click Here
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -479,16 +485,22 @@ export default function RentPage() {
                               {/* Add other details you want to show */}
                             </div>
                             <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                              <a 
-                                onClick={e => {
-                                  e.stopPropagation();
-                                  setSelectedApartment(apt);
-                                  setInquiryModalOpen(true);
-                                }}
-                                className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out cursor-pointer"
-                              >
-                                Get Owner's Contact
-                              </a>
+                              {apt.status === 'inactive' ? (
+                                <span className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-gray-300 text-gray-600 font-medium text-xs leading-normal uppercase rounded shadow-md cursor-not-allowed select-none">
+                                  Already Rented
+                                </span>
+                              ) : (
+                                <a 
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    setSelectedApartment(apt);
+                                    setInquiryModalOpen(true);
+                                  }}
+                                  className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-green-600 text-white font-medium text-xs leading-normal uppercase rounded shadow-md hover:bg-green-700 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out cursor-pointer"
+                                >
+                                  Get Owner's Contact
+                                </a>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -528,15 +540,21 @@ export default function RentPage() {
                       <div>{apt.available_from ? new Date(apt.available_from).toLocaleDateString() : '-'}</div>
                     </div>
                     {expandedMobileIdx !== idx && (
-                      <button
-                        className="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-lg font-semibold text-sm"
-                        onClick={e => {
-                          e.stopPropagation();
-                          setExpandedMobileIdx(idx);
-                        }}
-                      >
-                        For details click here
-                      </button>
+                      apt.status === 'inactive' ? (
+                        <span className="mt-3 bg-gray-300 text-gray-600 px-3 py-2 rounded-lg font-semibold text-sm cursor-not-allowed select-none w-full text-center">
+                          Already Rented
+                        </span>
+                      ) : (
+                        <button
+                          className="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-2 rounded-lg font-semibold text-sm"
+                          onClick={e => {
+                            e.stopPropagation();
+                            setExpandedMobileIdx(idx);
+                          }}
+                        >
+                          For details click here
+                        </button>
+                      )
                     )}
                   </div>
                   {expandedMobileIdx === idx && (
@@ -606,16 +624,22 @@ export default function RentPage() {
                         </div>
                       )}
                       <div className="mt-4 flex flex-col gap-2">
-                        <a
-                          onClick={e => {
-                            e.stopPropagation();
-                            setSelectedApartment(apt);
-                            setInquiryModalOpen(true);
-                          }}
-                          className="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg font-semibold text-sm text-center cursor-pointer"
-                        >
-                          Get Owner's Contact
-                        </a>
+                        {apt.status === 'inactive' ? (
+                          <span className="w-full bg-gray-300 text-gray-600 px-3 py-2 rounded-lg font-semibold text-sm text-center cursor-not-allowed select-none">
+                            Already Rented
+                          </span>
+                        ) : (
+                          <a
+                            onClick={e => {
+                              e.stopPropagation();
+                              setSelectedApartment(apt);
+                              setInquiryModalOpen(true);
+                            }}
+                            className="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg font-semibold text-sm text-center cursor-pointer"
+                          >
+                            Get Owner's Contact
+                          </a>
+                        )}
                       </div>
                     </div>
                   )}
