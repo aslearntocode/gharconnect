@@ -52,5 +52,17 @@ export const vendors: Vendor[] = [
     mobile: '+91 98923 53874 / 79923 34717',
     areaServed: ['Parel','Worli','Byculla','Dadar'],
     buildingServed: ['All']
+  },
+  {
+    name: 'Vijay Kumar - Vegetable Shop',
+    products: [{
+      name: 'Vegetables',
+      description: 'Farm fresh vegetables',
+      price: "Call for price",
+      unit: 'gms'
+    }],
+    mobile: '+91 99203 98545',
+    areaServed: ['Parel'],
+    buildingServed: ['All']
   }
 ]; 

@@ -277,7 +277,7 @@ export function Marketplace({ location }: { location: string }) {
       (product.building_name && product.building_name.toLowerCase().includes(locationFilterValue));
     // Filter for free items only
     const matchesFree = !showFreeOnly || product.price === 0
-
+    
     return matchesCategory && matchesCondition && matchesPrice && matchesLocation && matchesFree
   })
   

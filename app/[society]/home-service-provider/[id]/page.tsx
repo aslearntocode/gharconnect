@@ -479,10 +479,10 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
                         )}
                         {/* Show Instagram button if Instagram link exists */}
                         {talent.portfolio.some((url: string) => url.includes('instagram.com')) && (
-                          <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                            <FiInstagram className="w-5 h-5 text-indigo-600" />
-                            <div className="flex-1">
-                              <p className="text-sm text-gray-600">Instagram</p>
+                      <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                        <FiInstagram className="w-5 h-5 text-indigo-600" />
+                        <div className="flex-1">
+                          <p className="text-sm text-gray-600">Instagram</p>
                               <p className="font-semibold text-gray-900">Follow us on Instagram</p>
                             </div>
                             <button
@@ -576,8 +576,8 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
                             <div className="flex-1">
                               <p className="text-sm text-gray-600">Website</p>
                               <p className="font-semibold text-gray-900">Visit our website</p>
-                            </div>
-                            <button
+                        </div>
+                        <button
                               onClick={() => {
                                 const websiteUrl = talent.portfolio.find((url: string) => 
                                   !url.includes('instagram.com') && 
@@ -592,10 +592,10 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
                                   window.open(websiteUrl, '_blank');
                                 }
                               }}
-                              className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
-                            >
+                          className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors text-sm"
+                        >
                               Visit Website
-                            </button>
+                        </button>
                           </div>
                         )}
                         {/* Hidden div with all social media links for background access */}

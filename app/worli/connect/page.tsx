@@ -482,33 +482,33 @@ export default function WorliConnectPage() {
           
           {/* Main Content */}
           <div className="flex-1">
-            {/* SEO Content Section */}
-            <section className="sr-only mb-8 bg-white p-6 rounded-lg shadow-sm">
-              <h2 className="text-xl font-semibold text-gray-900 mb-3">Welcome to Worli Community Discussions</h2>
-              <div className="sr-only">
-                <p className="text-gray-700 mb-4">
-                  Join our vibrant community forum where residents share local insights, recommendations, and reach out for urgent help. 
-                  Whether you're looking for local service recommendations, or want to discuss community events, 
-                  this is the perfect place to engage with the Worli community.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-                  <div className="bg-indigo-50 p-3 rounded">
-                    <h3 className="font-semibold text-indigo-800 mb-1">Local Recommendations</h3>
-                    <p className="text-indigo-700">Share and discover the best local restaurants, services, and hidden gems in Worli.</p>
-                  </div>
-                  <div className="bg-green-50 p-3 rounded">
-                    <h3 className="font-semibold text-green-800 mb-1">Community Events</h3>
-                    <p className="text-green-700">Stay updated on local events, festivals, and community gatherings in Worli.</p>
-                  </div>
-                  <div className="bg-purple-50 p-3 rounded">
-                    <h3 className="font-semibold text-purple-800 mb-1">Urgent Help</h3>
-                    <p className="text-purple-700">Use the community to get help with urgent needs. Together we can make a difference.</p>
-                  </div>
+          {/* SEO Content Section */}
+          <section className="sr-only mb-8 bg-white p-6 rounded-lg shadow-sm">
+            <h2 className="text-xl font-semibold text-gray-900 mb-3">Welcome to Worli Community Discussions</h2>
+            <div className="sr-only">
+              <p className="text-gray-700 mb-4">
+                Join our vibrant community forum where residents share local insights, recommendations, and reach out for urgent help. 
+                Whether you're looking for local service recommendations, or want to discuss community events, 
+                this is the perfect place to engage with the Worli community.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                <div className="bg-indigo-50 p-3 rounded">
+                  <h3 className="font-semibold text-indigo-800 mb-1">Local Recommendations</h3>
+                  <p className="text-indigo-700">Share and discover the best local restaurants, services, and hidden gems in Worli.</p>
+                </div>
+                <div className="bg-green-50 p-3 rounded">
+                  <h3 className="font-semibold text-green-800 mb-1">Community Events</h3>
+                  <p className="text-green-700">Stay updated on local events, festivals, and community gatherings in Worli.</p>
+                </div>
+                <div className="bg-purple-50 p-3 rounded">
+                  <h3 className="font-semibold text-purple-800 mb-1">Urgent Help</h3>
+                  <p className="text-purple-700">Use the community to get help with urgent needs. Together we can make a difference.</p>
                 </div>
               </div>
-            </section>
-            {/* New Post Form */}
-            {user ? (
+            </div>
+          </section>
+          {/* New Post Form */}
+          {user ? (
               <section className="mb-8 bg-white rounded-xl shadow border border-gray-100 overflow-hidden">
                 {!isPostFormOpen ? (
                   <button
@@ -546,28 +546,28 @@ export default function WorliConnectPage() {
                         </svg>
                       </button>
                     </div>
-                    <form onSubmit={handleNewPost}>
-                      <input
+              <form onSubmit={handleNewPost}>
+                <input
                         className="w-full border rounded-lg p-3 mb-3 text-sm md:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="Title"
-                        value={newPost.title}
-                        onChange={e => setNewPost({ ...newPost, title: e.target.value })}
-                        required
-                        aria-label="Post title"
-                      />
-                      <textarea
+                  placeholder="Title"
+                  value={newPost.title}
+                  onChange={e => setNewPost({ ...newPost, title: e.target.value })}
+                  required
+                  aria-label="Post title"
+                />
+                <textarea
                         className="w-full border rounded-lg p-3 mb-4 text-sm md:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                        placeholder="What's on your mind?"
-                        value={newPost.body}
-                        onChange={e => setNewPost({ ...newPost, body: e.target.value })}
-                        required
-                        aria-label="Post content"
-                        rows={4}
-                      />
+                  placeholder="What's on your mind?"
+                  value={newPost.body}
+                  onChange={e => setNewPost({ ...newPost, body: e.target.value })}
+                  required
+                  aria-label="Post content"
+                  rows={4}
+                />
                       <div className="flex gap-3">
                         <Button type="submit" disabled={submitting} className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm md:text-base px-6 py-2">
-                          {submitting ? 'Posting...' : 'Post'}
-                        </Button>
+                  {submitting ? 'Posting...' : 'Post'}
+                </Button>
                         <Button 
                           type="button" 
                           onClick={() => {
@@ -579,27 +579,27 @@ export default function WorliConnectPage() {
                           Cancel
                         </Button>
                       </div>
-                    </form>
+              </form>
                   </div>
                 )}
-              </section>
-            ) : (
-              <div className="mb-8 text-center">
+            </section>
+          ) : (
+            <div className="mb-8 text-center">
                 <Button onClick={() => setIsLoginModalOpen(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white text-base md:text-lg px-6 py-3 rounded">
-                  Login to post or comment
-                </Button>
-              </div>
-            )}
-            {/* Posts List */}
-            <section>
+                Login to post or comment
+              </Button>
+            </div>
+          )}
+          {/* Posts List */}
+          <section>
               <h2 className="text-lg md:text-xl font-semibold mb-4">Recent Discussions</h2>
-              {loading ? (
-                <div>Loading posts...</div>
-              ) : filteredPosts.length === 0 ? (
-                <div className="text-gray-500">No results found.</div>
-              ) : (
+            {loading ? (
+              <div>Loading posts...</div>
+            ) : filteredPosts.length === 0 ? (
+              <div className="text-gray-500">No results found.</div>
+            ) : (
                 <ul className="flex flex-col gap-6">
-                  {filteredPosts.map(post => (
+                {filteredPosts.map(post => (
                     <li key={post.id} className="bg-white rounded-xl shadow border border-gray-100 p-5 flex flex-col gap-2">
                       {/* Top row: area, avatar, time */}
                       <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500 mb-1">
@@ -618,7 +618,7 @@ export default function WorliConnectPage() {
                             return lines.slice(0, 3).join('\n') + (lines.length > 3 ? '...' : '');
                           })()}
                         </p>
-                      </div>
+                    </div>
                       {/* Action row: like, comment, read more */}
                       <div className="flex gap-3 mt-2">
                         <button
@@ -640,12 +640,12 @@ export default function WorliConnectPage() {
                           <svg className="w-4 md:w-5 h-4 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                           Read More
                         </Link>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </section>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
           </div>
           {/* Right Sidebar (Desktop only) */}
           <aside className="hidden lg:block w-72 flex-shrink-0 sticky top-8 self-start">
