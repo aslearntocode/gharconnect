@@ -909,7 +909,7 @@ export default function Home() {
                       Marketplace
                     </h3>
                     <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
-                      Discover items for sale from your community. Browse, buy, or list your own items for neighbors to see.
+                      Discover items for sale from your community. Buy, or list your own items for neighbors to see.
                     </p>
                   </>
                 ) : (
