@@ -811,7 +811,7 @@ export function Marketplace({ location }: { location: string }) {
                                   </div>
                                 )
                               }
-                              // Regular price drop
+                              // Regular price drop (remove '₹X off')
                               return (
                                 <div className="flex items-center gap-2 mt-1">
                                   <span className="text-xs text-gray-500 line-through">
@@ -819,9 +819,6 @@ export function Marketplace({ location }: { location: string }) {
                                   </span>
                                   <span className="text-xs font-medium text-red-600 bg-red-50 px-1.5 py-0.5 rounded">
                                     -{priceDropInfo.priceDropPercentage}%
-                                  </span>
-                                  <span className="text-xs text-gray-500">
-                                    {formatPrice(priceDropInfo.priceDrop)} off
                                   </span>
                                 </div>
                               )
@@ -832,10 +829,10 @@ export function Marketplace({ location }: { location: string }) {
                         <Button
                           onClick={() => handleWhatsAppChat(product.contact_phone, product.title)}
                           size="sm"
-                          className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 h-auto flex-shrink-0"
+                          className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 h-auto flex-shrink-0 mt-auto"
                         >
                           <MessageCircle className="w-3 h-3 mr-1" />
-                          Chat
+                          Chat with Seller
                         </Button>
                       </div>
                     </CardContent>
