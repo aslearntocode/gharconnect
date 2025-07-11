@@ -753,7 +753,7 @@ export function Marketplace({ location }: { location: string }) {
                     
                     <CardContent className="p-3 flex flex-col justify-between h-full">
                       <div className="flex items-start justify-between mb-1">
-                        <CardTitle className="text-base font-semibold line-clamp-2">
+                        <CardTitle className="text-base font-semibold line-clamp-2 min-h-[2.8em]">
                           {product.title}
                         </CardTitle>
                         <span className={`text-xs font-medium rounded-full px-2 py-0.5 whitespace-nowrap flex-shrink-0 ml-2 ${
