@@ -995,6 +995,12 @@ export default function Home() {
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Eggs</h3>
                 </div>
               </Link>
+              <Link href="/worli/delivery/flowers" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">💐</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Flowers</h3>
+                </div>
+              </Link>
               <Link href="/worli/delivery/vegetables" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <span className="mb-2 text-2xl lg:text-4xl">🥦</span>

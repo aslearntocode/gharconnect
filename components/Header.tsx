@@ -415,6 +415,10 @@ export default function Header() {
                       <FiCircle className="w-5 h-5 text-yellow-500" />
                       <span>Eggs</span>
                     </Link>
+                    <Link href={`/${currentSociety}/delivery/flowers`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                      <span className="w-5 h-5 text-pink-500 text-lg">💐</span>
+                      <span>Flowers</span>
+                    </Link>
                     <Link href={`/${currentSociety}/delivery/vegetables`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
                       <FiTruck className="w-5 h-5 text-green-500" />
                       <span>Vegetables</span>
@@ -580,6 +584,9 @@ export default function Header() {
                   </Link>
                   <Link href={`/${currentSociety}/delivery/eggs`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
                     Eggs
+                  </Link>
+                  <Link href={`/${currentSociety}/delivery/flowers`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                    Flowers
                   </Link>
                   <Link href={`/${currentSociety}/delivery/vegetables`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
                     Vegetables
