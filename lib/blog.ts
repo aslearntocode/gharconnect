@@ -13,6 +13,44 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'list-apartment-for-rent-gharconnect',
+    title: 'How to List Your Apartment for Rent on GharConnect.in – It\'s Fast, Free & with Zero Brokerage',
+    excerpt: 'Are you a property owner looking to list your apartment for rent without paying brokerage or subscription fees? GharConnect.in offers a simple, owner-first rental platform that helps you connect directly with tenants in your locality.',
+    content: `
+How to List Your Apartment for Rent on GharConnect.in – It's Fast, Free & with Zero Brokerage
+
+Are you a property owner looking to list your apartment for rent without paying brokerage or subscription fees? GharConnect.in offers a simple rental platform that helps you connect directly with people looking for flats in your locality.
+
+🏠 **Free Apartment Listings with No Middlemen**
+GharConnect is designed for property owners who want to rent out their homes without the hassle of brokers or agent calls. The listing process is quick and easy:
+
+- WhatsApp your apartment details at +91 93213 14553
+- WhatsApp clear photos at +91 93213 14553
+- Complete a quick owner verification to ensure no broker involvement
+
+Once verified, your rental property goes live with zero listing charges, no subscription, and absolutely no brokerage.
+
+🌐 **Why List Your Property on GharConnect.in?**
+
+✅ Free apartment listings for owners
+
+✅ No agent involvement, ensuring genuine, verified listings
+
+✅ Connect with tenants looking for local flats in Mumbai and other cities
+
+✅ Optional help with rental agreement and legal documentation - Pay only if you want it
+
+✅ Build trust in your neighborhood through a community-focused rental platform
+
+Join the growing community of property owners listing on GharConnect.in. List your apartment for free today and skip the brokerage forever.
+`,
+    author: 'GharConnect Team',
+    date: '2025-07-10',
+    readTime: '4 min read',
+    category: 'Rental Tips',
+    image: '/blog/list-apartment-for-rent-gharconnect.jpg'
+  },
+  {
     slug: 'eggs-types',
     title: 'Desi Eggs vs White Eggs: Understanding the Difference in India',
     excerpt: 'Discover the key differences between desi eggs (country eggs) and white eggs (farm eggs) in India. Learn about their nutritional value, taste, farming methods, and why many Indian households prefer desi eggs.',
