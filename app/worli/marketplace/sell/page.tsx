@@ -84,7 +84,6 @@ const compressImage = (file: File, maxWidth: number = 1200, quality: number = 0.
 
 export default function SellPage() {
   const [user, setUser] = useState<any>(null)
-  const [userProfile, setUserProfile] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [imageFiles, setImageFiles] = useState<File[]>([])
@@ -113,7 +112,8 @@ export default function SellPage() {
           access_token: token,
           refresh_token: token, // or null if you don't have a refresh token
         });
-        await fetchUserProfile(user.uid)
+        console.log('Supabase session set');
+        setLoading(false)
       } else {
         setLoading(false)
       }
@@ -121,38 +121,6 @@ export default function SellPage() {
 
     return () => unsubscribe()
   }, [router])
-
-  const fetchUserProfile = async (userId: string) => {
-    try {
-      const supabase = await getSupabaseClient()
-      const { data, error } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('user_id', userId)
-        .single()
-
-      if (error) {
-        // Only log and show toast if error has a message (i.e., a real error)
-        if (error.message) {
-          console.error('Error fetching user profile:', error)
-          toast.error('Failed to load user profile')
-        }
-        // If error is empty, just return silently (profile is optional)
-        return
-      }
-
-      setUserProfile(data)
-      // Pre-fill contact phone if available
-      if (data?.phone) {
-        setValue('contact_phone', data.phone)
-      }
-    } catch (error) {
-      console.error('Error fetching user profile:', error)
-      toast.error('Failed to load user profile')
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files

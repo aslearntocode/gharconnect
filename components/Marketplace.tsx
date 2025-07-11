@@ -20,6 +20,7 @@ import LoginModal from '@/components/LoginModal'
 import Header from '@/components/Header'
 import { toast } from 'sonner'
 import Head from 'next/head'
+import Link from 'next/link'
 
 interface MarketplaceProduct {
   id: string
@@ -678,7 +679,12 @@ export function Marketplace({ location }: { location: string }) {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
                 {filteredProducts.map((product) => (
-                  <Card key={product.id} className="hover:shadow-lg transition-shadow duration-200 flex flex-col">
+                  <Link
+                    key={product.id}
+                    href={`/${location.toLowerCase()}/marketplace/${product.id}`}
+                    className="block"
+                  >
+                    <Card className="hover:shadow-lg transition-shadow duration-200 flex flex-col cursor-pointer min-h-[360px]">
                     <div className="bg-gray-100 rounded-t-lg overflow-hidden relative group cursor-pointer h-32 flex items-center justify-center">
                       {product.images && product.images.length > 0 ? (
                         <>
@@ -745,7 +751,7 @@ export function Marketplace({ location }: { location: string }) {
                       )}
                     </div>
                     
-                    <CardContent className="p-3 flex flex-col flex-grow">
+                    <CardContent className="p-3 flex flex-col justify-between h-full">
                       <div className="flex items-start justify-between mb-1">
                         <CardTitle className="text-base font-semibold line-clamp-2">
                           {product.title}
@@ -763,81 +769,50 @@ export function Marketplace({ location }: { location: string }) {
                         </span>
                       </div>
                       
-                      <CardDescription className="text-xs text-gray-600 mb-2">
+                      <CardDescription className="text-xs text-gray-600 mb-2 line-clamp-3 min-h-[3.6em]">
                         {product.description}
                       </CardDescription>
-                      {/* Event Date for Event or Movie Tickets */}
-                      {product.category === 'Event or Movie Tickets' && product.event_date && (
-                        <div className="flex items-center gap-2 text-xs text-blue-700 mb-2">
-                          <Calendar className="w-3 h-3 flex-shrink-0" />
-                          <span>Event Date: {formatDate(product.event_date)}</span>
-                        </div>
-                      )}
-                      <div className="flex-grow"></div>
-
-                      <div className="flex items-center gap-2 text-xs text-gray-500 mb-2">
-                        <MapPin className="w-3 h-3 flex-shrink-0" />
-                        <span className="truncate">
-                          {product.building_name
-                            ? `${product.building_name}, ${product.area.charAt(0).toUpperCase() + product.area.slice(1)}, Mumbai`
-                            : `${product.area.charAt(0).toUpperCase() + product.area.slice(1)}, Mumbai`
-                          }
-                        </span>
-                      </div>
-                      
-                      <div className="flex items-center gap-2 text-xs text-gray-500 mb-3">
-                        <Calendar className="w-3 h-3 flex-shrink-0" />
-                        <span>{formatDate(product.created_at)}</span>
-                      </div>
-                      
-                      <div className="flex items-center justify-between">
-                        <div className="flex flex-col">
-                          <div className="text-lg font-bold text-green-600">
-                            {isItemFree(product) ? 'Free' : formatPrice(product.price)}
+                      <div className="min-h-[40px] mb-3">
+                        {product.category === 'Event or Movie Tickets' && product.event_date && (
+                          <div className="flex items-center gap-2 text-xs text-blue-700 mb-1">
+                            <Calendar className="w-3 h-3 flex-shrink-0" />
+                            <span>Event Date: {formatDate(product.event_date)}</span>
                           </div>
-                          {/* Price Drop Display */}
-                          {(() => {
-                            const priceDropInfo = getPriceDropInfo(product)
-                            if (priceDropInfo) {
-                              // Special case: Item is now free
-                              if (isItemFree(product)) {
-                                return (
-                                  <div className="flex items-center gap-2 mt-1">
-                                    <span className="text-xs text-gray-500 line-through">
-                                      {formatPrice(priceDropInfo.oldPrice)}
-                                    </span>
-                                    <span className="text-xs font-medium text-green-600 bg-green-50 px-1.5 py-0.5 rounded">
-                                      Now Free!
-                                    </span>
-                                  </div>
-                                )
-                              }
-                              // Regular price drop (remove '₹X off')
-                              return (
-                                <div className="flex items-center gap-2 mt-1">
-                                  <span className="text-xs text-gray-500 line-through">
-                                    {formatPrice(priceDropInfo.oldPrice)}
-                                  </span>
-                                  <span className="text-xs font-medium text-red-600 bg-red-50 px-1.5 py-0.5 rounded">
-                                    -{priceDropInfo.priceDropPercentage}%
-                                  </span>
-                                </div>
-                              )
+                        )}
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <MapPin className="w-3 h-3 flex-shrink-0" />
+                          <span className="truncate">
+                            {product.building_name
+                              ? `${product.building_name}, ${product.area.charAt(0).toUpperCase() + product.area.slice(1)}, Mumbai`
+                              : `${product.area.charAt(0).toUpperCase() + product.area.slice(1)}, Mumbai`
                             }
-                            return null
-                          })()}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-gray-500">
+                          <Calendar className="w-3 h-3 flex-shrink-0" />
+                          <span>{formatDate(product.created_at)}</span>
+                        </div>
+                      </div>
+                    </CardContent>
+                    <div className="flex items-center justify-between mt-auto pt-2 px-2 pb-2">
+                        <div className="text-lg font-bold text-green-600">
+                          {isItemFree(product) ? 'Free' : formatPrice(product.price)}
                         </div>
                         <Button
-                          onClick={() => handleWhatsAppChat(product.contact_phone, product.title)}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            handleWhatsAppChat(product.contact_phone, product.title);
+                          }}
                           size="sm"
-                          className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 h-auto flex-shrink-0 mt-auto"
+                          className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 h-auto flex-shrink-0"
                         >
                           <MessageCircle className="w-3 h-3 mr-1" />
                           Chat with Seller
                         </Button>
                       </div>
-                    </CardContent>
                   </Card>
+                  </Link>
                 ))}
               </div>
             )}
