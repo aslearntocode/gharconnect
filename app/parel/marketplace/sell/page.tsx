@@ -19,7 +19,7 @@ import { toast } from 'sonner'
 const formSchema = z.object({
   title: z.string().min(1, 'Title is required').max(100, 'Title must be less than 100 characters'),
   description: z.string().min(10, 'Description must be at least 10 characters').max(500, 'Description must be less than 500 characters'),
-  price: z.number().min(1, 'Price must be at least ₹1').max(1000000, 'Price must be less than ₹10,00,000'),
+  price: z.number().min(1, 'Price must be at least ₹1').max(50000000, 'Price must be less than ₹50,00,000'),
   category: z.string().min(1, 'Category is required'),
   condition: z.string().min(1, 'Condition is required'),
   contact_phone: z.string().min(10, 'Phone number must be at least 10 digits').max(15, 'Phone number must be less than 15 digits'),
