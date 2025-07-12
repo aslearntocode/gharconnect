@@ -17,7 +17,7 @@ const getCurrentArea = (pathname: string): string => {
   const pathSegments = pathname.split('/');
   // URL pattern: /{area}/services/domestic-help
   const areaIndex = pathSegments.findIndex(segment => 
-    ['parel', 'worli', 'bandra', 'juhu', 'malad', 'powai', 'thane', 'andheri'].includes(segment)
+    ['parel', 'worli', 'bandra', 'juhu', 'malad', 'powai', 'thane', 'andheri', 'mahalaxmi'].includes(segment)
   );
   return areaIndex !== -1 ? pathSegments[areaIndex] : 'parel'; // Default to parel if not found
 };
