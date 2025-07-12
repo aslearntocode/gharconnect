@@ -161,7 +161,7 @@ export default function Home() {
       title: 'Search Rentals',
       description: 'Find Rental Apartments with No Brokerage',
       icon: FiHome,
-      href: '/parel/rent',
+      href: '/mahalaxmi/rent',
       gradient: 'from-blue-500 to-cyan-500'
     },
     {
@@ -169,7 +169,7 @@ export default function Home() {
       title: 'List Property',
       description: 'List Property for Rent with No Brokerage',
       icon: FiHome,
-      href: '/parel/rent-apartment',
+      href: '/mahalaxmi/rent-apartment',
       gradient: 'from-purple-500 to-pink-500'
     },
     {
@@ -195,7 +195,7 @@ export default function Home() {
       title: 'Marketplace',
       description: 'Buy & sell pre-loved items',
       icon: FiDollarSign,
-      href: '/parel/marketplace',
+      href: '/mahalaxmi/marketplace',
       gradient: 'from-pink-500 to-yellow-500'
     },
     {
@@ -203,7 +203,7 @@ export default function Home() {
       title: 'Social',
       description: 'Community Q&A & discussions',
       icon: FiUsers,
-      href: '/parel/connect',
+      href: '/mahalaxmi/connect',
       gradient: 'from-indigo-500 to-blue-500'
     }
   ];
@@ -477,7 +477,7 @@ export default function Home() {
       iconColor: 'text-green-600',
       buttonBg: 'bg-green-600',
       buttonHover: 'hover:bg-green-700',
-      href: '/parel/services/domestic-help',
+      href: '/mahalaxmi/services/domestic-help',
       buttonText: 'Find Help',
       buttonTextMobile: 'Find Help'
     },
@@ -489,7 +489,7 @@ export default function Home() {
       iconColor: 'text-blue-600',
       buttonBg: 'bg-indigo-600',
       buttonHover: 'hover:bg-indigo-700',
-      href: '/parel/rent/',
+      href: '/mahalaxmi/rent/',
       buttonText: 'Browse',
       buttonTextMobile: 'Browse'
     },
@@ -501,7 +501,7 @@ export default function Home() {
       iconColor: 'text-orange-600',
       buttonBg: 'bg-orange-600',
       buttonHover: 'hover:bg-orange-700',
-      href: '/parel/services/physical-training',
+      href: '/mahalaxmi/services/physical-training',
       buttonText: 'Trainers',
       buttonTextMobile: 'Trainers'
     },
@@ -513,7 +513,7 @@ export default function Home() {
       iconColor: 'text-green-600',
       buttonBg: 'bg-green-600',
       buttonHover: 'hover:bg-green-700',
-      href: '/parel/home-service-provider',
+      href: '/mahalaxmi/home-service-provider',
       buttonText: 'View',
       buttonTextMobile: 'View'
     },
@@ -525,7 +525,7 @@ export default function Home() {
       iconColor: 'text-indigo-600',
       buttonBg: 'bg-indigo-600',
       buttonHover: 'hover:bg-indigo-700',
-      href: '/parel/marketplace/sell',
+      href: '/mahalaxmi/marketplace/sell',
       buttonText: 'View',
       buttonTextMobile: 'View'
     },
@@ -537,7 +537,7 @@ export default function Home() {
       iconColor: 'text-orange-600',
       buttonBg: 'bg-orange-600',
       buttonHover: 'hover:bg-orange-700',
-      href: '/parel/delivery/eggs',
+      href: '/mahalaxmi/delivery/eggs',
       buttonText: 'Order Now',
       buttonTextMobile: 'Order Now'
     }
@@ -576,31 +576,35 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // Fetch latest 4 marketplace products for Parel
+    // Fetch latest 4 marketplace products for Mahalaxmi
     const fetchMarketplaceProducts = async () => {
       const { getSupabaseClient } = await import("@/lib/supabase");
       const supabase = await getSupabaseClient();
       const { data, error } = await supabase
         .from("marketplace_products")
-        .select("id,title,price,condition,images,created_at,building_name")
+        .select("id,title,price,condition,images,created_at,building_name,area")
         .eq("is_active", true)
-        .eq("area", "parel")
+        // .eq("area", "mahalaxmi") // Temporarily commented out to test
         .order("created_at", { ascending: false })
         .limit(4);
+      console.log("Mahalaxmi marketplace products:", { data, error });
+      if (data) {
+        console.log("Product areas:", data.map(p => p.area));
+      }
       if (!error && data) setMarketplaceProducts(data);
     };
     fetchMarketplaceProducts();
   }, []);
 
   useEffect(() => {
-    // Fetch latest 3 connect posts for Parel
+    // Fetch latest 3 connect posts for Mahalaxmi
     const fetchConnectPosts = async () => {
       const { getSupabaseClient } = await import("@/lib/supabase");
       const supabase = await getSupabaseClient();
       const { data, error } = await supabase
         .from("posts")
         .select("id,title,body,created_at")
-        .eq("area", "Parel")
+        .eq("area", "mahalaxmi")
         .order("created_at", { ascending: false })
         .limit(3);
       if (!error && data) setConnectPosts(data);
@@ -625,8 +629,8 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Rent, Services & Delivery in Parel | GharConnect</title>
-        <meta name="description" content="Find rental properties, local services, and delivery options in Parel. Connect with residents, businesses, and property owners on GharConnect." />
+        <title>Rent, Services & Delivery in Mahalaxmi | GharConnect</title>
+        <meta name="description" content="Find rental properties, local services, and delivery options in Mahalaxmi. Connect with residents, businesses, and property owners on GharConnect." />
       </Head>
       <main className="min-h-screen bg-white">
         <Header />
@@ -636,7 +640,7 @@ export default function Home() {
             We have a rental property available at Crescent Bay from 5th July 2025. Contact us at 9321314553.
           </div>
         </div> */}
-
+        
         {/* Popular Service Banner */}
         <div className="w-full bg-gray-50 py-4 md:py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -661,13 +665,13 @@ export default function Home() {
                           <div className="text-center flex-1 flex flex-col justify-between">
                             <div>
                               <div className={`w-6 h-6 ${card.iconBg} rounded-full flex items-center justify-center mx-auto mb-2`}>
-                                {IconComponent ? (
+                              {IconComponent ? (
                                   <IconComponent className={`w-3 h-3 ${card.iconColor}`} />
-                                ) : (
+                              ) : (
                                   <span className="text-xl">{card.icon as string}</span>
-                                )}
-                              </div>
-                              <h3 className="text-xs font-bold text-gray-900 mb-1">{card.title}</h3>
+                              )}
+                            </div>
+                            <h3 className="text-xs font-bold text-gray-900 mb-1">{card.title}</h3>
                             </div>
                             <a 
                               href={card.href}
@@ -701,12 +705,12 @@ export default function Home() {
                       </div>
                       <h3 className="text-[15px] font-bold text-gray-900 mb-1 leading-tight text-center">{card.title}</h3>
                     </div>
-                    <a 
-                      href={card.href}
+                      <a 
+                        href={card.href}
                       className={`inline-flex items-center justify-center px-3 py-1.5 ${card.buttonBg} ${card.buttonHover} text-white font-semibold rounded-lg transition-colors duration-200 shadow-sm text-sm w-full`}
-                    >
+                      >
                       {card.buttonText}
-                    </a>
+                      </a>
                   </div>
                 );
               })}
@@ -731,7 +735,7 @@ export default function Home() {
               <div>
                 <h1 className="text-[24px] md:text-[48px] leading-tight font-bold mb-6 text-center md:text-left flex flex-wrap items-center gap-2 justify-center md:justify-start">
                   <span className="text-black">Welcome to GharConnect </span>
-                  <span className="text-indigo-600">@Parel</span>
+                  <span className="text-indigo-600">@Mahalaxmi</span>
                   <Link href="/" className="ml-2 text-indigo-600 text-xs md:text-sm font-semibold underline hover:no-underline transition-all">
                     Click here to go to other cities
                   </Link>
@@ -787,7 +791,7 @@ export default function Home() {
                   </div>
                   <div className="flex-1">
                     <h3 className="text-lg md:text-xl font-semibold text-gray-900">E-Waste Collection Drive by GharConnect</h3>
-                    <p className="text-gray-600 text-sm md:text-base">📍 Parel, Mumbai • In Partnership with The Recycling Company</p>
+                    <p className="text-gray-600 text-sm md:text-base">📍 Mahalaxmi, Mumbai • In Partnership with The Recycling Company</p>
                     <p className="text-gray-600 text-sm md:text-base mt-1">
                       <span className="font-semibold text-green-700">Reach out to us and we can set up collection boxes in your society!</span>
                     </p>
@@ -806,9 +810,9 @@ export default function Home() {
                     </div>
                     <div className="sr-only">
                       <p>
-                        <a href="/parel" className="underline hover:text-blue-700">E-waste collection in Parel</a> |
-                        <a href="/parel" className="underline hover:text-blue-700">Electronic waste disposal Mumbai</a> |
-                        <a href="/parel" className="underline hover:text-blue-700">The Recycling Company</a>
+                        <a href="/mahalaxmi" className="underline hover:text-blue-700">E-waste collection in Mahalaxmi</a> |
+                        <a href="/mahalaxmi" className="underline hover:text-blue-700">Electronic waste disposal Mumbai</a> |
+                        <a href="/mahalaxmi" className="underline hover:text-blue-700">The Recycling Company</a>
                       </p>
                     </div>
                   </div>
@@ -824,71 +828,48 @@ export default function Home() {
                   </div>
                   
                   {/* Photo Carousel */}
-                  <div className="relative w-60 h-36 md:w-96 md:h-56 rounded-lg overflow-hidden flex-shrink-0">
+                <div className="relative w-60 h-36 md:w-96 md:h-56 rounded-lg overflow-hidden flex-shrink-0">
                     {/* Sample images - replace with actual e-waste drive photos */}
-                    <div className="absolute inset-0 flex transition-transform duration-500 ease-in-out" 
-                         style={{ transform: `translateX(-${currentAdCarouselIndex * 100}%)` }}>
-                      <div className="w-full flex-shrink-0 h-full">
-                        <img 
+                  <div className="absolute inset-0 flex transition-transform duration-500 ease-in-out" 
+                       style={{ transform: `translateX(-${currentAdCarouselIndex * 100}%)` }}>
+                    <div className="w-full flex-shrink-0 h-full">
+                      <img 
                           src="/Ads/eWaste_Collection.png" 
                           alt="E-Waste Collection Drive 1" 
-                          className="w-full h-full object-contain"
+                        className="w-full h-full object-contain"
                           onError={e => {
                             e.currentTarget.style.display = 'none';
                             e.currentTarget.nextElementSibling?.classList.remove('hidden');
                           }}
-                        />
-                      </div>
-                      <div className="w-full flex-shrink-0 h-full">
-                        <img 
+                      />
+                    </div>
+                    <div className="w-full flex-shrink-0 h-full">
+                      <img 
                           src="/Ads/eWaste_Drive.png" 
                           alt="E-Waste Collection Drive 2" 
-                          className="w-full h-full object-contain"
+                        className="w-full h-full object-contain"
                           onError={e => {
                             e.currentTarget.style.display = 'none';
                             e.currentTarget.nextElementSibling?.classList.remove('hidden');
                           }}
-                        />
-                      </div>
+                      />
                     </div>
-                    
-                    {/* Navigation Dots */}
+                  </div>
+                  
+                  {/* Navigation Dots */}
                     <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
                       {[0, 1].map((index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentAdCarouselIndex(index)}
+                      <button
+                        key={index}
+                        onClick={() => setCurrentAdCarouselIndex(index)}
                           className={`w-2 h-2 rounded-full transition-colors ${
-                            currentAdCarouselIndex === index ? 'bg-white' : 'bg-white/50'
-                          }`}
-                        />
-                      ))}
+                          currentAdCarouselIndex === index ? 'bg-white' : 'bg-white/50'
+                        }`}
+                      />
+                    ))}
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Community Video Section */}
-        <div className="bg-gray-50 py-8 md:py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Spotlight</h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Watch this video to learn how to register as a domestic help or driver
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 gap-6">
-              {/* Featured Video */}
-              <div className="max-w-4xl mx-auto">
-                <VideoEmbed
-                  videoId="Yj-uofiMN7Q" // Your specific YouTube video
-                  title="Domestic Help & Drivers"
-                  className="w-full h-64 md:h-80"
-                />
               </div>
             </div>
           </div>
@@ -906,7 +887,7 @@ export default function Home() {
                   <>
                     <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 break-words w-full max-w-full">
                       Marketplace
-                    </h3>
+                </h3>
                     <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
                       Discover items for sale from your community. Buy or list your own items for neighbors to see.
                     </p>
@@ -917,7 +898,7 @@ export default function Home() {
                       Social
                     </h3>
                     <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
-                      Join the conversation! Ask questions, share updates, and connect with your neighbors in Parel.
+                      Join the conversation! Ask questions, share updates, and connect with your neighbors in Mahalaxmi.
                     </p>
                   </>
                 )}
@@ -971,17 +952,17 @@ export default function Home() {
                         </div>
                         <div className="flex flex-row justify-center items-end gap-2 md:gap-3 mt-2 w-full grow">
                           <a 
-                            href="/parel/marketplace" 
+                            href="/mahalaxmi/marketplace" 
                             className="inline-flex items-center px-2 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 rounded text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
                             style={{ minHeight: '24px' }}
                           >
                             <span>Browse</span>
                             <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                          </a>
-                        </div>
-                      </div>
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
                       {/* Connect Slide */}
                       <div className="min-w-full w-full max-w-full bg-gradient-to-br from-blue-50 to-indigo-100 p-3 flex flex-col items-center text-center">
                         <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-md">
@@ -1007,17 +988,17 @@ export default function Home() {
                         </div>
                         <div className="flex flex-row justify-center items-end gap-2 md:gap-3 mt-1 w-full grow">
                           <a 
-                            href="/parel/connect" 
+                            href="/mahalaxmi/connect" 
                             className="inline-flex items-center px-2 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 rounded text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
                             style={{ minHeight: '24px' }}
                           >
                             <span>Join</span>
                             <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 24 24">
                               <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                            </svg>
-                          </a>
-                        </div>
-                      </div>
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
                     </div>
                     {/* Carousel Arrows (mobile only) */}
                     <button
@@ -1065,49 +1046,49 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-center mb-2 md:mb-3">Delivery Categories</h2>
             <p className="text-lg text-gray-600 text-center mb-8">Order fresh essentials delivered to your door</p>
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-2 md:gap-6">
-              <Link href="/parel/delivery/dairy" className="block group">
+              <Link href="/mahalaxmi/delivery/dairy" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <span className="mb-2 text-2xl lg:text-4xl">🥛</span>
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Dairy</h3>
                 </div>
               </Link>
-              <Link href="/parel/delivery/meat" className="block group">
+              <Link href="/mahalaxmi/delivery/meat" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <span className="mb-2 text-2xl lg:text-4xl">🍗</span>
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Meat</h3>
                 </div>
               </Link>
-              <Link href="/parel/delivery/eggs" className="block group">
+              <Link href="/mahalaxmi/delivery/eggs" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <span className="mb-2 text-2xl lg:text-4xl">🥚</span>
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Eggs</h3>
                 </div>
               </Link>
-              <Link href="/parel/delivery/flowers" className="block group">
+              <Link href="/mahalaxmi/delivery/flowers" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <span className="mb-2 text-2xl lg:text-4xl">💐</span>
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Flowers</h3>
                 </div>
               </Link>
-              <Link href="/parel/delivery/vegetables" className="block group">
+              <Link href="/mahalaxmi/delivery/vegetables" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <span className="mb-2 text-2xl lg:text-4xl">🥦</span>
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Vegetables</h3>
                 </div>
               </Link>
-              <Link href="/parel/delivery/fruits" className="block group">
+              <Link href="/mahalaxmi/delivery/fruits" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <span className="mb-2 text-2xl lg:text-4xl">🍎</span>
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Fruits</h3>
                 </div>
               </Link>
-              <Link href="/parel/delivery/dry-fruits" className="block group">
+              <Link href="/mahalaxmi/delivery/dry-fruits" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <span className="mb-2 text-2xl lg:text-4xl">🥜</span>
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Dry Fruits</h3>
-                </div>
+            </div>
               </Link>
-              <Link href="/parel/delivery/pharmacy" className="block group">
+              <Link href="/mahalaxmi/delivery/pharmacy" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <span className="mb-2 text-2xl lg:text-4xl">💊</span>
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Pharmacy</h3>
@@ -1128,7 +1109,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                 <a 
-                  href="/parel/services/domestic-help"
+                  href="/mahalaxmi/services/domestic-help"
                   className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors duration-200"
                 >
                   For Hiring - Click Here
@@ -1158,127 +1139,127 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-center mb-2 md:mb-3">Services Categories</h2>
             <p className="text-lg text-gray-600 text-center mb-8">Book trusted home and personal services</p>
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-2 md:gap-6">
-              <Link href="/parel/services/laundry" className="block group">
+              <Link href="/mahalaxmi/services/laundry" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiDroplet className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Laundry</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/carpenter" className="block group">
+              <Link href="/mahalaxmi/services/carpenter" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiTool className="w-7 h-7 mb-2 text-yellow-600 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Carpenter</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/tailor" className="block group">
+              <Link href="/mahalaxmi/services/tailor" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiEdit className="w-7 h-7 mb-2 text-pink-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Tailor</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/plumber" className="block group">
+              <Link href="/mahalaxmi/services/plumber" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiTool className="w-7 h-7 mb-2 text-blue-600 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Plumber</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/electrician" className="block group">
+              <Link href="/mahalaxmi/services/electrician" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiZap className="w-7 h-7 mb-2 text-yellow-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Electrician</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/domestic-help" className="block group">
+              <Link href="/mahalaxmi/services/domestic-help" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiUsers className="w-7 h-7 mb-2 text-green-600 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Domestic Help & Drivers</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/car-clean" className="block group">
+              <Link href="/mahalaxmi/services/car-clean" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <span className="mb-2 text-2xl text-blue-500 lg:mb-3 lg:text-4xl">🚗</span>
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Car Clean</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/painter" className="block group">
+              <Link href="/mahalaxmi/services/painter" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiEdit className="w-7 h-7 mb-2 text-pink-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Painter</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/gardener" className="block group">
+              <Link href="/mahalaxmi/services/gardener" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiHome className="w-7 h-7 mb-2 text-green-600 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Gardener</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/ac-service" className="block group">
+              <Link href="/mahalaxmi/services/ac-service" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiZap className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">AC Service</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/pest-control" className="block group">
+              <Link href="/mahalaxmi/services/pest-control" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiShield className="w-7 h-7 mb-2 text-red-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Pest Control</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/laptop-repair" className="block group">
+              <Link href="/mahalaxmi/services/laptop-repair" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiTool className="w-7 h-7 mb-2 text-red-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Laptop Repair</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/electronics-repair" className="block group">
+              <Link href="/mahalaxmi/services/electronics-repair" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiTool className="w-7 h-7 mb-2 text-red-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Electronics Repair</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/scrap-dealer" className="block group">
+              <Link href="/mahalaxmi/services/scrap-dealer" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <span className="mb-2 text-2xl text-orange-500 lg:mb-3 lg:text-4xl">♻️</span>
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Scrap Dealer</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/notary" className="block group">
+              <Link href="/mahalaxmi/services/notary" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiFileText className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Notary</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/piegon-net" className="block group">
+              <Link href="/mahalaxmi/services/piegon-net" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiGrid className="w-7 h-7 mb-2 text-green-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Pigeon Net</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/movers-packers" className="block group">
+              <Link href="/mahalaxmi/services/movers-packers" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiTruck className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Movers & Packers</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/physical-training" className="block group">
+              <Link href="/mahalaxmi/services/physical-training" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiTrendingUp className="w-7 h-7 mb-2 text-indigo-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Physical Training</h3>
-                </div>
+            </div>
               </Link>
-              <Link href="/parel/services/yoga" className="block group">
+              <Link href="/mahalaxmi/services/yoga" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiAward className="w-7 h-7 mb-2 text-green-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Yoga</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/massage" className="block group">
+              <Link href="/mahalaxmi/services/massage" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiHeart className="w-7 h-7 mb-2 text-pink-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Massage</h3>
                 </div>
               </Link>
-              <Link href="/parel/services/kids-classes" className="block group">
+              <Link href="/mahalaxmi/services/kids-classes" className="block group">
                 <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
                   <FiBookOpen className="w-7 h-7 mb-2 text-orange-500 lg:w-12 lg:h-12 lg:mb-3" />
                   <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Kids Classes</h3>
@@ -1307,7 +1288,7 @@ export default function Home() {
             <div className="flex-1 flex flex-col items-center justify-center text-center z-10 w-full min-h-[180px] md:pl-[260px] md:pr-[260px] p-6 md:p-0">
               <h2 className="text-2xl font-bold mb-2 text-gray-900">Have a property to rent?</h2>
               <p className="text-gray-600 mb-4">List your property & connect with clients faster!</p>
-              <a href="/parel/rent-apartment" className="inline-flex items-center px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors text-base shadow-lg">
+              <a href="/mahalaxmi/rent-apartment" className="inline-flex items-center px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors text-base shadow-lg">
                 List Your Property
               </a>
             </div>
@@ -1318,7 +1299,7 @@ export default function Home() {
           <div className="max-w-4xl mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold text-white mb-4">Neighbors Providing Services</h2>
             <p className="text-indigo-100 mb-6">Discover trusted, community-rated neighbors for all your needs - artists, musicians, lawyers, consultants and more. Let Your Neighbors Know You!</p>
-            <a href="/parel/home-service-provider" className="inline-flex items-center px-6 py-3 bg-white text-indigo-700 font-semibold rounded-lg shadow-md hover:bg-indigo-50 transition-colors text-lg">
+            <a href="/mahalaxmi/home-service-provider" className="inline-flex items-center px-6 py-3 bg-white text-indigo-700 font-semibold rounded-lg shadow-md hover:bg-indigo-50 transition-colors text-lg">
               View All Neighbors Providing Service
             </a>
           </div>

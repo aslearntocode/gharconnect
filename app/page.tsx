@@ -38,16 +38,10 @@ const communities = [
     status: 'active'
   },
   {
-    name: 'Wadala, Mumbai',
-    description: 'Wadala, Sion',
-    href: '/wadala',
-    status: 'coming-soon'
-  },
-  {
     name: 'Mahalaxmi, Mumbai',
     description: 'Mahalaxmi, Tardeo',
     href: '/mahalaxmi',
-    status: 'coming-soon'
+    status: 'active'
   },
   {
     name: 'Bandra, Mumbai',

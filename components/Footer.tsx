@@ -56,7 +56,7 @@ export default function Footer() {
               <Link href="/parel/" className="hover:text-indigo-600 transition-colors">Parel</Link>
               <Link href="/worli/" className="hover:text-indigo-600 transition-colors">Worli</Link>
               {/* <Link href="/wadala/" className="hover:text-indigo-600 transition-colors">Wadala</Link> */}
-              {/* <Link href="/mahalaxmi/" className="hover:text-indigo-600 transition-colors">Mahalaxmi</Link> */}
+              <Link href="/mahalaxmi/" className="hover:text-indigo-600 transition-colors">Mahalaxmi</Link>
               {/* <Link href="/andheri/" className="hover:text-indigo-600 transition-colors">Andheri</Link> */}
               <Link href="/bandra/" className="hover:text-indigo-600 transition-colors">Bandra</Link>
               {/* <Link href="/juhu/" className="hover:text-indigo-600 transition-colors">Juhu</Link> */}
