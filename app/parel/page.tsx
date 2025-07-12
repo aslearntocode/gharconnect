@@ -871,28 +871,76 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Community Video Section */}
-        <div className="bg-gray-50 py-8 md:py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Spotlight</h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Watch this video to learn how to register as a domestic help or driver
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 gap-6">
-              {/* Featured Video */}
-              <div className="max-w-4xl mx-auto">
-                <VideoEmbed
-                  videoId="Yj-uofiMN7Q" // Your specific YouTube video
-                  title="Domestic Help & Drivers"
-                  className="w-full h-64 md:h-80"
-                />
-              </div>
-            </div>
-          </div>
+        {/* Why You Should List Your Property With Us Section */}
+<div className="bg-gray-50 py-8 md:py-12">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-8">
+      <h2 className="text-3xl font-bold text-gray-900 mb-4">Why List Your Property With Us?</h2>
+      <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        Experience hassle-free property listing with our comprehensive services
+      </p>
+    </div>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+      {/* Benefit 1 */}
+      <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
+        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span className="text-2xl">💰</span>
         </div>
+        <h3 className="text-lg font-bold text-gray-900 mb-2">No Brokerage & No Listing Fees</h3>
+        <p className="text-gray-600 text-sm">
+          It's absolutely free and absolutely simple!!! No hidden charges, no commission fees.
+        </p>
+      </div>
+
+      {/* Benefit 2 */}
+      <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
+        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span className="text-2xl">🤝</span>
+        </div>
+        <h3 className="text-lg font-bold text-gray-900 mb-2">Legal Paperwork</h3>
+        <p className="text-gray-600 text-sm">
+          We will help you with the legal paperwork and ensure that you are compliant with the law.
+        </p>
+      </div>
+
+      {/* Benefit 3 */}
+      <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
+        <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span className="text-2xl">📸</span>
+        </div>
+        <h3 className="text-lg font-bold text-gray-900 mb-2">Professional Photoshoot</h3>
+        <p className="text-gray-600 text-sm">
+          Professional photoshoot service so people can see the apartment without actually visiting it.
+        </p>
+      </div>
+
+      {/* Benefit 4 */}
+      <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
+        <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <span className="text-2xl">🔧</span>
+        </div>
+        <h3 className="text-lg font-bold text-gray-900 mb-2">On-Demand Services</h3>
+        <p className="text-gray-600 text-sm">
+          Painting, carpentry and more services to get your house ready for the next tenant.
+        </p>
+      </div>
+    </div>
+
+    {/* CTA Button */}
+    <div className="text-center mt-8">
+      <a 
+        href="/parel/rent-apartment" 
+        className="inline-flex items-center px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+      >
+        List Your Property Now
+        <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
 
         {/* Property Management Services Section */}
         <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-0 pt-1 md:pt-2">
