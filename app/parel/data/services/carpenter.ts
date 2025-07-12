@@ -37,5 +37,17 @@ export const vendors: Vendor[] = [
     mobile: '+91 91672 28070',
     areaServed: ['Parel'],
     buildingServed: ['L&T Crescent Bay']
+  },
+  {
+    name: 'Vinay',
+    products: [{
+      name: 'Carpentry',
+      description: 'All types of carpentry work',
+      price: 'Call for price',
+      unit: 'job'
+    }],
+    mobile: '+91 93726 33491 / 91671 96255',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay', 'Ashok Gardens', 'ICC']
   }
 ];
