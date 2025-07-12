@@ -875,6 +875,29 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Community Video Section */}
+        <div className="bg-gray-50 py-8 md:py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">Spotlight</h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                Watch this video to learn how to register as a domestic help or driver
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 gap-6">
+              {/* Featured Video */}
+              <div className="max-w-4xl mx-auto">
+                <VideoEmbed
+                  videoId="Yj-uofiMN7Q" // Your specific YouTube video
+                  title="Domestic Help & Drivers"
+                  className="w-full h-64 md:h-80"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Property Management Services Section */}
         <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-0 pt-1 md:pt-2">
           <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
