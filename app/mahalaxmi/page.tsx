@@ -45,6 +45,7 @@ interface MarketplaceProduct {
   images: string[];
   created_at: string;
   building_name?: string;
+  is_active?: boolean;
 }
 
 interface ConnectPost {
@@ -582,8 +583,8 @@ export default function Home() {
       const supabase = await getSupabaseClient();
       const { data, error } = await supabase
         .from("marketplace_products")
-        .select("id,title,price,condition,images,created_at,building_name,area")
-        .eq("is_active", true)
+        .select("id,title,price,condition,images,created_at,building_name,area,is_active")
+        // .eq("is_active", true) // Temporarily commented out to test
         // .eq("area", "mahalaxmi") // Temporarily commented out to test
         .order("created_at", { ascending: false })
         .limit(4);
@@ -997,8 +998,8 @@ export default function Home() {
                               <div className="flex-1 text-center text-gray-500 py-3">No products listed yet.</div>
                             ) : (
                               (isMobile ? marketplaceProducts.slice(0, 2) : marketplaceProducts).map((product) => (
-                                <div key={product.id} className="bg-white rounded-md shadow p-1 flex flex-col items-center text-center border border-gray-100 hover:shadow-md transition-all min-w-[110px] md:min-w-[160px] max-w-[140px] md:max-w-[200px] w-full">
-                                  <div className="w-full h-14 md:h-20 flex items-center justify-center mb-1 overflow-hidden rounded">
+                                <div key={product.id} className={`bg-white rounded-md shadow p-1 flex flex-col items-center text-center border border-gray-100 hover:shadow-md transition-all min-w-[110px] md:min-w-[160px] max-w-[140px] md:max-w-[200px] w-full ${!product.is_active ? 'opacity-60' : ''}`}>
+                                  <div className="w-full h-14 md:h-20 flex items-center justify-center mb-1 overflow-hidden rounded relative">
                                     {product.images && product.images.length > 0 ? (
                                       <img
                                         src={product.images[0]}
@@ -1008,6 +1009,11 @@ export default function Home() {
                                       />
                                     ) : (
                                       <div className="w-full h-full flex items-center justify-center text-gray-300 bg-gray-100 text-xs">No Image</div>
+                                    )}
+                                    {!product.is_active && (
+                                      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                                        <span className="text-white font-bold text-xs md:text-sm">SOLD</span>
+                                      </div>
                                     )}
                                   </div>
                                   <div className="font-semibold text-[11px] md:text-sm text-gray-900 line-clamp-2 mb-0.5">{product.title}</div>

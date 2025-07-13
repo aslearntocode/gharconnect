@@ -35,6 +35,7 @@ interface MarketplaceProduct {
   contact_phone: string
   created_at: string
   building_name?: string
+  is_active?: boolean
   user_profile?: {
     society_name: string
     building_name: string
@@ -245,7 +246,6 @@ export function Marketplace({ location }: { location: string }) {
             changed_at
           )
         `)
-        .eq('is_active', true)
         .order('created_at', { ascending: false })
 
       if (error) {
@@ -678,13 +678,9 @@ export function Marketplace({ location }: { location: string }) {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-                {filteredProducts.map((product) => (
-                  <Link
-                    key={product.id}
-                    href={`/${location.toLowerCase()}/marketplace/${product.id}`}
-                    className="block"
-                  >
-                    <Card className="hover:shadow-lg transition-shadow duration-200 flex flex-col cursor-pointer min-h-[360px]">
+                {filteredProducts.map((product) => {
+                  const ProductCard = (
+                    <Card className={`hover:shadow-lg transition-shadow duration-200 flex flex-col cursor-pointer min-h-[360px] ${!product.is_active ? 'opacity-60' : ''}`}>
                     <div className="bg-gray-100 rounded-t-lg overflow-hidden relative group cursor-pointer h-32 flex items-center justify-center">
                       {product.images && product.images.length > 0 ? (
                         <>
@@ -703,6 +699,12 @@ export function Marketplace({ location }: { location: string }) {
                               openImageModal(product.images, 0)
                             }}
                           />
+                          {/* SOLD Overlay */}
+                          {!product.is_active && (
+                            <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                              <span className="text-white font-bold text-lg">SOLD</span>
+                            </div>
+                          )}
                           {/* Zoom indicator overlay */}
                           <div 
                             className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center pointer-events-none"
@@ -812,8 +814,23 @@ export function Marketplace({ location }: { location: string }) {
                         </Button>
                       </div>
                   </Card>
-                  </Link>
-                ))}
+                  )
+
+                  // Only wrap in Link if item is active (not sold)
+                  return product.is_active ? (
+                    <Link
+                      key={product.id}
+                      href={`/${location.toLowerCase()}/marketplace/${product.id}`}
+                      className="block"
+                    >
+                      {ProductCard}
+                    </Link>
+                  ) : (
+                    <div key={product.id} className="block">
+                      {ProductCard}
+                    </div>
+                  )
+                })}
               </div>
             )}
           </div>
