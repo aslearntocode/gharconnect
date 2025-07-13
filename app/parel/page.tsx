@@ -167,7 +167,7 @@ export default function Home() {
     {
       id: 'list-property',
       title: 'List Property',
-      description: 'List Property for Rent with No Brokerage',
+      description: 'List Your Property for Rent with No Brokerage',
       icon: FiHome,
       href: '/parel/rent-apartment',
       gradient: 'from-purple-500 to-pink-500'
@@ -483,7 +483,7 @@ export default function Home() {
     },
     {
       id: 'rental',
-      title: 'Rental Properties with No Brokerage',
+      title: 'Premium Rentals with No Brokerage',
       icon: FiHome,
       iconBg: 'bg-indigo-100',
       iconColor: 'text-blue-600',
