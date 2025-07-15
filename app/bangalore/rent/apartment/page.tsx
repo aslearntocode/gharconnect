@@ -162,7 +162,7 @@ export default function RentApartmentPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 pt-16">
       {/* Blue Banner */}
       <div className="relative">
         <div className="w-full bg-indigo-600 flex flex-col items-center justify-center py-8">
