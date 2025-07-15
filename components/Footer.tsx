@@ -67,7 +67,7 @@ export default function Footer() {
               </li>
               {!isMainPage && (
                 <li>
-                  <Link href={blogUrl} className="hover:text-indigo-600 transition-colors">Blogs</Link>
+                  <Link href="/blog" className="hover:text-indigo-600 transition-colors">Blogs</Link>
                 </li>
               )}
               {!isMainPage && (

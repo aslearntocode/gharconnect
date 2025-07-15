@@ -27,6 +27,6 @@ Allow: /parel/services
 Allow: /parel/delivery
 Allow: /worli/services
 Allow: /worli/delivery
-Allow: /parel/blog
+Allow: /blog
 Allow: /about
 Allow: /faq 
