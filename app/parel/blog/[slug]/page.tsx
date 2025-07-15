@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import BlogPostPage, { generateMetadata as sharedGenerateMetadata } from '@/app/components/BlogPostPage';
 
-export function generateMetadata(props: any): Metadata {
+export async function generateMetadata(props: any): Promise<Metadata> {
   return sharedGenerateMetadata({ ...props, society: 'parel' });
 }
 
-export default function ParelBlogPostPage(props: any) {
+export default async function ParelBlogPostPage(props: any) {
   return <BlogPostPage {...props} society="parel" />;
 } 

@@ -17,9 +17,9 @@ const PlatformComparisonTable = dynamic(() => import('@/components/PlatformCompa
 });
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
   society: string;
 }
 
@@ -97,9 +97,10 @@ const customComponents: Components = {
   ),
 };
 
-export function generateMetadata(props: { params: { slug: string }, society: string }): Metadata {
+export async function generateMetadata(props: { params: Promise<{ slug: string }>, society: string }): Promise<Metadata> {
   const { params, society } = props;
-  const post = getBlogPost(params.slug);
+  const { slug } = await params;
+  const post = getBlogPost(slug);
   
   if (!post) {
     return {
@@ -133,8 +134,9 @@ function renderWithTable(content: string) {
   );
 }
 
-export default function BlogPostPage({ params, society }: BlogPostPageProps) {
-  const post = getBlogPost(params.slug);
+export default async function BlogPostPage({ params, society }: BlogPostPageProps) {
+  const { slug } = await params;
+  const post = getBlogPost(slug);
 
   if (!post) {
     notFound();
