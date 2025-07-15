@@ -16,6 +16,7 @@ export default function RentalHeader() {
   const [isPropertiesDropdownOpen, setIsPropertiesDropdownOpen] = useState(false)
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
   const [user, setUser] = useState<User | null>(null)
+  const [isScrolled, setIsScrolled] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
 
@@ -44,8 +45,25 @@ export default function RentalHeader() {
     return () => unsubscribe()
   }, [])
 
+  // Scroll detection for header color change
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 50); // Change header color after 50px scroll
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <header className="bg-white shadow-md relative" style={{ zIndex: 1000 }}>
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-gray-900/60 backdrop-blur-sm shadow-lg text-white' 
+          : 'bg-white shadow-md text-black'
+      }`}
+    >
       <nav className="max-w-7xl mx-auto px-1 sm:px-2 lg:px-2">
         <div className="flex justify-between h-16 items-center w-full">
           <div className="flex items-center">
@@ -61,7 +79,14 @@ export default function RentalHeader() {
             </Link>
             
             <div className="hidden md:flex items-center space-x-8 ml-8">
-              <Link href={`/${currentCity}/rent`} className="text-black hover:text-gray-700 py-2 text-base">
+              <Link 
+                href={`/${currentCity}/rent`} 
+                className={`py-2 text-base transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-white hover:text-gray-300' 
+                    : 'text-black hover:text-gray-700'
+                }`}
+              >
                 Home
               </Link>
               
@@ -69,7 +94,11 @@ export default function RentalHeader() {
                 <div className="flex items-center">
                   <button 
                     onClick={() => setIsPropertiesDropdownOpen(!isPropertiesDropdownOpen)}
-                    className="text-black hover:text-gray-700 py-2 text-base flex items-center"
+                    className={`py-2 text-base flex items-center transition-colors duration-300 ${
+                      isScrolled 
+                        ? 'text-white hover:text-gray-300' 
+                        : 'text-black hover:text-gray-700'
+                    }`}
                   >
                     Rent
                     <svg
@@ -125,7 +154,14 @@ export default function RentalHeader() {
                 </div>
               </div>
             </div>
-            <Link href={`/${currentCity}/list-apartment`} className="hidden md:block text-black hover:text-gray-700 py-2 text-base ml-6">
+            <Link 
+              href={`/${currentCity}/list-apartment`} 
+              className={`hidden md:block py-2 text-base ml-6 transition-colors duration-300 ${
+                isScrolled 
+                  ? 'text-white hover:text-gray-300' 
+                  : 'text-black hover:text-gray-700'
+              }`}
+            >
               List
             </Link>
           </div>
@@ -134,7 +170,15 @@ export default function RentalHeader() {
             {user ? (
               <ProfileDropdown user={user} />
             ) : (
-              <Button variant="ghost" className="text-base py-2" onClick={() => setIsLoginModalOpen(true)}>
+              <Button 
+                variant="ghost" 
+                className={`text-base py-2 transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-white hover:text-gray-300' 
+                    : 'text-black hover:text-gray-700'
+                }`} 
+                onClick={() => setIsLoginModalOpen(true)}
+              >
                 Log in
               </Button>
             )}
@@ -147,16 +191,31 @@ export default function RentalHeader() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="md:hidden py-2 w-full bg-white fixed bottom-0 left-0 border-t border-gray-200 shadow-lg" style={{ position: 'fixed', bottom: 0, zIndex: 9999 }}>
+        <div className={`md:hidden py-2 w-full fixed bottom-0 left-0 border-t shadow-lg transition-colors duration-300 ${
+          isScrolled 
+            ? 'bg-gray-900/60 backdrop-blur-sm border-gray-700' 
+            : 'bg-white border-gray-200'
+        }`} style={{ position: 'fixed', bottom: 0, zIndex: 9999 }}>
           <div className="flex justify-around items-center px-1 pb-6">
-            <Link href={`/${currentCity}/rent`} className="text-black hover:text-gray-700 flex flex-col items-center">
+            <Link 
+              href={`/${currentCity}/rent`} 
+              className={`flex flex-col items-center transition-colors duration-300 ${
+                isScrolled 
+                  ? 'text-white hover:text-gray-300' 
+                  : 'text-black hover:text-gray-700'
+              }`}
+            >
               <FiHome className="w-6 h-6" />
               <span className="text-xs mt-1">Home</span>
             </Link>
             <div className="relative">
               <button 
                 onClick={() => setIsPropertiesDropdownOpen(isPropertiesDropdownOpen => !isPropertiesDropdownOpen)}
-                className="text-black hover:text-gray-700 flex flex-col items-center"
+                className={`flex flex-col items-center transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-white hover:text-gray-300' 
+                    : 'text-black hover:text-gray-700'
+                }`}
               >
                 <FaBuilding className="w-6 h-6" />
                 <span className="text-xs mt-1">Rent</span>
@@ -187,7 +246,14 @@ export default function RentalHeader() {
                 </div>
               )}
             </div>
-            <Link href={`/${currentCity}/list-apartment`} className="text-black hover:text-gray-700 flex flex-col items-center text-xs">
+            <Link 
+              href={`/${currentCity}/list-apartment`} 
+              className={`flex flex-col items-center text-xs transition-colors duration-300 ${
+                isScrolled 
+                  ? 'text-white hover:text-gray-300' 
+                  : 'text-black hover:text-gray-700'
+              }`}
+            >
               <FiFileText className="w-6 h-6" />
               <span>List</span>
             </Link>

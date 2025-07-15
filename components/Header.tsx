@@ -12,7 +12,7 @@ import { signOut } from 'firebase/auth'
 import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiSearch, FiPlus, FiHeart, FiCircle, FiUsers } from 'react-icons/fi'
 import { FaBuilding } from 'react-icons/fa'
 
-export default function Header() {
+export default function Header({ isScrolled = false }: { isScrolled?: boolean }) {
   const [user, setUser] = useState<User | null>(null)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isPropertiesDropdownOpen, setIsPropertiesDropdownOpen] = useState(false)
@@ -94,7 +94,13 @@ export default function Header() {
   }
 
   return (
-    <header className="bg-white shadow-md relative" style={{ zIndex: 1000 }}>
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'bg-gray-900/60 backdrop-blur-sm shadow-lg text-white' 
+          : 'bg-white shadow-md text-black'
+      }`}
+    >
       <nav className="max-w-7xl mx-auto px-1 sm:px-2 lg:px-2">
         <div className="flex justify-between h-16 items-center w-full">
           <div className="flex items-center">
@@ -110,7 +116,14 @@ export default function Header() {
             </Link>
             
             <div className="hidden md:flex items-center space-x-8 ml-8">
-              <Link href={`/${currentSociety}`} className="text-black hover:text-gray-700 py-2 text-base">
+              <Link 
+                href={`/${currentSociety}`} 
+                className={`py-2 text-base transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-white hover:text-gray-300' 
+                    : 'text-black hover:text-gray-700'
+                }`}
+              >
                 Home
               </Link>
               {/* Properties dropdown removed here */}
@@ -118,7 +131,11 @@ export default function Header() {
                 <div className="flex items-center">
                   <button 
                     onClick={() => setIsCreditScoreDropdownOpen(!isCreditScoreDropdownOpen)}
-                    className="text-black hover:text-gray-700 py-2 text-base flex items-center"
+                    className={`py-2 text-base flex items-center transition-colors duration-300 ${
+                      isScrolled 
+                        ? 'text-white hover:text-gray-300' 
+                        : 'text-black hover:text-gray-700'
+                    }`}
                   >
                     Services
                     <svg
@@ -200,120 +217,48 @@ export default function Header() {
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
-                      <span className="w-5 h-5 text-blue-500 text-lg">🚗</span>
-                      <span>Car Clean</span>
+                      <FiDroplet className="w-5 h-5 text-blue-500" />
+                      <span>Car Cleaning</span>
+                    </Link>
+                    <Link 
+                      href={`/${currentSociety}/services/beautician`}
+                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                      onClick={() => setIsCreditScoreDropdownOpen(false)}
+                    >
+                      <FiEdit className="w-5 h-5 text-pink-500" />
+                      <span>Beautician</span>
+                    </Link>
+                    <Link 
+                      href={`/${currentSociety}/services/cook`}
+                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                      onClick={() => setIsCreditScoreDropdownOpen(false)}
+                    >
+                      <FiEdit className="w-5 h-5 text-pink-500" />
+                      <span>Cook</span>
+                    </Link>
+                    <Link 
+                      href={`/${currentSociety}/services/security`}
+                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                      onClick={() => setIsCreditScoreDropdownOpen(false)}
+                    >
+                      <FiShield className="w-5 h-5 text-green-600" />
+                      <span>Security</span>
                     </Link>
                     <Link 
                       href={`/${currentSociety}/services/painter`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
-                      <FiEdit className="w-5 h-5 text-pink-500" />
+                      <FiTool className="w-5 h-5 text-blue-600" />
                       <span>Painter</span>
                     </Link>
                     <Link 
-                      href={`/${currentSociety}/services/gardener`}
+                      href={`/${currentSociety}/services/cleaning`}
                       className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                       onClick={() => setIsCreditScoreDropdownOpen(false)}
                     >
-                      <FiHome className="w-5 h-5 text-green-600" />
-                      <span>Gardener</span>
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/services/ac-service`}
-                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                      onClick={() => setIsCreditScoreDropdownOpen(false)}
-                    >
-                      <FiZap className="w-5 h-5 text-blue-500" />
-                      <span>AC Service</span>
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/services/pest-control`}
-                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                      onClick={() => setIsCreditScoreDropdownOpen(false)}
-                    >
-                      <FiShield className="w-5 h-5 text-red-500" />
-                      <span>Pest Control</span>
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/services/laptop-repair`}
-                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                      onClick={() => setIsCreditScoreDropdownOpen(false)}
-                    >
-                      <FiTool className="w-5 h-5 text-red-500" />
-                      <span>Laptop Repair</span>
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/services/electronics-repair`}
-                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                      onClick={() => setIsCreditScoreDropdownOpen(false)}
-                    >
-                      <FiTool className="w-5 h-5 text-red-500" />
-                      <span>Electronics Repair</span>
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/services/scrap-dealer`}
-                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                      onClick={() => setIsCreditScoreDropdownOpen(false)}
-                    >
-                      <span className="w-5 h-5 text-orange-500 text-lg">♻️</span>
-                      <span>Scrap Dealer</span>
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/services/notary`}
-                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                      onClick={() => setIsCreditScoreDropdownOpen(false)}
-                    >
-                      <FiFileText className="w-5 h-5 text-blue-500" />
-                      <span>Notary</span>
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/services/piegon-net`}
-                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                      onClick={() => setIsCreditScoreDropdownOpen(false)}
-                    >
-                      <FiGrid className="w-5 h-5 text-green-500" />
-                      <span>Pigeon Net</span>
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/services/movers-packers`}
-                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                      onClick={() => setIsCreditScoreDropdownOpen(false)}
-                    >
-                      <FiTruck className="w-5 h-5 text-blue-500" />
-                      <span>Movers & Packers</span>
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/services/physical-training`}
-                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                      onClick={() => setIsCreditScoreDropdownOpen(false)}
-                    >
-                      <FiTrendingUp className="w-5 h-5 text-indigo-500" />
-                      <span>Physical Training</span>
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/services/yoga`}
-                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                      onClick={() => setIsCreditScoreDropdownOpen(false)}
-                    >
-                      <FiAward className="w-5 h-5 text-green-500" />
-                      <span>Yoga</span>
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/services/massage`}
-                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                      onClick={() => setIsCreditScoreDropdownOpen(false)}
-                    >
-                      <FiHeart className="w-5 h-5 text-pink-500" />
-                      <span>Massage</span>
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/services/kids-classes`}
-                      className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                      onClick={() => setIsCreditScoreDropdownOpen(false)}
-                    >
-                      <FiBookOpen className="w-5 h-5 text-orange-500" />
-                      <span>Kids Classes</span>
+                      <FiDroplet className="w-5 h-5 text-blue-500" />
+                      <span>Cleaning</span>
                     </Link>
                   </div>
                 </div>
@@ -323,7 +268,11 @@ export default function Header() {
                 <div className="flex items-center">
                   <button 
                     onClick={() => setIsDeliveryDropdownOpen(!isDeliveryDropdownOpen)}
-                    className="text-black hover:text-gray-700 py-2 text-base"
+                    className={`py-2 text-base flex items-center transition-colors duration-300 ${
+                      isScrolled 
+                        ? 'text-white hover:text-gray-300' 
+                        : 'text-black hover:text-gray-700'
+                    }`}
                   >
                     Delivery
                     <svg
@@ -393,7 +342,11 @@ export default function Header() {
                 <div className="flex items-center">
                   <button 
                     onClick={() => setIsMarketplaceDropdownOpen(!isMarketplaceDropdownOpen)}
-                    className="text-black hover:text-gray-700 py-2 text-base"
+                    className={`py-2 text-base flex items-center transition-colors duration-300 ${
+                      isScrolled 
+                        ? 'text-white hover:text-gray-300' 
+                        : 'text-black hover:text-gray-700'
+                    }`}
                   >
                     Marketplace
                     <svg
@@ -438,7 +391,11 @@ export default function Header() {
                 <div className="flex items-center">
                   <button 
                     onClick={() => setIsSocialDropdownOpen(!isSocialDropdownOpen)}
-                    className="text-black hover:text-gray-700 py-2 text-base"
+                    className={`py-2 text-base flex items-center transition-colors duration-300 ${
+                      isScrolled 
+                        ? 'text-white hover:text-gray-300' 
+                        : 'text-black hover:text-gray-700'
+                    }`}
                   >
                     Social
                     <svg
@@ -488,9 +445,15 @@ export default function Header() {
                       placeholder="Search anything..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-80 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className={`w-80 pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors duration-300 ${
+                        isScrolled 
+                          ? 'border-gray-600 bg-gray-800 text-white placeholder-gray-400' 
+                          : 'border-gray-300 bg-white text-black placeholder-gray-500'
+                      }`}
                     />
-                    <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <FiSearch className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 ${
+                      isScrolled ? 'text-gray-400' : 'text-gray-400'
+                    }`} />
                   </div>
                 </form>
               </div>
@@ -507,9 +470,15 @@ export default function Header() {
                     placeholder="Search anything..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                    className={`w-64 pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-colors duration-300 ${
+                      isScrolled 
+                        ? 'border-gray-600 bg-gray-800 text-white placeholder-gray-400' 
+                        : 'border-gray-300 bg-white text-black placeholder-gray-500'
+                    }`}
                   />
-                  <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <FiSearch className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 ${
+                    isScrolled ? 'text-gray-400' : 'text-gray-400'
+                  }`} />
                 </div>
               </form>
             </div>
@@ -517,7 +486,11 @@ export default function Header() {
             {user ? (
               <ProfileDropdown user={user} />
             ) : (
-              <Link href={`/${currentSociety}/login`} className="text-black hover:text-gray-700 whitespace-nowrap">
+              <Link href={`/${currentSociety}/login`} className={`whitespace-nowrap transition-colors duration-300 ${
+                isScrolled 
+                  ? 'text-white hover:text-gray-300' 
+                  : 'text-black hover:text-gray-700'
+              }`}>
                 <Button variant="ghost" className="text-base py-2">
                   Log in
                 </Button>
@@ -526,9 +499,17 @@ export default function Header() {
           </div>
         </div>
 
-        <div className="md:hidden py-2 w-full bg-white fixed bottom-0 left-0 border-t border-gray-200 shadow-lg" style={{ position: 'fixed', bottom: 0, zIndex: 9999 }}>
+        <div className={`md:hidden py-2 w-full fixed bottom-0 left-0 border-t shadow-lg transition-colors duration-300 ${
+          isScrolled 
+            ? 'bg-gray-900/95 backdrop-blur-sm border-gray-700' 
+            : 'bg-white border-gray-200'
+        }`} style={{ position: 'fixed', bottom: 0, zIndex: 9999 }}>
           <div className="flex justify-around items-center px-1 pb-6">
-            <Link href={`/${currentSociety}`} className="text-black hover:text-gray-700 flex flex-col items-center">
+            <Link href={`/${currentSociety}`} className={`flex flex-col items-center transition-colors duration-300 ${
+              isScrolled 
+                ? 'text-white hover:text-gray-300' 
+                : 'text-black hover:text-gray-700'
+            }`}>
               <FiHome className="w-6 h-6" />
               <span className="text-xs mt-1">Home</span>
             </Link>
@@ -537,7 +518,11 @@ export default function Header() {
             <div className="relative">
               <button 
                 onClick={() => setIsDeliveryDropdownOpen(isDeliveryDropdownOpen => !isDeliveryDropdownOpen)}
-                className="text-black hover:text-gray-700 flex flex-col items-center"
+                className={`flex flex-col items-center transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-white hover:text-gray-300' 
+                    : 'text-black hover:text-gray-700'
+                }`}
               >
                 <FiTruck className="w-6 h-6" />
                 <span className="text-xs mt-1">Delivery</span>
@@ -575,7 +560,11 @@ export default function Header() {
             <div className="relative">
               <button 
                 onClick={() => setIsCreditScoreDropdownOpen(isCreditScoreDropdownOpen => !isCreditScoreDropdownOpen)}
-                className="text-black hover:text-gray-700 flex flex-col items-center"
+                className={`flex flex-col items-center transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-white hover:text-gray-300' 
+                    : 'text-black hover:text-gray-700'
+                }`}
               >
                 <FiTool className="w-6 h-6" />
                 <span className="text-xs mt-1">Services</span>
@@ -734,7 +723,11 @@ export default function Header() {
             </div>
 
             <div className="relative">
-              <Link href="#" className="text-black hover:text-gray-700 flex flex-col items-center" onClick={e => { e.preventDefault(); setIsMarketplaceMobileDropdownOpen(v => !v); }}>
+              <Link href="#" className={`flex flex-col items-center transition-colors duration-300 ${
+                isScrolled 
+                  ? 'text-white hover:text-gray-300' 
+                  : 'text-black hover:text-gray-700'
+              }`} onClick={e => { e.preventDefault(); setIsMarketplaceMobileDropdownOpen(v => !v); }}>
                 <FiGrid className="w-6 h-6" />
                 <span className="text-xs mt-1">Marketplace</span>
               </Link>
@@ -751,7 +744,11 @@ export default function Header() {
             </div>
 
             <div className="relative">
-              <Link href="#" className="text-black hover:text-gray-700 flex flex-col items-center" onClick={e => { e.preventDefault(); setIsSocialDropdownOpen(v => !v); }}>
+              <Link href="#" className={`flex flex-col items-center transition-colors duration-300 ${
+                isScrolled 
+                  ? 'text-white hover:text-gray-300' 
+                  : 'text-black hover:text-gray-700'
+              }`} onClick={e => { e.preventDefault(); setIsSocialDropdownOpen(v => !v); }}>
                 <FiUsers className="w-6 h-6" />
                 <span className="text-xs mt-1">Social</span>
               </Link>

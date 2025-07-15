@@ -89,6 +89,7 @@ export default function Home() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [marketplaceProducts, setMarketplaceProducts] = useState<MarketplaceProduct[]>([]);
   const [connectPosts, setConnectPosts] = useState<ConnectPost[]>([]);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const testimonials = [
     {
@@ -304,6 +305,17 @@ export default function Home() {
     
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
+
+  // Scroll detection for header color change
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 50); // Change header color after 50px scroll
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -538,8 +550,8 @@ export default function Home() {
         <title>Rent, Services & Delivery in Worli | GharConnect</title>
         <meta name="description" content="Find rental properties, local services, and delivery options in Worli. Connect with residents, businesses, and property owners on GharConnect." />
       </Head>
-      <main className="min-h-screen bg-white">
-        <Header />
+      <main className="min-h-screen bg-white pt-16">
+        <Header isScrolled={isScrolled} />
         <div className="flex flex-col items-center mb-8 mt-2">
           <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700 italic bg-indigo-50 px-8 md:px-16 py-2 rounded-lg w-full max-w-1xl">
             Connecting Residents and Businesses Within a Location
