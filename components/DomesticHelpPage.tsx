@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from 'react';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { usePathname } from 'next/navigation';
 import Header from '@/components/Header';
-import { useMediaQuery } from 'react-responsive';
-import { VendorRating } from '@/components/VendorRating';
-import { useRouter, usePathname } from 'next/navigation';
-import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import LoginModal from '@/components/LoginModal';
+import { Card } from '@/components/ui/card';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import { VendorRating } from './VendorRating';
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import LoginModal from './LoginModal';
+import { auth } from '@/lib/firebase';
+import { useMediaQuery } from 'react-responsive';
 
 // Utility function to get current area from URL path
 const getCurrentArea = (pathname: string): string => {
@@ -56,25 +56,33 @@ function getNext7Days() {
 
 export default function DomesticHelpPage() {
   const [vendors, setVendors] = useState<any[]>([]);
-  const [selectedVendor, setSelectedVendor] = useState<any | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [vendorRatings, setVendorRatings] = useState<Record<string, { rating: number; count: number }>>({});
-  const [showReviews, setShowReviews] = useState<Record<string, boolean>>({});
-  const [reviews, setReviews] = useState<Record<string, any[]>>({});
-  const [searchQuery, setSearchQuery] = useState("");
-  const supabase = createClientComponentClient();
-  const isMobile = useMediaQuery({ maxWidth: 767 });
-  const router = useRouter();
-  const pathname = usePathname();
-  const currentArea = getCurrentArea(pathname);
-  const [activeTab, setActiveTab] = useState<'temporary' | 'permanent'>('temporary');
-  const [permanentVendors, setPermanentVendors] = useState<any[]>([]);
   const [vendorAvailabilities, setVendorAvailabilities] = useState<Record<string, any[]>>({});
-  const [fetchError, setFetchError] = useState<string | null>(null);
+  const [permanentVendors, setPermanentVendors] = useState<any[]>([]);
+  const [vendorRatings, setVendorRatings] = useState<Record<string, { rating: number; count: number }>>({});
+  const [reviews, setReviews] = useState<Record<string, any[]>>({});
+  const [showReviews, setShowReviews] = useState<Record<string, boolean>>({});
   const [openVendorId, setOpenVendorId] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState<'temporary' | 'permanent'>('temporary');
+  const [fetchError, setFetchError] = useState<string | null>(null);
   const [showNumberMap, setShowNumberMap] = useState<Record<string, boolean>>({});
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [pendingVendorId, setPendingVendorId] = useState<string | null>(null);
+  const [user, setUser] = useState<any>(null);
+  const [selectedVendor, setSelectedVendor] = useState<any | null>(null);
+  const [loading, setLoading] = useState(false);
+  const supabase = createClientComponentClient();
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const pathname = usePathname();
+  const currentArea = getCurrentArea(pathname);
+
+  // Track user authentication status
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   // Fetch all vendors (distinct by vendor_id) - Area filtered
   useEffect(() => {
@@ -268,7 +276,7 @@ export default function DomesticHelpPage() {
   }, [activeTab]);
 
   // Helper to check if user is logged in
-  const isLoggedIn = typeof window !== 'undefined' && (window as any).firebase?.auth?.currentUser;
+  const isLoggedIn = user !== null;
 
   const handleShowNumber = (vendorKey: string) => {
     if (isLoggedIn) {

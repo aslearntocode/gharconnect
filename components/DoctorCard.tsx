@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Doctor } from '@/app/parel/data/services/doctors';
 import { FiPhone, FiMapPin, FiClock, FiAward, FiBookOpen, FiPlusSquare } from 'react-icons/fi';
 import LoginModal from './LoginModal';
+import { auth } from '@/lib/firebase';
 
 interface DoctorCardProps {
   doctor: Doctor;
@@ -12,9 +13,22 @@ interface DoctorCardProps {
 export function DoctorCard({ doctor }: DoctorCardProps) {
   const [showPhoneNumber, setShowPhoneNumber] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  // Track user authentication status
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleShowNumber = () => {
-    setIsLoginModalOpen(true);
+    if (user) {
+      setShowPhoneNumber(true);
+    } else {
+      setIsLoginModalOpen(true);
+    }
   };
 
   return (

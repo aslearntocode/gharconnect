@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter, usePathname } from 'next/navigation';
 import LoginModal from './LoginModal';
+import { auth } from '@/lib/firebase';
 
 interface ServiceRating {
   rating: number;
@@ -40,9 +41,18 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const [imageError, setImageError] = useState(false);
   const [showNumber, setShowNumber] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const supabase = createClientComponentClient();
   const router = useRouter();
   const pathname = usePathname();
+
+  // Track user authentication status
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+    return () => unsubscribe();
+  }, []);
 
   // Extract society from pathname
   const getSocietyFromPath = () => {
@@ -149,7 +159,11 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   };
 
   const handleShowNumber = () => {
-    setIsLoginModalOpen(true);
+    if (user) {
+      setShowNumber(true);
+    } else {
+      setIsLoginModalOpen(true);
+    }
   };
 
   const mobileNumber = vendor.mobile_no || vendor.mobile;
