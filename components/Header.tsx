@@ -261,6 +261,110 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         <FiDroplet className="w-5 h-5 text-blue-500" />
                         <span>Cleaning</span>
                       </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/gardener`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiTool className="w-5 h-5 text-green-600" />
+                        <span>Gardener</span>
+                      </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/ac-service`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiZap className="w-5 h-5 text-blue-600" />
+                        <span>AC Service</span>
+                      </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/pest-control`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiShield className="w-5 h-5 text-red-600" />
+                        <span>Pest Control</span>
+                      </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/laptop-repair`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiTool className="w-5 h-5 text-purple-600" />
+                        <span>Laptop Repair</span>
+                      </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/electronics-repair`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiTool className="w-5 h-5 text-indigo-600" />
+                        <span>Electronics Repair</span>
+                      </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/scrap-dealer`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiTool className="w-5 h-5 text-orange-600" />
+                        <span>Scrap Dealer</span>
+                      </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/notary`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiFileText className="w-5 h-5 text-gray-600" />
+                        <span>Notary</span>
+                      </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/piegon-net`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiTool className="w-5 h-5 text-blue-600" />
+                        <span>Pigeon Net</span>
+                      </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/movers-packers`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiTruck className="w-5 h-5 text-green-600" />
+                        <span>Movers & Packers</span>
+                      </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/physical-training`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiTrendingUp className="w-5 h-5 text-red-600" />
+                        <span>Physical Training</span>
+                      </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/yoga`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiTrendingUp className="w-5 h-5 text-purple-600" />
+                        <span>Yoga</span>
+                      </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/massage`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiTrendingUp className="w-5 h-5 text-pink-600" />
+                        <span>Massage</span>
+                      </Link>
+                      <Link 
+                        href={`/${currentSociety}/services/kids-classes`}
+                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
+                        onClick={() => setIsCreditScoreDropdownOpen(false)}
+                      >
+                        <FiBook className="w-5 h-5 text-yellow-600" />
+                        <span>Kids Classes</span>
+                      </Link>
                     </div>
                   </div>
                 </div>
