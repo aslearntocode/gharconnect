@@ -6,9 +6,9 @@ export default function RentApartmentLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <RentalHeader />
-      <main className="flex-grow">{children}</main>
-    </>
+      <main className="flex-grow pt-16">{children}</main>
+    </div>
   );
 } 

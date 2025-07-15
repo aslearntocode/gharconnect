@@ -6,7 +6,41 @@ import { usePathname } from 'next/navigation'
 export default function Footer() {
   const pathname = usePathname();
   const isMainPage = pathname === '/';
-  const society = pathname.split('/')[1] || 'parel'; // Default to parel if no society in path
+  
+  // Function to determine the correct blog URL based on current pathname
+  const getBlogUrl = () => {
+    const pathSegments = pathname.split('/').filter(segment => segment);
+    
+    // Handle different URL patterns
+    if (pathSegments.length === 0) {
+      return '/parel/blog'; // Default for main page
+    }
+    
+    // For society pages like /parel, /worli
+    if (pathSegments.length === 1) {
+      return `/${pathSegments[0]}/blog`;
+    }
+    
+    // For rental pages like /mumbai/rent, /bangalore/rent
+    if (pathSegments.length === 2 && pathSegments[1] === 'rent') {
+      return `/${pathSegments[0]}/rent/blog`;
+    }
+    
+    // For specific rental pages like /mumbai/rent/apartment, /bangalore/rent/pg
+    if (pathSegments.length === 3 && pathSegments[1] === 'rent') {
+      return `/${pathSegments[0]}/rent/blog`;
+    }
+    
+    // For service pages like /mumbai/services
+    if (pathSegments.length === 2 && pathSegments[1] === 'services') {
+      return `/${pathSegments[0]}/blog`;
+    }
+    
+    // Default fallback - use first segment
+    return `/${pathSegments[0]}/blog`;
+  };
+
+  const blogUrl = getBlogUrl();
 
   return (
     <footer className="bg-blue-50 text-gray-700">
@@ -26,19 +60,19 @@ export default function Footer() {
                 <Link href="/parel/faq" className="hover:text-indigo-600 transition-colors">FAQ</Link>
               </li>
               <li>
-                <Link href={isMainPage ? "/terms" : `/${society}/terms`} className="hover:text-indigo-600 transition-colors">Terms & Conditions</Link>
+                <Link href={isMainPage ? "/terms" : `/${pathname.split('/')[1] || 'parel'}/terms`} className="hover:text-indigo-600 transition-colors">Terms & Conditions</Link>
               </li>
               <li>
-                <Link href={isMainPage ? "/privacy" : `/${society}/privacy`} className="hover:text-indigo-600 transition-colors">Privacy Policy</Link>
+                <Link href={isMainPage ? "/privacy" : `/${pathname.split('/')[1] || 'parel'}/privacy`} className="hover:text-indigo-600 transition-colors">Privacy Policy</Link>
               </li>
               {!isMainPage && (
                 <li>
-                  <Link href={`/${society}/blog`} className="hover:text-indigo-600 transition-colors">Blogs</Link>
+                  <Link href={blogUrl} className="hover:text-indigo-600 transition-colors">Blogs</Link>
                 </li>
               )}
               {!isMainPage && (
                 <li>
-                  <Link href={`/${society}/rental-procedure`} className="hover:text-indigo-600 transition-colors">Rental Procedure</Link>
+                  <Link href={`/${pathname.split('/')[1] || 'parel'}/rental-procedure`} className="hover:text-indigo-600 transition-colors">Rental Procedure</Link>
                 </li>
               )}
               {!isMainPage && (

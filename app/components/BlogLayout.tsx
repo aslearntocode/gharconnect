@@ -12,7 +12,7 @@ export default function BlogLayout({ children }: BlogLayoutProps) {
       <Header />
 
       {/* Blog Content */}
-      <div className="flex-grow">
+      <div className="flex-grow pt-16">
         {children}
       </div>
     </div>
