@@ -14,7 +14,7 @@ export default function PestControlPage() {
   const filteredVendors = searchVendors(pestControlServices, searchQuery);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       {/* Blue Banner */}
       <div className="relative">

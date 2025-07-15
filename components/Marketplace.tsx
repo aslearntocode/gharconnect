@@ -403,7 +403,7 @@ export function Marketplace({ location }: { location: string }) {
         <meta name="twitter:image" content="/GC_Logo.png" />
         <link rel="canonical" href={`https://gharconnect.com/${location.toLowerCase()}/marketplace`} />
       </Head>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 lg:pt-16">
         <Header />
         
         {/* Indigo Banner */}

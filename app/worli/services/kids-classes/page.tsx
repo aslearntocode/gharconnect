@@ -7,7 +7,7 @@ import { FiSearch } from 'react-icons/fi';
 
 export default function KidsClassesPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       <div className="relative">
         <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">

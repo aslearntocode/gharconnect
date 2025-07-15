@@ -398,7 +398,7 @@ export default function ParelConnectPage() {
         />
       </Head>
       <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} redirectPath={pathname} />
-      <main className="min-h-screen bg-gray-50">
+      <main className="min-h-screen bg-gray-50 lg:pt-16">
         <Header />
         {/* Indigo Banner */}
         <section className="w-full bg-indigo-600 py-1 md:py-4 flex flex-col items-center justify-center text-center mb-4">

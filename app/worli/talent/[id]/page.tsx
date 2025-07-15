@@ -71,7 +71,7 @@ export default function WorliTalentDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 lg:pt-16">
         <Header />
         <div className="pt-20 pb-12 px-4">
           <div className="max-w-4xl mx-auto animate-pulse">
@@ -85,7 +85,7 @@ export default function WorliTalentDetailPage() {
 
   if (!talent) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 lg:pt-16">
         <Header />
         <div className="pt-20 pb-12 px-4">
           <div className="max-w-4xl mx-auto text-center">
@@ -100,7 +100,7 @@ export default function WorliTalentDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       
       <main className="pt-20 pb-12 px-4">

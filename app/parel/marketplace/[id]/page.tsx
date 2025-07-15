@@ -224,7 +224,7 @@ export default function MarketplaceItemDetailPage({ params }: { params: Promise<
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 lg:pt-16 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading...</p>
@@ -235,7 +235,7 @@ export default function MarketplaceItemDetailPage({ params }: { params: Promise<
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 lg:pt-16 flex items-center justify-center">
         <div className="text-center">
           <p className="text-lg text-gray-600">Item not found.</p>
         </div>
@@ -247,7 +247,7 @@ export default function MarketplaceItemDetailPage({ params }: { params: Promise<
   const isItemFree = product.price === 0;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Button

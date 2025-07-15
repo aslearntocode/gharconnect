@@ -5,7 +5,7 @@ import { deliveryCategories } from '@/app/parel/data/delivery';
 
 export default function DeliveryPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       {/* Blue Banner */}
       <div className="relative">

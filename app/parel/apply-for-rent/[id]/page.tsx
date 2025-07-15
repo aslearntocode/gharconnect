@@ -136,7 +136,7 @@ export default function ApplyForRentPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 lg:pt-16">
         <Header />
         <LoginModal
           isOpen={isLoginModalOpen}
@@ -168,7 +168,7 @@ export default function ApplyForRentPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       {/* Indigo Banner */}
       <div className="relative">

@@ -288,7 +288,7 @@ export default function DomesticHelpPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       {/* Indigo Banner */}
       <div className="relative">

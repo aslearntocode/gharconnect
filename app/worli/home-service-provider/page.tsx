@@ -74,7 +74,7 @@ export default function WorliNeighborhoodServiceProviderPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       
       {/* Hero Banner */}

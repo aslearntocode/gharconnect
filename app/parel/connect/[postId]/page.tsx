@@ -267,7 +267,7 @@ export default function PostDetailPage() {
           />
         )}
       </Head>
-      <main className="min-h-screen bg-gray-50">
+      <main className="min-h-screen bg-gray-50 lg:pt-16">
         <Header />
         <div className="max-w-2xl mx-auto py-8 px-4">
           <nav aria-label="Breadcrumb">

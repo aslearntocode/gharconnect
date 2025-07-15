@@ -7,7 +7,7 @@ import { FiSearch, FiDroplet, FiTool, FiZap, FiHome, FiEdit, FiTrendingUp, FiAwa
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       {/* Blue Banner */}
       <div className="relative">

@@ -14,7 +14,7 @@ const vendors = Array.from(new Set(acServiceServices.map(p => p.name))).map(name
 
 export default function ACServicePage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       {/* Blue Banner */}
       <div className="relative">

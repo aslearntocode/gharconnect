@@ -7,7 +7,7 @@ import { VendorCard } from '@/components/VendorCard';
 
 export default function YogaPage() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       <div className="relative">
         <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
