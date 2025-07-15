@@ -22,6 +22,7 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [isFirstTimeUser, setIsFirstTimeUser] = useState(false)
+  const [hasAttemptedLogin, setHasAttemptedLogin] = useState(false)
   const router = useRouter()
   const supabase = createClientComponentClient()
 
@@ -57,6 +58,7 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
   const handleGoogleLogin = async () => {
     setError('')
     setLoading(true)
+    setHasAttemptedLogin(true)
     console.log('Starting Google login process...')
 
     try {
@@ -108,8 +110,9 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
     let timeoutId: NodeJS.Timeout;
     
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      // Only auto-close if the modal is open and we're not in the middle of a login process
-      if (user && isOpen && !loading) {
+      // Only auto-close if the modal is open, we're not in the middle of a login process,
+      // and we have attempted a login (to prevent immediate closing on modal open)
+      if (user && isOpen && !loading && hasAttemptedLogin) {
         console.log('User authenticated, closing login modal');
         // Add a small delay to prevent race conditions
         timeoutId = setTimeout(() => {
@@ -129,7 +132,14 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
         clearTimeout(timeoutId);
       }
     };
-  }, [isOpen, onClose, redirectPath, router, onLoginSuccess, loading])
+  }, [isOpen, onClose, redirectPath, router, onLoginSuccess, loading, hasAttemptedLogin])
+
+  // Reset hasAttemptedLogin when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      setHasAttemptedLogin(false)
+    }
+  }, [isOpen])
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

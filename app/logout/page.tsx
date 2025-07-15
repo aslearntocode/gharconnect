@@ -21,10 +21,42 @@ function LogoutPageContent() {
     return pathParts[1] && pathParts[1] !== 'logout' ? pathParts[1] : null;
   };
 
+  // Extract city from a given path for rental pages
+  const getCityFromPath = (path: string) => {
+    const pathParts = path.split('/');
+    return pathParts[1] && pathParts[1] !== 'logout' ? pathParts[1] : null;
+  };
+
   // Determine redirect path
   const getRedirectPath = () => {
     const from = searchParams.get('from');
     if (from) {
+      // Check if the user was on a rental page
+      if (from.includes('/rent/') || from.includes('/list-apartment')) {
+        const city = getCityFromPath(from);
+        if (city) return `/${city}/rent`;
+      }
+      
+      // Check if the user was on a society-specific rental page
+      if (from.includes('/rent')) {
+        const society = getSocietyFromPath(from);
+        if (society) {
+          // Map society to city
+          const societyToCity: { [key: string]: string } = {
+            'parel': 'mumbai',
+            'bandra': 'mumbai',
+            'worli': 'mumbai',
+            'mahalaxmi': 'mumbai',
+            'powai': 'mumbai',
+            'malad': 'mumbai',
+            'andheri': 'mumbai',
+            'thane': 'mumbai'
+          };
+          const city = societyToCity[society];
+          if (city) return `/${city}/rent`;
+        }
+      }
+      
       // If the user was on a society subpage, redirect to its homepage
       const society = getSocietyFromPath(from);
       if (society) return `/${society}`;

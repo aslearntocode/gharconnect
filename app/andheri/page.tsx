@@ -470,7 +470,7 @@ export default function Home() {
                 <h1 className="text-[24px] md:text-[48px] leading-tight font-bold mb-6 text-center md:text-left flex flex-wrap items-center gap-2 justify-center md:justify-start">
                   <span className="text-black">Welcome to GharConnect </span>
                   <span className="text-indigo-600">@Andheri</span>
-                  <Link href="/" className="ml-2 text-indigo-600 text-xs md:text-sm font-semibold underline hover:no-underline transition-all">
+                  <Link href="/mumbai/services" className="ml-2 text-indigo-600 text-xs md:text-sm font-semibold underline hover:no-underline transition-all">
                     Click here to go to other areas
                   </Link>
                 </h1>

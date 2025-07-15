@@ -1,19 +1,23 @@
 'use client'
 
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useEffect, useState, useRef } from "react"
 import { auth } from "@/lib/firebase"
 import { User } from "firebase/auth"
+import { ProfileDropdown } from "@/components/ProfileDropdown"
+import Testimonials from "@/components/Testimonials"
 import Header from "@/components/Header"
 import { getSupabaseClient } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
-import { FiDroplet, FiTrendingUp, FiHome, FiTruck, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiUsers, FiScissors, FiDollarSign, FiHeart } from 'react-icons/fi'
+import { Dialog } from '@headlessui/react'
+import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiUsers, FiHeart } from 'react-icons/fi'
 import DoctorsContainer from "@/components/DoctorsContainer"
 import TravelDiariesContainer from "@/components/TravelDiariesContainer"
 import Head from 'next/head'
 import VideoEmbed from '@/components/VideoEmbed'
-import Poll from '@/components/Poll'
+import VideoPlayer from '@/components/VideoPlayer'
 
 interface MarketplaceProduct {
   id: string;
@@ -133,22 +137,6 @@ export default function Home() {
 
   const mainActionCards = [
     {
-      id: 'rent',
-      title: 'Search Rentals',
-      description: 'Find Rental Apartments with No Brokerage',
-      icon: FiHome,
-      href: '/parel/rent',
-      gradient: 'from-blue-500 to-cyan-500'
-    },
-    {
-      id: 'list-property',
-      title: 'List Your Property',
-      description: 'List Property for Rent with No Brokerage',
-      icon: FiHome,
-      href: '/parel/rent-apartment',
-      gradient: 'from-purple-500 to-pink-500'
-    },
-    {
       id: 'services',
       title: 'Local Services',
       description: 'Book trusted home services',
@@ -207,18 +195,6 @@ export default function Home() {
       href: '/worli/services/domestic-help',
       buttonText: 'Find Help',
       buttonTextMobile: 'Find Help'
-    },
-    {
-      id: 'rental',
-      title: 'Rental Properties with No Brokerage',
-      icon: FiHome,
-      iconBg: 'bg-indigo-100',
-      iconColor: 'text-blue-600',
-      buttonBg: 'bg-indigo-600',
-      buttonHover: 'hover:bg-indigo-700',
-      href: '/worli/rent/',
-      buttonText: 'Browse',
-      buttonTextMobile: 'Browse'
     },
     {
       id: 'physical-training',
@@ -564,15 +540,19 @@ export default function Home() {
       </Head>
       <main className="min-h-screen bg-white">
         <Header />
+        <div className="flex flex-col items-center mb-8 mt-2">
+          <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700 italic bg-indigo-50 px-8 md:px-16 py-2 rounded-lg w-full max-w-1xl">
+            Connecting Residents and Businesses Within a Location
+          </div>
+        </div>
         
-        {/* Popular Service Banner */}
-        <div className="w-full bg-gray-50 py-4 md:py-4">
+        {/* Popular Service Banner - Commented out for now, can be re-enabled later */}
+        {/* <div className="w-full bg-gray-50 py-4 md:py-4">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-4 md:mb-4">
               <h2 className="text-lg md:text-xl lg:text-2xl font-bold text-gray-900 mb-1">Most Popular Services</h2>
             </div>
             
-            {/* Mobile Carousel */}
             <div className="md:hidden">
               <div 
                 className="relative overflow-hidden rounded-lg"
@@ -612,7 +592,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Desktop Grid */}
             <div className="hidden md:flex md:overflow-x-auto md:gap-4 max-w-5xl mx-auto pb-4">
               {popularServicesCards.map((card) => {
                 const IconComponent = typeof card.icon === 'string' ? null : card.icon;
@@ -639,7 +618,7 @@ export default function Home() {
               })}
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Floating Info Cards */}
         <div className="fixed right-4 top-52 md:top-44 z-50 flex flex-col gap-4">
@@ -647,55 +626,215 @@ export default function Home() {
         {/* Hero Section */}
         <div className="relative bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-4">
-            <div className="flex flex-col items-center mb-8">
-              <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700 italic bg-indigo-50 px-8 md:px-16 py-2 rounded-lg w-full max-w-1xl">
-              Connecting Residents, Businesses, and Property Owners Within a Location            </div>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              {/* Left Content */}
-              <div>
-                <h1 className="text-[24px] md:text-[48px] leading-tight font-bold mb-6 text-center md:text-left flex flex-wrap items-center gap-2 justify-center md:justify-start">
+            <div className="w-full">
+              {/* Content */}
+              <div className="text-center">
+                <h1 className="text-[24px] md:text-[48px] leading-tight font-bold mb-6 flex flex-wrap items-center gap-2 justify-center">
                   <span className="text-black">Welcome to GharConnect </span>
                   <span className="text-indigo-600">@Worli</span>
-                  <Link href="/" className="ml-2 text-indigo-600 text-xs md:text-sm font-semibold underline hover:no-underline transition-all">
-                    Click here to go to other areas
+                  <Link href="/mumbai/services" className="inline-flex items-center px-2 py-1 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-xs ml-2">
+                    <svg className="w-3 h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                    Back to Other Areas
                   </Link>
                 </h1>
-                <p className="text-lg text-gray-600 mb-4 md:mb-8">
+                {/* <p className="text-lg text-gray-600 mb-4 md:mb-8 max-w-4xl mx-auto">
                 GharConnect is a community-based platform to find rental homes, trusted local services, marketplace deals and to connect with neighbors. It is a one stop destination for all the community requirements.
-                </p>
+                </p> */}
               </div>
-              {/* Right Content - Main Offerings */}
-              <div className="relative">
-                {/* Grid Container */}
-                <div className="grid grid-cols-2 md:grid-cols-2 gap-3 md:gap-4">
-                  {mainActionCards.map((card) => {
-                    const IconComponent = card.icon;
-                    return (
-                      <Link 
-                        key={card.id} 
-                        href={card.href} 
-                        onClick={card.onClick}
-                        className="group"
-                      >
-                        <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 transition-all duration-300 p-3 md:p-4 flex items-center gap-x-2 md:gap-x-3 group hover:bg-gray-50 cursor-pointer h-full">
-                          <div className={`w-10 h-10 md:w-12 md:h-12 rounded-2xl bg-gradient-to-br ${card.gradient} flex-shrink-0 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                            <IconComponent className="w-6 h-6 md:w-8 md:h-8 text-white" />
-                          </div>
-                          <div className="text-left">
-                            <h3 className="font-bold text-gray-900 text-sm md:text-lg">
-                              {card.title}
-                            </h3>
-                            <p className="hidden md:block text-xs md:text-sm text-gray-600 mt-1">
-                              {card.description}
-                            </p>
-                          </div>
-                        </div>
-                      </Link>
-                    );
-                  })}
+            </div>
+          </div>
+        </div>
+
+        {/* Delivery Categories Section */}
+        <div id="delivery-categories" className="bg-gray-50 py-8 md:py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-center mb-2 md:mb-3">Delivery Categories</h2>
+            <p className="text-lg text-gray-600 text-center mb-8">Order fresh essentials delivered to your door</p>
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-2 md:gap-6">
+              <Link href="/worli/delivery/dairy" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">🥛</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Dairy</h3>
                 </div>
-              </div>
+              </Link>
+              <Link href="/worli/delivery/meat" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">🍗</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Meat</h3>
+                </div>
+              </Link>
+              <Link href="/worli/delivery/eggs" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">🥚</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Eggs</h3>
+                </div>
+              </Link>
+              <Link href="/worli/delivery/flowers" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">💐</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Flowers</h3>
+                </div>
+              </Link>
+              <Link href="/worli/delivery/vegetables" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">🥦</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Vegetables</h3>
+                </div>
+              </Link>
+              <Link href="/worli/delivery/fruits" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">🍎</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Fruits</h3>
+                </div>
+              </Link>
+              <Link href="/worli/delivery/dry-fruits" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">🥜</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Dry Fruits</h3>
+                </div>
+              </Link>
+              <Link href="/worli/delivery/pharmacy" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl lg:text-4xl">💊</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Pharmacy</h3>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* Services Categories Section */}
+        <div id="services-categories" className="bg-white py-8 md:py-12">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-3xl font-bold text-center mb-2 md:mb-3">Services Categories</h2>
+            <p className="text-lg text-gray-600 text-center mb-8">Book trusted home and personal services</p>
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-2 md:gap-6">
+              <Link href="/worli/services/laundry" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiDroplet className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Laundry</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/carpenter" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiTool className="w-7 h-7 mb-2 text-yellow-600 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Carpenter</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/tailor" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiEdit className="w-7 h-7 mb-2 text-pink-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Tailor</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/plumber" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiTool className="w-7 h-7 mb-2 text-blue-600 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Plumber</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/electrician" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiZap className="w-7 h-7 mb-2 text-yellow-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Electrician</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/domestic-help" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiUsers className="w-7 h-7 mb-2 text-green-600 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Domestic Help & Drivers</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/car-clean" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl text-blue-500 lg:mb-3 lg:text-4xl">🚗</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Car Clean</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/painter" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiEdit className="w-7 h-7 mb-2 text-pink-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Painter</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/gardener" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiHome className="w-7 h-7 mb-2 text-green-600 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Gardener</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/ac-service" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiZap className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">AC Service</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/pest-control" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiShield className="w-7 h-7 mb-2 text-red-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Pest Control</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/laptop-repair" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiTool className="w-7 h-7 mb-2 text-red-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Laptop Repair</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/electronics-repair" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiTool className="w-7 h-7 mb-2 text-red-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Electronics Repair</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/scrap-dealer" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <span className="mb-2 text-2xl text-orange-500 lg:mb-3 lg:text-4xl">♻️</span>
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Scrap Dealer</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/notary" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiFileText className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Notary</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/piegon-net" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiGrid className="w-7 h-7 mb-2 text-green-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Pigeon Net</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/movers-packers" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiTruck className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Movers & Packers</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/physical-training" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiTrendingUp className="w-7 h-7 mb-2 text-indigo-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Physical Training</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/yoga" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiAward className="w-7 h-7 mb-2 text-green-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Yoga</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/massage" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiHeart className="w-7 h-7 mb-2 text-pink-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Massage</h3>
+                </div>
+              </Link>
+              <Link href="/worli/services/kids-classes" className="block group">
+                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
+                  <FiBookOpen className="w-7 h-7 mb-2 text-orange-500 lg:w-12 lg:h-12 lg:mb-3" />
+                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Kids Classes</h3>
+                </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -784,75 +923,7 @@ export default function Home() {
         </div>
 
         {/* Why You Should List Your Property With Us Section */}
-<div className="bg-gray-50 py-8 md:py-12">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="text-center mb-8">
-      <h2 className="text-3xl font-bold text-gray-900 mb-4">Why List Your Property With Us?</h2>
-      <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-        Experience hassle-free property listing with our comprehensive services
-      </p>
-    </div>
-    
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-      {/* Benefit 1 */}
-      <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <span className="text-2xl">💰</span>
-        </div>
-        <h3 className="text-lg font-bold text-gray-900 mb-2">No Brokerage & No Listing Fees</h3>
-        <p className="text-gray-600 text-sm">
-          It's absolutely free and absolutely simple!!! No hidden charges, no commission fees.
-        </p>
-      </div>
-
-      {/* Benefit 2 */}
-      <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-        <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <span className="text-2xl">🤝</span>
-        </div>
-        <h3 className="text-lg font-bold text-gray-900 mb-2">Legal Paperwork</h3>
-        <p className="text-gray-600 text-sm">
-          We will help you with the legal paperwork and ensure that you are compliant with the law.
-        </p>
-      </div>
-
-      {/* Benefit 3 */}
-      <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-        <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <span className="text-2xl">📸</span>
-        </div>
-        <h3 className="text-lg font-bold text-gray-900 mb-2">Professional Photoshoot</h3>
-        <p className="text-gray-600 text-sm">
-          Professional photoshoot service so people can see the apartment without actually visiting it.
-        </p>
-      </div>
-
-      {/* Benefit 4 */}
-      <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-        <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-          <span className="text-2xl">🔧</span>
-        </div>
-        <h3 className="text-lg font-bold text-gray-900 mb-2">On-Demand Services</h3>
-        <p className="text-gray-600 text-sm">
-          Painting, carpentry and more services to get your house ready for the next tenant.
-        </p>
-      </div>
-    </div>
-
-    {/* CTA Button */}
-    <div className="text-center mt-8">
-      <a 
-        href="/parel/rent-apartment" 
-        className="inline-flex items-center px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
-      >
-        List Your Property Now
-        <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-        </svg>
-      </a>
-    </div>
-  </div>
-</div>
+        {/* Removed as per request */}
 
         {/* Property Management Services Section */}
         <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-0 pt-1 md:pt-2">
@@ -1018,274 +1089,68 @@ export default function Home() {
             </div>
           </div>
         </div>
-
-         {/* Delivery Categories Section */}
-         <div id="delivery-categories" className="bg-gray-50 py-8 md:py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-2 md:mb-3">Delivery Categories</h2>
-            <p className="text-lg text-gray-600 text-center mb-8">Order fresh essentials delivered to your door</p>
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-2 md:gap-6">
-              <Link href="/worli/delivery/dairy" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <span className="mb-2 text-2xl lg:text-4xl">🥛</span>
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Dairy</h3>
-                </div>
-              </Link>
-              <Link href="/worli/delivery/meat" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <span className="mb-2 text-2xl lg:text-4xl">🍗</span>
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Meat</h3>
-                </div>
-              </Link>
-              <Link href="/worli/delivery/eggs" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <span className="mb-2 text-2xl lg:text-4xl">🥚</span>
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Eggs</h3>
-                </div>
-              </Link>
-              <Link href="/worli/delivery/flowers" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <span className="mb-2 text-2xl lg:text-4xl">💐</span>
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Flowers</h3>
-                </div>
-              </Link>
-              <Link href="/worli/delivery/vegetables" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <span className="mb-2 text-2xl lg:text-4xl">🥦</span>
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Vegetables</h3>
-                </div>
-              </Link>
-              <Link href="/worli/delivery/fruits" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <span className="mb-2 text-2xl lg:text-4xl">🍎</span>
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Fruits</h3>
-                </div>
-              </Link>
-              <Link href="/worli/delivery/dry-fruits" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <span className="mb-2 text-2xl lg:text-4xl">🥜</span>
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Dry Fruits</h3>
-                </div>
-              </Link>
-              <Link href="/worli/delivery/pharmacy" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <span className="mb-2 text-2xl lg:text-4xl">💊</span>
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Pharmacy</h3>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Domestic Help Container */}
-        <div className="bg-indigo-600 py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold text-white mb-4">Looking for Domestic Help & Drivers?</h2>
-              <p className="text-indigo-100 max-w-2xl mx-auto mb-8">
-                The domestic help puts in their availability for the next 10 days 
-                and you can book them for a few hours or for a few days to meet your emergency needs.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <a 
-                  href="/worli/services/domestic-help"
-                  className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors duration-200"
-                >
-                  For Hiring - Click Here
-                  <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                  </svg>
-                </a>
-                <a 
-                  href="https://gharconnect.in/vendor"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center px-6 py-3 border-2 border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-indigo-600 transition-colors duration-200"
-                >
-                  Looking for Work - Click Here
-                  <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
+        {/* GharCare+ Subscription Section */}
+        <div className="bg-gradient-to-br from-blue-50 to-green-50 py-10 px-4 md:px-0">
+          <div className="max-w-4xl mx-auto rounded-2xl shadow-lg bg-white/80 p-8 flex flex-col items-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-indigo-700 mb-2 text-center">GharCare+ Subscription</h2>
+            <p className="text-gray-700 text-center mb-6 max-w-2xl">Subscribe to <span className="font-semibold text-indigo-700">GharCare+</span> and get annual coverage for <span className="font-semibold">Pest Control</span>, <span className="font-semibold">AC Servicing</span>, and <span className="font-semibold">Water Purifier Servicing</span> at a special price. Hassle-free, reliable, and trusted by your community.</p>
+            <div className="flex flex-row gap-6 mb-6 w-full justify-center">
+              <div className="flex flex-col items-center flex-1">
+                <span className="bg-indigo-100 text-indigo-600 rounded-full p-4 mb-2"><FiShield className="w-7 h-7" /></span>
+                <span className="font-semibold text-gray-900 text-center">Pest<br/>Control</span>
+              </div>
+              <div className="flex flex-col items-center flex-1">
+                <span className="bg-indigo-100 text-blue-600 rounded-full p-4 mb-2"><FiZap className="w-7 h-7" /></span>
+                <span className="font-semibold text-gray-900 text-center">AC<br/>Servicing</span>
+              </div>
+              <div className="flex flex-col items-center flex-1">
+                <span className="bg-green-100 text-green-600 rounded-full p-4 mb-2"><FiDroplet className="w-7 h-7" /></span>
+                <span className="font-semibold text-gray-900 text-center">Water Purifier<br/>Servicing</span>
               </div>
             </div>
+            <a href="https://wa.me/919321314553?text=I%20want%20to%20subscribe%20to%20GharCare%2B" target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-3 bg-indigo-600 text-white font-bold rounded-lg shadow-md hover:bg-indigo-700 transition-colors text-lg mt-2">Subscribe Now</a>
           </div>
         </div>
-
-        {/* Services Categories Section */}
-        <div id="services-categories" className="bg-white py-8 md:py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-center mb-2 md:mb-3">Services Categories</h2>
-            <p className="text-lg text-gray-600 text-center mb-8">Book trusted home and personal services</p>
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-2 md:gap-6">
-              <Link href="/worli/services/laundry" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiDroplet className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Laundry</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/carpenter" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiTool className="w-7 h-7 mb-2 text-yellow-600 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Carpenter</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/tailor" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiEdit className="w-7 h-7 mb-2 text-pink-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Tailor</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/plumber" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiTool className="w-7 h-7 mb-2 text-blue-600 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Plumber</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/electrician" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiZap className="w-7 h-7 mb-2 text-yellow-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Electrician</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/domestic-help" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiUsers className="w-7 h-7 mb-2 text-green-600 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Domestic Help & Drivers</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/car-clean" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <span className="mb-2 text-2xl text-blue-500 lg:mb-3 lg:text-4xl">🚗</span>
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Car Clean</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/painter" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiEdit className="w-7 h-7 mb-2 text-pink-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Painter</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/gardener" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiHome className="w-7 h-7 mb-2 text-green-600 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Gardener</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/ac-service" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiZap className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">AC Service</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/pest-control" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiShield className="w-7 h-7 mb-2 text-red-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Pest Control</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/laptop-repair" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiTool className="w-7 h-7 mb-2 text-red-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Laptop Repair</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/electronics-repair" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiTool className="w-7 h-7 mb-2 text-red-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Electronics Repair</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/scrap-dealer" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <span className="mb-2 text-2xl text-orange-500 lg:mb-3 lg:text-4xl">♻️</span>
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Scrap Dealer</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/notary" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiFileText className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Notary</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/piegon-net" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiGrid className="w-7 h-7 mb-2 text-green-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Pigeon Net</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/movers-packers" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiTruck className="w-7 h-7 mb-2 text-blue-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Movers & Packers</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/physical-training" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiTrendingUp className="w-7 h-7 mb-2 text-indigo-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Physical Training</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/yoga" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiAward className="w-7 h-7 mb-2 text-green-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Yoga</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/massage" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiHeart className="w-7 h-7 mb-2 text-pink-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Massage</h3>
-                </div>
-              </Link>
-              <Link href="/worli/services/kids-classes" className="block group">
-                <div className="bg-white rounded-2xl shadow-lg p-2 lg:p-4 flex flex-col items-center transition hover:shadow-xl">
-                  <FiBookOpen className="w-7 h-7 mb-2 text-orange-500 lg:w-12 lg:h-12 lg:mb-3" />
-                  <h3 className="text-sm font-semibold text-gray-900 text-center leading-tight mb-0 lg:text-base">Kids Classes</h3>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </div>
-
         {/* Doctors Container */}
-        <DoctorsContainer />
+        {/* <DoctorsContainer /> */}
 
         {/* Property to Rent Container */}
-        <div className="max-w-4xl mx-auto mt-12 mb-16 px-4">
-          <div className="rounded-2xl border border-gray-200 shadow-md bg-white flex flex-col md:flex-row items-stretch p-0 md:p-0 gap-6 md:gap-0 relative overflow-hidden">
-            {/* Left Image as Card (faded background) */}
-            <div className="hidden md:block absolute top-0 bottom-0 left-0 h-full w-[260px]">
-              <img src="/Keys_IMG.png" alt="Keys illustration" className="h-full w-full object-contain rounded-l-2xl shadow-md" style={{opacity:0.25}} />
-              <div className="absolute inset-0 bg-white rounded-l-2xl" style={{opacity:0.25}}></div>
-            </div>
-            {/* Right Image as Card */}
-            <div className="hidden md:block absolute top-0 bottom-0 right-0 h-full w-[260px]">
-              <img src="/House_IMG.png" alt="House illustration" className="h-full w-full object-contain rounded-r-2xl shadow-md bg-white" />
-            </div>
-            {/* Main Content */}
-            <div className="flex-1 flex flex-col items-center justify-center text-center z-10 w-full min-h-[180px] md:pl-[260px] md:pr-[260px] p-6 md:p-0">
-              <h2 className="text-2xl font-bold mb-2 text-gray-900">Have a property to rent?</h2>
-              <p className="text-gray-600 mb-4">List your property & connect with clients faster!</p>
-              <a href="/worli/rent-apartment" className="inline-flex items-center px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors text-base shadow-lg">
-                List Your Property
+        
+
+        {/* Travel Diaries Container */}
+        {/* <TravelDiariesContainer /> */}
+                {/* Domestic Help Container */}
+                <div className="bg-indigo-600 py-12">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">Looking for Domestic Help & Drivers?</h2>
+            <p className="text-indigo-100 mb-6">
+              The domestic help and drivers put in their availability for the next 10 days 
+              and you can book them for a few hours or for a few days to meet your emergency needs.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a 
+                href="/parel/services/domestic-help"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors duration-200"
+              >
+                For Hiring - Click Here
+                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
+              <a 
+                href="https://gharconnect.in/vendor"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-6 py-3 border-2 border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-indigo-600 transition-colors duration-200"
+              >
+                Looking for Work - Click Here
+                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
               </a>
             </div>
           </div>
         </div>
-        {/* Home Service Providers Indigo Container */}
-        <div className="bg-indigo-600 py-12">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-white mb-4">Neighbors Providing Services</h2>
-            <p className="text-indigo-100 mb-6">Discover trusted, community-rated home service professionals for all your needs - artists, musicians, lawyers, consultants and more. Let Your Neighbors Know You!</p>
-            <a href="/worli/home-service-provider" className="inline-flex items-center px-6 py-3 bg-white text-indigo-700 font-semibold rounded-lg shadow-md hover:bg-indigo-50 transition-colors text-lg">
-              View All Home Service Providers
-            </a>
-          </div>
-        </div>
-        {/* Travel Diaries Container */}
-        {/* <TravelDiariesContainer /> */}
-        
         {/* Metrics Section - Numbers Since Launch */}
         <div className="bg-white py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1329,28 +1194,8 @@ export default function Home() {
             </div>
           </div>
         </div>
-        {/* GharCare+ Subscription Section */}
-        <div className="bg-gradient-to-br from-blue-50 to-green-50 py-10 px-4 md:px-0">
-          <div className="max-w-4xl mx-auto rounded-2xl shadow-lg bg-white/80 p-8 flex flex-col items-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-indigo-700 mb-2 text-center">GharCare+ Subscription</h2>
-            <p className="text-gray-700 text-center mb-6 max-w-2xl">Subscribe to <span className="font-semibold text-indigo-700">GharCare+</span> and get annual coverage for <span className="font-semibold">Pest Control</span>, <span className="font-semibold">AC Servicing</span>, and <span className="font-semibold">Water Purifier Servicing</span> at a special price. Hassle-free, reliable, and trusted by your community.</p>
-            <div className="flex flex-row gap-6 mb-6 w-full justify-center">
-              <div className="flex flex-col items-center flex-1">
-                <span className="bg-indigo-100 text-indigo-600 rounded-full p-4 mb-2"><FiShield className="w-7 h-7" /></span>
-                <span className="font-semibold text-gray-900 text-center">Pest<br/>Control</span>
-              </div>
-              <div className="flex flex-col items-center flex-1">
-                <span className="bg-indigo-100 text-blue-600 rounded-full p-4 mb-2"><FiZap className="w-7 h-7" /></span>
-                <span className="font-semibold text-gray-900 text-center">AC<br/>Servicing</span>
-              </div>
-              <div className="flex flex-col items-center flex-1">
-                <span className="bg-green-100 text-green-600 rounded-full p-4 mb-2"><FiDroplet className="w-7 h-7" /></span>
-                <span className="font-semibold text-gray-900 text-center">Water Purifier<br/>Servicing</span>
-              </div>
-            </div>
-            <a href="https://wa.me/919321314553?text=I%20want%20to%20subscribe%20to%20GharCare%2B" target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-3 bg-indigo-600 text-white font-bold rounded-lg shadow-md hover:bg-indigo-700 transition-colors text-lg mt-2">Subscribe Now</a>
-          </div>
-        </div>
+
+
       </main>
     </>
   )

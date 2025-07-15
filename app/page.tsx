@@ -41,13 +41,13 @@ const communities = [
     name: 'Mahalaxmi, Mumbai',
     description: 'Mahalaxmi, Tardeo',
     href: '/mahalaxmi',
-    status: 'active'
+    status: 'coming-soon'
   },
   {
     name: 'Bandra, Mumbai',
     description: 'Bandra, Khar',
     href: '/bandra',
-    status: 'active'
+    status: 'coming-soon'
   },
   {
     name: 'Andheri, Mumbai',
@@ -81,72 +81,124 @@ const communities = [
   }
 ];
 
+const rentalCities = [
+  {
+    name: 'Mumbai',
+    description: 'Mumbai, Navi Mumbai, Thane',
+    href: '/mumbai',
+    status: 'active'
+  },
+  {
+    name: 'Bangalore',
+    description: 'Bangalore',
+    href: '/bangalore/rent',
+    status: 'active'
+  },
+  {
+    name: 'Pune',
+    description: 'Pune',
+    href: '/pune',
+    status: 'coming-soon'
+  },
+  {
+    name: 'Hyderabad',
+    description: 'Hyderabad, Secunderabad',
+    href: '/hyderabad',
+    status: 'coming-soon'
+  },
+  {
+    name: 'Delhi',
+    description: 'Delhi, NCR',
+    href: '/delhi',
+    status: 'coming-soon'
+  },
+  {
+    name: 'Chennai',
+    description: 'Chennai',
+    href: '/chennai',
+    status: 'coming-soon'
+  }
+];
+
 export default function SocietiesPage() {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Simple, distinct header for societies selection */}
+      {/* Header */}
       <header className="w-full bg-white shadow-sm py-4 px-6 flex items-center justify-center mb-4">
-        <div className="flex items-center gap-2">
-          <h1 className="text-2xl font-extrabold text-indigo-700 tracking-tight">GharConnect</h1>
-          <span className="ml-2 text-sm text-gray-400 font-medium hidden sm:inline">Premium Community Platform</span>
-        </div>
+        <h1 className="text-2xl font-extrabold text-indigo-700 tracking-tight">GharConnect</h1> 
       </header>
-      
       {/* Website Description */}
       <div className="w-full flex justify-center mb-8 px-4">
         <p className="max-w-6xl text-center text-gray-600 text-sm md:text-lg leading-relaxed">
-          Your Society. Your Network. One Powerful Platform. <br />
-          Whether you're renting, house-hunting, or hiring a domestic help or a driver - GharConnect.in has it all!
+          One Powerful Platform.
+          Whether you're renting, or hiring a domestic help or a driver - GharConnect.in has it all!
         </p>
       </div>
-
-      {/* Communities Section */}
-      <div className="flex-grow px-4 pb-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {communities.map((community) => (
+      {/* Main Sections */}
+      <div className="max-w-7xl mx-auto w-full px-4 mb-12">
+        {/* Choose a City Section */}
+        <div className="bg-gradient-to-br from-white via-blue-50 to-indigo-100 rounded-xl shadow-md border border-gray-200 p-8">
+          <h2 className="text-2xl font-bold text-indigo-700 mb-6 text-center">Choose a City</h2>
+          <p className="text-gray-600 text-sm mb-8 text-center">Select a city to explore rental properties and society services</p>
+          
+          {/* Cities Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {rentalCities.map((city) => (
               <div
-                key={community.name}
-                className={`bg-gradient-to-br from-white via-indigo-50 to-blue-100 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-gray-200 overflow-hidden ${community.status === 'coming-soon' ? 'opacity-75' : 'hover:border-indigo-500'}`}
+                key={city.name}
+                className={`bg-white rounded-lg shadow border border-gray-200 overflow-hidden ${city.status === 'coming-soon' ? 'opacity-75' : 'hover:border-indigo-500'} transition-all duration-300`}
               >
-                {community.status === 'active' ? (
-                  <Link href={community.href} className="block group h-full">
-                    {/* Community Header with Integrated Button */}
-                    <div className="bg-white px-4 py-4 border-b border-gray-200">
-                      <h2 className="text-lg font-bold mb-1 text-gray-900 group-hover:text-indigo-600 transition-colors">
-                        {community.name}
-                      </h2>
-                      <p className="text-gray-600 text-xs mb-3">
-                        {community.description}
+                {city.status === 'active' ? (
+                  <div className="block group h-full">
+                    <div className="px-6 py-4">
+                      <h3 className="text-lg font-bold mb-2 text-gray-900 group-hover:text-indigo-600 transition-colors">
+                        {city.name}
+                      </h3>
+                      <p className="text-gray-600 text-sm mb-4">
+                        {city.description}
                       </p>
-                      {/* Explore Button Integrated in Header */}
-                      <div className="inline-flex items-center bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-xs px-3 py-1.5 rounded-lg group-hover:from-indigo-700 group-hover:to-purple-700 transition-all duration-300">
-                        Explore Community
-                        <svg className="w-3 h-3 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
+                      <div className="flex flex-row gap-2">
+                        <Link href={city.href.includes('/rent') ? city.href : `${city.href}/rent`} className="inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-semibold text-xs px-3 py-2 rounded transition-all duration-300">
+                          Rentals
+                          <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </Link>
+                        {city.name === 'Bangalore' ? (
+                          <div className="inline-flex items-center justify-center bg-gray-400 text-white font-semibold text-xs px-3 py-2 rounded cursor-not-allowed">
+                            Society Services
+                            <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </div>
+                        ) : (
+                          <Link href={`${city.href}/services`} className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs px-3 py-2 rounded transition-all duration-300">
+                            Society Services
+                            <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </Link>
+                        )}
                       </div>
                     </div>
-                  </Link>
+                  </div>
                 ) : (
                   <div className="block h-full">
-                    {/* Community Header - Coming Soon */}
-                    <div className="bg-gray-100 px-4 py-4 border-b border-gray-200">
-                      <div className="flex items-center justify-between mb-1">
-                        <h2 className="text-lg font-bold text-gray-700">
-                          {community.name}
-                        </h2>
+                    <div className="bg-gray-100 px-6 py-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="text-lg font-bold text-gray-700">
+                          {city.name}
+                        </h3>
                         <span className="bg-yellow-500 text-yellow-900 text-xs px-2 py-1 rounded-full font-bold">
                           SOON
                         </span>
                       </div>
-                      <p className="text-gray-600 text-xs mb-3">
-                        {community.description}
+                      <p className="text-gray-600 text-sm mb-4">
+                        {city.description}
                       </p>
-                      {/* Disabled Explore Button */}
-                      <div className="inline-flex items-center bg-gray-400 text-white font-semibold text-xs px-3 py-1.5 rounded-lg cursor-not-allowed">
-                        Explore Community
-                        <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <div className="inline-flex items-center bg-gray-400 text-white font-semibold text-sm px-3 py-2 rounded cursor-not-allowed">
+                        Explore City
+                        <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
                       </div>
@@ -158,7 +210,6 @@ export default function SocietiesPage() {
           </div>
         </div>
       </div>
-      
       <Footer />
     </div>
   );

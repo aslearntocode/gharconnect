@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { FiX, FiPhone, FiMail, FiUser, FiHome } from 'react-icons/fi';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseClient } from '@/lib/supabase';
 import { Apartment } from '@/types/apartment';
 
 interface PropertyInquiryModalProps {
@@ -25,11 +25,6 @@ export default function PropertyInquiryModal({ isOpen, onClose, apartment }: Pro
   const [ownerDetails, setOwnerDetails] = useState<OwnerDetails | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL || '',
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
-  );
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -47,6 +42,9 @@ export default function PropertyInquiryModal({ isOpen, onClose, apartment }: Pro
     setError(null);
 
     try {
+      // Get shared Supabase client
+      const supabase = await getSupabaseClient();
+      
       // Save inquiry to database
       const { error: insertError } = await supabase
         .from('property_inquiries')

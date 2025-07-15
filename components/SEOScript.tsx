@@ -2,7 +2,7 @@ import Script from 'next/script';
 
 interface SEOScriptProps {
   location: string;
-  type: 'rent' | 'sale';
+  type: 'rent' | 'sale' | 'pg' | 'shared';
 }
 
 export default function SEOScript({ location, type }: SEOScriptProps) {
@@ -23,17 +23,17 @@ export default function SEOScript({ location, type }: SEOScriptProps) {
       "@type": "City",
       "name": location
     },
-    "serviceType": `${type === 'rent' ? 'Rental' : 'Sale'} Services`,
+    "serviceType": `${type === 'rent' ? 'Rental' : type === 'sale' ? 'Sale' : type === 'pg' ? 'PG' : 'Shared'} Services`,
     "priceRange": "₹₹",
     "hasOfferCatalog": {
       "@type": "OfferCatalog",
-      "name": `${location} ${type === 'rent' ? 'Rental' : 'Sale'} Properties`,
+      "name": `${location} ${type === 'rent' ? 'Rental' : type === 'sale' ? 'Sale' : type === 'pg' ? 'PG' : 'Shared'} Properties`,
       "itemListElement": [
         {
           "@type": "Offer",
           "itemOffered": {
             "@type": "Apartment",
-            "name": `${location} ${type === 'rent' ? 'Rental' : 'Sale'} Apartments`,
+            "name": `${location} ${type === 'rent' ? 'Rental' : type === 'sale' ? 'Sale' : type === 'pg' ? 'PG' : 'Shared'} Apartments`,
             "description": `Premium ${type} apartments in ${location} with minimal brokerage fees`
           }
         }
