@@ -351,6 +351,34 @@ export default function DomesticHelpPage() {
     setIsLoginModalOpen(false);
   };
 
+  const formatArea = (area: string | any): string => {
+    if (!area) return '';
+    
+    // If it's already a string without curly brackets, return as is
+    if (typeof area === 'string' && !area.includes('{') && !area.includes('}')) {
+      return area;
+    }
+    
+    // If it's a JSON array string, parse and format it
+    if (typeof area === 'string') {
+      try {
+        // Remove curly brackets and quotes, then split by comma
+        const cleanArea = area.replace(/[{}"]/g, '').split(',').filter(Boolean);
+        return cleanArea.join(', ');
+      } catch (error) {
+        // If parsing fails, return the original string
+        return area;
+      }
+    }
+    
+    // If it's an array, join with commas
+    if (Array.isArray(area)) {
+      return area.join(', ');
+    }
+    
+    return String(area);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
@@ -461,7 +489,7 @@ export default function DomesticHelpPage() {
                         </a>
                       )}
                     </div>
-                    <div className="text-sm text-gray-600 mb-1">Area: {vendor.area}</div>
+                    <div className="text-sm text-gray-600 mb-1">Area: {formatArea(vendor.area)}</div>
                     <div className="text-sm text-gray-600 mb-1">Societies: {Array.isArray(vendor.societies) ? vendor.societies.join(", ") : String(vendor.societies).replace(/[{}"]+/g, "").split(",").filter(Boolean).join(", ")}</div>
                     {vendor.services && (
                       <div className="text-sm text-gray-600 mb-1">Services: {typeof vendor.services === 'string' && vendor.services.trim().toLowerCase() === 'both'
@@ -612,7 +640,7 @@ export default function DomesticHelpPage() {
                         </a>
                       )}
                     </div>
-                    <div className="text-sm text-gray-600 mb-1">Area: {vendor.area}</div>
+                    <div className="text-sm text-gray-600 mb-1">Area: {formatArea(vendor.area)}</div>
                     {vendor.services && (
                       <div className="text-sm text-gray-600 mb-1">Services: {typeof vendor.services === 'string' && vendor.services.trim().toLowerCase() === 'both'
                         ? 'Both (Cleaning and Cooking)'

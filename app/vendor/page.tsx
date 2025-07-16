@@ -38,6 +38,7 @@ const PERMANENT_SLOTS = [
   { id: 'morning', label: 'Morning', start: '07:00', end: '12:00' },
   { id: 'afternoon', label: 'Afternoon', start: '12:00', end: '17:00' },
   { id: 'evening', label: 'Evening', start: '17:00', end: '20:00' },
+  { id: '24hours', label: '24 Hours', start: '00:00', end: '23:59' },
 ];
 
 const societies = [
@@ -134,7 +135,7 @@ export default function VendorDashboard() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [selectedSlots, setSelectedSlots] = useState<Record<string, Record<string, boolean>>>({});
   const [selectedSocieties, setSelectedSocieties] = useState<string[]>([]);
-  const [selectedArea, setSelectedArea] = useState('');
+  const [selectedArea, setSelectedArea] = useState<string[]>([]);
   const [mobileNo, setMobileNo] = useState('');
   const [selectedService, setSelectedService] = useState('');
   const [activeTab, setActiveTab] = useState<'temporary' | 'permanent'>('temporary');
@@ -142,6 +143,7 @@ export default function VendorDashboard() {
     morning: false,
     afternoon: false,
     evening: false,
+    '24hours': false,
   });
   const router = useRouter();
   const supabase = createClientComponentClient();
@@ -272,15 +274,36 @@ export default function VendorDashboard() {
       toast({ title: 'Error', description: 'Please select a service', variant: 'destructive' });
       return;
     }
+    if (selectedArea.length === 0) {
+      toast({ title: 'Error', description: 'Please select at least one area', variant: 'destructive' });
+      return;
+    }
     setIsLoading(true);
     try {
       const vendorName = auth.currentUser?.displayName || auth.currentUser?.email || '';
       const societiesString = selectedSocieties.length
         ? `{${selectedSocieties.map(s => `"${s}"`).join(',')}}`
         : '{}';
+      const areasString = `{${selectedArea.map(area => `"${area}"`).join(',')}}`;
 
       if (activeTab === 'permanent') {
-        // Save permanent availability
+        // First, delete existing records for this vendor
+        const { error: deleteError } = await supabase
+          .from('vendor_permanent_availability')
+          .delete()
+          .eq('vendor_id', auth.currentUser!.uid);
+
+        if (deleteError) {
+          toast({
+            title: 'Error',
+            description: 'Failed to clear existing availability',
+            variant: 'destructive',
+          });
+          setIsLoading(false);
+          return;
+        }
+
+        // Save permanent availability - one record per slot type with all areas
         const rows = Object.entries(permanentSlots)
           .filter(([slotId, isAvailable]) => isAvailable)
           .map(([slotId]) => {
@@ -290,7 +313,7 @@ export default function VendorDashboard() {
               name: vendorName,
               mobile_no: mobileNo,
               services: selectedService,
-              area: selectedArea,
+              area: areasString, // Store all areas as JSON array
               societies: societiesString,
               slot_type: slotId,
               slot_start_time: slot?.start,
@@ -307,7 +330,7 @@ export default function VendorDashboard() {
 
         const { error } = await supabase
           .from('vendor_permanent_availability')
-          .upsert(rows, { onConflict: 'vendor_id,slot_type' });
+          .insert(rows);
 
         if (error) {
           toast({
@@ -322,8 +345,25 @@ export default function VendorDashboard() {
         return;
       }
 
-      // Temporary (weekly) availability logic (updated for 10 days and 3 slots)
+      // Temporary (weekly) availability logic
       const days = getNext10Days();
+      
+      // First, delete existing records for this vendor
+      const { error: deleteError } = await supabase
+        .from('vendor_weekly_availability')
+        .delete()
+        .eq('vendor_id', auth.currentUser!.uid);
+
+      if (deleteError) {
+        toast({
+          title: 'Error',
+          description: 'Failed to clear existing availability',
+          variant: 'destructive',
+        });
+        setIsLoading(false);
+        return;
+      }
+
       const rows = days.map(date => {
         const dateKey = date.toISOString().slice(0, 10);
         return {
@@ -331,7 +371,7 @@ export default function VendorDashboard() {
           name: vendorName,
           mobile_no: mobileNo,
           services: selectedService,
-          area: selectedArea,
+          area: areasString, // Store all areas as JSON array
           societies: societiesString,
           date: dateKey,
           morning: !!selectedSlots[dateKey]?.morning,
@@ -339,9 +379,10 @@ export default function VendorDashboard() {
           evening: !!selectedSlots[dateKey]?.evening,
         };
       });
+      
       const { error } = await supabase
         .from('vendor_weekly_availability')
-        .upsert(rows, { onConflict: 'vendor_id,date' });
+        .insert(rows);
       if (error) throw error;
       toast({ title: 'Success', description: 'Availability saved!' });
     } catch (error: any) {
@@ -355,12 +396,18 @@ export default function VendorDashboard() {
     }
   };
 
-  const filteredSocieties = selectedArea ? societies.filter(s => s.area === selectedArea) : [];
+  const filteredSocieties = selectedArea ? societies.filter(s => selectedArea.includes(s.area)) : [];
 
-  const handleAreaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedArea(e.target.value);
-    setSelectedSocieties([]); // Reset societies when area changes
-    setSelectedSlots({}); // Reset slots when area changes
+  const handleAreaToggle = (areaValue: string) => {
+    setSelectedArea(prev => {
+      if (prev.includes(areaValue)) {
+        return prev.filter(area => area !== areaValue);
+      } else {
+        return [...prev, areaValue];
+      }
+    });
+    setSelectedSocieties([]); // Reset societies when areas change
+    setSelectedSlots({}); // Reset slots when areas change
   };
 
   // Show loading state while authentication is being determined
@@ -439,23 +486,42 @@ export default function VendorDashboard() {
           </Button>
         </div>
         <Card className="p-6 mb-8 w-full">
-          <h2 className="text-lg font-semibold mb-4">Select Area</h2>
-          <div className="max-w-xs mb-4">
-            <select
-              value={selectedArea}
-              onChange={handleAreaChange}
-              className="w-full px-4 py-2 rounded-lg border border-gray-300 shadow-sm focus:ring-2 focus:ring-indigo-400 focus:outline-none text-base"
-            >
-              <option value="">Select an area</option>
+          <h2 className="text-lg font-semibold mb-4">Select Areas</h2>
+          <div className="mb-4">
+            <p className="text-sm text-gray-600 mb-3">Select one or more areas where you want to work:</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {areas.map(area => (
-                <option key={area.value} value={area.value}>{area.name}</option>
+                <div key={area.value} className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id={`area-${area.value}`}
+                    checked={selectedArea.includes(area.value)}
+                    onChange={() => handleAreaToggle(area.value)}
+                    className="w-5 h-5 accent-indigo-600 mr-3"
+                  />
+                  <label htmlFor={`area-${area.value}`} className="text-sm font-medium text-gray-900 cursor-pointer">
+                    {area.name}
+                  </label>
+                </div>
               ))}
-            </select>
+            </div>
           </div>
-          {selectedArea && (
+          {selectedArea.length > 0 && (
             <>
               <h2 className="text-lg font-semibold mb-4">Select up to 2 Societies</h2>
               <ul className="mb-4 grid grid-cols-2 gap-2">
+                {/* Any option */}
+                <li key="Any" className="flex items-center">
+                  <input
+                    type="checkbox"
+                    id="society-Any"
+                    checked={selectedSocieties.includes('Any')}
+                    disabled={!selectedSocieties.includes('Any') && selectedSocieties.length >= 2}
+                    onChange={() => handleSocietyToggle('Any')}
+                    className="w-5 h-5 accent-indigo-600 mr-2"
+                  />
+                  <label htmlFor="society-Any" className={`text-sm font-medium ${!selectedSocieties.includes('Any') && selectedSocieties.length >= 2 ? 'text-gray-400' : 'text-gray-900'}`}>Any</label>
+                </li>
                 {filteredSocieties.map(society => {
                   const isSelected = selectedSocieties.includes(society.name);
                   const isDisabled = !isSelected && selectedSocieties.length >= 2;
@@ -514,6 +580,7 @@ export default function VendorDashboard() {
                     <option value="Both">Both (Cook and Cleaner)</option>
                     <option value="Nanny">Nanny</option>
                     <option value="Driver">Driver</option>
+                    <option value="Full Time Help">Full Time Help</option>
                   </select>
                 </div>
               </div>
