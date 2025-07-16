@@ -52,7 +52,7 @@ export default function MumbaiRentTypeSelection() {
               </p>
                         </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
               {/* Benefit 1 */}
               <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -69,13 +69,24 @@ export default function MumbaiRentTypeSelection() {
                 <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🤝</span>
                   </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Legal Paperwork</h3>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Legal <br/> Paperwork</h3>
                 <p className="text-gray-600 text-sm">
                   We will help you with the legal paperwork and ensure that you are compliant with the law.
                 </p>
                           </div>
 
               {/* Benefit 3 */}
+              <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
+                <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🏠</span>
+                </div>
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Managed Visits Service</h3>
+                <p className="text-gray-600 text-sm">
+                  GharConnect arranges and conducts property visits on behalf of the owner.
+                </p>
+              </div>
+
+              {/* Benefit 4 */}
               <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
                 <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">📸</span>
@@ -86,7 +97,7 @@ export default function MumbaiRentTypeSelection() {
                 </p>
       </div>
 
-              {/* Benefit 4 */}
+              {/* Benefit 5 */}
               <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
                 <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-2xl">🔧</span>
