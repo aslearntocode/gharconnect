@@ -641,6 +641,7 @@ export default function DomesticHelpPage() {
                       )}
                     </div>
                     <div className="text-sm text-gray-600 mb-1">Area: {formatArea(vendor.area)}</div>
+                    <div className="text-sm text-gray-600 mb-1">Societies: {Array.isArray(vendor.societies) ? vendor.societies.join(", ") : String(vendor.societies).replace(/[{}"]+/g, "").split(",").filter(Boolean).join(", ")}</div>
                     {vendor.services && (
                       <div className="text-sm text-gray-600 mb-1">Services: {typeof vendor.services === 'string' && vendor.services.trim().toLowerCase() === 'both'
                         ? 'Both (Cleaning and Cooking)'
