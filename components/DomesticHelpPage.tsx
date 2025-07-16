@@ -63,7 +63,7 @@ export default function DomesticHelpPage() {
   const [showReviews, setShowReviews] = useState<Record<string, boolean>>({});
   const [openVendorId, setOpenVendorId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState<'temporary' | 'permanent'>('temporary');
+  const [activeTab, setActiveTab] = useState<'temporary' | 'permanent'>('permanent');
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [showNumberMap, setShowNumberMap] = useState<Record<string, boolean>>({});
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
@@ -397,17 +397,6 @@ export default function DomesticHelpPage() {
         {/* Tabs for Temporary and Permanent */}
         <div className="flex border-b border-gray-200 mb-6 gap-2">
           <button
-            onClick={() => setActiveTab('temporary')}
-            className={`px-6 py-2 text-lg font-bold rounded-t-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
-              activeTab === 'temporary'
-                ? 'bg-indigo-600 text-white shadow-md'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
-            aria-current={activeTab === 'temporary' ? 'page' : undefined}
-          >
-            Temporary
-          </button>
-          <button
             onClick={() => setActiveTab('permanent')}
             className={`px-6 py-2 text-lg font-bold rounded-t-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
               activeTab === 'permanent'
@@ -417,6 +406,17 @@ export default function DomesticHelpPage() {
             aria-current={activeTab === 'permanent' ? 'page' : undefined}
           >
             Permanent
+          </button>
+          <button
+            onClick={() => setActiveTab('temporary')}
+            className={`px-6 py-2 text-lg font-bold rounded-t-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
+              activeTab === 'temporary'
+                ? 'bg-indigo-600 text-white shadow-md'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+            }`}
+            aria-current={activeTab === 'temporary' ? 'page' : undefined}
+          >
+            Temporary
           </button>
         </div>
         {/* Filters */}
@@ -432,7 +432,132 @@ export default function DomesticHelpPage() {
           </div>
         </div>
         {/* Vendor cards */}
-        {activeTab === 'temporary' ? (
+        {activeTab === 'permanent' ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
+            {permanentVendors
+              .filter(vendor => {
+                const searchLower = searchQuery.toLowerCase();
+                return (
+                  !searchQuery ||
+                  (vendor.name || '').toLowerCase().includes(searchLower) ||
+                  String(vendor.mobile_no || '').toLowerCase().includes(searchLower) ||
+                  (vendor.area || '').toLowerCase().includes(searchLower) ||
+                  (vendor.services || '').toLowerCase().includes(searchLower)
+                );
+              })
+              .map((vendor) => {
+                // Use mobile_no as unique key if present, else fallback to vendor_id
+                const vendorKey = vendor.mobile_no || vendor.vendor_id;
+                const generatedVendorId = generateVendorId(vendor.vendor_id, vendor.name);
+                return (
+                  <Card key={vendorKey} className="p-4 border-2 border-gray-200 mb-6">
+                    <div className="flex justify-between items-start mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-lg">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</span>
+                        {vendor.is_verified && (
+                          <CheckCircleIcon className="w-5 h-5 text-green-600" title="Verified Vendor" />
+                        )}
+                      </div>
+                      <VendorRating
+                        vendorId={generatedVendorId}
+                        vendorName={vendor.name}
+                        vendorType="service"
+                        onRatingAdded={() => {
+                          console.log('Rating added, refreshing ratings...');
+                          // Refresh ratings after a new rating is added
+                          refreshRatings();
+                        }}
+                      />
+                    </div>
+                    <div className="text-sm text-gray-600 mb-1">
+                      Mobile: {!showNumberMap[vendorKey] ? (
+                        <button
+                          onClick={() => handleShowNumber(vendorKey)}
+                          className="text-blue-600 text-sm font-medium hover:text-blue-700 underline focus:outline-none"
+                        >
+                          Log-in to view number
+                        </button>
+                      ) : (
+                        <a href={`tel:${vendor.mobile_no}`} className="text-blue-600 text-sm font-medium hover:text-blue-700">
+                          {vendor.mobile_no}
+                        </a>
+                      )}
+                    </div>
+                    <div className="text-sm text-gray-600 mb-1">Area: {formatArea(vendor.area)}</div>
+                    <div className="text-sm text-gray-600 mb-1">Societies: {Array.isArray(vendor.societies) ? vendor.societies.join(", ") : String(vendor.societies).replace(/[{}"]+/g, "").split(",").filter(Boolean).join(", ")}</div>
+                    {vendor.services && (
+                      <div className="text-sm text-gray-600 mb-1">Services: {typeof vendor.services === 'string' && vendor.services.trim().toLowerCase() === 'both'
+                        ? 'Both (Cleaning and Cooking)'
+                        : Array.isArray(vendor.services)
+                          ? vendor.services.join(', ')
+                          : vendor.services}
+                      </div>
+                    )}
+                    <div className="mt-2 mb-2">
+                      <div className="text-sm font-semibold text-gray-700 mb-1">Available Slots:</div>
+                      {Object.entries(vendor.slots).map(([slotType, slotData]: [string, any]) => (
+                        <div key={slotType} className="text-xs text-gray-600 mb-1">
+                          {slotType.charAt(0).toUpperCase() + slotType.slice(1)}: {slotData.slot_start_time || '-'} - {slotData.slot_end_time || '-'}
+                        </div>
+                      ))}
+                    </div>
+                    <div>
+                      {vendorRatings[generatedVendorId] && (
+                        <div className="flex items-center gap-1 text-yellow-500 mb-2">
+                          <span className="text-sm font-medium">
+                            {vendorRatings[generatedVendorId].rating.toFixed(1)}
+                          </span>
+                          <span className="text-gray-500 text-xs">
+                            ({vendorRatings[generatedVendorId].count})
+                          </span>
+                        </div>
+                      )}
+                      {vendorRatings[generatedVendorId] && vendorRatings[generatedVendorId].count > 0 && (
+                        <button
+                          onClick={() => toggleReviews(generatedVendorId)}
+                          className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-2"
+                        >
+                          {showReviews[generatedVendorId] ? (
+                            <>
+                              <FiChevronUp className="w-4 h-4" />
+                              Hide Reviews
+                            </>
+                          ) : (
+                            <>
+                              <FiChevronDown className="w-4 h-4" />
+                              Show Reviews
+                            </>
+                          )}
+                        </button>
+                      )}
+                      {showReviews[generatedVendorId] && reviews[generatedVendorId] && (
+                        <div className="border-t border-gray-100 p-4 bg-gray-50">
+                          <div className="space-y-4">
+                            {reviews[generatedVendorId].map((review, index) => (
+                              <div key={index} className="border-b border-gray-200 pb-3 last:border-0 last:pb-0">
+                                <div className="flex items-center justify-between mb-2">
+                                  <span className="text-sm font-medium text-gray-900">{review.user_name}</span>
+                                  <span className="text-sm text-yellow-500 font-medium">{review.rating}/10</span>
+                                </div>
+                                <p className="text-sm text-gray-600">{review.comment}</p>
+                                <p className="text-xs text-gray-500 mt-1">
+                                  {new Date(review.created_at).toLocaleDateString('en-IN', {
+                                    year: 'numeric',
+                                    month: 'short',
+                                    day: 'numeric'
+                                  })}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </Card>
+                );
+              })}
+          </div>
+        ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
             {Object.entries(vendorAvailabilities)
               .filter(([_, availRows]) => {
@@ -585,131 +710,6 @@ export default function DomesticHelpPage() {
                         </table>
                       </div>
                     )}
-                  </Card>
-                );
-              })}
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-10">
-            {permanentVendors
-              .filter(vendor => {
-                const searchLower = searchQuery.toLowerCase();
-                return (
-                  !searchQuery ||
-                  (vendor.name || '').toLowerCase().includes(searchLower) ||
-                  String(vendor.mobile_no || '').toLowerCase().includes(searchLower) ||
-                  (vendor.area || '').toLowerCase().includes(searchLower) ||
-                  (vendor.services || '').toLowerCase().includes(searchLower)
-                );
-              })
-              .map((vendor) => {
-                // Use mobile_no as unique key if present, else fallback to vendor_id
-                const vendorKey = vendor.mobile_no || vendor.vendor_id;
-                const generatedVendorId = generateVendorId(vendor.vendor_id, vendor.name);
-                return (
-                  <Card key={vendorKey} className="p-4 border-2 border-gray-200 mb-6">
-                    <div className="flex justify-between items-start mb-2">
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-lg">{vendor.name || vendor.vendor_id?.slice(0, 8) + '...'}</span>
-                        {vendor.is_verified && (
-                          <CheckCircleIcon className="w-5 h-5 text-green-600" title="Verified Vendor" />
-                        )}
-                      </div>
-                      <VendorRating
-                        vendorId={generatedVendorId}
-                        vendorName={vendor.name}
-                        vendorType="service"
-                        onRatingAdded={() => {
-                          console.log('Rating added, refreshing ratings...');
-                          // Refresh ratings after a new rating is added
-                          refreshRatings();
-                        }}
-                      />
-                    </div>
-                    <div className="text-sm text-gray-600 mb-1">
-                      Mobile: {!showNumberMap[vendorKey] ? (
-                        <button
-                          onClick={() => handleShowNumber(vendorKey)}
-                          className="text-blue-600 text-sm font-medium hover:text-blue-700 underline focus:outline-none"
-                        >
-                          Log-in to view number
-                        </button>
-                      ) : (
-                        <a href={`tel:${vendor.mobile_no}`} className="text-blue-600 text-sm font-medium hover:text-blue-700">
-                          {vendor.mobile_no}
-                        </a>
-                      )}
-                    </div>
-                    <div className="text-sm text-gray-600 mb-1">Area: {formatArea(vendor.area)}</div>
-                    <div className="text-sm text-gray-600 mb-1">Societies: {Array.isArray(vendor.societies) ? vendor.societies.join(", ") : String(vendor.societies).replace(/[{}"]+/g, "").split(",").filter(Boolean).join(", ")}</div>
-                    {vendor.services && (
-                      <div className="text-sm text-gray-600 mb-1">Services: {typeof vendor.services === 'string' && vendor.services.trim().toLowerCase() === 'both'
-                        ? 'Both (Cleaning and Cooking)'
-                        : Array.isArray(vendor.services)
-                          ? vendor.services.join(', ')
-                          : vendor.services}
-                      </div>
-                    )}
-                    <div className="mt-2 mb-2">
-                      <div className="text-sm font-semibold text-gray-700 mb-1">Available Slots:</div>
-                      {Object.entries(vendor.slots).map(([slotType, slotData]: [string, any]) => (
-                        <div key={slotType} className="text-xs text-gray-600 mb-1">
-                          {slotType.charAt(0).toUpperCase() + slotType.slice(1)}: {slotData.slot_start_time || '-'} - {slotData.slot_end_time || '-'}
-                        </div>
-                      ))}
-                    </div>
-                    <div>
-                      {vendorRatings[generatedVendorId] && (
-                        <div className="flex items-center gap-1 text-yellow-500 mb-2">
-                          <span className="text-sm font-medium">
-                            {vendorRatings[generatedVendorId].rating.toFixed(1)}
-                          </span>
-                          <span className="text-gray-500 text-xs">
-                            ({vendorRatings[generatedVendorId].count})
-                          </span>
-                        </div>
-                      )}
-                      {vendorRatings[generatedVendorId] && vendorRatings[generatedVendorId].count > 0 && (
-                        <button
-                          onClick={() => toggleReviews(generatedVendorId)}
-                          className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-2"
-                        >
-                          {showReviews[generatedVendorId] ? (
-                            <>
-                              <FiChevronUp className="w-4 h-4" />
-                              Hide Reviews
-                            </>
-                          ) : (
-                            <>
-                              <FiChevronDown className="w-4 h-4" />
-                              Show Reviews
-                            </>
-                          )}
-                        </button>
-                      )}
-                      {showReviews[generatedVendorId] && reviews[generatedVendorId] && (
-                        <div className="border-t border-gray-100 p-4 bg-gray-50">
-                          <div className="space-y-4">
-                            {reviews[generatedVendorId].map((review, index) => (
-                              <div key={index} className="border-b border-gray-200 pb-3 last:border-0 last:pb-0">
-                                <div className="flex items-center justify-between mb-2">
-                                  <span className="text-sm font-medium text-gray-900">{review.user_name}</span>
-                                  <span className="text-sm text-yellow-500 font-medium">{review.rating}/10</span>
-                                </div>
-                                <p className="text-sm text-gray-600">{review.comment}</p>
-                                <p className="text-xs text-gray-500 mt-1">
-                                  {new Date(review.created_at).toLocaleDateString('en-IN', {
-                                    year: 'numeric',
-                                    month: 'short',
-                                    day: 'numeric'
-                                  })}
-                                </p>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
                   </Card>
                 );
               })}

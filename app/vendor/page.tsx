@@ -138,7 +138,7 @@ export default function VendorDashboard() {
   const [selectedArea, setSelectedArea] = useState<string[]>([]);
   const [mobileNo, setMobileNo] = useState('');
   const [selectedService, setSelectedService] = useState('');
-  const [activeTab, setActiveTab] = useState<'temporary' | 'permanent'>('temporary');
+  const [activeTab, setActiveTab] = useState<'temporary' | 'permanent'>('permanent');
   const [permanentSlots, setPermanentSlots] = useState<Record<string, boolean>>({
     morning: false,
     afternoon: false,
@@ -593,16 +593,6 @@ export default function VendorDashboard() {
           {/* Tab Navigation */}
           <div className="flex border-b border-gray-200 mb-6">
             <button
-              onClick={() => setActiveTab('temporary')}
-              className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
-                activeTab === 'temporary'
-                  ? 'border-indigo-600 text-indigo-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              Temporary Availability
-            </button>
-            <button
               onClick={() => setActiveTab('permanent')}
               className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
                 activeTab === 'permanent'
@@ -612,7 +602,42 @@ export default function VendorDashboard() {
             >
               Permanent Availability
             </button>
+            <button
+              onClick={() => setActiveTab('temporary')}
+              className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
+                activeTab === 'temporary'
+                  ? 'border-indigo-600 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              Temporary Availability
+            </button>
           </div>
+
+          {/* Permanent Availability Tab */}
+          {activeTab === 'permanent' && (
+            <div>
+              <h3 className="text-lg font-medium mb-4">Permanent Availability</h3>
+              <p className="text-gray-600 mb-4">Select your regular availability slots:</p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {PERMANENT_SLOTS.map(slot => (
+                  <div key={slot.id} className="flex items-center p-4 border border-gray-200 rounded-lg bg-white">
+                    <input
+                      type="checkbox"
+                      id={slot.id}
+                      checked={permanentSlots[slot.id]}
+                      onChange={() => handlePermanentSlotToggle(slot.id)}
+                      className="w-5 h-5 accent-indigo-600 mr-3"
+                    />
+                    <label htmlFor={slot.id} className="flex-1 cursor-pointer">
+                      <div className="font-medium text-gray-900">{slot.label}</div>
+                      <div className="text-sm text-gray-500">{slot.start} - {slot.end}</div>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Temporary Availability Tab */}
           {activeTab === 'temporary' && (
@@ -651,31 +676,6 @@ export default function VendorDashboard() {
                     })}
                   </tbody>
                 </table>
-              </div>
-            </div>
-          )}
-
-          {/* Permanent Availability Tab */}
-          {activeTab === 'permanent' && (
-            <div>
-              <h3 className="text-lg font-medium mb-4">Permanent Availability</h3>
-              <p className="text-gray-600 mb-4">Select your regular availability slots:</p>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {PERMANENT_SLOTS.map(slot => (
-                  <div key={slot.id} className="flex items-center p-4 border border-gray-200 rounded-lg bg-white">
-                    <input
-                      type="checkbox"
-                      id={slot.id}
-                      checked={permanentSlots[slot.id]}
-                      onChange={() => handlePermanentSlotToggle(slot.id)}
-                      className="w-5 h-5 accent-indigo-600 mr-3"
-                    />
-                    <label htmlFor={slot.id} className="flex-1 cursor-pointer">
-                      <div className="font-medium text-gray-900">{slot.label}</div>
-                      <div className="text-sm text-gray-500">{slot.start} - {slot.end}</div>
-                    </label>
-                  </div>
-                ))}
               </div>
             </div>
           )}
