@@ -629,154 +629,156 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
               <span className="text-xs mt-1">Services</span>
             </button>
             {isCreditScoreDropdownOpen && (
-              <div className="absolute bottom-full mb-2 w-64 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)', maxWidth: '90vw' }}>
-                <Link 
-                  href={`/${currentSociety}/services/laundry`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Laundry
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/carpenter`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Carpenter
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/tailor`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Tailor
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/plumber`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Plumber
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/electrician`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Electrician
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/domestic-help`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Domestic Help & Drivers
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/car-clean`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Car Clean
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/painter`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Painter
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/gardener`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Gardener
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/ac-service`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  AC Service
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/pest-control`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Pest Control
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/laptop-repair`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Laptop Repair
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/electronics-repair`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Electronics Repair
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/scrap-dealer`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Scrap Dealer
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/notary`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Notary
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/piegon-net`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Pigeon Net
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/movers-packers`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Movers & Packers
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/physical-training`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Physical Training
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/yoga`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Yoga
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/massage`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Massage
-                </Link>
-                <Link 
-                  href={`/${currentSociety}/services/kids-classes`}
-                  className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                  onClick={() => setIsCreditScoreDropdownOpen(false)}
-                >
-                  Kids Classes
-                </Link>
+              <div className="absolute bottom-full mb-2 w-64 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)', maxWidth: '90vw', maxHeight: '60vh', overflowY: 'auto' }}>
+                <div className="max-h-[50vh] overflow-y-auto">
+                  <Link 
+                    href={`/${currentSociety}/services/laundry`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Laundry
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/carpenter`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Carpenter
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/tailor`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Tailor
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/plumber`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Plumber
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/electrician`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Electrician
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/domestic-help`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Domestic Help & Drivers
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/car-clean`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Car Clean
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/painter`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Painter
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/gardener`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Gardener
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/ac-service`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    AC Service
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/pest-control`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Pest Control
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/laptop-repair`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Laptop Repair
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/electronics-repair`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Electronics Repair
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/scrap-dealer`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Scrap Dealer
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/notary`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Notary
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/piegon-net`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Pigeon Net
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/movers-packers`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Movers & Packers
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/physical-training`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Physical Training
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/yoga`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Yoga
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/massage`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Massage
+                  </Link>
+                  <Link 
+                    href={`/${currentSociety}/services/kids-classes`}
+                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
+                    onClick={() => setIsCreditScoreDropdownOpen(false)}
+                  >
+                    Kids Classes
+                  </Link>
+                </div>
               </div>
             )}
           </div>
