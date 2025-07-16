@@ -7,6 +7,7 @@ import * as z from 'zod'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { auth } from '@/lib/firebase'
 import { generateAnonymousId } from '@/lib/anonymousId'
+import { checkProfileCompletion } from '@/lib/profileUtils'
 import {
   Dialog,
   DialogContent,
@@ -27,6 +28,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { StarIcon } from '@heroicons/react/24/solid'
 import { StarIcon as StarOutlineIcon } from '@heroicons/react/24/outline'
 import LoginModal from '@/components/LoginModal'
+import { ProfileCompletionModal } from '@/components/ProfileCompletionModal'
 
 const ratingSchema = z.object({
   rating: z.number().min(1).max(10),
@@ -48,6 +50,8 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
   const [error, setError] = useState<string | null>(null)
   const [hoverRating, setHoverRating] = useState<number | null>(null)
   const [showLoginModal, setShowLoginModal] = useState(false)
+  const [showProfileModal, setShowProfileModal] = useState(false)
+  const [missingFields, setMissingFields] = useState<string[]>([])
   const [loginMessage, setLoginMessage] = useState('')
   const supabase = createClientComponentClient()
 
@@ -81,6 +85,24 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
     return fallbackId;
   };
 
+  const checkProfileAndProceed = async () => {
+    try {
+      const { isComplete, missingFields: fields } = await checkProfileCompletion()
+      
+      if (!isComplete) {
+        setMissingFields(fields)
+        setShowProfileModal(true)
+        return false
+      }
+      
+      return true
+    } catch (error) {
+      console.error('Error checking profile completion:', error)
+      setError('Failed to check profile completion')
+      return false
+    }
+  }
+
   const onSubmit = async (data: RatingFormValues) => {
     setIsLoading(true)
     setError(null)
@@ -88,6 +110,13 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
       const currentUser = auth.currentUser
       if (!currentUser) {
         setError('Please log in to rate this vendor')
+        setIsLoading(false)
+        return
+      }
+
+      // Check profile completion before proceeding
+      const profileComplete = await checkProfileAndProceed()
+      if (!profileComplete) {
         setIsLoading(false)
         return
       }
@@ -199,19 +228,29 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
     })
   }
 
-  const handleRateClick = () => {
+  const handleRateClick = async () => {
     if (!auth.currentUser) {
       setIsOpen(false)
       setLoginMessage('Login for rating the vendor')
       setShowLoginModal(true)
-    } else {
+      return
+    }
+
+    // Check profile completion before opening rating dialog
+    const profileComplete = await checkProfileAndProceed()
+    if (profileComplete) {
       setIsOpen(true)
     }
   }
 
+  const handleProfileComplete = () => {
+    setShowProfileModal(false)
+    setIsOpen(true)
+  }
+
   return (
     <>
-      {!showLoginModal && (
+      {!showLoginModal && !showProfileModal && (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <Button variant="outline" size="sm" className="text-xs px-2 py-1 h-7" onClick={handleRateClick}>
@@ -269,6 +308,7 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
           </DialogContent>
         </Dialog>
       )}
+      
       {showLoginModal && (
         <>
           <div className="mb-4 p-3 bg-blue-50 text-blue-700 rounded-md text-sm text-center">
@@ -283,6 +323,15 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
             }}
           />
         </>
+      )}
+
+      {showProfileModal && (
+        <ProfileCompletionModal
+          isOpen={showProfileModal}
+          onClose={() => setShowProfileModal(false)}
+          onProfileComplete={handleProfileComplete}
+          missingFields={missingFields}
+        />
       )}
     </>
   )
