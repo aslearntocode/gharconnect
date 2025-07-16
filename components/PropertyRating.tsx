@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { auth } from '@/lib/firebase'
+import { generateAnonymousId } from '@/lib/anonymousId'
 import {
   Dialog,
   DialogContent,
@@ -29,7 +30,7 @@ import LoginModal from '@/components/LoginModal'
 
 const ratingSchema = z.object({
   rating: z.number().min(1).max(5),
-  comment: z.string().min(10, 'Review must be at least 10 characters long'),
+  comment: z.string().min(10, 'Comment must be at least 10 characters long'),
 })
 
 type RatingFormValues = z.infer<typeof ratingSchema>
@@ -82,13 +83,18 @@ export function PropertyRating({ propertyId, propertyName, onRatingAdded }: Prop
       }
 
       if (existingRating) {
-        throw new Error('You have already rated this property')
+        setError('You have already rated this property')
+        setIsLoading(false)
+        return
       }
 
-      // Proceed with inserting the new rating
+      // Generate anonymous ID for display
+      const anonymousId = generateAnonymousId(currentUser.uid)
+
+      // Proceed with inserting the new rating with anonymous display name
       const { error: insertError } = await supabase.from('property_reviews').insert({
         user_id: currentUser.uid,
-        user_name: currentUser.displayName || currentUser.email,
+        user_name: anonymousId, // Store anonymous ID instead of real name
         property_id: propertyId,
         property_name: propertyName,
         rating: data.rating,
@@ -98,12 +104,14 @@ export function PropertyRating({ propertyId, propertyName, onRatingAdded }: Prop
       if (insertError) {
         console.error('Error inserting rating:', insertError)
         if (insertError.code === '23505') { // Unique violation
-          throw new Error('You have already rated this property')
+          setError('You have already rated this property')
         } else if (insertError.code === '42501') { // Permission denied
-          throw new Error('You do not have permission to rate this property')
+          setError('You do not have permission to rate this property')
         } else {
-          throw new Error(`Failed to add rating: ${insertError.message}`)
+          setError(`Failed to add rating: ${insertError.message}`)
         }
+        setIsLoading(false)
+        return
       }
 
       setIsOpen(false)

@@ -76,6 +76,28 @@ export default function DomesticHelpPage() {
   const pathname = usePathname();
   const currentArea = getCurrentArea(pathname);
 
+  // Use the same vendor ID generation logic as VendorCard and VendorRating
+  const generateVendorId = (vendorId: string | null | undefined, vendorName?: string): string => {
+    console.log('DomesticHelpPage: Generating vendor ID for:', { vendorId, vendorName, type: typeof vendorId });
+    
+    // If vendorId is a valid string, use it
+    if (vendorId && typeof vendorId === 'string' && vendorId.trim() !== '') {
+      console.log('DomesticHelpPage: Using provided vendorId:', vendorId);
+      return vendorId;
+    }
+    
+    // If vendorId is null/undefined/empty, use vendorName as fallback
+    if (vendorName && typeof vendorName === 'string' && vendorName.trim() !== '') {
+      console.log('DomesticHelpPage: Using vendorName as ID:', vendorName);
+      return vendorName;
+    }
+    
+    // Final fallback
+    const fallbackId = `vendor_fallback_${Date.now()}`;
+    console.log('DomesticHelpPage: Using fallback ID:', fallbackId);
+    return fallbackId;
+  };
+
   // Track user authentication status
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -144,6 +166,7 @@ export default function DomesticHelpPage() {
           ratings[vendorId].rating = ratings[vendorId].rating / ratings[vendorId].count;
         });
 
+        console.log('DomesticHelpPage: Fetched ratings:', ratings);
         setVendorRatings(ratings);
       } catch (err) {
         console.error('Error in fetchRatings:', err);
@@ -152,6 +175,39 @@ export default function DomesticHelpPage() {
 
     fetchRatings();
   }, [supabase]);
+
+  // Create a function to refresh ratings that can be called from VendorRating
+  const refreshRatings = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('reviews')
+        .select('card_id, rating');
+
+      if (error) {
+        console.error('Error refreshing ratings:', error);
+        return;
+      }
+
+      const ratings: Record<string, { rating: number; count: number }> = {};
+      data?.forEach(review => {
+        if (!ratings[review.card_id]) {
+          ratings[review.card_id] = { rating: 0, count: 0 };
+        }
+        ratings[review.card_id].rating += review.rating;
+        ratings[review.card_id].count += 1;
+      });
+
+      // Calculate average ratings
+      Object.keys(ratings).forEach(vendorId => {
+        ratings[vendorId].rating = ratings[vendorId].rating / ratings[vendorId].count;
+      });
+
+      console.log('DomesticHelpPage: Refreshed ratings:', ratings);
+      setVendorRatings(ratings);
+    } catch (err) {
+      console.error('Error in refreshRatings:', err);
+    }
+  };
 
   // Fetch reviews for a specific vendor
   const fetchReviews = async (vendorId: string) => {
@@ -370,6 +426,7 @@ export default function DomesticHelpPage() {
               })
               .map(([vendorId, availRows]) => {
                 const vendor = availRows[0];
+                const generatedVendorId = generateVendorId(vendorId, vendor.name);
                 return (
                   <Card key={vendorId} className="p-4 border-2 border-gray-200 mb-6">
                     <div className="flex justify-between items-start mb-2">
@@ -380,10 +437,14 @@ export default function DomesticHelpPage() {
                         )}
                       </div>
                       <VendorRating
-                        vendorId={vendorId}
+                        vendorId={generatedVendorId}
                         vendorName={vendor.name}
                         vendorType="service"
-                        onRatingAdded={() => {}}
+                        onRatingAdded={() => {
+                          console.log('Rating added, refreshing ratings...');
+                          // Refresh ratings after a new rating is added
+                          refreshRatings();
+                        }}
                       />
                     </div>
                     <div className="text-sm text-gray-600 mb-1">
@@ -419,22 +480,22 @@ export default function DomesticHelpPage() {
                       </button>
                     </div>
                     <div>
-                      {vendorRatings[vendorId] && (
+                      {vendorRatings[generatedVendorId] && (
                         <div className="flex items-center gap-1 text-yellow-500 mb-2">
                           <span className="text-sm font-medium">
-                            {vendorRatings[vendorId].rating.toFixed(1)}
+                            {vendorRatings[generatedVendorId].rating.toFixed(1)}
                           </span>
                           <span className="text-gray-500 text-xs">
-                            ({vendorRatings[vendorId].count})
+                            ({vendorRatings[generatedVendorId].count})
                           </span>
                         </div>
                       )}
-                      {vendorRatings[vendorId] && vendorRatings[vendorId].count > 0 && (
+                      {vendorRatings[generatedVendorId] && vendorRatings[generatedVendorId].count > 0 && (
                         <button
-                          onClick={() => toggleReviews(vendorId)}
+                          onClick={() => toggleReviews(generatedVendorId)}
                           className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-2"
                         >
-                          {showReviews[vendorId] ? (
+                          {showReviews[generatedVendorId] ? (
                             <>
                               <FiChevronUp className="w-4 h-4" />
                               Hide Reviews
@@ -447,10 +508,10 @@ export default function DomesticHelpPage() {
                           )}
                         </button>
                       )}
-                      {showReviews[vendorId] && reviews[vendorId] && (
+                      {showReviews[generatedVendorId] && reviews[generatedVendorId] && (
                         <div className="border-t border-gray-100 p-4 bg-gray-50">
                           <div className="space-y-4">
-                            {reviews[vendorId].map((review, index) => (
+                            {reviews[generatedVendorId].map((review, index) => (
                               <div key={index} className="border-b border-gray-200 pb-3 last:border-0 last:pb-0">
                                 <div className="flex items-center justify-between mb-2">
                                   <span className="text-sm font-medium text-gray-900">{review.user_name}</span>
@@ -516,6 +577,7 @@ export default function DomesticHelpPage() {
               .map((vendor) => {
                 // Use mobile_no as unique key if present, else fallback to vendor_id
                 const vendorKey = vendor.mobile_no || vendor.vendor_id;
+                const generatedVendorId = generateVendorId(vendor.vendor_id, vendor.name);
                 return (
                   <Card key={vendorKey} className="p-4 border-2 border-gray-200 mb-6">
                     <div className="flex justify-between items-start mb-2">
@@ -526,10 +588,14 @@ export default function DomesticHelpPage() {
                         )}
                       </div>
                       <VendorRating
-                        vendorId={vendor.vendor_id}
+                        vendorId={generatedVendorId}
                         vendorName={vendor.name}
                         vendorType="service"
-                        onRatingAdded={() => {}}
+                        onRatingAdded={() => {
+                          console.log('Rating added, refreshing ratings...');
+                          // Refresh ratings after a new rating is added
+                          refreshRatings();
+                        }}
                       />
                     </div>
                     <div className="text-sm text-gray-600 mb-1">
@@ -572,22 +638,22 @@ export default function DomesticHelpPage() {
                       </button>
                     </div>
                     <div>
-                      {vendorRatings[vendor.vendor_id] && (
+                      {vendorRatings[generatedVendorId] && (
                         <div className="flex items-center gap-1 text-yellow-500 mb-2">
                           <span className="text-sm font-medium">
-                            {vendorRatings[vendor.vendor_id].rating.toFixed(1)}
+                            {vendorRatings[generatedVendorId].rating.toFixed(1)}
                           </span>
                           <span className="text-gray-500 text-xs">
-                            ({vendorRatings[vendor.vendor_id].count})
+                            ({vendorRatings[generatedVendorId].count})
                           </span>
                         </div>
                       )}
-                      {vendorRatings[vendor.vendor_id] && vendorRatings[vendor.vendor_id].count > 0 && (
+                      {vendorRatings[generatedVendorId] && vendorRatings[generatedVendorId].count > 0 && (
                         <button
-                          onClick={() => toggleReviews(vendor.vendor_id)}
+                          onClick={() => toggleReviews(generatedVendorId)}
                           className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 mb-2"
                         >
-                          {showReviews[vendor.vendor_id] ? (
+                          {showReviews[generatedVendorId] ? (
                             <>
                               <FiChevronUp className="w-4 h-4" />
                               Hide Reviews
@@ -600,10 +666,10 @@ export default function DomesticHelpPage() {
                           )}
                         </button>
                       )}
-                      {showReviews[vendor.vendor_id] && reviews[vendor.vendor_id] && (
+                      {showReviews[generatedVendorId] && reviews[generatedVendorId] && (
                         <div className="border-t border-gray-100 p-4 bg-gray-50">
                           <div className="space-y-4">
-                            {reviews[vendor.vendor_id].map((review, index) => (
+                            {reviews[generatedVendorId].map((review, index) => (
                               <div key={index} className="border-b border-gray-200 pb-3 last:border-0 last:pb-0">
                                 <div className="flex items-center justify-between mb-2">
                                   <span className="text-sm font-medium text-gray-900">{review.user_name}</span>

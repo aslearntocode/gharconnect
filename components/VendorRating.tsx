@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { auth } from '@/lib/firebase'
+import { generateAnonymousId } from '@/lib/anonymousId'
 import {
   Dialog,
   DialogContent,
@@ -58,6 +59,28 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
     },
   })
 
+  // Use the same vendor ID generation logic as VendorCard
+  const generateVendorId = (vendorId: string | null | undefined): string => {
+    console.log('VendorRating: Generating vendor ID for:', { vendorId, vendorName, type: typeof vendorId });
+    
+    // If vendorId is a valid string, use it
+    if (vendorId && typeof vendorId === 'string' && vendorId.trim() !== '') {
+      console.log('VendorRating: Using provided vendorId:', vendorId);
+      return vendorId;
+    }
+    
+    // If vendorId is null/undefined/empty, use vendorName as fallback
+    if (vendorName && typeof vendorName === 'string' && vendorName.trim() !== '') {
+      console.log('VendorRating: Using vendorName as ID:', vendorName);
+      return vendorName;
+    }
+    
+    // Final fallback
+    const fallbackId = `vendor_fallback_${Date.now()}`;
+    console.log('VendorRating: Using fallback ID:', fallbackId);
+    return fallbackId;
+  };
+
   const onSubmit = async (data: RatingFormValues) => {
     setIsLoading(true)
     setError(null)
@@ -69,12 +92,33 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
         return
       }
 
+      // Debug logging
+      console.log('Submitting rating for vendor:', { vendorId, vendorName, currentUser: currentUser.uid, vendorIdType: typeof vendorId });
+
+      // Use the same logic as VendorCard to generate a stable vendor ID
+      let finalVendorId = generateVendorId(vendorId);
+
+      // Validate vendorId is not null, empty, or invalid
+      if (!finalVendorId || 
+          typeof finalVendorId !== 'string' || 
+          finalVendorId.trim() === '' || 
+          finalVendorId === 'unknown' || 
+          finalVendorId === 'undefined' ||
+          finalVendorId === 'null') {
+        console.error('Invalid vendor ID received:', { vendorId, finalVendorId, vendorName, type: typeof vendorId });
+        // Generate a fallback ID instead of showing error
+        finalVendorId = generateVendorId(null);
+        console.log('Generated fallback vendor ID:', finalVendorId);
+      }
+
+      console.log('Final vendor ID for rating submission:', finalVendorId);
+
       // First check if user has already rated this vendor
       const { data: existingRating, error: checkError } = await supabase
         .from('reviews')
         .select('id')
         .eq('user_id', currentUser.uid)
-        .eq('card_id', vendorId)
+        .eq('card_id', finalVendorId)
         .maybeSingle()
 
       if (checkError) {
@@ -83,14 +127,19 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
       }
 
       if (existingRating) {
-        throw new Error('You have already rated this vendor')
+        setError('You have already rated this vendor')
+        setIsLoading(false)
+        return
       }
 
-      // Proceed with inserting the new rating
+      // Generate anonymous ID for display
+      const anonymousId = generateAnonymousId(currentUser.uid)
+
+      // Proceed with inserting the new rating with anonymous display name
       const { error: insertError } = await supabase.from('reviews').insert({
         user_id: currentUser.uid,
-        user_name: currentUser.displayName || currentUser.email,
-        card_id: vendorId,
+        user_name: anonymousId, // Store anonymous ID instead of real name
+        card_id: finalVendorId,
         card_name: vendorName,
         rating: data.rating,
         comment: data.comment,
@@ -99,12 +148,14 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
       if (insertError) {
         console.error('Error inserting rating:', insertError)
         if (insertError.code === '23505') { // Unique violation
-          throw new Error('You have already rated this vendor')
+          setError('You have already rated this vendor')
         } else if (insertError.code === '42501') { // Permission denied
-          throw new Error('You do not have permission to rate this vendor')
+          setError('You do not have permission to rate this vendor')
         } else {
-          throw new Error(`Failed to add rating: ${insertError.message}`)
+          setError(`Failed to add rating: ${insertError.message}`)
         }
+        setIsLoading(false)
+        return
       }
 
       setIsOpen(false)

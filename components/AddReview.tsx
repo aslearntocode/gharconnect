@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { auth } from '@/lib/firebase'
+import { generateAnonymousId } from '@/lib/anonymousId'
 import {
   Dialog,
   DialogContent,
@@ -61,9 +62,12 @@ export function AddReview({ cardId, cardName, onReviewAdded }: AddReviewProps) {
         throw new Error('You must be logged in to add a review')
       }
 
+      // Generate anonymous ID for display
+      const anonymousId = generateAnonymousId(currentUser.uid)
+
       const { error } = await supabase.from('reviews').insert({
         user_id: currentUser.uid,
-        user_name: currentUser.displayName || currentUser.email,
+        user_name: anonymousId, // Store anonymous ID instead of real name
         card_id: cardId,
         card_name: cardName,
         rating: data.rating,

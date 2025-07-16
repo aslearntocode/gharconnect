@@ -25,6 +25,8 @@ interface VendorCardProps {
     social_media?: string;
     areaServed?: string | string[];
     buildingServed?: string | string[];
+    id?: string; // Added for new vendorId logic
+    vendor_id?: string; // Added for new vendorId logic
   };
   type: 'service' | 'delivery';
 }
@@ -45,6 +47,58 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const supabase = createClientComponentClient();
   const router = useRouter();
   const pathname = usePathname();
+
+  // Generate a stable vendor ID
+  const generateVendorId = (vendor: any): string => {
+    console.log('Generating vendor ID for vendor:', vendor);
+    
+    // Ensure vendor is an object
+    if (!vendor || typeof vendor !== 'object') {
+      console.error('Invalid vendor object:', vendor);
+      return `vendor_unknown_${Date.now()}`;
+    }
+    
+    // If vendor has an id or vendor_id, use that
+    if (vendor.id && typeof vendor.id === 'string' && vendor.id.trim() !== '') {
+      console.log('Using vendor.id:', vendor.id);
+      return vendor.id;
+    }
+    if (vendor.vendor_id && typeof vendor.vendor_id === 'string' && vendor.vendor_id.trim() !== '') {
+      console.log('Using vendor.vendor_id:', vendor.vendor_id);
+      return vendor.vendor_id;
+    }
+    
+    // If vendor has a name, use that as the ID
+    if (vendor.name && typeof vendor.name === 'string' && vendor.name.trim() !== '') {
+      console.log('Using vendor.name as ID:', vendor.name);
+      return vendor.name;
+    }
+    
+    // If no name, create a hash based on vendor properties
+    console.log('No name found, creating hash from vendor properties');
+    const vendorString = JSON.stringify({
+      mobile: vendor.mobile || vendor.mobile_no,
+      services: vendor.services,
+      products: vendor.products,
+      areaServed: vendor.areaServed,
+      buildingServed: vendor.buildingServed
+    });
+    
+    let hash = 0;
+    for (let i = 0; i < vendorString.length; i++) {
+      const char = vendorString.charCodeAt(i);
+      hash = ((hash << 5) - hash) + char;
+      hash = hash & hash; // Convert to 32-bit integer
+    }
+    
+    const generatedId = `vendor_${Math.abs(hash).toString(36).substring(0, 8)}`;
+    console.log('Generated hash ID:', generatedId);
+    
+    // Ensure we always return a string and never null
+    const result = String(generatedId || `vendor_${Date.now()}`);
+    console.log('Final vendor ID result:', result, 'type:', typeof result);
+    return result;
+  };
 
   // Track user authentication status
   useEffect(() => {
@@ -73,10 +127,30 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
         setIsLoading(true);
         setError(null);
         
-        const { data, error } = await supabase
+        const vendorId = generateVendorId(vendor);
+        
+        console.log('Fetching ratings for vendor:', { vendorId, vendorName: vendor.name, vendor });
+        
+        // Try to fetch ratings with the generated vendor ID
+        let { data, error } = await supabase
           .from('reviews')
           .select('rating')
-          .eq('card_id', vendor.name);
+          .eq('card_id', vendorId);
+
+        // If no ratings found with the generated ID, try with vendor name as fallback
+        if (!data || data.length === 0) {
+          console.log('No ratings found with generated ID, trying with vendor name');
+          const fallbackId = vendor.name || `vendor_${Date.now()}`;
+          const { data: fallbackData, error: fallbackError } = await supabase
+            .from('reviews')
+            .select('rating')
+            .eq('card_id', fallbackId);
+          
+          if (fallbackData && fallbackData.length > 0) {
+            data = fallbackData;
+            error = fallbackError;
+          }
+        }
 
         if (error) {
           console.error('Error fetching ratings:', error);
@@ -100,15 +174,91 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
     };
 
     fetchRatings();
-  }, [vendor.name, supabase]);
+  }, [vendor.id, vendor.vendor_id, vendor.name, supabase]);
+
+  // Create a function to refresh ratings that can be called from VendorRating
+  const refreshRatings = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      const vendorId = generateVendorId(vendor);
+      
+      console.log('Refreshing ratings for vendor:', { vendorId, vendorName: vendor.name, vendor });
+      
+      // Try to fetch ratings with the generated vendor ID
+      let { data, error } = await supabase
+        .from('reviews')
+        .select('rating')
+        .eq('card_id', vendorId);
+
+      // If no ratings found with the generated ID, try with vendor name as fallback
+      if (!data || data.length === 0) {
+        console.log('No ratings found with generated ID, trying with vendor name');
+        const fallbackId = vendor.name || `vendor_${Date.now()}`;
+        const { data: fallbackData, error: fallbackError } = await supabase
+          .from('reviews')
+          .select('rating')
+          .eq('card_id', fallbackId);
+        
+        if (fallbackData && fallbackData.length > 0) {
+          data = fallbackData;
+          error = fallbackError;
+        }
+      }
+
+      if (error) {
+        console.error('Error refreshing ratings:', error);
+        setError('Failed to refresh ratings');
+        return;
+      }
+
+      if (data && data.length > 0) {
+        const totalRating = data.reduce((sum, item) => sum + item.rating, 0);
+        setVendorRatings({
+          rating: totalRating / data.length,
+          count: data.length
+        });
+      } else {
+        // If no ratings found, reset the ratings
+        setVendorRatings(null);
+      }
+    } catch (err) {
+      console.error('Error in refreshRatings:', err);
+      setError('An unexpected error occurred while refreshing ratings');
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const fetchReviews = async () => {
     try {
-      const { data, error } = await supabase
+      const vendorId = generateVendorId(vendor);
+      
+      console.log('Fetching reviews for vendor:', { vendorId, vendorName: vendor.name });
+      
+      // Try to fetch reviews with the generated vendor ID
+      let { data, error } = await supabase
         .from('reviews')
         .select('*')
-        .eq('card_id', vendor.name)
+        .eq('card_id', vendorId)
         .order('created_at', { ascending: false });
+
+      // If no reviews found with the generated ID, try with vendor name as fallback
+      if (!data || data.length === 0) {
+        console.log('No reviews found with generated ID, trying with vendor name');
+        const fallbackId = vendor.name || `vendor_${Date.now()}`;
+        const { data: fallbackData, error: fallbackError } = await supabase
+          .from('reviews')
+          .select('*')
+          .eq('card_id', fallbackId)
+          .order('created_at', { ascending: false });
+        
+        if (fallbackData && fallbackData.length > 0) {
+          data = fallbackData;
+          error = fallbackError;
+        }
+      }
 
       if (error) {
         console.error('Error fetching reviews:', error);
@@ -215,14 +365,26 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
             <h2 className="text-lg font-semibold text-gray-900">
               {vendor.name}
             </h2>
-            <VendorRating
-              vendorId={vendor.name}
-              vendorName={vendor.name}
-              vendorType={type}
-              onRatingAdded={() => {
-                router.refresh();
-              }}
-            />
+            {(() => {
+              const vendorId = generateVendorId(vendor);
+              console.log('Passing vendor ID to VendorRating:', { 
+                vendorId, 
+                vendorIdType: typeof vendorId,
+                vendorName: vendor.name,
+                vendor: vendor 
+              });
+              return (
+                <VendorRating
+                  vendorId={vendorId}
+                  vendorName={vendor.name || 'Unknown Vendor'}
+                  vendorType={type}
+                  onRatingAdded={() => {
+                    console.log('Rating added, refreshing ratings...');
+                    refreshRatings();
+                  }}
+                />
+              );
+            })()}
           </div>
           <p className="text-sm text-gray-600 mb-2">
             {items.length} {itemType} available
