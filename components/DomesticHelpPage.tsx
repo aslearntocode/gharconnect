@@ -658,14 +658,6 @@ export default function DomesticHelpPage() {
                         </div>
                       ))}
                     </div>
-                    <div className="flex gap-2 mt-2 mb-2">
-                      <button
-                        className="mt-2 mb-2 px-4 py-1 bg-indigo-600 text-white rounded font-semibold hover:bg-indigo-700 transition"
-                        onClick={() => setOpenVendorId(openVendorId === vendorKey ? null : vendorKey)}
-                      >
-                        {openVendorId === vendorKey ? 'Hide Availability' : 'View Availability'}
-                      </button>
-                    </div>
                     <div>
                       {vendorRatings[generatedVendorId] && (
                         <div className="flex items-center gap-1 text-yellow-500 mb-2">
