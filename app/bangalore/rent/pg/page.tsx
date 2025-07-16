@@ -267,8 +267,8 @@ export default function PGPage() {
     <div className="min-h-screen bg-gray-50 pt-16">
       {/* Blue Banner */}
       <div className="relative">
-        <div className="w-full bg-indigo-600 flex flex-col items-center justify-center py-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-white text-center">PG Accommodation with No Brokerage</h1>
+        <div className="w-full bg-indigo-600 flex flex-col items-center justify-center py-4 md:py-8">
+          <h1 className="text-2xl md:text-4xl font-bold text-white text-center">PG Accommodation with No Brokerage</h1>
           <p className="text-indigo-100 text-base md:text-lg mt-2 text-center max-w-5xl">
             Discover premium PG accommodations within your neighborhood.
           </p>
@@ -386,45 +386,8 @@ export default function PGPage() {
         apartment={selectedApartment}
       />
 
-      {/* Value Proposition Cards */}
-      <div className="max-w-6xl mx-auto mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div className="bg-white rounded-xl md:rounded-2xl shadow p-4 md:p-8 flex items-center gap-4 md:gap-8 w-full max-w-md mx-auto md:max-w-none md:w-auto">
-          <div className="flex-shrink-0">
-            <span className="inline-flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-full bg-indigo-100">
-              <svg className="w-6 h-6 md:w-10 md:h-10 text-indigo-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
-            </span>
-          </div>
-          <div>
-            <h2 className="text-xl md:text-2xl font-bold mb-2">Eliminate the struggle of paying brokerage</h2>
-            <p className="text-sm md:text-base text-gray-600">With our community based approach, finding the right PG accommodation that meets your needs and preferences is easier. We provide you with a list of properties within your vicinity that meet your requirements and connect you directly with the owner.</p>
-          </div>
-        </div>
-        <div className="bg-white rounded-xl md:rounded-2xl shadow p-4 md:p-8 flex items-center gap-4 md:gap-8 w-full max-w-md mx-auto md:max-w-none md:w-auto">
-          <div className="flex-shrink-0">
-            <span className="inline-flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-full bg-green-100">
-              <svg className="w-6 h-6 md:w-10 md:h-10 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4" /></svg>
-            </span>
-          </div>
-          <div>
-            <h2 className="text-xl md:text-2xl font-bold mb-2">Hassle-free experience</h2>
-            <p className="text-sm md:text-base text-gray-600">We will ensure that you have a hassle-free experience by getting your PG accommodation ready at the right time. We handle all tasks like cleaning, maintenance etc. and get the room ready on owner's behalf.</p>
-          </div>
-        </div>
-        <div className="bg-white rounded-xl md:rounded-2xl shadow p-4 md:p-8 flex items-center gap-4 md:gap-8 md:col-span-2 w-full max-w-md mx-auto md:max-w-none md:w-auto">
-          <div className="flex-shrink-0">
-            <span className="inline-flex items-center justify-center w-12 h-12 md:w-20 md:h-20 rounded-full bg-pink-100">
-              <svg className="w-6 h-6 md:w-10 md:h-10 text-pink-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17v-2a2 2 0 012-2h2a2 2 0 012 2v2m-6 0h6" /></svg>
-            </span>
-          </div>
-          <div>
-            <h2 className="text-xl md:text-2xl font-bold mb-2">Seamless Paperwork</h2>
-            <p className="text-sm md:text-base text-gray-600">The PG accommodation process involves a lot of paperwork, including rental agreements, security deposits, and utility bills. We handle all the paperwork for you, ensuring that it is completed accurately and in a timely manner.</p>
-          </div>
-        </div>
-      </div>
-
       {/* Blue CTA Section */}
-      <div className="w-full bg-blue-700 p-4 md:py-12 mt-12 flex flex-col items-center justify-center max-w-md mx-auto md:max-w-none">
+      <div className="w-full bg-indigo-600 p-4 md:py-12 mt-12 flex flex-col items-center justify-center max-w-md mx-auto md:max-w-none">
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 text-center">Have a PG Accommodation to Rent?</h2>
         <p className="text-base md:text-lg text-white mb-6 max-w-2xl text-center">If you want to list your PG accommodation for rent, then login and fill this form to reach potential tenants in your community or just WhatsApp us.</p>
         <Link href="/bangalore/list-apartment" className="inline-flex items-center bg-green-500 text-white font-semibold px-4 py-2 md:px-6 md:py-3 rounded-xl shadow-lg hover:bg-green-600 transition-all text-base md:text-lg">
