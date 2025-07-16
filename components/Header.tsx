@@ -210,7 +210,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiEdit className="w-5 h-5 text-pink-500" />
+                        <FiUsers className="w-5 h-5 text-green-600" />
                         <span>Domestic Help & Drivers</span>
                       </Link>
                       <Link 
@@ -218,55 +218,23 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiDroplet className="w-5 h-5 text-blue-500" />
-                        <span>Car Cleaning</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/beautician`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiEdit className="w-5 h-5 text-pink-500" />
-                        <span>Beautician</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/cook`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiEdit className="w-5 h-5 text-pink-500" />
-                        <span>Cook</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/security`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiShield className="w-5 h-5 text-green-600" />
-                        <span>Security</span>
+                        <span className="w-5 h-5 text-blue-500 text-lg">🚗</span>
+                        <span>Car Clean</span>
                       </Link>
                       <Link 
                         href={`/${currentSociety}/services/painter`}
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiTool className="w-5 h-5 text-blue-600" />
+                        <FiEdit className="w-5 h-5 text-pink-500" />
                         <span>Painter</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/cleaning`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiDroplet className="w-5 h-5 text-blue-500" />
-                        <span>Cleaning</span>
                       </Link>
                       <Link 
                         href={`/${currentSociety}/services/gardener`}
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiTool className="w-5 h-5 text-green-600" />
+                        <FiHome className="w-5 h-5 text-green-600" />
                         <span>Gardener</span>
                       </Link>
                       <Link 
@@ -274,7 +242,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiZap className="w-5 h-5 text-blue-600" />
+                        <FiZap className="w-5 h-5 text-blue-500" />
                         <span>AC Service</span>
                       </Link>
                       <Link 
@@ -282,7 +250,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiShield className="w-5 h-5 text-red-600" />
+                        <FiShield className="w-5 h-5 text-red-500" />
                         <span>Pest Control</span>
                       </Link>
                       <Link 
@@ -290,7 +258,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiTool className="w-5 h-5 text-purple-600" />
+                        <FiTool className="w-5 h-5 text-red-500" />
                         <span>Laptop Repair</span>
                       </Link>
                       <Link 
@@ -298,7 +266,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiTool className="w-5 h-5 text-indigo-600" />
+                        <FiTool className="w-5 h-5 text-red-500" />
                         <span>Electronics Repair</span>
                       </Link>
                       <Link 
@@ -306,7 +274,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiTool className="w-5 h-5 text-orange-600" />
+                        <span className="w-5 h-5 text-orange-500 text-lg">♻️</span>
                         <span>Scrap Dealer</span>
                       </Link>
                       <Link 
@@ -314,7 +282,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiFileText className="w-5 h-5 text-gray-600" />
+                        <FiFileText className="w-5 h-5 text-blue-500" />
                         <span>Notary</span>
                       </Link>
                       <Link 
@@ -322,7 +290,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiTool className="w-5 h-5 text-blue-600" />
+                        <FiGrid className="w-5 h-5 text-green-500" />
                         <span>Pigeon Net</span>
                       </Link>
                       <Link 
@@ -330,7 +298,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiTruck className="w-5 h-5 text-green-600" />
+                        <FiTruck className="w-5 h-5 text-blue-500" />
                         <span>Movers & Packers</span>
                       </Link>
                       <Link 
@@ -338,7 +306,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiTrendingUp className="w-5 h-5 text-red-600" />
+                        <FiTrendingUp className="w-5 h-5 text-indigo-500" />
                         <span>Physical Training</span>
                       </Link>
                       <Link 
@@ -346,7 +314,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiTrendingUp className="w-5 h-5 text-purple-600" />
+                        <FiAward className="w-5 h-5 text-green-500" />
                         <span>Yoga</span>
                       </Link>
                       <Link 
@@ -354,7 +322,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiTrendingUp className="w-5 h-5 text-pink-600" />
+                        <FiHeart className="w-5 h-5 text-pink-500" />
                         <span>Massage</span>
                       </Link>
                       <Link 
@@ -362,7 +330,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                         className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
                         onClick={() => setIsCreditScoreDropdownOpen(false)}
                       >
-                        <FiBook className="w-5 h-5 text-yellow-600" />
+                        <FiBookOpen className="w-5 h-5 text-orange-500" />
                         <span>Kids Classes</span>
                       </Link>
                     </div>
