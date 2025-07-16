@@ -927,270 +927,158 @@ export default function Home() {
         {/* Advertisement Section */}
         <div className="bg-white py-3 md:py-4 mb-0">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border border-green-100 p-3 md:p-4 relative">
-              <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
-                {/* Left Side - E-Waste Drive Details */}
-                <div className="flex-1 flex items-center space-x-4 mt-8 md:mt-0">
-                  <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold text-lg">♻️</span>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="text-lg md:text-xl font-semibold text-gray-900">E-Waste Collection Drive by GharConnect</h3>
-                    <p className="text-gray-600 text-sm md:text-base">📍 Parel, Mumbai • In Partnership with The Recycling Company</p>
-                    <p className="text-gray-600 text-sm md:text-base mt-1">
-                      <span className="font-semibold text-green-700">Reach out to us and we can set up collection boxes in your society!</span>
-                    </p>
-                    <div className="mt-3">
-                      <a 
-                        href="https://wa.me/919321314553?text=Hi! I'm interested in setting up e-waste collection boxes in our society. Can you help us with the details?"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors duration-200 text-sm shadow-md"
-                      >
-                        <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
-                        </svg>
-                        WhatsApp Us
-                      </a>
-                    </div>
-                    <div className="sr-only">
-                      <p>
-                        <a href="/parel" className="underline hover:text-blue-700">E-waste collection in Parel</a> |
-                        <a href="/parel" className="underline hover:text-blue-700">Electronic waste disposal Mumbai</a> |
-                        <a href="/parel" className="underline hover:text-blue-700">The Recycling Company</a>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Right Side - Logos and Photo Carousel */}
-                <div className="flex flex-col items-center gap-4">
-                  {/* Logos */}
-                  <div className="flex items-center gap-4">
-                    <img src="/GC_Logo.png" alt="GharConnect Logo" className="h-8 md:h-10 object-contain" />
-                    {/* <span className="text-gray-400">×</span> */}
-                    <img src="Ads/therecyclingcompany.png" alt="The Recycling Company Logo" className="h-8 md:h-10 object-contain" />
-                  </div>
-                  
-                  {/* Photo Carousel */}
-                  <div className="relative w-60 h-36 md:w-96 md:h-56 rounded-lg overflow-hidden flex-shrink-0">
-                    {/* Sample images - replace with actual e-waste drive photos */}
-                    <div className="absolute inset-0 flex transition-transform duration-500 ease-in-out" 
-                         style={{ transform: `translateX(-${currentAdCarouselIndex * 100}%)` }}>
-                      <div className="w-full flex-shrink-0 h-full">
-                        <img 
-                          src="/Ads/eWaste_Collection.png" 
-                          alt="E-Waste Collection Drive 1" 
-                          className="w-full h-full object-contain"
-                          onError={e => {
-                            e.currentTarget.style.display = 'none';
-                            e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                          }}
-                        />
+            <div className="relative overflow-hidden rounded-xl border border-green-100">
+              {/* E-Waste Drive Banner */}
+              <div 
+                className={`transition-all duration-500 ease-in-out ${
+                  currentAdCarouselIndex === 0 ? 'opacity-100' : 'opacity-0 absolute inset-0'
+                }`}
+              >
+                <div className="bg-gradient-to-r from-green-50 to-blue-50 p-3 md:p-4">
+                  <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                    {/* Left Side - E-Waste Drive Details */}
+                    <div className="flex-1 flex items-center space-x-4 mt-8 md:mt-0">
+                      <div className="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-lg">♻️</span>
                       </div>
-                      <div className="w-full flex-shrink-0 h-full">
-                        <img 
-                          src="/Ads/eWaste_Drive.png" 
-                          alt="E-Waste Collection Drive 2" 
-                          className="w-full h-full object-contain"
-                          onError={e => {
-                            e.currentTarget.style.display = 'none';
-                            e.currentTarget.nextElementSibling?.classList.remove('hidden');
-                          }}
-                        />
+                      <div className="flex-1">
+                        <h3 className="text-lg md:text-xl font-semibold text-gray-900">E-Waste Collection Drive by GharConnect</h3>
+                        <p className="text-gray-600 text-sm md:text-base">In Partnership with The Recycling Company</p>
+                        <p className="text-gray-600 text-sm md:text-base mt-1">
+                          <span className="font-semibold text-green-700">Reach out to us and we can set up collection boxes in your society!</span>
+                        </p>
+                        <div className="mt-3">
+                          <a 
+                            href="https://wa.me/919321314553?text=Hi! I'm interested in setting up e-waste collection boxes in our society. Can you help us with the details?"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition-colors duration-200 text-sm shadow-md"
+                          >
+                            <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                            </svg>
+                            WhatsApp Us
+                          </a>
+                        </div>
+                        <div className="sr-only">
+                          <p>
+                            <a href="/parel" className="underline hover:text-blue-700">E-waste collection in Parel</a> |
+                            <a href="/parel" className="underline hover:text-blue-700">Electronic waste disposal Mumbai</a> |
+                            <a href="/parel" className="underline hover:text-blue-700">The Recycling Company</a>
+                          </p>
+                        </div>
                       </div>
                     </div>
                     
-                    {/* Navigation Dots */}
-                    <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                      {[0, 1].map((index) => (
-                        <button
-                          key={index}
-                          onClick={() => setCurrentAdCarouselIndex(index)}
-                          className={`w-2 h-2 rounded-full transition-colors ${
-                            currentAdCarouselIndex === index ? 'bg-white' : 'bg-white/50'
-                          }`}
+                    {/* Right Side - Logos and Photo Carousel */}
+                    <div className="flex flex-col items-center gap-4">
+                      {/* Logos */}
+                      <div className="flex items-center gap-4">
+                        <img src="/GC_Logo.png" alt="GharConnect Logo" className="h-8 md:h-10 object-contain" />
+                        <img src="Ads/therecyclingcompany.png" alt="The Recycling Company Logo" className="h-8 md:h-10 object-contain" />
+                      </div>
+                      
+                      {/* Photo Carousel */}
+                      <div className="relative w-60 h-36 md:w-96 md:h-56 rounded-lg overflow-hidden flex-shrink-0">
+                        <img 
+                          src="/Ads/eWaste_Collection.png" 
+                          alt="E-Waste Collection Drive" 
+                          className="w-full h-full object-contain"
+                          onError={e => {
+                            e.currentTarget.style.display = 'none';
+                            e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                          }}
                         />
-                      ))}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
 
-        {/* Property Management Services Section */}
-        <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-0 pt-1 md:pt-2">
-          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
-          <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-            <div className="py-6 flex flex-col items-center justify-center gap-4 relative">
-              {/* Content */}
-              <div className="flex-1 text-center w-full">
-                {carouselIndex === 0 ? (
-                  <>
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 break-words w-full max-w-full">
-                      Marketplace
-                    </h3>
-                    <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
-                      Discover items for sale from your community. Buy or list your own items for neighbors to see.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 break-words w-full max-w-full">
-                      Social
-                    </h3>
-                    <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
-                      Join the conversation! Ask questions, share updates, and connect with your neighbors in Parel.
-                    </p>
-                  </>
-                )}
-                <div className="w-full max-w-xl md:max-w-4xl mx-auto my-4 overflow-x-hidden">
-                  <div
-                    className="relative overflow-hidden rounded-lg w-full max-w-full"
-                    ref={carouselRef}
-                    onTouchStart={e => { if (isMounted && !isMobile) handleTouchStart(e); }}
-                    onTouchMove={e => { if (isMounted && !isMobile) handleTouchMove(e); }}
-                    onTouchEnd={() => { if (isMounted && !isMobile) handleTouchEnd(); }}
-                  >
-                    <div
-                      className="flex transition-transform duration-500 w-full max-w-full"
-                      style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
-                    >
-                      {/* Marketplace Slide */}
-                      <div className="min-w-full w-full max-w-full bg-gradient-to-br from-blue-50 to-indigo-100 p-3 flex flex-col items-center text-center">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-md">
-                          <span className="text-lg">🛍️</span>
-                        </div>
-                        {/* <h4 className="text-sm font-bold text-gray-900 mb-1 leading-none">Marketplace</h4> */}
-                        <div className="w-full overflow-x-auto">
-                          <div className="flex flex-row gap-2 w-full justify-center flex-nowrap">
-                            {marketplaceProducts.length === 0 ? (
-                              <div className="flex-1 text-center text-gray-500 py-3">No products listed yet.</div>
-                            ) : (
-                              (isMounted && isMobile ? marketplaceProducts.slice(0, 2) : marketplaceProducts).map((product) => (
-                                <div key={product.id} className={`bg-white rounded-md shadow p-1 flex flex-col items-center text-center border border-gray-100 hover:shadow-md transition-all min-w-[110px] md:min-w-[160px] max-w-[140px] md:max-w-[200px] w-full ${!product.is_active ? 'opacity-60' : ''}`}>
-                                  <div className="w-full h-14 md:h-20 flex items-center justify-center mb-1 overflow-hidden rounded relative">
-                                    {product.images && product.images.length > 0 ? (
-                                      <img
-                                        src={product.images[0]}
-                                        alt={product.title}
-                                        className="object-cover w-full h-full"
-                                        onError={e => (e.currentTarget.src = '/placeholder-image.svg')}
-                                      />
-                                    ) : (
-                                      <div className="w-full h-full flex items-center justify-center text-gray-300 bg-gray-100 text-xs">No Image</div>
-                                    )}
-                                    {!product.is_active && (
-                                      <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                                        <span className="text-white font-bold text-xs md:text-sm">SOLD</span>
-                                      </div>
-                                    )}
-                                  </div>
-                                  <div className="font-semibold text-[11px] md:text-sm text-gray-900 line-clamp-2 mb-0.5">{product.title}</div>
-                                  <div className="text-[9px] md:text-xs text-gray-500 mb-0.5">{product.condition}</div>
-                                  <div className="text-xs md:text-sm font-bold text-green-600 mb-0.5">₹{product.price.toLocaleString('en-IN')}</div>
-                                  {product.building_name && (
-                                    <div className="text-[8px] md:text-xs text-gray-400 mb-0.5 truncate">{product.building_name}</div>
-                                  )}
-                                </div>
-                              ))
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex flex-row justify-center items-end gap-2 md:gap-3 mt-2 w-full grow">
-                          <a 
-                            href="/parel/marketplace" 
-                            className="inline-flex items-center px-2 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 rounded text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
-                            style={{ minHeight: '24px' }}
-                          >
-                            <span>Browse</span>
-                            <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                          </a>
-                        </div>
+              {/* Used Cooking Oil Drive Banner */}
+              <div 
+                className={`transition-all duration-500 ease-in-out ${
+                  currentAdCarouselIndex === 1 ? 'opacity-100' : 'opacity-0 absolute inset-0'
+                }`}
+              >
+                <div className="bg-gradient-to-r from-orange-50 to-yellow-50 p-3 md:p-4">
+                  <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+                    {/* Left Side - Used Cooking Oil Drive Details */}
+                    <div className="flex-1 flex items-center space-x-4 mt-8 md:mt-0">
+                      <div className="w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <span className="text-white font-bold text-lg">🛢️</span>
                       </div>
-                      {/* Connect Slide */}
-                      <div className="min-w-full w-full max-w-full bg-gradient-to-br from-blue-50 to-indigo-100 p-3 flex flex-col items-center text-center">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-md">
-                          <span className="text-lg">💬</span>
-                        </div>
-                        {/* <h4 className="text-sm font-bold text-gray-900 mb-1 leading-none">Connect</h4> */}
-                        <div className="w-full overflow-x-auto">
-                          <div className="flex flex-row gap-2 w-full justify-center flex-nowrap">
-                            {connectPosts.length === 0 ? (
-                              <div className="flex-1 text-center text-gray-500 py-3">No posts yet.</div>
-                            ) : (
-                              (isMounted && isMobile ? connectPosts.slice(0, 2) : connectPosts).map((post) => (
-                                <div key={post.id} className="p-1 bg-white rounded-md shadow-sm border border-gray-100 hover:shadow-md transition-shadow mb-0 w-full min-w-[140px] md:min-w-[200px] max-w-[180px] md:max-w-[280px] flex-shrink-0 flex flex-col items-start">
-                                  <div className="flex items-center justify-between mb-0.5 w-full">
-                                    <span className="text-xs md:text-sm font-bold text-gray-800 bg-indigo-100 px-1 py-0.5 rounded-full truncate max-w-[70%]">{post.title}</span>
-                                    <span className="text-xs md:text-sm text-gray-500 bg-gray-100 px-1 py-0.5 rounded-full">{new Date(post.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
-                                  </div>
-                                  <p className="text-xs md:text-sm text-gray-600 leading-relaxed line-clamp-4 w-full">{post.body}</p>
-                                </div>
-                              ))
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex flex-row justify-center items-end gap-2 md:gap-3 mt-1 w-full grow">
+                      <div className="flex-1">
+                        <h3 className="text-lg md:text-xl font-semibold text-gray-900">Used Cooking Oil Collection Drive by GharConnect</h3>
+                        <p className="text-gray-600 text-sm md:text-base">In Partnership with ECOIL</p>
+                        <p className="text-gray-600 text-sm md:text-base mt-1">
+                          <span className="font-semibold text-orange-700">Don't pour used cooking oil down the drain! We collect it for recycling.</span>
+                        </p>
+                        <div className="mt-3">
                           <a 
-                            href="/parel/connect" 
-                            className="inline-flex items-center px-2 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 rounded text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
-                            style={{ minHeight: '24px' }}
+                            href="https://wa.me/919321314553?text=Hi! I'm interested in the used cooking oil collection drive. Can you help us set up collection points in our society?"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-lg transition-colors duration-200 text-sm shadow-md"
                           >
-                            <span>Join</span>
-                            <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                            <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
                             </svg>
+                            WhatsApp Us
                           </a>
+                        </div>
+                        <div className="sr-only">
+                          <p>
+                            <a href="/parel" className="underline hover:text-blue-700">Used cooking oil collection in Parel</a> |
+                            <a href="/parel" className="underline hover:text-blue-700">Cooking oil disposal Mumbai</a> |
+                            <a href="/parel" className="underline hover:text-blue-700">ECOIL</a>
+                          </p>
                         </div>
                       </div>
                     </div>
-                    {/* Carousel Arrows (mobile only) */}
-                    <button
-                      className="block md:hidden absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-3 shadow hover:bg-opacity-100 transition z-30 pointer-events-auto"
-                      onClick={handlePrev}
-                      aria-label="Previous"
-                      style={{ left: 4 }}
-                    >
-                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
-                    </button>
-                    <button
-                      className="block md:hidden absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-3 shadow hover:bg-opacity-100 transition z-30 pointer-events-auto"
-                      onClick={handleNext}
-                      aria-label="Next"
-                    >
-                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                    </button>
-                    {/* Carousel Arrows (desktop only) */}
-                    <button
-                      className="hidden md:block absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-opacity-100 transition z-10"
-                      onClick={handlePrev}
-                      aria-label="Previous"
-                      style={{ left: 4 }}
-                    >
-                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
-                    </button>
-                    <button
-                      className="hidden md:block absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-opacity-100 transition z-10"
-                      onClick={handleNext}
-                      aria-label="Next"
-                      style={{ right: 4 }}
-                    >
-                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                    </button>
+                    
+                    {/* Right Side - Logos and Photo */}
+                    <div className="flex flex-col items-center gap-4">
+                      {/* Logos */}
+                      <div className="flex items-center gap-4">
+                        <img src="/GC_Logo.png" alt="GharConnect Logo" className="h-8 md:h-10 object-contain" />
+                        <img src="Ads/ECOIL_Logo.png" alt="ECOIL Logo" className="h-8 md:h-10 object-contain" />
+                      </div>
+                      
+                      {/* Photo */}
+                      <div className="relative w-60 h-36 md:w-96 md:h-56 rounded-lg overflow-hidden flex-shrink-0">
+                        <img 
+                          src="/Ads/UCO_Warning.png" 
+                          alt="Used Cooking Oil Collection Drive" 
+                          className="w-full h-full object-contain"
+                          onError={e => {
+                            e.currentTarget.style.display = 'none';
+                            e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                          }}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
+              </div>
+
+              {/* Navigation Dots */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3 z-10">
+                {[0, 1].map((index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentAdCarouselIndex(index)}
+                    className={`w-4 h-4 rounded-full transition-all duration-200 shadow-md ${
+                      currentAdCarouselIndex === index 
+                        ? 'bg-white border-2 border-gray-700' 
+                        : 'bg-white/80 border-2 border-gray-300 hover:bg-white'
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </div>
         </div>
-
-
 
         {/* GharCare+ Subscription Section */}
         <div className="bg-gradient-to-br from-blue-50 to-green-50 py-10 px-4 md:px-0">
