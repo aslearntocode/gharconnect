@@ -10,7 +10,7 @@ export default function MumbaiRentTypeSelection() {
       name: 'Silver',
       price: '₹2,999',
       icon: '🥈',
-      description: 'Perfect for property owners who want essential services',
+      description: 'For property owners who want essential services',
       features: [
         'No Brokerage Listing',
         'Legal Paperwork',
@@ -24,7 +24,7 @@ export default function MumbaiRentTypeSelection() {
       name: 'Gold',
       price: '₹4,999',
       icon: '🥇',
-      description: 'Package includes premium services for your property',
+      description: 'Premium services for your property',
       features: [
         'Everything in Silver',
         'Professional Property Photoshoot',
@@ -178,7 +178,7 @@ export default function MumbaiRentTypeSelection() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">Silver</h3>
                 <div className="text-3xl font-bold text-indigo-600 mb-2">₹2,999</div>
                 <p className="text-gray-600 text-sm mb-6">
-                  Perfect for property owners who want essential services
+                  For property owners who want essential services
                 </p>
                 <ul className="text-left text-gray-700 space-y-3 mb-6">
                   <li className="flex items-start">
@@ -219,7 +219,7 @@ export default function MumbaiRentTypeSelection() {
                 <h3 className="text-2xl font-bold text-gray-900 mb-2">Gold</h3>
                 <div className="text-3xl font-bold text-indigo-600 mb-2">₹4,999</div>
                 <p className="text-gray-600 text-sm mb-6">
-                  Package includes premium services for your property
+                  Premium services for your property
                 </p>
                 <ul className="text-left text-gray-700 space-y-3 mb-6">
                   <li className="flex items-start">
