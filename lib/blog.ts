@@ -13,6 +13,77 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'rent-property-without-brokerage-gharconnect-packages',
+    title: 'Rent Your Property Without Brokerage Using GharConnect\'s Silver, Gold & Platinum Packages',
+    excerpt: 'Finding the right tenant can be stressful, expensive, and time-consuming — especially when traditional platforms involve hefty brokerage, subscription fees, or agent interference. At GharConnect.in, we believe property owners should have full control over their rental journey — without paying brokerage or worrying about listing fees.',
+    content: `
+Rent Your Property Without Brokerage Using GharConnect's Silver, Gold & Platinum Packages
+
+Finding the right tenant can be stressful, expensive, and time-consuming — especially when traditional platforms involve hefty brokerage, subscription fees, or agent interference. At GharConnect.in, we believe property owners should have full control over their rental journey — without paying brokerage or worrying about listing fees.
+
+That's why we've introduced our Silver, Gold, and Platinum packages — designed to help you rent your apartment efficiently, affordably, and 100% brokerage-free.
+
+🏠 What Makes GharConnect Different?
+
+While platforms like NoBroker and others exist in the market, GharConnect goes a step further by combining verified local listings, community trust, and personalized support — at a fraction of the cost.
+
+Our focus is simple:
+Help owners rent their properties without agents, hidden charges, or unfiltered leads.
+
+💡 What Do the Packages Include?
+
+Silver Package (Ideal for basic, no-frills listing)
+- Your property listed with zero listing fee
+- Visible to everyone
+- Up to 10 managed property visits (only with serious tenants)
+- All leads manually screened for relevance
+- No brokerage involved - ever
+
+Gold Package (Popular choice for faster rentals)
+- Includes all Silver benefits
+- High-priority listing placement
+- Up to 10 additional managed property visits (only with serious tenants)
+- Support with rent agreement
+
+Platinum Package (For full-service, premium experience)
+- Includes all Silver & Gold benefits
+- Professional photoshoot of your property
+- Rent-ready services like cleaning or painting (if needed)
+- End-to-end coordination till deal closure
+
+🔒 Only Genuine Leads. No Time Wasters.
+
+Unlike many open listing sites, at GharConnect we allow only verified, genuine tenant leads to request property visits. This ensures:
+- No agent calls
+- No random walk-ins
+- Only serious renters come through the door
+
+Your time and property are respected, and tenants benefit from a clean, no-broker experience.
+
+💸 Zero Brokerage. Zero Listing Fee. Transparent Pricing.
+You pay only for the package you choose — not a percentage of the rent, not a recurring subscription. The listing stays live until the property is rented, and our team supports you every step of the way.
+
+🚀 Why GharConnect.in?
+
+✅ 100% owner-first platform
+✅ Community-focused, verified listings
+✅ No brokerage, ever
+✅ Transparent, affordable packages
+✅ Local expertise in areas like Mumbai, Bangalore & more
+
+Ready to List?
+Choose the package that suits you best and get started today.
+Your property. Your control. Zero brokerage.
+
+📩 To list your flat or know more, WhatsApp us at +91 9321314553
+`,
+    author: 'GharConnect Team',
+    date: '2025-07-17',
+    readTime: '5 min read',
+    category: 'Rental Tips',
+    image: '/blog/gharconnect-packages-no-brokerage.jpg'
+  },
+  {
     slug: 'why-gharconnect-best-place-list-pg-apartment-mumbai-bangalore',
     title: 'Why GharConnect.in is the Best Place to List Your PG or Apartment in Mumbai & Bangalore',
     excerpt: 'If you\'re a property owner or PG operator in Mumbai or Bangalore, and you\'re looking to rent out your space quickly, without brokers or hidden charges, GharConnect.in is the ideal platform for you.',
