@@ -196,10 +196,10 @@ export default function PropertyInquiryModal({ isOpen, onClose, apartment }: Pro
                   <div>
                     <p className="text-sm text-gray-600">Contact Number</p>
                     <a 
-                      href={`tel:${ownerDetails?.contact_phone}`}
+                      href="tel:9321314553"
                       className="font-medium text-indigo-600 hover:text-indigo-700"
                     >
-                      {ownerDetails?.contact_phone}
+                      9321314553
                     </a>
                   </div>
                 </div>
