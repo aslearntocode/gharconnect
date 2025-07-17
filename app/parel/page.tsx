@@ -614,9 +614,9 @@ export default function Home() {
         <title>Rent, Services & Delivery in Parel | GharConnect</title>
         <meta name="description" content="Find rental properties, local services, and delivery options in Parel. Connect with residents, businesses, and property owners on GharConnect." />
       </Head>
-      <main className="min-h-screen bg-white pt-16">
+      <main className="min-h-screen bg-white pt-12 md:pt-16">
         <Header isScrolled={isScrolled} />
-        <div className="flex flex-col items-center mb-8 mt-2">
+        <div className="flex flex-col items-center mb-4 md:mb-8 mt-0 md:mt-2">
           <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700 italic bg-indigo-50 px-8 md:px-16 py-2 rounded-lg w-full max-w-1xl">
             Connecting Residents and Businesses Within a Location
           </div>
@@ -710,17 +710,36 @@ export default function Home() {
         
         {/* Hero Section */}
         <div className="relative bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 md:py-4">
             <div className="w-full">
               {/* Content */}
               <div className="text-center">
+                {/* Mobile Navigation Buttons - Above heading */}
+                <div className="md:hidden flex flex-row gap-2 mb-2 justify-start">
+                  <Link href="/mumbai/services" className="inline-flex items-center px-1 py-0.5 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-[10px]">
+                    <svg className="w-2 h-2 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                    Back to Other Areas
+                  </Link>
+                  <Link href="/mumbai/rent" className="inline-flex items-center px-1 py-0.5 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-[10px]">
+                    <svg className="w-2 h-2 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                    Back to Mumbai Rentals
+                  </Link>
+                </div>
+                
                 <h1 className="text-[24px] md:text-[48px] leading-tight font-bold mb-6 flex flex-wrap items-center gap-2 justify-center">
                   <span className="text-black">Welcome to GharConnect </span>
                   <span className="text-indigo-600">@Parel</span>
-                  <Link href="/mumbai/services" className="inline-flex items-center px-2 py-1 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-xs ml-2">
-                    <svg className="w-3 h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
-                    Back to Other Areas
-                  </Link>
+                  {/* Desktop Navigation Buttons - Hidden on mobile */}
+                  <div className="hidden md:flex flex-col gap-2 ml-2">
+                    <Link href="/mumbai/services" className="inline-flex items-center px-1 md:px-2 py-0.5 md:py-1 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-[10px] md:text-xs">
+                      <svg className="w-2 h-2 md:w-3 md:h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                      Back to Other Areas
+                    </Link>
+                    <Link href="/mumbai/rent" className="inline-flex items-center px-1 md:px-2 py-0.5 md:py-1 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-[10px] md:text-xs">
+                      <svg className="w-2 h-2 md:w-3 md:h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                      Back to Mumbai Rentals
+                    </Link>
+                  </div>
                 </h1>
                 {/* <p className="text-lg text-gray-600 mb-4 md:mb-8 max-w-4xl mx-auto">
                 GharConnect is a community-based platform to find rental homes, trusted local services, marketplace deals and to connect with neighbors. It is a one stop destination for all the community requirements.
@@ -1075,6 +1094,171 @@ export default function Home() {
                     }`}
                   />
                 ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+                {/* Property Management Services Section */}
+                <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-0 pt-1 md:pt-2">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
+          <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+            <div className="py-6 flex flex-col items-center justify-center gap-4 relative">
+              {/* Content */}
+              <div className="flex-1 text-center w-full">
+                {carouselIndex === 0 ? (
+                  <>
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 break-words w-full max-w-full">
+                      Marketplace
+                    </h3>
+                    <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
+                      Discover items for sale from your community. Buy or list your own items for neighbors to see.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 break-words w-full max-w-full">
+                      Social
+                    </h3>
+                    <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
+                      Join the conversation! Ask questions, share updates, and connect with your neighbors in Worli.
+                    </p>
+                  </>
+                )}
+                <div className="w-full max-w-xl md:max-w-4xl mx-auto my-4 overflow-x-hidden">
+                  <div
+                    className="relative overflow-hidden rounded-lg w-full max-w-full"
+                    ref={carouselRef}
+                    onTouchStart={e => { if (!isMobile) handleCarouselTouchStart(e); }}
+                    onTouchMove={e => { if (!isMobile) handleCarouselTouchMove(e); }}
+                    onTouchEnd={() => { if (!isMobile) handleCarouselTouchEnd(); }}
+                  >
+                    <div
+                      className="flex transition-transform duration-500 w-full max-w-full"
+                      style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
+                    >
+                      {/* Marketplace Slide */}
+                      <div className="min-w-full w-full max-w-full bg-gradient-to-br from-blue-50 to-indigo-100 p-3 flex flex-col items-center text-center">
+                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-md">
+                          <span className="text-lg">🛍️</span>
+                        </div>
+                        {/* <h4 className="text-sm font-bold text-gray-900 mb-1 leading-none">Marketplace</h4> */}
+                        <div className="w-full overflow-x-auto">
+                          <div className="flex flex-row gap-2 w-full justify-center flex-nowrap">
+                            {marketplaceProducts.length === 0 ? (
+                              <div className="flex-1 text-center text-gray-500 py-3">No products listed yet.</div>
+                            ) : (
+                              (isMobile ? marketplaceProducts.slice(0, 2) : marketplaceProducts).map((product) => (
+                                <div key={product.id} className="bg-white rounded-md shadow p-1 flex flex-col items-center text-center border border-gray-100 hover:shadow-md transition-all min-w-[110px] md:min-w-[160px] max-w-[140px] md:max-w-[200px] w-full">
+                                  <div className="w-full h-14 md:h-20 flex items-center justify-center mb-1 overflow-hidden rounded">
+                                    {product.images && product.images.length > 0 ? (
+                                      <img
+                                        src={product.images[0]}
+                                        alt={product.title}
+                                        className="object-cover w-full h-full"
+                                        onError={e => (e.currentTarget.src = '/placeholder-image.svg')}
+                                      />
+                                    ) : (
+                                      <div className="w-full h-full flex items-center justify-center text-gray-300 bg-gray-100 text-xs">No Image</div>
+                                    )}
+                                  </div>
+                                  <div className="font-semibold text-[11px] md:text-sm text-gray-900 line-clamp-2 mb-0.5">{product.title}</div>
+                                  <div className="text-[9px] md:text-xs text-gray-500 mb-0.5">{product.condition}</div>
+                                  <div className="text-xs md:text-sm font-bold text-green-600 mb-0.5">₹{product.price.toLocaleString('en-IN')}</div>
+                                  {product.building_name && (
+                                    <div className="text-[8px] md:text-xs text-gray-400 mb-0.5 truncate">{product.building_name}</div>
+                                  )}
+                                </div>
+                              ))
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex flex-row justify-center items-end gap-2 md:gap-3 mt-2 w-full grow">
+                          <a 
+                            href="/parel/marketplace" 
+                            className="inline-flex items-center px-2 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 rounded text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
+                            style={{ minHeight: '24px' }}
+                          >
+                            <span>Browse</span>
+                            <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                      {/* Connect Slide */}
+                      <div className="min-w-full w-full max-w-full bg-gradient-to-br from-blue-50 to-indigo-100 p-3 flex flex-col items-center text-center">
+                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-md">
+                          <span className="text-lg">💬</span>
+                        </div>
+                        {/* <h4 className="text-sm font-bold text-gray-900 mb-1 leading-none">Connect</h4> */}
+                        <div className="w-full overflow-x-auto">
+                          <div className="flex flex-row gap-2 w-full justify-center flex-nowrap">
+                            {connectPosts.length === 0 ? (
+                              <div className="flex-1 text-center text-gray-500 py-3">No posts yet.</div>
+                            ) : (
+                              (isMobile ? connectPosts.slice(0, 2) : connectPosts).map((post) => (
+                                <div key={post.id} className="p-1 bg-white rounded-md shadow-sm border border-gray-100 hover:shadow-md transition-shadow mb-0 w-full min-w-[140px] md:min-w-[200px] max-w-[180px] md:max-w-[280px] flex-shrink-0 flex flex-col items-start">
+                                  <div className="flex items-center justify-between mb-0.5 w-full">
+                                    <span className="text-xs md:text-sm font-bold text-gray-800 bg-indigo-100 px-1 py-0.5 rounded-full truncate max-w-[70%]">{post.title}</span>
+                                    <span className="text-xs md:text-sm text-gray-500 bg-gray-100 px-1 py-0.5 rounded-full">{new Date(post.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
+                                  </div>
+                                  <p className="text-xs md:text-sm text-gray-600 leading-relaxed line-clamp-4 w-full">{post.body}</p>
+                                </div>
+                              ))
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex flex-row justify-center items-end gap-2 md:gap-3 mt-1 w-full grow">
+                          <a 
+                            href="/parel/connect" 
+                            className="inline-flex items-center px-2 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 rounded text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
+                            style={{ minHeight: '24px' }}
+                          >
+                            <span>Join</span>
+                            <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    {/* Carousel Arrows (mobile only) */}
+                    <button
+                      className="block md:hidden absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-3 shadow hover:bg-opacity-100 transition z-30 pointer-events-auto"
+                      onClick={handlePrev}
+                      aria-label="Previous"
+                      style={{ left: 4 }}
+                    >
+                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                    </button>
+                    <button
+                      className="block md:hidden absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-3 shadow hover:bg-opacity-100 transition z-30 pointer-events-auto"
+                      onClick={handleNext}
+                      aria-label="Next"
+                    >
+                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                    </button>
+                    {/* Carousel Arrows (desktop only) */}
+                    <button
+                      className="hidden md:block absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-opacity-100 transition z-10"
+                      onClick={handlePrev}
+                      aria-label="Previous"
+                      style={{ left: 4 }}
+                    >
+                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                    </button>
+                    <button
+                      className="hidden md:block absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-opacity-100 transition z-10"
+                      onClick={handleNext}
+                      aria-label="Next"
+                      style={{ right: 4 }}
+                    >
+                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

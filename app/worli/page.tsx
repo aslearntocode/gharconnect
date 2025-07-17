@@ -550,9 +550,9 @@ export default function Home() {
         <title>Rent, Services & Delivery in Worli | GharConnect</title>
         <meta name="description" content="Find rental properties, local services, and delivery options in Worli. Connect with residents, businesses, and property owners on GharConnect." />
       </Head>
-      <main className="min-h-screen bg-white pt-16">
+      <main className="min-h-screen bg-white pt-12 md:pt-16">
         <Header isScrolled={isScrolled} />
-        <div className="flex flex-col items-center mb-8 mt-2">
+        <div className="flex flex-col items-center mb-4 md:mb-8 mt-0 md:mt-2">
           <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700 italic bg-indigo-50 px-8 md:px-16 py-2 rounded-lg w-full max-w-1xl">
             Connecting Residents and Businesses Within a Location
           </div>
@@ -637,17 +637,36 @@ export default function Home() {
         </div>
         {/* Hero Section */}
         <div className="relative bg-gradient-to-br from-gray-50 via-white to-gray-50 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 md:py-4">
             <div className="w-full">
               {/* Content */}
               <div className="text-center">
+                {/* Mobile Navigation Buttons - Above heading */}
+                <div className="md:hidden flex flex-row gap-2 mb-2 justify-start">
+                  <Link href="/mumbai/services" className="inline-flex items-center px-1 py-0.5 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-[10px]">
+                    <svg className="w-2 h-2 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                    Back to Other Areas
+                  </Link>
+                  <Link href="/mumbai/rent" className="inline-flex items-center px-1 py-0.5 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-[10px]">
+                    <svg className="w-2 h-2 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                    Back to Mumbai Rentals
+                  </Link>
+                </div>
+                
                 <h1 className="text-[24px] md:text-[48px] leading-tight font-bold mb-6 flex flex-wrap items-center gap-2 justify-center">
                   <span className="text-black">Welcome to GharConnect </span>
                   <span className="text-indigo-600">@Worli</span>
-                  <Link href="/mumbai/services" className="inline-flex items-center px-2 py-1 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-xs ml-2">
-                    <svg className="w-3 h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
-                    Back to Other Areas
-                  </Link>
+                  {/* Desktop Navigation Buttons - Hidden on mobile */}
+                  <div className="hidden md:flex flex-col gap-2 ml-2">
+                    <Link href="/mumbai/services" className="inline-flex items-center px-1 md:px-2 py-0.5 md:py-1 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-[10px] md:text-xs">
+                      <svg className="w-2 h-2 md:w-3 md:h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                      Back to Other Areas
+                    </Link>
+                    <Link href="/mumbai/rent" className="inline-flex items-center px-1 md:px-2 py-0.5 md:py-1 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-[10px] md:text-xs">
+                      <svg className="w-2 h-2 md:w-3 md:h-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
+                      Back to Mumbai Rentals
+                    </Link>
+                  </div>
                 </h1>
                 {/* <p className="text-lg text-gray-600 mb-4 md:mb-8 max-w-4xl mx-auto">
                 GharConnect is a community-based platform to find rental homes, trusted local services, marketplace deals and to connect with neighbors. It is a one stop destination for all the community requirements.

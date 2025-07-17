@@ -604,7 +604,7 @@ export default function BandraConnectPage() {
                       {/* Top row: area, avatar, time */}
                       <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500 mb-1">
                         <img src="/GC_Logo.png" alt="avatar" className="w-8 h-8 rounded-full border object-cover" />
-                        <span className="font-semibold text-gray-800">r/Bandra</span>
+                        <span className="font-semibold text-gray-800">gc/Bandra</span>
                         <span className="mx-1">•</span>
                         <span>{timeAgo(post.created_at)}</span>
                       </div>
