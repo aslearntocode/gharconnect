@@ -1130,9 +1130,9 @@ export default function Home() {
                   <div
                     className="relative overflow-hidden rounded-lg w-full max-w-full"
                     ref={carouselRef}
-                    onTouchStart={e => { if (!isMobile) handleCarouselTouchStart(e); }}
-                    onTouchMove={e => { if (!isMobile) handleCarouselTouchMove(e); }}
-                    onTouchEnd={() => { if (!isMobile) handleCarouselTouchEnd(); }}
+                    onTouchStart={e => { if (!isMobile) handleTouchStart(e); }}
+                    onTouchMove={e => { if (!isMobile) handleTouchMove(e); }}
+                    onTouchEnd={() => { if (!isMobile) handleTouchEnd(); }}
                   >
                     <div
                       className="flex transition-transform duration-500 w-full max-w-full"
