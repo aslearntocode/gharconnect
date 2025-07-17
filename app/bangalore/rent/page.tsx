@@ -1,8 +1,60 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function BangaloreRentTypeSelection() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const packages = [
+    {
+      name: 'Silver',
+      price: '₹2,999',
+      icon: '🥈',
+      description: 'Perfect for property owners who want essential services',
+      features: [
+        'No Brokerage Listing',
+        'Legal Paperwork (Cost borne by owner)',
+        '10 Property Visits for Tenants'
+      ],
+      borderColor: 'border-gray-200',
+      bgColor: 'bg-gray-100'
+    },
+    {
+      name: 'Gold',
+      price: '₹4,999',
+      icon: '🥇',
+      description: 'Package includes premium services for your property',
+      features: [
+        'Everything in Silver',
+        'Professional Property Photoshoot',
+        '10 Additional Property Visits for Tenants'
+      ],
+      borderColor: 'border-yellow-400',
+      bgColor: 'bg-yellow-100',
+      isPopular: true
+    },
+    {
+      name: 'Platinum',
+      price: '₹6,999',
+      icon: '💎',
+      description: 'Complete peace of mind for property owners',
+      features: [
+        'Everything in Gold',
+        'Property Readiness Services including Painting, Carpentry, etc. (Bill paid by owner)'
+      ],
+      borderColor: 'border-purple-400',
+      bgColor: 'bg-purple-100'
+    }
+  ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % packages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + packages.length) % packages.length);
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-white to-indigo-50 pb-12 px-2 pt-8">
       {/* Back to All Cities Button */}
@@ -47,64 +99,173 @@ export default function BangaloreRentTypeSelection() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Why List Your Property With Us?</h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                Experience hassle-free property listing with our comprehensive services
+              <p className="text-lg text-gray-600 max-w-5xl mx-auto">
+                Comprehensive packages designed to make property listing hassle-free <br/>
+                <span className="text-lg text-gray-500 font-bold text-indigo-600">No Brokerage Ever</span>
               </p>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 max-w-6xl mx-auto">
-              {/* Benefit 1 */}
-              <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">💰</span>
+            {/* Mobile Carousel */}
+            <div className="md:hidden">
+              <div className="relative">
+                <div className="overflow-hidden">
+                  <div 
+                    className="flex transition-transform duration-300 ease-in-out"
+                    style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                  >
+                    {packages.map((pkg, index) => (
+                      <div key={index} className="w-full flex-shrink-0 px-2">
+                        <div className={`bg-white rounded-xl shadow-lg p-4 text-center hover:shadow-xl transition-shadow border-2 ${pkg.borderColor} relative`}>
+                          {pkg.isPopular && (
+                            <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
+                              <span className="bg-yellow-400 text-white px-2 py-0.5 rounded-full text-xs font-semibold">MOST POPULAR</span>
+                            </div>
+                          )}
+                          <div className={`w-12 h-12 ${pkg.bgColor} rounded-full flex items-center justify-center mx-auto mb-3`}>
+                            <span className="text-xl">{pkg.icon}</span>
+                          </div>
+                          <h3 className="text-xl font-bold text-gray-900 mb-1">{pkg.name}</h3>
+                          <div className="text-2xl font-bold text-indigo-600 mb-1">{pkg.price}</div>
+                          <p className="text-gray-600 text-xs mb-4">
+                            {pkg.description}
+                          </p>
+                          <ul className="text-left text-gray-700 space-y-2 mb-4">
+                            {pkg.features.map((feature, featureIndex) => (
+                              <li key={featureIndex} className="flex items-start">
+                                <svg className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                                <span className="text-sm">{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">No Brokerage & No Listing Fees</h3>
-                <p className="text-gray-600 text-sm">
-                  It's absolutely free and absolutely simple!!! No hidden charges, no commission fees.
+                
+                {/* Navigation Arrows */}
+                <button
+                  onClick={prevSlide}
+                  className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-lg hover:shadow-xl transition-shadow"
+                >
+                  <svg className="w-5 h-5 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={nextSlide}
+                  className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-lg hover:shadow-xl transition-shadow"
+                >
+                  <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Desktop Grid */}
+            <div className="hidden md:grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {/* Silver Package */}
+              <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow border-2 border-gray-200">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🥈</span>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Silver</h3>
+                <div className="text-3xl font-bold text-indigo-600 mb-2">₹2,999</div>
+                <p className="text-gray-600 text-sm mb-6">
+                  Perfect for property owners who want essential services
                 </p>
+                <ul className="text-left text-gray-700 space-y-3 mb-6">
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span>No Brokerage Listing</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span>Legal Paperwork</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span>10 Property Visits for Tenants</span>
+                  </li>
+                </ul>
               </div>
 
-              {/* Benefit 2 */}
-              <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🤝</span>
+              {/* Gold Package */}
+              <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow border-2 border-yellow-400 relative">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-yellow-400 text-white px-3 py-1 rounded-full text-sm font-semibold">MOST POPULAR</span>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Legal <br/> Paperwork</h3>
-                <p className="text-gray-600 text-sm">
-                  We will help you with the legal paperwork and ensure that you are compliant with the law.
+                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-2xl">🥇</span>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Gold</h3>
+                <div className="text-3xl font-bold text-indigo-600 mb-2">₹4,999</div>
+                <p className="text-gray-600 text-sm mb-6">
+                  Package includes premium services for your property
                 </p>
+                <ul className="text-left text-gray-700 space-y-3 mb-6">
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span>Everything in Silver</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span>Professional Property Photoshoot</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span>10 Additional Property Visits for Tenants</span>
+                  </li>
+                </ul>
               </div>
 
-              {/* Benefit 3 */}
-              <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-                <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🏠</span>
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Managed Visits Service</h3>
-                <p className="text-gray-600 text-sm">
-                  GharConnect arranges and conducts property visits on behalf of the owner.
-                </p>
-              </div>
-
-              {/* Benefit 4 */}
-              <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
+              {/* Platinum Package */}
+              <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow border-2 border-purple-400">
                 <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">📸</span>
+                  <span className="text-2xl">💎</span>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Professional Photoshoot</h3>
-                <p className="text-gray-600 text-sm">
-                  Professional photoshoot service so people can see the apartment without actually visiting it.
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">Platinum</h3>
+                <div className="text-3xl font-bold text-indigo-600 mb-2">₹6,999</div>
+                <p className="text-gray-600 text-sm mb-6">
+                  Complete peace of mind for property owners
                 </p>
+                <ul className="text-left text-gray-700 space-y-3 mb-6">
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span>Everything in Gold</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span>Timely Property Readiness Services including Painting, Carpentry, Repairing, etc.</span>
+                  </li>
+                </ul>
               </div>
+            </div>
 
-              {/* Benefit 5 */}
-              <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow">
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🔧</span>
-                </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">On-Demand Services</h3>
-                <p className="text-gray-600 text-sm">
-                  Painting, carpentry and more services to get your house ready for the next tenant.
+            {/* Important Note */}
+            <div className="text-center mt-8 mb-6">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-2xl mx-auto">
+                <p className="text-blue-800 text-sm">
+                  <strong>Important:</strong> Legal paperwork costs and property readiness services (painting, carpentry, etc.) are to be borne by the property owner. We provide the service coordination and quality assurance.
                 </p>
               </div>
             </div>
