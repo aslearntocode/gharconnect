@@ -57,5 +57,15 @@ export const vendors: Vendor[] = [
       unit: 'kg'
     }],
     mobile: '+91 9987066551 / 9004336536'
+  },
+  {
+    name: 'Rahman Coconut Delivery',
+    products: [{
+      name: 'Coconut',
+      description: 'Fresh coconuts',
+      price: 'Call for price',
+      unit: 'piece'
+    }],
+    mobile: '+91 82913 35456'
   }
 ]; 

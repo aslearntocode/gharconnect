@@ -248,6 +248,103 @@ export default function RentApartmentPage() {
           </div>
         </div>
       </main>
+      
+      {/* Related Searches Section */}
+      <div className="w-full max-w-7xl mx-auto mt-8 px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 md:p-8">
+          <div className="max-w-6xl mx-auto">
+            {/* Nearby Localities */}
+            <div className="mb-8">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Nearby Localities</h3>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                {[
+                  'Indiranagar', 'Koramangala', 'HSR Layout', 'JP Nagar', 'Banashankari',
+                  'Jayanagar', 'Basavanagudi', 'Malleswaram', 'Rajajinagar', 'Vijayanagar',
+                  'Hebbal', 'Yelahanka', 'Whitefield', 'Marathahalli', 'Electronic City',
+                  'Sarjapur Road', 'Bellandur', 'HSR Layout', 'Bommanahalli', 'BTM Layout'
+                ].map((locality, index) => (
+                  <Link 
+                    key={index} 
+                    href={`/bangalore/rent/apartment?locality=${locality.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-full text-xs md:text-sm font-medium transition-colors"
+                  >
+                    2 BHK Flats for rent in {locality}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* People Also Searched For */}
+            <div className="mb-8">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">People Also Searched For</h3>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                {[
+                  '1 BHK Flats for rent in Koramangala',
+                  '3 BHK Flats for rent in Koramangala',
+                  '4 BHK Flats for rent in Koramangala',
+                  '1 RK Flats for rent in Koramangala',
+                  '4+ BHK Flats for rent in Koramangala',
+                  'Villas for rent in Koramangala',
+                  'Fully Furnished Flats for rent in Koramangala',
+                  'UnFurnished Flats for rent in Koramangala'
+                ].map((search, index) => (
+                  <Link 
+                    key={index} 
+                    href={`/bangalore/rent/apartment?search=${search.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-full text-xs md:text-sm font-medium transition-colors"
+                  >
+                    {search}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Top Localities */}
+            <div className="mb-8">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Top Localities</h3>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                {[
+                  'Whitefield', 'Electronic City', 'Sarjapur Road', 'Bellandur', 'HSR Layout',
+                  'Marathahalli', 'Hebbal', 'Yelahanka', 'Indiranagar', 'Koramangala',
+                  'JP Nagar', 'Banashankari', 'Jayanagar', 'Basavanagudi', 'Malleswaram',
+                  'Rajajinagar', 'Vijayanagar', 'BTM Layout', 'Bommanahalli', 'Domlur'
+                ].map((locality, index) => (
+                  <Link 
+                    key={index} 
+                    href={`/bangalore/rent/apartment?locality=${locality.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-full text-xs md:text-sm font-medium transition-colors"
+                  >
+                    2 BHK Flats for rent in {locality}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Top Societies */}
+            <div>
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Top Societies</h3>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                {[
+                  'Prestige Shantiniketan', 'Brigade Gateway', 'Sobha Dream Acres', 'Godrej Woodsman Estate',
+                  'Prestige Lakeside Habitat', 'Brigade Lakefront', 'Sobha City', 'Godrej Green Cove',
+                  'Prestige Tech Park', 'Brigade Metropolis', 'Sobha Royal Pavilion', 'Godrej Palm Grove',
+                  'Prestige Waterford', 'Brigade Gardenia', 'Sobha Hibiscus', 'Godrej Park Retreat',
+                  'Prestige Misty Waters', 'Brigade Meadows'
+                ].map((society, index) => (
+                  <Link 
+                    key={index} 
+                    href={`/bangalore/rent/apartment?society=${society.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-full text-xs md:text-sm font-medium transition-colors"
+                  >
+                    {society}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       {/* Property Inquiry Modal */}
       <PropertyInquiryModal
         isOpen={inquiryModalOpen}

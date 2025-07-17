@@ -249,6 +249,103 @@ export default function RentApartmentPage() {
           </div>
         </div>
       </main>
+      
+      {/* Related Searches Section */}
+      <div className="w-full max-w-7xl mx-auto mt-8 px-4 sm:px-6 lg:px-8">
+        <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 md:p-8">
+          <div className="max-w-6xl mx-auto">
+            {/* Nearby Localities */}
+            <div className="mb-8">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Nearby Localities</h3>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                {[
+                  'Lower Parel', 'Doctor Compound', 'Chinchpokli', 'Dadar East', 'Sewri',
+                  'Jacob Circle', 'Worli', 'Prabhadevi', 'Dadar', 'Mahalakshmi',
+                  'Wadala East', 'Dadar TT Road', 'Agripada', 'Byculla', 'South Bombay',
+                  'Dadar West', 'Arya Nagar', 'Madanpura', 'Wadala'
+                ].map((locality, index) => (
+                  <Link 
+                    key={index} 
+                    href={`/mumbai/rent/apartment?locality=${locality.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-full text-xs md:text-sm font-medium transition-colors"
+                  >
+                    2 BHK Flats for rent in {locality}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* People Also Searched For */}
+            <div className="mb-8">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">People Also Searched For</h3>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                {[
+                  '1 BHK Flats for rent in Parel',
+                  '3 BHK Flats for rent in Parel',
+                  '4 BHK Flats for rent in Parel',
+                  '1 RK Flats for rent in Parel',
+                  '4+ BHK Flats for rent in Parel',
+                  'Villas for rent in Parel',
+                  'Fully Furnished Flats for rent in Parel',
+                  'UnFurnished Flats for rent in Parel'
+                ].map((search, index) => (
+                  <Link 
+                    key={index} 
+                    href={`/mumbai/rent/apartment?search=${search.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-full text-xs md:text-sm font-medium transition-colors"
+                  >
+                    {search}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Top Localities */}
+            <div className="mb-8">
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Top Localities</h3>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                {[
+                  'Andheri East', 'Ghansoli', 'Navi Mumbai', 'Kalyan West', 'Goregaon',
+                  'Nerul', 'Mira Road East', 'Andheri West', 'Airoli', 'Chembur',
+                  'Malad West', 'Borivali West', 'Kandivali West', 'Kopar Khairane', 'Powai',
+                  'Kharghar', 'Goregaon West', 'Thane', 'Ulwe', 'Vashi'
+                ].map((locality, index) => (
+                  <Link 
+                    key={index} 
+                    href={`/mumbai/rent/apartment?locality=${locality.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-full text-xs md:text-sm font-medium transition-colors"
+                  >
+                    2 BHK Flats for rent in {locality}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Top Societies */}
+            <div>
+              <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-4">Top Societies</h3>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                {[
+                  'Sai Siddhi Chs', 'L&T Crescent Bay', 'Ashok Gardens', 'Dosti Flamingoes',
+                  'Shiwani Building', 'Habib Mansion', 'Divya Apartment', 'Ashok Towers',
+                  'Choksi Mansion', 'Omkar Vedha', 'Om Residency', 'Tilak nagar varsha chs ltd',
+                  'Nana Palkar Smruti samiti', 'Ruparel Ariana', 'Lodha Park',
+                  'Ashok Tower C (Ashoka Towers)', 'World One', 'Piramal Heights', 'L&T Skyline'
+                ].map((society, index) => (
+                  <Link 
+                    key={index} 
+                    href={`/mumbai/rent/apartment?society=${society.toLowerCase().replace(/\s+/g, '-')}`}
+                    className="inline-block px-3 py-1.5 md:px-4 md:py-2 bg-gray-100 hover:bg-indigo-100 text-gray-700 hover:text-indigo-700 rounded-full text-xs md:text-sm font-medium transition-colors"
+                  >
+                    {society}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       {/* Property Inquiry Modal */}
       <PropertyInquiryModal
         isOpen={inquiryModalOpen}
