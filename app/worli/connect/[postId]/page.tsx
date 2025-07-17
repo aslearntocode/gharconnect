@@ -194,13 +194,25 @@ export default function PostDetailPage() {
                     onSubmit={e => handleNewComment(e, comment.id)}
                     className="flex gap-2 mt-2"
                   >
-                    <input
-                      className="flex-1 border rounded p-2"
+                    <textarea
+                      className="flex-1 border rounded p-2 resize-none min-h-[40px] max-h-32 overflow-y-auto"
                       placeholder="Reply..."
                       value={newComment}
-                      onChange={e => setNewComment(e.target.value)}
+                      onChange={e => {
+                        setNewComment(e.target.value);
+                        // Auto-resize textarea
+                        e.target.style.height = 'auto';
+                        e.target.style.height = Math.min(e.target.scrollHeight, 128) + 'px';
+                      }}
+                      onKeyDown={e => {
+                        if (e.key === 'Enter' && !e.shiftKey) {
+                          e.preventDefault();
+                          handleNewComment(e, comment.id);
+                        }
+                      }}
                       required
                       aria-label="Reply to comment"
+                      rows={1}
                     />
                     <Button type="submit" disabled={commentLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
                       {commentLoading ? 'Posting...' : 'Reply'}
@@ -319,13 +331,25 @@ export default function PostDetailPage() {
                   <section>
                     <h3 className="mb-2 font-semibold">Add a Comment</h3>
                     <form onSubmit={e => handleNewComment(e, null)} className="flex gap-2 mt-2">
-                      <input
-                        className="flex-1 border rounded p-2"
+                      <textarea
+                        className="flex-1 border rounded p-2 resize-none min-h-[40px] max-h-32 overflow-y-auto"
                         placeholder="Add a comment..."
                         value={newComment}
-                        onChange={e => setNewComment(e.target.value)}
+                        onChange={e => {
+                          setNewComment(e.target.value);
+                          // Auto-resize textarea
+                          e.target.style.height = 'auto';
+                          e.target.style.height = Math.min(e.target.scrollHeight, 128) + 'px';
+                        }}
+                        onKeyDown={e => {
+                          if (e.key === 'Enter' && !e.shiftKey) {
+                            e.preventDefault();
+                            handleNewComment(e, null);
+                          }
+                        }}
                         required
                         aria-label="Add a comment"
+                        rows={1}
                       />
                       <Button type="submit" disabled={commentLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
                         {commentLoading ? 'Posting...' : 'Comment'}
