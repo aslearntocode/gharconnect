@@ -12,6 +12,7 @@ export interface Apartment {
   pincode: string;
   location?: string; // Parel or Worli
   apartment_type: string;
+  accommodation_type?: string; // 'PG' or 'Apartment'
   floor_number?: number;
   total_floors?: number;
   carpet_area: number;
@@ -23,6 +24,8 @@ export interface Apartment {
   parking_type?: string;
   amenities?: string[];
   pet_friendly: boolean;
+  veg_non_veg_allowed?: boolean;
+  balcony_count?: number;
   bachelor_allowed: boolean;
   preferred_tenant_type?: string;
   contact_name: string;

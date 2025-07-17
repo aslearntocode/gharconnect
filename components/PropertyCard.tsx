@@ -30,6 +30,9 @@ interface PropertyCardProps {
   isExpanded?: boolean;
   propertyId: string;
   status?: string;
+  availableFrom?: string;
+  petFriendly?: boolean;
+  vegNonVegAllowed?: boolean;
 }
 
 const occupancyIcons: Record<string, React.ReactNode> = {
@@ -63,6 +66,9 @@ export default function PropertyCard({
   isExpanded = false,
   propertyId,
   status,
+  availableFrom,
+  petFriendly,
+  vegNonVegAllowed,
 }: PropertyCardProps) {
   const [expanded, setExpanded] = useState(isExpanded);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -76,6 +82,26 @@ export default function PropertyCard({
         ? { src: url, type: "video" }
         : { src: url }
     );
+
+  // Helper to format availability date
+  const getAvailabilityText = (availableFrom?: string) => {
+    if (!availableFrom) return 'Immediate Possession';
+    
+    const availableDate = new Date(availableFrom);
+    const today = new Date();
+    
+    // If the date has already passed, show immediate possession
+    if (availableDate <= today) {
+      return 'Immediate Possession';
+    }
+    
+    // Otherwise show the formatted date
+    return availableDate.toLocaleDateString('en-IN', {
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
+  };
 
   const galleryImages = images.length > 0 ? images : [image];
 
@@ -180,7 +206,7 @@ export default function PropertyCard({
           {/* Availability Button */}
           <div className="flex items-center gap-2 mt-1 md:mt-0">
             {status === 'inactive' ? (
-              <span className="w-full sm:w-auto flex-grow text-center px-6 py-2.5 bg-gray-300 text-gray-600 font-medium text-xs leading-normal uppercase rounded shadow-md cursor-not-allowed select-none">
+              <span className="w-full sm:w-auto flex-grow text-center px-4 py-2 bg-gray-300 text-gray-600 font-medium text-xs leading-normal uppercase rounded shadow-md cursor-not-allowed select-none">
                 Already Rented
               </span>
             ) : (
@@ -194,6 +220,38 @@ export default function PropertyCard({
         {expanded && expandedContent && (
           <div className="mt-3 border-t pt-3 text-xs text-gray-700">
             {expandedContent}
+          </div>
+        )}
+        
+        {/* Additional Property Details */}
+        {(availableFrom || petFriendly !== undefined || vegNonVegAllowed !== undefined) && (
+          <div className="mt-3 border-t pt-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              {availableFrom && (
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-500">📅 Available:</span>
+                  <span className="font-medium text-green-600">{getAvailabilityText(availableFrom)}</span>
+                </div>
+              )}
+              
+              {petFriendly !== undefined && (
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-500">🐕 Pets:</span>
+                  <span className={`font-medium ${petFriendly ? 'text-green-600' : 'text-red-600'}`}>
+                    {petFriendly ? 'Allowed' : 'Not Allowed'}
+                  </span>
+                </div>
+              )}
+              
+              {vegNonVegAllowed !== undefined && (
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-500">🍽️ Food:</span>
+                  <span className={`font-medium ${vegNonVegAllowed ? 'text-green-600' : 'text-orange-600'}`}>
+                    {vegNonVegAllowed ? 'Non-Veg Allowed' : 'Veg Only'}
+                  </span>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

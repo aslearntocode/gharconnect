@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { getSupabaseClient } from '@/lib/supabase';
 import { Apartment } from '@/types/apartment';
+import PropertyDetailGrid from '@/components/PropertyDetailGrid';
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import PropertyInquiryModal from '@/components/PropertyInquiryModal';
+import { FiMapPin, FiPhone, FiArrowLeft, FiHeart, FiShare2 } from 'react-icons/fi';
+import Link from 'next/link';
 
 export default function PropertyDetailsPage() {
   const { id } = useParams();
@@ -20,6 +23,7 @@ export default function PropertyDetailsPage() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const [inquiryModalOpen, setInquiryModalOpen] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
     async function fetchProperty() {
@@ -50,115 +54,226 @@ export default function PropertyDetailsPage() {
         : { src: url }
     );
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  if (error || !property) return <div className="min-h-screen flex items-center justify-center text-red-600">{error || "Property not found."}</div>;
+  // Helper to format description as bullet points
+  const formatDescriptionAsBullets = (description: string): string[] => {
+    if (!description) return [];
+    return description
+      .split(/[,;•\n]/)
+      .map(feature => feature.trim())
+      .filter(feature => feature.length > 0)
+      .map(feature => feature.replace(/^[-•*]\s*/, ''));
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-16">
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error || !property) {
+    return (
+      <div className="min-h-screen bg-gray-50 pt-16">
+        <div className="flex justify-center items-center min-h-[60vh]">
+          <div className="text-center">
+            <p className="text-red-600 mb-4">{error || 'Property not found'}</p>
+            <Link href="/" className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+              Back to Home
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const galleryImages = property.images && property.images.length > 0 ? property.images : ['/default-apartment.jpg'];
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-12">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg mt-8 p-4 md:p-8">
-        <button
-          className="mb-4 text-indigo-600 hover:underline text-sm font-medium"
-          onClick={() => router.back()}
-        >
-          ← Back
-        </button>
-        {/* Gallery on top, text below */}
-        <div className="w-full mb-6">
-          {property.images && property.images.length > 0 ? (
-            <>
-              <img
-                src={property.images[lightboxIndex]}
-                alt="Property"
-                className="w-full h-64 object-cover rounded-lg cursor-zoom-in"
-                onClick={() => setLightboxOpen(true)}
-              />
-              <div className="flex gap-2 mt-2 overflow-x-auto pb-1">
-                {property.images.slice(0, 6).map((img, i) => (
-                  <img
-                    key={i}
-                    src={img}
-                    alt={`Thumb ${i+1}`}
-                    className={`w-20 h-20 object-cover rounded border-2 ${lightboxIndex === i ? 'border-indigo-500' : 'border-white'} cursor-pointer flex-shrink-0`}
-                    onClick={() => setLightboxIndex(i)}
-                  />
-                ))}
-                {property.images.length > 6 && (
-                  <span className="w-20 h-20 flex items-center justify-center bg-gray-200 rounded text-xs font-semibold">+{property.images.length - 6} more</span>
-                )}
-              </div>
-              <Lightbox
-                open={lightboxOpen}
-                close={() => setLightboxOpen(false)}
-                slides={getMediaSlides(property.images) as any}
-                index={lightboxIndex}
-                plugins={[Thumbnails, Zoom]}
-                render={{
-                  slide: ({ slide }) =>
-                    (slide as any).type === "video" ? (
-                      <video
-                        src={slide.src}
-                        controls
-                        style={{ width: "100%", height: "100%", background: "#000" }}
-                      />
-                    ) : undefined,
-                }}
-              />
-            </>
-          ) : (
-            <img src="/default-apartment.jpg" alt="Property" className="w-full h-64 object-cover rounded-lg" />
-          )}
-        </div>
-        {/* Details below gallery */}
-        <div className="w-full flex flex-col gap-3">
-          <h1 className="text-2xl font-bold text-gray-900 mb-1">{property.building_name || 'Property'}</h1>
-          <div className="text-blue-700 font-medium mb-1">{property.location}</div>
-          <div className="text-gray-700 mb-1">{property.street_name}, {property.city}, {property.state} - {property.pincode}</div>
-          <div className="flex flex-wrap gap-2 mb-1">
-            <span className="bg-purple-100 text-purple-700 text-xs font-semibold px-3 py-1 rounded-full">{property.apartment_type}</span>
-            <span className="bg-cyan-100 text-cyan-700 text-xs font-semibold px-3 py-1 rounded-full">{property.carpet_area} sq.ft</span>
-            <span className="bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">{property.furnishing_status}</span>
-          </div>
-          <div className="text-xl font-bold text-gray-900 mb-1">₹ {property.rent_amount?.toLocaleString()} <span className="text-base font-normal text-gray-500">/mo</span></div>
-          <div className="text-gray-700 mb-1">Deposit: <span className="font-semibold">₹{property.security_deposit?.toLocaleString()}</span></div>
-          <div className="text-gray-700 mb-1">Available From: <span className="font-semibold">{property.available_from ? new Date(property.available_from).toLocaleDateString() : '-'}</span></div>
-          <div className="text-gray-700 mb-1">Status: <span className="font-semibold capitalize">{property.status}</span></div>
-          {property.description && (
-            <div className="mt-2">
-              <div className="font-semibold mb-1">Description:</div>
-              <div className="text-gray-700 whitespace-pre-line text-sm">{property.description}</div>
-            </div>
-          )}
-          {property.amenities && property.amenities.length > 0 && (
-            <div className="mt-2">
-              <div className="font-semibold mb-1">Amenities:</div>
-              <ul className="list-disc list-inside text-sm text-gray-700">
-                {property.amenities.map((a, i) => <li key={i}>{a}</li>)}
-              </ul>
-            </div>
-          )}
-          <div className="mt-6 flex flex-col gap-2">
-            {property.status === 'inactive' ? (
-              <span
-                className="w-full bg-gray-300 text-gray-600 px-3 py-2 rounded-lg font-semibold text-sm text-center cursor-not-allowed select-none"
-              >
-                Already Rented
-              </span>
-            ) : (
+    <div className="min-h-screen bg-gray-50 pt-16">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex items-center justify-between">
+            <Link 
+              href={property.accommodation_type === 'PG' 
+                ? `/${property.city?.toLowerCase()}/rent/pg` 
+                : `/${property.city?.toLowerCase()}/rent/apartment`
+              } 
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
+            >
+              <FiArrowLeft className="w-5 h-5" />
+              <span>Back to Properties</span>
+            </Link>
+            <div className="flex items-center gap-3">
               <button
-                className="w-full bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg font-semibold text-sm text-center cursor-pointer"
-                onClick={() => setInquiryModalOpen(true)}
+                onClick={() => setIsFavorite(!isFavorite)}
+                className="p-2 text-gray-400 hover:text-pink-500 transition-colors"
               >
-                Get Owner's Contact
+                <FiHeart className={`w-5 h-5 ${isFavorite ? 'text-pink-500 fill-pink-500' : ''}`} />
               </button>
+              <button className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                <FiShare2 className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Property Images */}
+            <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+              <div className="relative">
+                <img
+                  src={galleryImages[0]}
+                  alt="Property"
+                  className="w-full h-64 md:h-80 object-cover cursor-zoom-in"
+                  onClick={() => { setLightboxOpen(true); setLightboxIndex(0); }}
+                />
+                {/* Image count overlay */}
+                <div className="absolute bottom-4 right-4 bg-black/60 text-white text-sm font-semibold px-3 py-1 rounded-full">
+                  {galleryImages.length} Photo{galleryImages.length > 1 ? 's' : ''}
+                </div>
+              </div>
+              
+              {/* Thumbnails */}
+              {galleryImages.length > 1 && (
+                <div className="p-4 flex gap-2 overflow-x-auto">
+                  {galleryImages.map((img, i) => (
+                    <img
+                      key={i}
+                      src={img}
+                      alt={`Thumbnail ${i+1}`}
+                      className={`w-20 h-16 object-cover rounded cursor-pointer border-2 ${
+                        lightboxIndex === i ? 'border-indigo-500' : 'border-gray-200'
+                      }`}
+                      onClick={() => { setLightboxOpen(true); setLightboxIndex(i); }}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Property Details Grid */}
+            <PropertyDetailGrid apartment={property} />
+
+            {/* Description */}
+            {property.description && (
+              <div className="bg-white rounded-lg p-6 shadow-sm border">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Description</h3>
+                <div className="text-gray-700 space-y-2">
+                  {formatDescriptionAsBullets(property.description).map((bullet, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <span className="text-indigo-500 mt-1">•</span>
+                      <span>{bullet}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Amenities */}
+            {property.amenities && property.amenities.length > 0 && (
+              <div className="bg-white rounded-lg p-6 shadow-sm border">
+                <h3 className="text-lg font-semibold text-gray-900 mb-4">Amenities</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {property.amenities.map((amenity, index) => (
+                    <div key={index} className="flex items-center gap-2 text-gray-700">
+                      <span className="text-green-500">✓</span>
+                      <span className="text-sm">{amenity}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
+
+          {/* Sidebar - Floating on desktop, normal on mobile */}
+          <div className="lg:sticky lg:top-8 lg:self-start space-y-6">
+            {/* Price Card */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border">
+              <div className="text-center mb-6">
+                <div className="text-3xl font-bold text-gray-900">
+                  ₹{property.rent_amount.toLocaleString()}
+                </div>
+                <div className="text-gray-500">per month</div>
+              </div>
+              
+              {property.security_deposit && (
+                <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+                  <div className="text-sm text-gray-600">Security Deposit</div>
+                  <div className="font-semibold text-gray-900">
+                    ₹{property.security_deposit.toLocaleString()}
+                  </div>
+                </div>
+              )}
+
+              <div className="space-y-3">
+                {property.status === 'inactive' ? (
+                  <span className="w-full bg-gray-300 text-gray-600 py-3 px-4 rounded-lg font-semibold text-center cursor-not-allowed select-none block text-xs">
+                    Already Rented
+                  </span>
+                ) : (
+                  <button
+                    onClick={() => setInquiryModalOpen(true)}
+                    className="w-full bg-indigo-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors"
+                  >
+                    Get Owner Details
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Location Info */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border">
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">Location</h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <FiMapPin className="text-gray-400 w-5 h-5" />
+                  <div>
+                    <div className="font-medium text-gray-900">{property.building_name}</div>
+                    {property.tower && (
+                      <div className="text-sm text-gray-600">Tower: {property.tower}</div>
+                    )}
+                    <div className="text-sm text-gray-500">{property.street_name}, {property.city}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <PropertyInquiryModal
-          isOpen={inquiryModalOpen}
-          onClose={() => setInquiryModalOpen(false)}
-          apartment={property}
-        />
       </div>
+
+      {/* Property Inquiry Modal */}
+      <PropertyInquiryModal
+        isOpen={inquiryModalOpen}
+        onClose={() => setInquiryModalOpen(false)}
+        apartment={property}
+      />
+
+      {/* Lightbox */}
+      <Lightbox
+        open={lightboxOpen}
+        close={() => setLightboxOpen(false)}
+        slides={getMediaSlides(galleryImages) as any}
+        index={lightboxIndex}
+        plugins={[Thumbnails, Zoom]}
+        render={{
+          slide: ({ slide }) =>
+            (slide as any).type === "video" ? (
+              <video
+                src={slide.src}
+                controls
+                style={{ width: "100%", height: "100%", background: "#000" }}
+              />
+            ) : undefined,
+        }}
+      />
     </div>
   );
 } 

@@ -366,6 +366,9 @@ export default function PGPage() {
                 highlights={formatDescriptionAsBullets(apt.description || '').slice(0, 2)}
                 rent={apt.rent_amount || 0}
                 deposit={apt.security_deposit ? `₹${apt.security_deposit.toLocaleString()}` : undefined}
+                availableFrom={apt.available_from}
+                petFriendly={apt.pet_friendly}
+                vegNonVegAllowed={apt.veg_non_veg_allowed}
                 onBook={() => {
                                   setSelectedApartment(apt);
                                   setInquiryModalOpen(true);
