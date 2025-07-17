@@ -12,7 +12,7 @@ interface VendorRegistrationData {
   name: string
   mobile_no: string
   services: string
-  area: string
+  areas: string[]
   societies: string[]
 }
 
@@ -36,13 +36,14 @@ export default function VendorRegistration() {
     name: '',
     mobile_no: '',
     services: '',
-    area: '',
+    areas: [],
     societies: [],
   })
   const [selectedSlots, setSelectedSlots] = useState<Record<string, boolean>>({
     morning: false,
     afternoon: false,
     evening: false,
+    '24hours': false,
   })
   const [isLoading, setIsLoading] = useState(false)
 
@@ -54,9 +55,32 @@ export default function VendorRegistration() {
   }
 
   const handleSlotToggle = (slotId: string) => {
-    setSelectedSlots(prev => ({
+    if (slotId === '24hours') {
+      // If 24 hours is selected, unselect all other slots
+      setSelectedSlots({
+        morning: false,
+        afternoon: false,
+        evening: false,
+        '24hours': !selectedSlots['24hours'],
+      })
+    } else {
+      // If other slot is selected, unselect 24 hours
+      setSelectedSlots(prev => ({
+        ...prev,
+        [slotId]: !prev[slotId],
+        '24hours': false,
+      }))
+    }
+  }
+
+  const handleAreaToggle = (area: string) => {
+    setFormData(prev => ({
       ...prev,
-      [slotId]: !prev[slotId]
+      areas: prev.areas.includes(area)
+        ? prev.areas.filter(a => a !== area)
+        : [...prev.areas, area],
+      // Clear societies when areas change
+      societies: []
     }))
   }
 
@@ -69,22 +93,42 @@ export default function VendorRegistration() {
     }))
   }
 
+  const handleAnyInSocietyToggle = () => {
+    setFormData(prev => ({
+      ...prev,
+      societies: prev.societies.includes('Any in society')
+        ? prev.societies.filter(s => s !== 'Any in society')
+        : ['Any in society']
+    }))
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
 
     try {
-      const selectedSlotIds = Object.keys(selectedSlots).filter(slotId => selectedSlots[slotId])
+      // If 24 hours is selected, only send 24 hours slot
+      // Otherwise, send all selected slots except 24 hours
+      const selectedSlotIds = selectedSlots['24hours'] 
+        ? ['24hours']
+        : Object.keys(selectedSlots).filter(slotId => selectedSlots[slotId] && slotId !== '24hours')
       
-      const result = await insertVendorWithoutAuth({
-        name: formData.name,
-        mobile_no: formData.mobile_no,
-        services: formData.services,
-        area: formData.area,
-        societies: formData.societies,
-      }, selectedSlotIds)
+      // For each selected area, create a registration entry
+      const registrationPromises = formData.areas.map(async (area) => {
+        return await insertVendorWithoutAuth({
+          name: formData.name,
+          mobile_no: formData.mobile_no,
+          services: formData.services,
+          area: area,
+          societies: formData.societies,
+        }, selectedSlotIds)
+      })
 
-      if (result.success) {
+      const results = await Promise.all(registrationPromises)
+      const allSuccessful = results.every(result => result.success)
+      const firstError = results.find(result => !result.success)?.error
+
+      if (allSuccessful) {
         toast({
           title: 'Success',
           description: 'Vendor registration submitted successfully!',
@@ -95,18 +139,19 @@ export default function VendorRegistration() {
           name: '',
           mobile_no: '',
           services: '',
-          area: '',
+          areas: [],
           societies: [],
         })
         setSelectedSlots({
           morning: false,
           afternoon: false,
           evening: false,
+          '24hours': false,
         })
       } else {
         toast({
           title: 'Error',
-          description: result.error || 'Failed to submit registration',
+          description: firstError || 'Failed to submit registration',
           variant: 'destructive',
         })
       }
@@ -122,7 +167,10 @@ export default function VendorRegistration() {
     }
   }
 
-  const filteredSocieties = formData.area ? SOCIETIES.find(s => s.area === formData.area)?.societies || [] : []
+  // Get all societies for selected areas
+  const allSocietiesForSelectedAreas = formData.areas.flatMap(area => 
+    SOCIETIES.find(s => s.area === area)?.societies || []
+  )
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
@@ -170,41 +218,58 @@ export default function VendorRegistration() {
               </div>
             </div>
 
-            {/* Area and Societies */}
+            {/* Areas and Societies */}
             <div className="space-y-4">
-              <h2 className="text-lg font-semibold text-gray-900">Service Area</h2>
+              <h2 className="text-lg font-semibold text-gray-900">Service Areas</h2>
               
               <div>
-                <Label htmlFor="area">Area *</Label>
-                <select
-                  id="area"
-                  value={formData.area}
-                  onChange={(e) => handleInputChange('area', e.target.value)}
-                  className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                >
-                  <option value="">Select an area</option>
+                <Label>Select Areas *</Label>
+                <div className="grid grid-cols-2 gap-2 mt-2">
                   {AREAS.map(area => (
-                    <option key={area} value={area}>{area}</option>
+                    <label key={area} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={formData.areas.includes(area)}
+                        onChange={() => handleAreaToggle(area)}
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      />
+                      <span className="text-sm text-gray-700">{area}</span>
+                    </label>
                   ))}
-                </select>
+                </div>
               </div>
 
-              {formData.area && (
+              {formData.areas.length > 0 && (
                 <div>
                   <Label>Societies *</Label>
-                  <div className="grid grid-cols-2 gap-2 mt-2">
-                    {filteredSocieties.map(society => (
-                      <label key={society} className="flex items-center space-x-2">
-                        <input
-                          type="checkbox"
-                          checked={formData.societies.includes(society)}
-                          onChange={() => handleSocietyToggle(society)}
-                          className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                        />
-                        <span className="text-sm text-gray-700">{society}</span>
-                      </label>
-                    ))}
+                  <div className="space-y-2 mt-2">
+                    {/* Any in society option */}
+                    <label className="flex items-center space-x-2 p-2 bg-blue-50 rounded-md">
+                      <input
+                        type="checkbox"
+                        checked={formData.societies.includes('Any in society')}
+                        onChange={handleAnyInSocietyToggle}
+                        className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                      />
+                      <span className="text-sm font-medium text-blue-800">Any in society (Available for any society in selected areas)</span>
+                    </label>
+                    
+                    {/* Individual societies */}
+                    {!formData.societies.includes('Any in society') && (
+                      <div className="grid grid-cols-2 gap-2">
+                        {allSocietiesForSelectedAreas.map(society => (
+                          <label key={society} className="flex items-center space-x-2">
+                            <input
+                              type="checkbox"
+                              checked={formData.societies.includes(society)}
+                              onChange={() => handleSocietyToggle(society)}
+                              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                            />
+                            <span className="text-sm text-gray-700">{society}</span>
+                          </label>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
@@ -213,7 +278,23 @@ export default function VendorRegistration() {
             {/* Time Slots */}
             <div className="space-y-4">
               <h2 className="text-lg font-semibold text-gray-900">Available Time Slots *</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* 24 Hours option */}
+                <div className="flex items-center p-4 border border-gray-200 rounded-lg bg-white">
+                  <input
+                    type="checkbox"
+                    id="24hours"
+                    checked={selectedSlots['24hours']}
+                    onChange={() => handleSlotToggle('24hours')}
+                    className="w-5 h-5 accent-blue-600 mr-3"
+                  />
+                  <label htmlFor="24hours" className="flex-1 cursor-pointer">
+                    <div className="font-medium text-gray-900">24 Hours</div>
+                    <div className="text-sm text-gray-500">Available round the clock</div>
+                  </label>
+                </div>
+                
+                {/* Regular time slots */}
                 {PERMANENT_SLOTS.map(slot => (
                   <div key={slot.id} className="flex items-center p-4 border border-gray-200 rounded-lg bg-white">
                     <input

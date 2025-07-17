@@ -299,11 +299,14 @@ export default function DomesticHelpPage() {
         .order("created_at", { ascending: false });
 
       if (!error && data) {
-        // Group by vendor_id and organize slots
+        // Group by vendor_id (or mobile_no + name for vendors without vendor_id) and organize slots
         const vendorMap: Record<string, any> = {};
         data.forEach((row: any) => {
-          if (!vendorMap[row.vendor_id]) {
-            vendorMap[row.vendor_id] = {
+          // Create a unique key for grouping vendors
+          const vendorKey = row.vendor_id || `${row.mobile_no}_${row.name}`;
+          
+          if (!vendorMap[vendorKey]) {
+            vendorMap[vendorKey] = {
               vendor_id: row.vendor_id,
               name: row.name,
               mobile_no: row.mobile_no,
@@ -314,12 +317,27 @@ export default function DomesticHelpPage() {
               slots: {}
             };
           }
-          vendorMap[row.vendor_id].slots[row.slot_type] = {
+          vendorMap[vendorKey].slots[row.slot_type] = {
             slot_start_time: row.slot_start_time,
             slot_end_time: row.slot_end_time
           };
         });
-        setPermanentVendors(Object.values(vendorMap));
+
+        // Clean up conflicting slots for each vendor
+        const cleanedVendors = Object.values(vendorMap).map((vendor: any) => {
+          const cleanedVendor = { ...vendor };
+          
+          // If vendor has 24hours slot, remove all other slots
+          if (vendor.slots['24hours']) {
+            cleanedVendor.slots = {
+              '24hours': vendor.slots['24hours']
+            };
+          }
+          
+          return cleanedVendor;
+        });
+
+        setPermanentVendors(cleanedVendors);
       }
     };
     fetchSlots();
