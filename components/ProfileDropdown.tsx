@@ -4,7 +4,7 @@ import { Fragment, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { User } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
-import { useRouter } from 'next/navigation'
+import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
@@ -25,9 +25,18 @@ interface UserProfile {
 
 export function ProfileDropdown({ user }: ProfileDropdownProps) {
   const router = useRouter()
+  const pathname = usePathname()
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [error, setError] = useState<string | null>(null)
   const supabase = createClientComponentClient()
+
+  // Extract area from pathname (e.g., /parel/connect -> parel, /worli/connect -> worli)
+  const getCurrentArea = () => {
+    const pathSegments = pathname.split('/')
+    return pathSegments[1] || 'parel' // Default to parel if no area found
+  }
+
+  const currentArea = getCurrentArea()
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -117,7 +126,7 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  href="/parel/profile"
+                  href={`/${currentArea}/profile`}
                   className={`${
                     active ? 'bg-blue-500 text-white' : 'text-gray-100'
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -129,12 +138,36 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
             <Menu.Item>
               {({ active }) => (
                 <Link
-                  href="/parel/my-reviews"
+                  href={`/${currentArea}/my-reviews`}
                   className={`${
                     active ? 'bg-blue-500 text-white' : 'text-gray-100'
                   } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                 >
-                  View All Reviews
+                  View All Vendor Reviews
+                </Link>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  href={`/${currentArea}/my-posts`}
+                  className={`${
+                    active ? 'bg-blue-500 text-white' : 'text-gray-100'
+                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                >
+                  View All Posts
+                </Link>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  href={`/${currentArea}/my-comments`}
+                  className={`${
+                    active ? 'bg-blue-500 text-white' : 'text-gray-100'
+                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
+                >
+                  View All Comments
                 </Link>
               )}
             </Menu.Item>

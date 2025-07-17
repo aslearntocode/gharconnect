@@ -17,8 +17,8 @@ export default function MyReviews() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (!user) {
-        // Redirect to Parel homepage instead of login page
-        router.push('/parel')
+        // Redirect to Worli homepage instead of login page
+        router.push('/worli')
         return
       }
 
@@ -54,7 +54,7 @@ export default function MyReviews() {
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header />
       
-      <div className="flex-1">
+      <div className="flex-1 lg:pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900">My Reviews</h1>
@@ -74,7 +74,7 @@ export default function MyReviews() {
               <h3 className="text-lg font-medium text-gray-900 mb-2">No reviews yet</h3>
               <p className="text-gray-500 mb-6">You haven't reviewed any items yet.</p>
               <Link
-                href="/parel/marketplace"
+                href="/worli/marketplace"
                 className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
                 Browse Marketplace
@@ -86,7 +86,7 @@ export default function MyReviews() {
                 <div key={review.id} className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                   <div className="p-6">
                     <Link 
-                      href={`/parel/marketplace/${review.card_id}`}
+                      href={`/worli/marketplace/${review.card_id}`}
                       className="text-lg font-semibold text-gray-900 hover:text-blue-600 transition-colors mb-2 block"
                     >
                       {review.card_name}
