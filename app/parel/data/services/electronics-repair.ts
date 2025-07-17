@@ -37,5 +37,17 @@ export const vendors: Vendor[] = [
     mobile: '+91 79777 74528',
     areaServed: [],
     buildingServed: []
+  },
+  {
+    name: 'Vishnu Bajaj',
+    services: [{
+      name: 'Electronics Repair',
+      description: 'Oven, gas stove, etc. repair',
+      price: 'Call for price',
+      unit: 'per repair'
+    }],
+    mobile: '+91 83694 75836',
+    areaServed: ['All'],
+    buildingServed: ['All']
   }
 ];
