@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { getSupabaseClient } from '@/lib/supabase';
 import { auth } from '@/lib/firebase';
+import { generateAnonymousId } from '@/lib/anonymousId';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Link from 'next/link';
@@ -163,7 +164,7 @@ export default function PostDetailPage() {
           <li key={comment.id} className={`bg-white p-3 rounded shadow-sm border border-gray-100 relative` + (level > 0 ? ' mt-2' : '')}>
             <article>
               <div className="flex items-center gap-2 mb-1">
-                <span className="font-semibold text-sm text-indigo-700">User</span>
+                <span className="font-semibold text-sm text-indigo-700">{generateAnonymousId(comment.user_id)}</span>
                 <time className="text-xs text-gray-400" dateTime={comment.created_at}>
                   {new Date(comment.created_at).toLocaleString()}
                 </time>

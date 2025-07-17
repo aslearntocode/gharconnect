@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { getSupabaseClient } from '@/lib/supabase';
 import { auth } from '@/lib/firebase';
+import { generateAnonymousId } from '@/lib/anonymousId';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Link from 'next/link';

@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { getSupabaseClient } from '@/lib/supabase';
 import { auth } from '@/lib/firebase';
+import { generateAnonymousId } from '@/lib/anonymousId';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Link from 'next/link';
@@ -19,6 +20,7 @@ interface Post {
   created_at: string;
   comment_count?: number;
   likes?: number;
+  category?: string;
 }
 
 interface Comment {
@@ -34,7 +36,7 @@ export default function ParelConnectPage() {
   const [user, setUser] = useState<any>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [newPost, setNewPost] = useState({ title: '', body: '' });
+  const [newPost, setNewPost] = useState({ title: '', body: '', category: 'gc/parel' });
   const [submitting, setSubmitting] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -49,6 +51,24 @@ export default function ParelConnectPage() {
   const [activeFilter, setActiveFilter] = useState<string>('All');
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [isPostFormOpen, setIsPostFormOpen] = useState(false);
+
+  // Available communities for Parel
+  const parelCommunities = [
+    { value: 'gc/parel', label: 'gc/parel (General)' },
+    { value: 'gc/parel/education', label: 'gc/parel/education' },
+    { value: 'gc/parel/food', label: 'gc/parel/food' },
+    { value: 'gc/parel/travel', label: 'gc/parel/travel' },
+    { value: 'gc/parel/safety', label: 'gc/parel/safety' },
+    { value: 'gc/parel/events', label: 'gc/parel/events' },
+    { value: 'gc/parel/services', label: 'gc/parel/services' },
+    { value: 'gc/parel/health', label: 'gc/parel/health' },
+    { value: 'gc/parel/governance', label: 'gc/parel/governance' },
+    { value: 'gc/parel/crime', label: 'gc/parel/crime' },
+    { value: 'gc/parel/environment', label: 'gc/parel/environment' },
+    { value: 'gc/parel/entertainment', label: 'gc/parel/entertainment' },
+    { value: 'gc/parel/religion', label: 'gc/parel/religion' },
+    { value: 'gc/parel/cleanliness', label: 'gc/parel/cleanliness' },
+  ];
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -127,6 +147,7 @@ export default function ParelConnectPage() {
       body: newPost.body,
       user_id: formattedUuid,
       area: "Parel",
+      category: newPost.category,
     };
     console.log('Inserting post data:', postData);
     console.log('Formatted UUID:', formattedUuid);
@@ -145,7 +166,7 @@ export default function ParelConnectPage() {
     }
     setSubmitting(false);
     if (!error) {
-      setNewPost({ title: '', body: '' });
+      setNewPost({ title: '', body: '', category: 'gc/parel' });
       fetchPosts();
     } else {
       console.error('Error creating post:', error);
@@ -301,35 +322,28 @@ export default function ParelConnectPage() {
       return matchesSearch;
     }
     
-    const postText = (post.title + ' ' + post.body).toLowerCase();
-    const filterKeywords = getFilterKeywords(activeFilter);
-    const matchesFilter = filterKeywords.some(keyword => 
-      postText.includes(keyword.toLowerCase())
-    );
+    // Map filter names to category values
+    const filterToCategory: { [key: string]: string } = {
+      'Cleanliness': 'gc/parel/cleanliness',
+      'Food': 'gc/parel/food',
+      'Travel': 'gc/parel/travel',
+      'Safety': 'gc/parel/safety',
+      'Events': 'gc/parel/events',
+      'Services': 'gc/parel/services',
+      'Health': 'gc/parel/health',
+      'Governance': 'gc/parel/governance',
+      'Crime': 'gc/parel/crime',
+      'Education': 'gc/parel/education',
+      'Environment': 'gc/parel/environment',
+      'Entertainment': 'gc/parel/entertainment',
+      'Religion': 'gc/parel/religion',
+    };
+    
+    const targetCategory = filterToCategory[activeFilter];
+    const matchesFilter = targetCategory ? post.category === targetCategory : false;
     
     return matchesSearch && matchesFilter;
   });
-
-  // Helper function to get keywords for each filter
-  function getFilterKeywords(filter: string): string[] {
-    const filterMap: { [key: string]: string[] } = {
-      'Schools': ['school', 'education', 'college', 'university', 'student', 'teacher', 'academic', 'study', 'exam', 'class', 'tuition', 'coaching'],
-      'Cleanliness': ['clean', 'dirty', 'garbage', 'waste', 'sweep', 'dustbin', 'sanitation', 'hygiene', 'maintenance', 'rubbish', 'trash', 'litter'],
-      'Food': ['food', 'restaurant', 'cafe', 'dining', 'kitchen', 'cook', 'eat', 'meal', 'cuisine', 'delivery', 'takeaway', 'chef', 'menu'],
-      'Transport': ['bus', 'train', 'metro', 'taxi', 'auto', 'transport', 'commute', 'travel', 'road', 'traffic', 'parking', 'vehicle', 'car'],
-      'Safety': ['safety', 'security', 'police', 'crime', 'theft', 'robbery', 'emergency', 'helpline', 'guard', 'cctv', 'patrol', 'law'],
-      'Events': ['event', 'festival', 'celebration', 'party', 'function', 'gathering', 'meetup', 'ceremony', 'program', 'show', 'performance'],
-      'Services': ['service', 'repair', 'maintenance', 'electrician', 'plumber', 'carpenter', 'painter', 'cleaning', 'laundry', 'tailor', 'shop'],
-      'Health': ['hospital', 'clinic', 'doctor', 'medical', 'health', 'medicine', 'pharmacy', 'dental', 'emergency', 'ambulance', 'treatment'],
-      'Governance': ['council', 'ward', 'municipal', 'corporation', 'government', 'administration', 'policy', 'legislation', 'complaint', 'suggestion', 'improvement', 'development','police','bmc'],
-      'Crime': ['crime', 'theft', 'robbery', 'assault', 'violence', 'fight', 'murder', 'accident', 'incident', 'emergency', 'helpline', 'police', 'security', 'law'],
-      'Education': ['school', 'college', 'university', 'education', 'academic', 'study', 'exam', 'class', 'tuition', 'coaching', 'institute', 'learning', 'knowledge', 'research'],
-      'Environment': ['environment', 'pollution', 'waste', 'garbage', 'litter', 'clean', 'green', 'sustainability', 'recycling', 'eco-friendly', 'climate', 'nature', 'wildlife', 'noise', 'noise pollution'],
-      'Entertainment': ['entertainment', 'movie', 'theater', 'music', 'dance', 'art', 'culture', 'festival', 'celebration', 'party', 'function', 'gathering', 'show', 'performance'],
-      'Religion': ['religion', 'faith', 'temple', 'church', 'mosque', 'synagogue', 'worship', 'prayer', 'spiritual', 'meditation', 'yoga', 'zen', 'satsang', 'guru', 'gurugram'],
-    };
-    return filterMap[filter] || [];
-  }
 
   // Compute top liked and top commented posts
   const topLikedPosts = [...filteredPosts]
@@ -436,7 +450,7 @@ export default function ParelConnectPage() {
               {isFilterDropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                   <div className="p-2 max-h-64 overflow-y-auto space-y-1">
-                    {['All', 'Cleanliness', 'Food', 'Transport', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Religion'].map(filter => (
+                    {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Religion'].map(filter => (
                       <button
                         key={filter}
                         onClick={() => {
@@ -463,7 +477,7 @@ export default function ParelConnectPage() {
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4">
               <h3 className="text-lg font-bold mb-4 text-indigo-700">Filter by Topic</h3>
               <div className="space-y-2">
-                {['All', 'Cleanliness', 'Food', 'Transport', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Religion'].map(filter => (
+                {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Religion'].map(filter => (
                   <button
                     key={filter}
                     onClick={() => setActiveFilter(filter)}
@@ -537,7 +551,7 @@ export default function ParelConnectPage() {
                       <button
                         onClick={() => {
                           setIsPostFormOpen(false);
-                          setNewPost({ title: '', body: '' });
+                          setNewPost({ title: '', body: '', category: 'gc/parel' });
                         }}
                         className="text-gray-400 hover:text-gray-600 transition-colors"
                       >
@@ -555,6 +569,19 @@ export default function ParelConnectPage() {
                         required
                         aria-label="Post title"
                       />
+                      <select
+                        className="w-full border rounded-lg p-3 mb-3 text-sm md:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        value={newPost.category}
+                        onChange={e => setNewPost({ ...newPost, category: e.target.value })}
+                        required
+                        aria-label="Select community"
+                      >
+                        {parelCommunities.map(community => (
+                          <option key={community.value} value={community.value}>
+                            {community.label}
+                          </option>
+                        ))}
+                      </select>
                       <textarea
                         className="w-full border rounded-lg p-3 mb-4 text-sm md:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="What's on your mind?"
@@ -572,7 +599,7 @@ export default function ParelConnectPage() {
                           type="button" 
                           onClick={() => {
                             setIsPostFormOpen(false);
-                            setNewPost({ title: '', body: '' });
+                            setNewPost({ title: '', body: '', category: 'gc/parel' });
                           }}
                           className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm md:text-base px-6 py-2"
                         >
@@ -604,7 +631,9 @@ export default function ParelConnectPage() {
                       {/* Top row: area, avatar, time */}
                       <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500 mb-1">
                         <img src="/GC_Logo.png" alt="avatar" className="w-8 h-8 rounded-full border object-cover" />
-                        <span className="font-semibold text-gray-800">gc/Parel</span>
+                        <span className="font-semibold text-gray-800">{post.category || 'gc/parel'}</span>
+                        <span className="mx-1">•</span>
+                        <span>{generateAnonymousId(post.user_id)}</span>
                         <span className="mx-1">•</span>
                         <span>{timeAgo(post.created_at)}</span>
                       </div>
