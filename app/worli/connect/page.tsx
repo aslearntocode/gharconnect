@@ -415,12 +415,12 @@ export default function WorliConnectPage() {
       <main className="min-h-screen bg-gray-50 lg:pt-16">
         <Header />
         {/* Indigo Banner */}
-        <section className="w-full bg-indigo-600 py-1 md:py-4 flex flex-col items-center justify-center text-center mb-4">
+        <section className="w-full h-32 bg-indigo-600 flex flex-col items-center justify-center text-center mb-4">
           <h1 className="text-xl md:text-3xl font-bold text-white mb-1">👋 Welcome to Worli's Own Social Network</h1>
-          <p className="text-white text-sm md:text-lg mb-3">Share your thoughts, ask questions, and get to know your neighbors</p>
+          <p className="text-white text-sm md:text-lg mb-3">Your Identity is Always Anonymous</p>
         </section>
         {/* Overlapping Search Box */}
-        <div className="w-full flex justify-center -mt-8 mb-6">
+        <div className="w-full flex justify-center -mt-8 mb-6 px-4 md:px-0">
           <div className="flex items-center w-full max-w-xl bg-white rounded-full shadow-lg px-6 py-3">
             <FiSearch className="text-xl md:text-2xl text-gray-400 mr-3" />
             <input
