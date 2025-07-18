@@ -7,14 +7,25 @@ export default function MumbaiRentTypeSelection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const packages = [
     {
+      name: 'Bronze',
+      price: '₹0',
+      icon: '🥉',
+      description: 'Basic listing',
+      features: [
+        'Listing on the Website',
+        'Privacy of Owner\'s Contact Details'
+      ],
+      borderColor: 'border-orange-300',
+      bgColor: 'bg-orange-100'
+    },
+    {
       name: 'Silver',
       price: '₹2,999',
       icon: '🥈',
       description: 'For property owners who want essential services',
       features: [
-        'No Brokerage Listing',
-        'Legal Paperwork',
-        '10 Property Showings on Owner\'s Behalf',
+        'Property Promotion on the Website',
+        'Property Showings on Owner\'s Behalf',
         'Privacy of Owner\'s Contact Details'
       ],
       borderColor: 'border-gray-200',
@@ -118,7 +129,7 @@ export default function MumbaiRentTypeSelection() {
                   >
                     {packages.map((pkg, index) => (
                       <div key={index} className="w-full flex-shrink-0 px-2">
-                        <div className={`bg-white rounded-xl shadow-lg p-4 text-center hover:shadow-xl transition-shadow border-2 ${pkg.borderColor} relative`}>
+                        <div className={`bg-white rounded-xl shadow-lg p-4 text-center hover:shadow-xl transition-shadow border-2 ${pkg.borderColor} relative h-80 flex flex-col`}>
                           {pkg.isPopular && (
                             <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
                               <span className="bg-yellow-400 text-white px-2 py-0.5 rounded-full text-xs font-semibold">MOST POPULAR</span>
@@ -132,7 +143,7 @@ export default function MumbaiRentTypeSelection() {
                           <p className="text-gray-600 text-xs mb-4">
                             {pkg.description}
                           </p>
-                          <ul className="text-left text-gray-700 space-y-2 mb-4">
+                          <ul className="text-left text-gray-700 space-y-2 mb-4 flex-grow">
                             {pkg.features.map((feature, featureIndex) => (
                               <li key={featureIndex} className="flex items-start">
                                 <svg className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -169,114 +180,140 @@ export default function MumbaiRentTypeSelection() {
             </div>
 
             {/* Desktop Grid */}
-            <div className="hidden md:grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {/* Silver Package */}
-              <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow border-2 border-gray-200">
-                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🥈</span>
+            <div className="hidden md:grid md:grid-cols-4 gap-3 max-w-7xl mx-auto">
+              {/* Bronze Package */}
+              <div className="bg-white rounded-xl shadow-lg p-3 text-center hover:shadow-xl transition-shadow border-2 border-orange-300">
+                <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-lg">🥉</span>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Silver</h3>
-                <div className="text-3xl font-bold text-indigo-600 mb-2">₹2,999</div>
-                <p className="text-gray-600 text-sm mb-6">
+                <h3 className="text-base font-bold text-gray-900 mb-1">Bronze</h3>
+                <div className="text-xl font-bold text-indigo-600 mb-1">₹0</div>
+                <p className="text-gray-600 text-xs mb-3">
+                  Basic listing
+                </p>
+                <ul className="text-left text-gray-700 space-y-1 mb-3">
+                  <li className="flex items-start">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-xs leading-tight">Listing on the Website</span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-xs leading-tight">Privacy of Owner's Contact Details</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Silver Package */}
+              <div className="bg-white rounded-xl shadow-lg p-3 text-center hover:shadow-xl transition-shadow border-2 border-gray-200">
+                <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-lg">🥈</span>
+                </div>
+                <h3 className="text-base font-bold text-gray-900 mb-1">Silver</h3>
+                <div className="text-xl font-bold text-indigo-600 mb-1">₹2,999</div>
+                <p className="text-gray-600 text-xs mb-3">
                   For property owners who want essential services
                 </p>
-                <ul className="text-left text-gray-700 space-y-3 mb-6">
+                <ul className="text-left text-gray-700 space-y-1 mb-3">
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span>No Brokerage Listing</span>
+                    <span className="text-xs leading-tight">Property Promotion on the Website</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span>Legal Paperwork</span>
+                    <span className="text-xs leading-tight">Legal Paperwork</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span>10 Property Showings on Owner's Behalf</span>
+                    <span className="text-xs leading-tight">10 Property Showings on Owner's Behalf</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span>Privacy of Owner's Contact Details</span>
+                    <span className="text-xs leading-tight">Privacy of Owner's Contact Details</span>
                   </li>
                 </ul>
               </div>
 
               {/* Gold Package */}
-              <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow border-2 border-yellow-400 relative">
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-yellow-400 text-white px-3 py-1 rounded-full text-sm font-semibold">MOST POPULAR</span>
+              <div className="bg-white rounded-xl shadow-lg p-3 text-center hover:shadow-xl transition-shadow border-2 border-yellow-400 relative">
+                <div className="absolute -top-1.5 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-yellow-400 text-white px-1.5 py-0.5 rounded-full text-xs font-semibold">MOST POPULAR</span>
                 </div>
-                <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">🥇</span>
+                <div className="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-lg">🥇</span>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Gold</h3>
-                <div className="text-3xl font-bold text-indigo-600 mb-2">₹4,999</div>
-                <p className="text-gray-600 text-sm mb-6">
+                <h3 className="text-base font-bold text-gray-900 mb-1">Gold</h3>
+                <div className="text-xl font-bold text-indigo-600 mb-1">₹4,999</div>
+                <p className="text-gray-600 text-xs mb-3">
                   Premium services for your property
                 </p>
-                <ul className="text-left text-gray-700 space-y-3 mb-6">
+                <ul className="text-left text-gray-700 space-y-1 mb-3">
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span>Everything in Silver</span>
+                    <span className="text-xs leading-tight">Everything in Silver</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span>Professional Property Photoshoot</span>
+                    <span className="text-xs leading-tight">Professional Property Photoshoot</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span>10 Additional Property Showings on Owner's Behalf</span>
+                    <span className="text-xs leading-tight">10 Additional Property Showings on Owner's Behalf</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span>Privacy of Owner's Contact Details</span>
+                    <span className="text-xs leading-tight">Privacy of Owner's Contact Details</span>
                   </li>
                 </ul>
               </div>
 
               {/* Platinum Package */}
-              <div className="bg-white rounded-xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow border-2 border-purple-400">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">💎</span>
+              <div className="bg-white rounded-xl shadow-lg p-3 text-center hover:shadow-xl transition-shadow border-2 border-purple-400">
+                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <span className="text-lg">💎</span>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">Platinum</h3>
-                <div className="text-3xl font-bold text-indigo-600 mb-2">₹6,999</div>
-                <p className="text-gray-600 text-sm mb-6">
+                <h3 className="text-base font-bold text-gray-900 mb-1">Platinum</h3>
+                <div className="text-xl font-bold text-indigo-600 mb-1">₹6,999</div>
+                <p className="text-gray-600 text-xs mb-3">
                   Complete peace of mind for property owners
                 </p>
-                <ul className="text-left text-gray-700 space-y-3 mb-6">
+                <ul className="text-left text-gray-700 space-y-1 mb-3">
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span>Everything in Gold</span>
+                    <span className="text-xs leading-tight">Everything in Gold</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span>Timely Property Readiness Services including Painting, Carpentry, Repairing, etc.</span>
+                    <span className="text-xs leading-tight">Timely Property Readiness Services including Painting, Carpentry, Repairing, etc.</span>
                   </li>
                   <li className="flex items-start">
-                    <svg className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span>Privacy of Owner's Contact Details</span>
+                    <span className="text-xs leading-tight">Privacy of Owner's Contact Details</span>
                   </li>
                 </ul>
               </div>
