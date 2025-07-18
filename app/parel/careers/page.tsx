@@ -218,8 +218,8 @@ export default function Careers() {
                     <h3 className="text-xl font-semibold text-gray-900 mb-3">How to Apply</h3>
                     <p className="text-gray-600">
                       Please submit your updated resume and portfolio (if available) to{' '}
-                      <a href="mailto:careers@financialhealth.co.in" className="text-blue-600 hover:text-blue-800 font-medium">
-                        careers@financialhealth.co.in
+                      <a href="mailto:support@gharconnect.in" className="text-blue-600 hover:text-blue-800 font-medium">
+                        support@gharconnect.in
                       </a>
                     </p>
                   </section>
