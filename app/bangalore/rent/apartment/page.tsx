@@ -236,6 +236,7 @@ export default function RentApartmentPage() {
                 availableFrom={apt.available_from}
                 petFriendly={apt.pet_friendly}
                 vegNonVegAllowed={apt.veg_non_veg_allowed}
+                furnishingStatus={apt.furnishing_status}
                 onBook={() => {
                   setSelectedApartment(apt);
                   setInquiryModalOpen(true);

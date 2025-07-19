@@ -33,6 +33,7 @@ interface PropertyCardProps {
   availableFrom?: string;
   petFriendly?: boolean;
   vegNonVegAllowed?: boolean;
+  furnishingStatus?: string;
 }
 
 const occupancyIcons: Record<string, React.ReactNode> = {
@@ -69,6 +70,7 @@ export default function PropertyCard({
   availableFrom,
   petFriendly,
   vegNonVegAllowed,
+  furnishingStatus,
 }: PropertyCardProps) {
   const [expanded, setExpanded] = useState(isExpanded);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -224,7 +226,7 @@ export default function PropertyCard({
         )}
         
         {/* Additional Property Details */}
-        {(availableFrom || petFriendly !== undefined || vegNonVegAllowed !== undefined) && (
+        {(availableFrom || petFriendly !== undefined || vegNonVegAllowed !== undefined || furnishingStatus) && (
           <div className="mt-3 border-t pt-3">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
               {availableFrom && (
@@ -248,6 +250,15 @@ export default function PropertyCard({
                   <span className="text-gray-500">🍽️ Food:</span>
                   <span className={`font-medium ${vegNonVegAllowed ? 'text-green-600' : 'text-orange-600'}`}>
                     {vegNonVegAllowed ? 'Non-Veg Allowed' : 'Veg Only'}
+                  </span>
+                </div>
+              )}
+              
+              {furnishingStatus && (
+                <div className="flex items-center gap-2">
+                  <span className="text-gray-500">🪑 Furnishing:</span>
+                  <span className="font-medium text-blue-600">
+                    {furnishingStatus}
                   </span>
                 </div>
               )}
