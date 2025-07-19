@@ -31,7 +31,7 @@ export default function RentApartmentPage() {
   const [maxArea, setMaxArea] = useState('');
   const [size, setSize] = useState('');
   const [furnished, setFurnished] = useState('');
-  const [inMarket, setInMarket] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
   const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
   const [photoModal, setPhotoModal] = useState<{ images: string[]; idx: number } | null>(null);
   const [expandedMobileIdx, setExpandedMobileIdx] = useState<number | null>(null);
@@ -135,10 +135,10 @@ export default function RentApartmentPage() {
       if (furnished === 'Semi' && apt.furnishing_status !== 'Semi-furnished') return false;
       if (furnished === 'Fully' && apt.furnishing_status !== 'Fully-furnished') return false;
     }
-    // In Market - assume all apartments are available for now
-    if (inMarket) {
-      if (inMarket === 'Y' && apt.status !== 'available') return false;
-      if (inMarket === 'N' && apt.status === 'available') return false;
+    // Status filter - filter based on status column
+    if (statusFilter) {
+      if (statusFilter === 'active' && apt.status !== 'active') return false;
+      if (statusFilter === 'inactive' && apt.status !== 'inactive') return false;
     }
     return true;
   });
@@ -198,20 +198,27 @@ export default function RentApartmentPage() {
           <input type="text" placeholder="Building name" className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 min-w-[120px]" value={building} onChange={e => setBuilding(e.target.value)} />
           <input type="text" placeholder="Min Area" className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 min-w-[100px]" value={minArea} onChange={e => setMinArea(e.target.value.replace(/\D/g, ''))} />
           <input type="text" placeholder="Max Area" className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 min-w-[100px]" value={maxArea} onChange={e => setMaxArea(e.target.value.replace(/\D/g, ''))} />
-          <select className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 min-w-[120px]" value={size} onChange={e => setSize(e.target.value)}>
-            <option value="">Size (BHK)</option>
-            <option value="2BHK">2 BHK</option>
-            <option value="2.5BHK">2.5 BHK</option>
-            <option value="3BHK">3 BHK</option>
-            <option value="3.5BHK">3.5 BHK</option>
-            <option value="4BHK">4 BHK</option>
-          </select>
-          <select className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 min-w-[120px]" value={furnished} onChange={e => setFurnished(e.target.value)}>
-            <option value="">Furnished</option>
-            <option value="Not">Not</option>
-            <option value="Semi">Semi</option>
-            <option value="Fully">Fully</option>
-          </select>
+          <div className="flex gap-2 w-full md:w-auto">
+            <select className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 md:flex-none md:min-w-[120px]" value={size} onChange={e => setSize(e.target.value)}>
+              <option value="">Size (BHK)</option>
+              <option value="2BHK">2 BHK</option>
+              <option value="2.5BHK">2.5 BHK</option>
+              <option value="3BHK">3 BHK</option>
+              <option value="3.5BHK">3.5 BHK</option>
+              <option value="4BHK">4 BHK</option>
+            </select>
+            <select className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 md:flex-none md:min-w-[120px]" value={furnished} onChange={e => setFurnished(e.target.value)}>
+              <option value="">Furnished</option>
+              <option value="Not">Not</option>
+              <option value="Semi">Semi</option>
+              <option value="Fully">Fully</option>
+            </select>
+            <select className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 md:flex-none md:min-w-[120px]" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
+              <option value="">Status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
         </div>
       </div>
       <main className="pt-4 md:pt-16 pb-12 px-4 sm:px-6 lg:px-8">
