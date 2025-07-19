@@ -9,27 +9,33 @@ export interface Vendor {
   name: string;
   services: Service[];
   mobile: string;
+  areaServed?: string[];
+  buildingServed?: string[];
 }
 
 export const vendors: Vendor[] = [
   {
-    name: 'Happy Packers & Movers',
+    name: 'Ravi Packers',
     services: [{
-      name: 'Packers & Movers',
-      description: 'Complete packing, loading, transport, and unpacking',
+      name: 'Moving',
+      description: 'Household moving and packing',
       price: 'Call for price',
-      unit: 'per shift'
+      unit: 'job'
     }],
-    mobile: '+91 96573 00088'
+    mobile: '+91 98765 43210',
+    areaServed: ['Worli'],
+    buildingServed: ['All']
   },
   {
-    name: 'Pack N',
+    name: 'Amardeep Packers',
     services: [{
       name: 'Packers & Movers',
-      description: 'Professional packing and moving',
+      description: 'Packers & Movers within and Outside Buildings',
       price: 'Call for price',
-      unit: 'per shift'
-    }],
-    mobile: '+91 80806 56767'
+      unit: 'per job'
+    }], 
+    mobile: '+91 80806 56767',
+    areaServed: ['Worli'],
+    buildingServed: ['All']
   }
 ];
