@@ -20,6 +20,8 @@ import { doctors } from '@/app/parel/data/services/doctors'
 // Import delivery vendors
 import { vendors as dairyVendors } from '@/app/parel/data/delivery/dairy'
 import { vendors as meatVendors } from '@/app/parel/data/delivery/meat'
+import { vendors as eggsVendors } from '@/app/parel/data/delivery/eggs'
+import { vendors as flowersVendors } from '@/app/parel/data/delivery/flowers'
 import { vendors as vegetablesVendors } from '@/app/parel/data/delivery/vegetables'
 import { vendors as fruitsVendors } from '@/app/parel/data/delivery/fruits'
 import { vendors as dryFruitsVendors } from '@/app/parel/data/delivery/dry-fruits'
@@ -71,6 +73,8 @@ export default function SearchPage() {
     doctors: [],
     dairyVendors: [],
     meatVendors: [],
+    eggsVendors: [],
+    flowersVendors: [],
     vegetablesVendors: [],
     fruitsVendors: [],
     dryFruitsVendors: [],
@@ -92,6 +96,8 @@ export default function SearchPage() {
           { doctors },
           { vendors: dairyVendors },
           { vendors: meatVendors },
+          { vendors: eggsVendors },
+          { vendors: flowersVendors },
           { vendors: vegetablesVendors },
           { vendors: fruitsVendors },
           { vendors: dryFruitsVendors },
@@ -106,6 +112,8 @@ export default function SearchPage() {
           import(`@/app/${currentSociety}/data/services/doctors`),
           import(`@/app/${currentSociety}/data/delivery/dairy`),
           import(`@/app/${currentSociety}/data/delivery/meat`),
+          import(`@/app/${currentSociety}/data/delivery/eggs`),
+          import(`@/app/${currentSociety}/data/delivery/flowers`),
           import(`@/app/${currentSociety}/data/delivery/vegetables`),
           import(`@/app/${currentSociety}/data/delivery/fruits`),
           import(`@/app/${currentSociety}/data/delivery/dry-fruits`),
@@ -122,6 +130,8 @@ export default function SearchPage() {
           doctors,
           dairyVendors,
           meatVendors,
+          eggsVendors,
+          flowersVendors,
           vegetablesVendors,
           fruitsVendors,
           dryFruitsVendors,
@@ -140,6 +150,8 @@ export default function SearchPage() {
           doctors: [],
           dairyVendors: [],
           meatVendors: [],
+          eggsVendors: [],
+          flowersVendors: [],
           vegetablesVendors: [],
           fruitsVendors: [],
           dryFruitsVendors: [],
@@ -358,6 +370,44 @@ export default function SearchPage() {
           url: '/[society]/delivery/meat',
           category: 'Meat',
           rating: 4.5,
+          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
+          vendorName: vendor.name,
+          mobile: vendor.mobile,
+          tags: generateTags(vendor.name, product.name, product.description)
+        })
+      })
+    })
+
+    // Eggs vendors
+    vendorData.eggsVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
+        results.push({
+          id: `eggs-${idCounter++}`,
+          title: `${vendor.name} - ${product.name}`,
+          description: product.description,
+          type: 'vendor',
+          url: '/[society]/delivery/eggs',
+          category: 'Eggs',
+          rating: 4.6,
+          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
+          vendorName: vendor.name,
+          mobile: vendor.mobile,
+          tags: generateTags(vendor.name, product.name, product.description)
+        })
+      })
+    })
+
+    // Flowers vendors
+    vendorData.flowersVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
+        results.push({
+          id: `flowers-${idCounter++}`,
+          title: `${vendor.name} - ${product.name}`,
+          description: product.description,
+          type: 'vendor',
+          url: '/[society]/delivery/flowers',
+          category: 'Flowers',
+          rating: 4.7,
           price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
           vendorName: vendor.name,
           mobile: vendor.mobile,
