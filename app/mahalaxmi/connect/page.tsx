@@ -31,6 +31,13 @@ interface Comment {
   parent_comment_id?: string;
 }
 
+interface TopUser {
+  user_id: string;
+  total_posts: number;
+  total_comments: number;
+  total_activity: number;
+}
+
 export default function MahalaxmiConnectPage() {
   const [user, setUser] = useState<any>(null);
   const [posts, setPosts] = useState<Post[]>([]);
@@ -50,6 +57,7 @@ export default function MahalaxmiConnectPage() {
   const [activeFilter, setActiveFilter] = useState<string>('All');
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [isPostFormOpen, setIsPostFormOpen] = useState(false);
+  const [topUsers, setTopUsers] = useState<TopUser[]>([]);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -73,6 +81,7 @@ export default function MahalaxmiConnectPage() {
       }
     });
     fetchPosts();
+    fetchTopUsers(); // Call fetchTopUsers here
     return () => unsubscribe();
   }, []);
 
@@ -96,6 +105,59 @@ export default function MahalaxmiConnectPage() {
       setPosts(transformedData);
     }
     setLoading(false);
+  };
+
+  const fetchTopUsers = async () => {
+    const supabase = await getSupabaseClient();
+    
+    // Get posts count by user for Mahalaxmi area
+    const { data: postsData, error: postsError } = await supabase
+      .from('posts')
+      .select('user_id')
+      .eq('area', 'Mahalaxmi');
+    
+    // Get comments count by user for Mahalaxmi posts
+    const { data: commentsData, error: commentsError } = await supabase
+      .from('comments')
+      .select(`
+        user_id,
+        posts!inner(area)
+      `)
+      .eq('posts.area', 'Mahalaxmi');
+    
+    if (!postsError && !commentsError) {
+      // Count posts by user
+      const postCounts: { [userId: string]: number } = {};
+      postsData?.forEach(post => {
+        postCounts[post.user_id] = (postCounts[post.user_id] || 0) + 1;
+      });
+      
+      // Count comments by user
+      const commentCounts: { [userId: string]: number } = {};
+      commentsData?.forEach(comment => {
+        commentCounts[comment.user_id] = (commentCounts[comment.user_id] || 0) + 1;
+      });
+      
+      // Combine and calculate total activity
+      const allUserIds = new Set([
+        ...Object.keys(postCounts),
+        ...Object.keys(commentCounts)
+      ]);
+      
+      const topUsersData: TopUser[] = Array.from(allUserIds).map(userId => ({
+        user_id: userId,
+        total_posts: postCounts[userId] || 0,
+        total_comments: commentCounts[userId] || 0,
+        total_activity: (postCounts[userId] || 0) + (commentCounts[userId] || 0)
+      }));
+      
+      // Sort by total activity and take top 3
+      const sortedTopUsers = topUsersData
+        .sort((a, b) => b.total_activity - a.total_activity)
+        .slice(0, 3);
+      
+      setTopUsers(sortedTopUsers);
+    }
   };
 
   const handleNewPost = async (e: React.FormEvent) => {
@@ -661,13 +723,55 @@ export default function MahalaxmiConnectPage() {
                 ))}
               </ul>
             </div>
-            <div className="bg-white rounded-xl shadow border border-gray-100 p-4">
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-4 mb-6">
               <h3 className="text-lg font-bold mb-3 text-indigo-700">Top Commented Posts</h3>
               <ul className="space-y-3">
                 {topCommentedPosts.map(post => (
                   <li key={post.id} className="flex items-center justify-between">
                     <Link href={`/mahalaxmi/connect/${post.id}`} className="text-blue-700 font-medium hover:underline line-clamp-1 flex-1">{post.title}</Link>
                     <span className="ml-2 flex items-center text-gray-500 text-sm"><svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>{post.comment_count || 0}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-4">
+              <h3 className="text-lg font-bold mb-3 text-indigo-700">Top Users</h3>
+              <ul className="space-y-3">
+                {topUsers.map((user, index) => (
+                  <li key={user.user_id} className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 flex-1">
+                      <div className="w-6 h-6 flex items-center justify-center">
+                        {index === 0 && (
+                          <svg className="w-6 h-6 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M12 12L10 20L12 18L14 20L12 12Z"/>
+                          </svg>
+                        )}
+                        {index === 1 && (
+                          <svg className="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M12 12L10 20L12 18L14 20L12 12Z"/>
+                          </svg>
+                        )}
+                        {index === 2 && (
+                          <svg className="w-6 h-6 text-amber-600" fill="currentColor" viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="4"/>
+                            <path d="M12 12L10 20L12 18L14 20L12 12Z"/>
+                          </svg>
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <div className="text-sm font-medium text-gray-900">
+                          {generateAnonymousId(user.user_id)}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {user.total_posts} posts • {user.total_comments} comments
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2 py-1 rounded">
+                      {user.total_activity}
+                    </div>
                   </li>
                 ))}
               </ul>
