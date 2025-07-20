@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     title: 'Bangalore Rental Apartments - No Brokerage | GharConnect',
     description: 'Find rental apartments in Bangalore with minimal brokerage fees. Transparent pricing, no hidden charges.',
     type: 'website',
-    url: 'https://gharconnect.in/bangalore/rent',
+    url: 'https://gharconnect.in/bangalore',
     siteName: 'GharConnect',
     locale: 'en_IN',
   },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: 'https://gharconnect.in/bangalore/rent',
+    canonical: 'https://gharconnect.in/bangalore',
   },
 };
 

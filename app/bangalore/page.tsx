@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Head from 'next/head';
 
 const rentalOptions = [
   {
@@ -53,7 +54,23 @@ const bangaloreAreas = [
 
 export default function BangaloreRentalOptions() {
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-50 px-4">
+    <>
+      <Head>
+        <title>Bangalore Rental Apartments - No Brokerage | GharConnect</title>
+        <meta name="description" content="Find rental apartments in Bangalore with minimal brokerage fees. GharConnect offers the best rental deals in Bangalore with transparent pricing and no hidden charges." />
+        <meta name="keywords" content="Bangalore rental apartments, Bangalore flats for rent, low brokerage rental Bangalore, Bangalore 1BHK rent, Bangalore 2BHK rent, Bangalore 3BHK rent, rental apartments Bangalore" />
+        <meta name="robots" content="index, follow" />
+        <link rel="canonical" href="https://gharconnect.in/bangalore" />
+        <meta property="og:title" content="Bangalore Rental Apartments - No Brokerage | GharConnect" />
+        <meta property="og:description" content="Find rental apartments in Bangalore with minimal brokerage fees. Transparent pricing, no hidden charges." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://gharconnect.in/bangalore" />
+        <meta property="og:site_name" content="GharConnect" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Bangalore Rental Apartments - No Brokerage | GharConnect" />
+        <meta name="twitter:description" content="Find rental apartments in Bangalore with minimal brokerage fees." />
+      </Head>
+      <div className="min-h-screen flex flex-col items-center bg-gray-50 px-4">
       {/* Header */}
       <header className="w-full bg-white shadow-sm py-4 px-6 flex items-center justify-center mb-4">
         <h1 className="text-2xl font-extrabold text-indigo-700 tracking-tight">GharConnect</h1> 
@@ -148,5 +165,6 @@ export default function BangaloreRentalOptions() {
         </div>
       </div>
     </div>
+    </>
   );
 } 
