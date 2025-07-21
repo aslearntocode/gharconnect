@@ -15,6 +15,18 @@ export interface Vendor {
 
 export const vendors: Vendor[] = [
   {
+    name: 'Chandan',
+    products: [{
+      name: 'Carpentry',
+      description: 'All types of carpentry work',
+      price: 'Call for price',
+      unit: 'job'
+    }],
+    mobile: '+91 91986 99981',
+    areaServed: ['Parel'],
+    buildingServed: ['All']
+  },
+  {
     name: 'Ajay Sharma',
     products: [{
       name: 'Carpentry',
