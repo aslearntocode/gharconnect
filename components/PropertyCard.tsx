@@ -32,8 +32,10 @@ interface PropertyCardProps {
   status?: string;
   availableFrom?: string;
   petFriendly?: boolean;
-  vegNonVegAllowed?: boolean;
+  vegNonVegAllowed?: string;
   furnishingStatus?: string;
+  city?: string;
+  accommodationType?: string;
 }
 
 const occupancyIcons: Record<string, React.ReactNode> = {
@@ -71,6 +73,8 @@ export default function PropertyCard({
   petFriendly,
   vegNonVegAllowed,
   furnishingStatus,
+  city,
+  accommodationType,
 }: PropertyCardProps) {
   const [expanded, setExpanded] = useState(isExpanded);
   const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -110,7 +114,11 @@ export default function PropertyCard({
   return (
     <Card
       className="flex flex-col md:flex-row items-stretch w-full shadow-lg rounded-2xl overflow-hidden bg-white hover:shadow-xl transition-shadow duration-200 cursor-pointer relative group min-h-[220px]"
-      onClick={() => router.push(`/property/${propertyId}`)}
+      onClick={() => {
+        const cityPath = city?.toLowerCase() || 'mumbai';
+        const typePath = accommodationType?.toLowerCase() === 'pg' ? 'pg' : 'apartment';
+        router.push(`/${cityPath}/rent/${typePath}/${propertyId}`);
+      }}
     >
       {/* Image + Favorite */}
       <div className="relative w-full md:w-56 h-40 md:h-auto flex-shrink-0">
