@@ -37,7 +37,7 @@ export const vendors: Vendor[] = [
       unit: 'gms'
     }],
     mobile: '+91 93219 80577 / 90826 03974',
-    photo: '/images/vendors/Krishna_Grocery.jpeg',
+    // photo: '/images/vendors/Krishna_Grocery.jpeg',
     areaServed: ['Parel'],
     buildingServed: ['L&T Crescent Bay']
   },

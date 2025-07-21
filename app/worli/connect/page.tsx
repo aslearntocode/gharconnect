@@ -12,6 +12,7 @@ import Head from 'next/head';
 import LoginModal from '@/components/LoginModal'
 import { usePathname } from 'next/navigation'
 import ImageUpload from '@/components/ImageUpload';
+import React from 'react';
 
 interface Post {
   id: string;
@@ -717,74 +718,122 @@ export default function WorliConnectPage() {
               <div className="text-gray-500">No results found.</div>
             ) : (
                 <ul className="flex flex-col gap-6">
-                {filteredPosts.map(post => (
-                    <li key={post.id} className="bg-white rounded-xl shadow border border-gray-100 p-3 md:p-5 flex flex-col gap-2">
-                      {/* Top row: area, avatar, time */}
-                      <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500 mb-1">
-                        <img src="/GC_Logo.png" alt="avatar" className="w-6 h-6 md:w-8 md:h-8 rounded-full border object-cover" />
-                        <span className="font-semibold text-gray-800 text-xs md:text-sm">{post.category || 'gc/worli'}</span>
-                        <span className="mx-1">•</span>
-                        <span className="text-xs md:text-sm">{generateAnonymousId(post.user_id)}</span>
-                        <span className="mx-1">•</span>
-                        <span className="text-xs md:text-sm">{timeAgo(post.created_at)}</span>
-                      </div>
-                      {/* Title and body */}
-                      <div>
-                        <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1">{post.title}</h3>
-                        <p className="text-gray-800 text-xs md:text-base mb-2 line-clamp-3 md:line-clamp-4 whitespace-pre-line">
-                          {(() => {
-                            // Split by line breaks, show only first 2-3 lines/paragraphs
-                            const lines = post.body.split(/\r?\n/).filter(l => l.trim() !== '');
-                            return lines.slice(0, 3).join('\n') + (lines.length > 3 ? '...' : '');
-                          })()}
-                        </p>
-                    </div>
-                      {/* Images */}
-                      {post.images && post.images.length > 0 && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mb-2">
-                          {post.images.slice(0, 3).map((imageUrl, index) => (
-                            <div key={index} className="relative">
-                              <img
-                                src={imageUrl}
-                                alt={`Post image ${index + 1}`}
-                                className="w-full h-24 md:h-32 object-cover rounded-lg border"
-                              />
-                              {index === 2 && post.images && post.images.length > 3 && (
-                                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
-                                  <span className="text-white font-semibold text-xs md:text-sm">
-                                    +{post.images.length - 3} more
-                                  </span>
-                                </div>
-                              )}
-                            </div>
-                          ))}
+                  {filteredPosts.map((post, index) => (
+                    <React.Fragment key={post.id}>
+                      <li className="bg-white rounded-xl shadow border border-gray-100 p-3 md:p-5 flex flex-col gap-2">
+                        {/* Top row: area, avatar, time */}
+                        <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500 mb-1">
+                          <img src="/GC_Logo.png" alt="avatar" className="w-6 h-6 md:w-8 md:h-8 rounded-full border object-cover" />
+                          <span className="font-semibold text-gray-800 text-xs md:text-sm">{post.category || 'gc/worli'}</span>
+                          <span className="mx-1">•</span>
+                          <span className="text-xs md:text-sm">{generateAnonymousId(post.user_id)}</span>
+                          <span className="mx-1">•</span>
+                          <span className="text-xs md:text-sm">{timeAgo(post.created_at)}</span>
                         </div>
+                        {/* Title and body */}
+                        <div>
+                          <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1">{post.title}</h3>
+                          <p className="text-gray-800 text-xs md:text-base mb-2 line-clamp-3 md:line-clamp-4 whitespace-pre-line">
+                            {(() => {
+                              // Split by line breaks, show only first 2-3 lines/paragraphs
+                              const lines = post.body.split(/\r?\n/).filter(l => l.trim() !== '');
+                              return lines.slice(0, 3).join('\n') + (lines.length > 3 ? '...' : '');
+                            })()}
+                          </p>
+                        </div>
+                        {/* Images */}
+                        {post.images && post.images.length > 0 && (
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mb-2">
+                            {post.images.slice(0, 3).map((imageUrl, index) => (
+                              <div key={index} className="relative">
+                                <img
+                                  src={imageUrl}
+                                  alt={`Post image ${index + 1}`}
+                                  className="w-full h-24 md:h-32 object-cover rounded-lg border"
+                                />
+                                {index === 2 && post.images && post.images.length > 3 && (
+                                  <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
+                                    <span className="text-white font-semibold text-xs md:text-sm">
+                                      +{post.images.length - 3} more
+                                    </span>
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                        {/* Action row: like, comment, read more */}
+                        <div className="flex gap-2 md:gap-3 mt-2">
+                          <button
+                            className={`flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold text-xs md:text-sm ${(post.likes || 0) > 0 ? 'text-red-500' : 'text-gray-700'} ${likesLoading === post.id ? 'opacity-50 cursor-wait' : ''}`}
+                            onClick={() => handleLikePost(post.id)}
+                            disabled={userLikedPosts[post.id] || likesLoading === post.id}
+                            aria-label={userLikedPosts[post.id] ? 'Liked' : 'Like'}
+                          >
+                            <FiHeart fill={(post.likes || 0) > 0 ? 'currentColor' : 'none'} />
+                            {post.likes || 0}
+                          </button>
+                          <Link href={`/worli/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
+                            {/* Speech bubble icon */}
+                            <svg className="w-3 md:w-5 h-3 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                            {post.comment_count || 0}
+                          </Link>
+                          <Link href={`/worli/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
+                            {/* Arrow right icon */}
+                            <svg className="w-3 md:w-5 h-3 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                            Read More
+                          </Link>
+                        </div>
+                      </li>
+                      {index === 0 && (
+                        <li key="eggs-delivery-card" className="bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200 rounded-lg p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                                <svg className="w-7 h-7 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                              </div>
+                              <div>
+                                <h4 className="text-base font-semibold text-gray-900">Fresh Eggs Delivery</h4>
+                                <p className="text-sm text-gray-600">Get farm-fresh eggs delivered to your doorstep</p>
+                              </div>
+                            </div>
+                            <Link 
+                              href="/worli/delivery/eggs" 
+                              className="bg-yellow-500 hover:bg-yellow-600 text-white text-[10px] md:text-sm font-semibold px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-colors"
+                            >
+                              Order Now
+                            </Link>
+                          </div>
+                        </li>
                       )}
-                      {/* Action row: like, comment, read more */}
-                      <div className="flex gap-2 md:gap-3 mt-2">
-                        <button
-                          className={`flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold text-xs md:text-sm ${(post.likes || 0) > 0 ? 'text-red-500' : 'text-gray-700'} ${likesLoading === post.id ? 'opacity-50 cursor-wait' : ''}`}
-                          onClick={() => handleLikePost(post.id)}
-                          disabled={userLikedPosts[post.id] || likesLoading === post.id}
-                          aria-label={userLikedPosts[post.id] ? 'Liked' : 'Like'}
-                        >
-                          <FiHeart fill={(post.likes || 0) > 0 ? 'currentColor' : 'none'} />
-                          {post.likes || 0}
-                        </button>
-                        <Link href={`/worli/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
-                          {/* Speech bubble icon */}
-                          <svg className="w-3 md:w-5 h-3 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-                          {post.comment_count || 0}
-                        </Link>
-                        <Link href={`/worli/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
-                          {/* Arrow right icon */}
-                          <svg className="w-3 md:w-5 h-3 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-                          Read More
-                        </Link>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+                      {index === 2 && (
+                        <li key="mumbai-rentals-card" className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <svg className="w-7 h-7 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+                                </svg>
+                              </div>
+                              <div>
+                                <h4 className="text-base font-semibold text-gray-900">Mumbai Rentals</h4>
+                                <p className="text-sm text-gray-600">Find your perfect home in Mumbai</p>
+                              </div>
+                            </div>
+                            <Link 
+                              href="/mumbai/rent" 
+                              className="bg-blue-500 hover:bg-blue-600 text-white text-[10px] md:text-sm font-semibold px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-colors"
+                            >
+                              Browse Rentals
+                            </Link>
+                          </div>
+                        </li>
+                      )}
+                    </React.Fragment>
+                  ))}
+                </ul>
             )}
           </section>
           </div>
