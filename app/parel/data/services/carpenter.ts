@@ -61,5 +61,29 @@ export const vendors: Vendor[] = [
     mobile: '+91 93726 33491 / 91671 96255',
     areaServed: ['Parel'],
     buildingServed: ['L&T Crescent Bay', 'Ashok Gardens', 'ICC']
+  },
+  {
+    name: 'Khan Farooq',
+    products: [{
+      name: 'Carpentry',
+      description: 'Custome Furniture & Wardrobe',
+      price: 'Call for price',
+      unit: 'job'
+    }],
+    mobile: '+91 99300 46311',
+    areaServed: ['All'],
+    buildingServed: ['All']
+  },
+  {
+    name: 'Ravindra Vishwakarma',
+    products: [{
+      name: 'Carpentry',
+      description: 'Custome Furniture & Wardrobe',
+      price: 'Call for price',
+      unit: 'job'
+    }],
+    mobile: '+91 83691 23195',
+    areaServed: ['All'],
+    buildingServed: ['All']
   }
 ];
