@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { uploadMediaToConnectBucket, validateMediaFile } from '@/lib/uploadUtils';
+import { uploadImageToConnectBucket, validateImageFile } from '@/lib/uploadUtils';
 import { FiUpload, FiX, FiImage, FiVideo } from 'react-icons/fi';
 
 interface MediaUploadProps {
@@ -46,7 +46,7 @@ export default function MediaUpload({
     const file = files[0];
     
     // Validate file
-    const validation = validateMediaFile(file);
+    const validation = validateImageFile(file);
     if (!validation.valid) {
       setUploadError(validation.error || 'Invalid file');
       return;
@@ -62,7 +62,7 @@ export default function MediaUpload({
     setUploadError(null);
 
     try {
-      const result = await uploadMediaToConnectBucket(file, userId);
+      const result = await uploadImageToConnectBucket(file, userId);
       
       if (result.success && result.url) {
         const newMedia = [...media, result.url];
