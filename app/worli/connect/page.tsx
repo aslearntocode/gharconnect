@@ -11,6 +11,7 @@ import { FiHeart } from 'react-icons/fi';
 import Head from 'next/head';
 import LoginModal from '@/components/LoginModal'
 import { usePathname } from 'next/navigation'
+import ImageUpload from '@/components/ImageUpload';
 
 interface Post {
   id: string;
@@ -21,6 +22,7 @@ interface Post {
   comment_count?: number;
   likes?: number;
   category?: string;
+  images?: string[];
 }
 
 interface Comment {
@@ -43,7 +45,7 @@ export default function WorliConnectPage() {
   const [user, setUser] = useState<any>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [newPost, setNewPost] = useState({ title: '', body: '', category: 'gc/worli' });
+  const [newPost, setNewPost] = useState({ title: '', body: '', category: 'gc/worli', images: [] as string[] });
   const [submitting, setSubmitting] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -59,6 +61,7 @@ export default function WorliConnectPage() {
   const [isFilterDropdownOpen, setIsFilterDropdownOpen] = useState(false);
   const [isPostFormOpen, setIsPostFormOpen] = useState(false);
   const [topUsers, setTopUsers] = useState<TopUser[]>([]);
+  const [imageUploadReset, setImageUploadReset] = useState(false);
 
   // Available communities for Worli
   const worliCommunities = [
@@ -103,6 +106,16 @@ export default function WorliConnectPage() {
     fetchTopUsers(); // Call fetchTopUsers here
     return () => unsubscribe();
   }, []);
+
+  // Reset imageUploadReset flag after component has been reset
+  useEffect(() => {
+    if (imageUploadReset) {
+      const timer = setTimeout(() => {
+        setImageUploadReset(false);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [imageUploadReset]);
 
   const fetchPosts = async () => {
     setLoading(true);
@@ -210,6 +223,7 @@ export default function WorliConnectPage() {
       user_id: formattedUuid,
       area: "Worli",
       category: newPost.category,
+      images: newPost.images,
     };
     console.log('Inserting post data:', postData);
     console.log('Formatted UUID:', formattedUuid);
@@ -228,8 +242,9 @@ export default function WorliConnectPage() {
     }
     setSubmitting(false);
     if (!error) {
-      setNewPost({ title: '', body: '', category: 'gc/worli' });
+      setNewPost({ title: '', body: '', category: 'gc/worli', images: [] });
       fetchPosts();
+      setImageUploadReset(true); // Reset image upload state after successful post
     } else {
       console.error('Error creating post:', error);
     }
@@ -613,7 +628,8 @@ export default function WorliConnectPage() {
                       <button
                         onClick={() => {
                           setIsPostFormOpen(false);
-                          setNewPost({ title: '', body: '', category: 'gc/worli' });
+                          setNewPost({ title: '', body: '', category: 'gc/worli', images: [] });
+                          setImageUploadReset(true); // Reset image upload state
                         }}
                         className="text-gray-400 hover:text-gray-600 transition-colors"
                       >
@@ -653,6 +669,18 @@ export default function WorliConnectPage() {
                   aria-label="Post content"
                   rows={4}
                 />
+                {/* Image Upload Component */}
+                {user && (
+                  <div className="mb-4">
+                    <ImageUpload
+                      onImagesChange={(urls) => setNewPost({ ...newPost, images: urls })}
+                      maxImages={5}
+                      userId={user.uid}
+                      disabled={submitting}
+                      reset={imageUploadReset} // Pass reset prop
+                    />
+                  </div>
+                )}
                       <div className="flex gap-3">
                         <Button type="submit" disabled={submitting} className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm md:text-base px-6 py-2">
                   {submitting ? 'Posting...' : 'Post'}
@@ -661,7 +689,8 @@ export default function WorliConnectPage() {
                           type="button" 
                           onClick={() => {
                             setIsPostFormOpen(false);
-                            setNewPost({ title: '', body: '', category: 'gc/worli' });
+                            setNewPost({ title: '', body: '', category: 'gc/worli', images: [] });
+                            setImageUploadReset(true); // Reset image upload state
                           }}
                           className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm md:text-base px-6 py-2"
                         >
@@ -710,6 +739,27 @@ export default function WorliConnectPage() {
                           })()}
                         </p>
                     </div>
+                      {/* Images */}
+                      {post.images && post.images.length > 0 && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mb-2">
+                          {post.images.slice(0, 3).map((imageUrl, index) => (
+                            <div key={index} className="relative">
+                              <img
+                                src={imageUrl}
+                                alt={`Post image ${index + 1}`}
+                                className="w-full h-32 object-cover rounded-lg border"
+                              />
+                              {index === 2 && post.images && post.images.length > 3 && (
+                                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
+                                  <span className="text-white font-semibold text-sm">
+                                    +{post.images.length - 3} more
+                                  </span>
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                       {/* Action row: like, comment, read more */}
                       <div className="flex gap-3 mt-2">
                         <button

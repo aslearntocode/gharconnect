@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Link from 'next/link';
 import Head from 'next/head';
+import ImageModal from '@/components/ImageModal';
 
 interface Post {
   id: string;
@@ -15,6 +16,8 @@ interface Post {
   body: string;
   user_id: string;
   created_at: string;
+  category?: string;
+  images?: string[];
 }
 
 interface Comment {
@@ -43,6 +46,12 @@ export default function PostDetailPage() {
   const [likesLoading, setLikesLoading] = useState<string | null>(null);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [userLikedComments, setUserLikedComments] = useState<{ [commentId: string]: boolean }>({});
+  const [imageModal, setImageModal] = useState<{ isOpen: boolean; imageUrl: string; alt: string; currentIndex: number }>({
+    isOpen: false,
+    imageUrl: '',
+    alt: '',
+    currentIndex: 0
+  });
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => setUser(user));
@@ -294,11 +303,37 @@ export default function PostDetailPage() {
             <>
               <article className="bg-white p-4 rounded shadow mb-6">
                 <header>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="font-semibold text-sm text-gray-600">{post.category || 'gc/mahalaxmi'}</span>
+                  </div>
                   <h1 className="font-semibold text-lg mb-1">{post.title}</h1>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="font-semibold text-sm text-indigo-700">{generateAnonymousId(post.user_id)}</span>
+                    <time className="text-xs text-gray-400" dateTime={post.created_at}>
+                      {new Date(post.created_at).toLocaleString()}
+                    </time>
+                  </div>
                   <div className="text-gray-700 mb-2 whitespace-pre-line">{post.body}</div>
-                  <time className="text-xs text-gray-400" dateTime={post.created_at}>
-                    {new Date(post.created_at).toLocaleString()}
-                  </time>
+                  
+                  {/* Images Display */}
+                  {post.images && post.images.length > 0 && (
+                    <div className="mt-4">
+                      <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3">
+                        {post.images.map((imageUrl, index) => (
+                          <div key={index} className="relative">
+                            <img
+                              src={imageUrl}
+                              alt={`Post image ${index + 1}`}
+                              className="w-full h-20 md:h-48 object-cover rounded-lg border cursor-pointer hover:opacity-90 transition-opacity"
+                              onClick={() => {
+                                setImageModal({ isOpen: true, imageUrl: imageUrl, alt: `Post image ${index + 1}`, currentIndex: index });
+                              }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </header>
               </article>
               <section>
@@ -364,6 +399,15 @@ export default function PostDetailPage() {
           )}
         </div>
       </main>
+      <ImageModal
+        isOpen={imageModal.isOpen}
+        onClose={() => setImageModal({ ...imageModal, isOpen: false })}
+        imageUrl={post?.images?.[imageModal.currentIndex] || imageModal.imageUrl}
+        alt={imageModal.alt}
+        allImages={post?.images || []}
+        currentIndex={imageModal.currentIndex}
+        onImageChange={(index) => setImageModal(prev => ({ ...prev, currentIndex: index }))}
+      />
     </>
   );
 } 
