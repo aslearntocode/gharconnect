@@ -243,7 +243,7 @@ export default function RentApartmentPage() {
                 deposit={apt.security_deposit ? `₹${apt.security_deposit.toLocaleString()}` : undefined}
                 availableFrom={apt.available_from}
                 petFriendly={apt.pet_friendly}
-                vegNonVegAllowed={apt.veg_non_veg_allowed}
+                vegNonVegAllowed={apt.veg_non_veg_allowed ? 'Non-Veg Allowed' : 'Veg Only'}
                 furnishingStatus={apt.furnishing_status}
                 onBook={() => {
                   setSelectedApartment(apt);
