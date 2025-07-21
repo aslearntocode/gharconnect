@@ -1121,7 +1121,7 @@ export default function Home() {
                               <div className="flex-1 text-center text-gray-500 py-3">No posts yet.</div>
                             ) : (
                               (isMobile ? connectPosts.slice(0, 2) : connectPosts).map((post) => (
-                                <div key={post.id} className="p-1 bg-white rounded-md shadow-sm border border-gray-100 hover:shadow-md transition-shadow mb-0 w-full min-w-[140px] md:min-w-[200px] max-w-[180px] md:max-w-[280px] flex-shrink-0 flex flex-col items-start">
+                                <div key={post.id} className="p-1 bg-white rounded-md shadow-sm border border-gray-100 hover:shadow-md transition-shadow mb-0 w-full min-w-[140px] md:min-w-[180px] max-w-[180px] md:max-w-[220px] flex-shrink-0 flex flex-col items-start">
                                   <div className="flex items-center justify-between mb-0.5 w-full">
                                     <span className="text-xs md:text-sm font-bold text-gray-800 bg-indigo-100 px-1 py-0.5 rounded-full truncate max-w-[70%]">{post.title}</span>
                                     <span className="text-xs md:text-sm text-gray-500 bg-gray-100 px-1 py-0.5 rounded-full">{new Date(post.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>

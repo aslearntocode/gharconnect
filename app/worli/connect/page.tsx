@@ -718,20 +718,20 @@ export default function WorliConnectPage() {
             ) : (
                 <ul className="flex flex-col gap-6">
                 {filteredPosts.map(post => (
-                    <li key={post.id} className="bg-white rounded-xl shadow border border-gray-100 p-5 flex flex-col gap-2">
+                    <li key={post.id} className="bg-white rounded-xl shadow border border-gray-100 p-3 md:p-5 flex flex-col gap-2">
                       {/* Top row: area, avatar, time */}
                       <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500 mb-1">
-                        <img src="/GC_Logo.png" alt="avatar" className="w-8 h-8 rounded-full border object-cover" />
-                        <span className="font-semibold text-gray-800">{post.category || 'gc/worli'}</span>
+                        <img src="/GC_Logo.png" alt="avatar" className="w-6 h-6 md:w-8 md:h-8 rounded-full border object-cover" />
+                        <span className="font-semibold text-gray-800 text-xs md:text-sm">{post.category || 'gc/worli'}</span>
                         <span className="mx-1">•</span>
-                        <span>{generateAnonymousId(post.user_id)}</span>
+                        <span className="text-xs md:text-sm">{generateAnonymousId(post.user_id)}</span>
                         <span className="mx-1">•</span>
-                        <span>{timeAgo(post.created_at)}</span>
+                        <span className="text-xs md:text-sm">{timeAgo(post.created_at)}</span>
                       </div>
                       {/* Title and body */}
                       <div>
-                        <h3 className="text-base md:text-lg font-bold text-gray-900 mb-1">{post.title}</h3>
-                        <p className="text-gray-800 text-sm md:text-base mb-2 line-clamp-4 whitespace-pre-line">
+                        <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1">{post.title}</h3>
+                        <p className="text-gray-800 text-xs md:text-base mb-2 line-clamp-3 md:line-clamp-4 whitespace-pre-line">
                           {(() => {
                             // Split by line breaks, show only first 2-3 lines/paragraphs
                             const lines = post.body.split(/\r?\n/).filter(l => l.trim() !== '');
@@ -747,11 +747,11 @@ export default function WorliConnectPage() {
                               <img
                                 src={imageUrl}
                                 alt={`Post image ${index + 1}`}
-                                className="w-full h-32 object-cover rounded-lg border"
+                                className="w-full h-24 md:h-32 object-cover rounded-lg border"
                               />
                               {index === 2 && post.images && post.images.length > 3 && (
                                 <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
-                                  <span className="text-white font-semibold text-sm">
+                                  <span className="text-white font-semibold text-xs md:text-sm">
                                     +{post.images.length - 3} more
                                   </span>
                                 </div>
@@ -761,9 +761,9 @@ export default function WorliConnectPage() {
                         </div>
                       )}
                       {/* Action row: like, comment, read more */}
-                      <div className="flex gap-3 mt-2">
+                      <div className="flex gap-2 md:gap-3 mt-2">
                         <button
-                          className={`flex items-center gap-1 px-3 md:px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold text-xs md:text-sm ${(post.likes || 0) > 0 ? 'text-red-500' : 'text-gray-700'} ${likesLoading === post.id ? 'opacity-50 cursor-wait' : ''}`}
+                          className={`flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold text-xs md:text-sm ${(post.likes || 0) > 0 ? 'text-red-500' : 'text-gray-700'} ${likesLoading === post.id ? 'opacity-50 cursor-wait' : ''}`}
                           onClick={() => handleLikePost(post.id)}
                           disabled={userLikedPosts[post.id] || likesLoading === post.id}
                           aria-label={userLikedPosts[post.id] ? 'Liked' : 'Like'}
@@ -771,14 +771,14 @@ export default function WorliConnectPage() {
                           <FiHeart fill={(post.likes || 0) > 0 ? 'currentColor' : 'none'} />
                           {post.likes || 0}
                         </button>
-                        <Link href={`/worli/connect/${post.id}`} className="flex items-center gap-1 px-3 md:px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
+                        <Link href={`/worli/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
                           {/* Speech bubble icon */}
-                          <svg className="w-4 md:w-5 h-4 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                          <svg className="w-3 md:w-5 h-3 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                           {post.comment_count || 0}
                         </Link>
-                        <Link href={`/worli/connect/${post.id}`} className="flex items-center gap-1 px-3 md:px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
+                        <Link href={`/worli/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
                           {/* Arrow right icon */}
-                          <svg className="w-4 md:w-5 h-4 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
+                          <svg className="w-3 md:w-5 h-3 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                           Read More
                         </Link>
                     </div>
@@ -853,6 +853,20 @@ export default function WorliConnectPage() {
                   </li>
                 ))}
               </ul>
+            </div>
+            {/* Neighbor Service Providers Link */}
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-4 mt-6">
+              <h3 className="text-lg font-bold mb-3 text-indigo-700">Neighbors Providing Services</h3>
+              <p className="text-sm text-gray-600 mb-4">Connect with trusted service providers in your neighborhood</p>
+              <Link 
+                href="/worli/home-service-provider" 
+                className="inline-flex items-center justify-center w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition-colors"
+              >
+                <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                Browse Service Providers
+              </Link>
             </div>
           </aside>
         </div>

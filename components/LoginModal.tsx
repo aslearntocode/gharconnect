@@ -89,7 +89,25 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
       }
     } catch (error: any) {
       console.error('Login error:', error)
-      setError(error.message)
+      
+      // Handle specific Firebase errors gracefully
+      if (error.code === 'auth/popup-closed-by-user') {
+        // User closed the popup - this is not an error, just reset the state
+        console.log('User closed the authentication popup')
+        setError('')
+        return
+      } else if (error.code === 'auth/cancelled-popup-request') {
+        // User cancelled the popup request - also not an error
+        console.log('User cancelled the authentication popup')
+        setError('')
+        return
+      } else if (error.code === 'auth/popup-blocked') {
+        // Popup was blocked by browser - show helpful message
+        setError('Please allow popups for this site to sign in with Google')
+      } else {
+        // For other errors, show the error message
+        setError(error.message || 'An error occurred during sign in')
+      }
     } finally {
       setLoading(false)
       console.log('Login process completed')

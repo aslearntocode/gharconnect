@@ -18,9 +18,6 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
   const [isPropertiesDropdownOpen, setIsPropertiesDropdownOpen] = useState(false)
   const [isCreditScoreDropdownOpen, setIsCreditScoreDropdownOpen] = useState(false)
   const [isDeliveryDropdownOpen, setIsDeliveryDropdownOpen] = useState(false)
-  const [isMarketplaceDropdownOpen, setIsMarketplaceDropdownOpen] = useState(false)
-  const [isMarketplaceMobileDropdownOpen, setIsMarketplaceMobileDropdownOpen] = useState(false)
-  const [isSocialDropdownOpen, setIsSocialDropdownOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const router = useRouter()
   const pathname = usePathname()
@@ -411,100 +408,28 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                   </div>
                 </div>
 
-                <div className="relative" style={{ zIndex: 50 }}>
-                  <div className="flex items-center">
-                    <button 
-                      onClick={() => setIsMarketplaceDropdownOpen(!isMarketplaceDropdownOpen)}
-                      className={`py-2 text-base flex items-center transition-colors duration-300 ${
-                        isScrolled 
-                          ? 'text-white hover:text-gray-300' 
-                          : 'text-black hover:text-gray-700'
-                      }`}
-                    >
-                      Marketplace
-                      <svg
-                        className={`ml-2 h-5 w-5 transform inline-block ${isMarketplaceDropdownOpen ? 'rotate-180' : ''}`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <div 
-                    className={`absolute w-48 bg-white rounded-lg shadow-lg py-2 ${isMarketplaceDropdownOpen ? 'block' : 'hidden'}`}
-                    style={{ zIndex: 1000, left: 0, top: '2.5rem' }}
-                  >
-                    <Link 
-                      href={`/${currentSociety}/marketplace`}
-                      className="flex items-center gap-x-3 px-4 py-2 text-base text-black hover:bg-gray-50"
-                      onClick={() => setIsMarketplaceDropdownOpen(false)}
-                    >
-                      <FiGrid className="w-5 h-5 text-blue-600" />
-                      View Items
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/marketplace/sell`}
-                      className="flex items-center gap-x-3 px-4 py-2 text-base text-black hover:bg-gray-50"
-                      onClick={() => setIsMarketplaceDropdownOpen(false)}
-                    >
-                      <FiPlus className="w-5 h-5 text-green-600" />
-                      Sell Items
-                    </Link>
-                  </div>
-                </div>
+                <Link 
+                  href={`/${currentSociety}/marketplace`}
+                  className={`py-2 text-base transition-colors duration-300 ${
+                    isScrolled 
+                      ? 'text-white hover:text-gray-300' 
+                      : 'text-black hover:text-gray-700'
+                  }`}
+                >
+                  Marketplace
+                </Link>
 
                 <div className="relative" style={{ zIndex: 50 }}>
                   <div className="flex items-center">
-                    <button 
-                      onClick={() => setIsSocialDropdownOpen(!isSocialDropdownOpen)}
-                      className={`py-2 text-base flex items-center transition-colors duration-300 ${
+                    <Link 
+                      href={`/${currentSociety}/connect`}
+                      className={`py-2 text-base transition-colors duration-300 ${
                         isScrolled 
                           ? 'text-white hover:text-gray-300' 
                           : 'text-black hover:text-gray-700'
                       }`}
                     >
                       Social
-                      <svg
-                        className={`ml-2 h-5 w-5 transform inline-block ${isSocialDropdownOpen ? 'rotate-180' : ''}`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <div 
-                    className={`absolute w-48 bg-white rounded-lg shadow-lg py-2 ${isSocialDropdownOpen ? 'block' : 'hidden'}`}
-                    style={{ zIndex: 1000, left: 0, top: '2.5rem' }}
-                  >
-                    <Link 
-                      href={`/${currentSociety}/connect`}
-                      className="flex items-center gap-x-3 px-4 py-2 text-base text-black hover:bg-gray-50"
-                      onClick={() => setIsSocialDropdownOpen(false)}
-                    >
-                      <FiUsers className="w-5 h-5 text-indigo-600" />
-                      Community
-                    </Link>
-                    <Link 
-                      href={`/${currentSociety}/home-service-provider`}
-                      className="flex items-center gap-x-3 px-4 py-2 text-base text-black hover:bg-gray-50"
-                      onClick={() => setIsSocialDropdownOpen(false)}
-                    >
-                      <FiUsers className="w-5 h-5 text-green-600" />
-                      Neighbor Service Providers
                     </Link>
                   </div>
                 </div>
@@ -784,37 +709,17 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
           </div>
 
           <div className="relative">
-            <Link href="#" className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300" onClick={e => { e.preventDefault(); setIsMarketplaceMobileDropdownOpen(v => !v); }}>
+            <Link href={`/${currentSociety}/marketplace`} className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300">
               <FiGrid className="w-6 h-6" />
               <span className="text-xs mt-1">Marketplace</span>
             </Link>
-            {isMarketplaceMobileDropdownOpen && (
-              <div className="absolute bottom-full mb-2 w-64 bg-white rounded-lg shadow-lg py-2 left-1/2 transform -translate-x-1/2 z-[9999]">
-                <Link href={`/${currentSociety}/marketplace`} className="flex items-center px-4 py-2 text-sm text-black hover:bg-gray-50" onClick={() => setIsMarketplaceMobileDropdownOpen(false)}>
-                  View Items
-                </Link>
-                <Link href={`/${currentSociety}/marketplace/sell`} className="flex items-center px-4 py-2 text-sm text-black hover:bg-gray-50" onClick={() => setIsMarketplaceMobileDropdownOpen(false)}>
-                  Sell Items
-                </Link>
-              </div>
-            )}
           </div>
 
           <div className="relative">
-            <Link href="#" className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300" onClick={e => { e.preventDefault(); setIsSocialDropdownOpen(v => !v); }}>
+            <Link href={`/${currentSociety}/connect`} className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300">
               <FiUsers className="w-6 h-6" />
               <span className="text-xs mt-1">Social</span>
             </Link>
-            {isSocialDropdownOpen && (
-              <div className="absolute bottom-full mb-2 w-64 bg-white rounded-lg shadow-lg py-2 left-1/2 transform -translate-x-1/2 z-[9999]">
-                <Link href={`/${currentSociety}/connect`} className="flex items-center px-4 py-2 text-sm text-black hover:bg-gray-50" onClick={() => setIsSocialDropdownOpen(false)}>
-                  Community
-                </Link>
-                <Link href={`/${currentSociety}/home-service-provider`} className="flex items-center px-4 py-2 text-sm text-black hover:bg-gray-50" onClick={() => setIsSocialDropdownOpen(false)}>
-                  Neighbor Service Providers
-                </Link>
-              </div>
-            )}
           </div>
         </div>
       </div>
