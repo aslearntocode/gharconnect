@@ -13,6 +13,8 @@ import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import PropertyInquiryModal from '@/components/PropertyInquiryModal';
 import { FiMapPin, FiPhone, FiArrowLeft, FiHeart, FiShare2 } from 'react-icons/fi';
 import Link from 'next/link';
+import RentalHeader from '@/components/RentalHeader';
+import Footer from '@/components/Footer';
 
 export default function PropertyDetailsPage() {
   const { id } = useParams();
@@ -66,7 +68,7 @@ export default function PropertyDetailsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-16">
+      <div className="min-h-screen bg-gray-50">
         <div className="flex justify-center items-center min-h-[60vh]">
           <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
         </div>
@@ -76,7 +78,7 @@ export default function PropertyDetailsPage() {
 
   if (error || !property) {
     return (
-      <div className="min-h-screen bg-gray-50 pt-16">
+      <div className="min-h-screen bg-gray-50">
         <div className="flex justify-center items-center min-h-[60vh]">
           <div className="text-center">
             <p className="text-red-600 mb-4">{error || 'Property not found'}</p>
@@ -92,9 +94,12 @@ export default function PropertyDetailsPage() {
   const galleryImages = property.images && property.images.length > 0 ? property.images : ['/default-apartment.jpg'];
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-16">
+    <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <RentalHeader />
+
+      {/* Navigation and Action Buttons */}
+      <div className="bg-white shadow-sm border-b pt-16 md:pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <Link 
@@ -274,6 +279,9 @@ export default function PropertyDetailsPage() {
             ) : undefined,
         }}
       />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 } 
