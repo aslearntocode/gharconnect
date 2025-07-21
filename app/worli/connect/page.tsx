@@ -77,7 +77,7 @@ export default function WorliConnectPage() {
     { value: 'gc/worli/crime', label: 'gc/worli/crime' },
     { value: 'gc/worli/environment', label: 'gc/worli/environment' },
     { value: 'gc/worli/entertainment', label: 'gc/worli/entertainment' },
-    { value: 'gc/worli/religion', label: 'gc/worli/religion' },
+    { value: 'gc/worli/work', label: 'gc/worli/work' },
     { value: 'gc/worli/cleanliness', label: 'gc/worli/cleanliness' },
   ];
 
@@ -413,7 +413,7 @@ export default function WorliConnectPage() {
       'Education': 'gc/worli/education',
       'Environment': 'gc/worli/environment',
       'Entertainment': 'gc/worli/entertainment',
-      'Religion': 'gc/worli/religion',
+      'Work': 'gc/worli/work',
     };
     
     const targetCategory = filterToCategory[activeFilter];
@@ -527,7 +527,7 @@ export default function WorliConnectPage() {
               {isFilterDropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                   <div className="p-2 max-h-64 overflow-y-auto space-y-1">
-                    {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Religion'].map(filter => (
+                    {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Work'].map(filter => (
                       <button
                         key={filter}
                         onClick={() => {
@@ -554,7 +554,7 @@ export default function WorliConnectPage() {
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4">
               <h3 className="text-lg font-bold mb-4 text-indigo-700">Filter by Topic</h3>
               <div className="space-y-2">
-                {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Religion'].map(filter => (
+                {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Work'].map(filter => (
                   <button
                     key={filter}
                     onClick={() => setActiveFilter(filter)}

@@ -389,7 +389,7 @@ export default function BandraConnectPage() {
       'Education': ['school', 'college', 'university', 'education', 'academic', 'study', 'exam', 'class', 'tuition', 'coaching', 'institute', 'learning', 'knowledge', 'research'],
       'Environment': ['environment', 'pollution', 'waste', 'garbage', 'litter', 'clean', 'green', 'sustainability', 'recycling', 'eco-friendly', 'climate', 'nature', 'wildlife', 'noise', 'noise pollution'],
       'Entertainment': ['entertainment', 'movie', 'theater', 'music', 'dance', 'art', 'culture', 'festival', 'celebration', 'party', 'function', 'gathering', 'show', 'performance'],
-      'Religion': ['religion', 'faith', 'temple', 'church', 'mosque', 'synagogue', 'worship', 'prayer', 'spiritual', 'meditation', 'yoga', 'zen', 'satsang', 'guru', 'gurugram'],
+      'Work': ['work', 'office', 'job', 'career', 'commute', 'workplace', 'colleague', 'boss', 'meeting', 'deadline', 'project', 'workload', 'work-life', 'remote', 'hybrid', 'cubicle', 'desk', 'laptop', 'presentation', 'client', 'business'],
     };
     return filterMap[filter] || [];
   }
@@ -499,7 +499,7 @@ export default function BandraConnectPage() {
               {isFilterDropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                   <div className="p-2 max-h-64 overflow-y-auto space-y-1">
-                    {['All', 'Cleanliness', 'Food', 'Transport', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Religion'].map(filter => (
+                    {['All', 'Cleanliness', 'Food', 'Transport', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Work'].map(filter => (
                       <button
                         key={filter}
                         onClick={() => {
@@ -526,7 +526,7 @@ export default function BandraConnectPage() {
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4">
               <h3 className="text-lg font-bold mb-4 text-indigo-700">Filter by Topic</h3>
               <div className="space-y-2">
-                {['All', 'Cleanliness', 'Food', 'Transport', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Religion'].map(filter => (
+                {['All', 'Cleanliness', 'Food', 'Transport', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Work'].map(filter => (
                   <button
                     key={filter}
                     onClick={() => setActiveFilter(filter)}

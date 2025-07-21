@@ -77,7 +77,7 @@ export default function ParelConnectPage() {
     { value: 'gc/parel/crime', label: 'gc/parel/crime' },
     { value: 'gc/parel/environment', label: 'gc/parel/environment' },
     { value: 'gc/parel/entertainment', label: 'gc/parel/entertainment' },
-    { value: 'gc/parel/religion', label: 'gc/parel/religion' },
+    { value: 'gc/parel/work', label: 'gc/parel/work' },
     { value: 'gc/parel/cleanliness', label: 'gc/parel/cleanliness' },
   ];
 
@@ -413,7 +413,7 @@ export default function ParelConnectPage() {
       'Education': 'gc/parel/education',
       'Environment': 'gc/parel/environment',
       'Entertainment': 'gc/parel/entertainment',
-      'Religion': 'gc/parel/religion',
+      'Work': 'gc/parel/work',
     };
     
     const targetCategory = filterToCategory[activeFilter];
@@ -527,7 +527,7 @@ export default function ParelConnectPage() {
               {isFilterDropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                   <div className="p-2 max-h-64 overflow-y-auto space-y-1">
-                    {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Religion'].map(filter => (
+                    {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Work'].map(filter => (
                       <button
                         key={filter}
                         onClick={() => {
@@ -554,7 +554,7 @@ export default function ParelConnectPage() {
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4">
               <h3 className="text-lg font-bold mb-4 text-indigo-700">Filter by Topic</h3>
               <div className="space-y-2">
-                {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Religion'].map(filter => (
+                {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Work'].map(filter => (
                   <button
                     key={filter}
                     onClick={() => setActiveFilter(filter)}
