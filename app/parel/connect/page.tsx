@@ -731,9 +731,9 @@ export default function ParelConnectPage() {
                           <span className="text-xs md:text-sm">{timeAgo(post.created_at)}</span>
                         </div>
                         {/* Title and body */}
-                        <div>
-                          <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1">{post.title}</h3>
-                          <p className="text-gray-800 text-xs md:text-base mb-2 line-clamp-3 md:line-clamp-4 whitespace-pre-line">
+                        <div className="cursor-pointer" onClick={() => window.location.href = `/parel/connect/${post.id}`}>
+                          <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1 hover:text-indigo-600 transition-colors">{post.title}</h3>
+                          <p className="text-gray-800 text-xs md:text-base mb-2 line-clamp-3 md:line-clamp-4 whitespace-pre-line hover:text-gray-600 transition-colors">
                             {(() => {
                               // Split by line breaks, show only first 2-3 lines/paragraphs
                               const lines = post.body.split(/\r?\n/).filter(l => l.trim() !== '');
@@ -743,13 +743,13 @@ export default function ParelConnectPage() {
                         </div>
                         {/* Images */}
                         {post.images && post.images.length > 0 && (
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mb-2">
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mb-2 cursor-pointer" onClick={() => window.location.href = `/parel/connect/${post.id}`}>
                             {post.images.slice(0, 3).map((imageUrl, index) => (
                               <div key={index} className="relative">
                                 <img
                                   src={imageUrl}
                                   alt={`Post image ${index + 1}`}
-                                  className="w-full h-24 md:h-32 object-cover rounded-lg border"
+                                  className="w-full h-24 md:h-32 object-cover rounded-lg border hover:opacity-90 transition-opacity"
                                 />
                                 {index === 2 && post.images && post.images.length > 3 && (
                                   <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded-lg">
