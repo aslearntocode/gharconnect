@@ -9,7 +9,6 @@ export interface Vendor {
   name: string;
   products: Product[];
   mobile: string;
-  photo?: string;
   areaServed?: string[];
   buildingServed?: string[];
 }
@@ -57,12 +56,24 @@ export const vendors: Vendor[] = [
     name: 'Vijay Kumar - Vegetable Shop',
     products: [{
       name: 'Vegetables',
-      description: 'Farm fresh vegetables',
+      description: 'Vegetables',
       price: "Call for price",
       unit: 'gms'
     }],
     mobile: '+91 99203 98545',
     areaServed: ['Parel'],
     buildingServed: ['All']
-  }
+  },
+  {
+    name: 'Surender Vegetable Seller',
+    products: [{
+      name: 'All Vegetables',
+      description: 'Vegetables',
+      price: 'Call for price',
+      unit: 'kg'
+    }],
+    mobile: '+91 77150 51571',
+    areaServed: ['Parel'],
+    buildingServed: ['L&T Crescent Bay','ICC','Ruparel Ariana']
+  },
 ]; 
