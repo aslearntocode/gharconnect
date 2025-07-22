@@ -61,6 +61,7 @@
     "react-signature-canvas": "^1.1.0-alpha.2",
     "react-swipeable": "^7.0.2",
     "recharts": "^2.15.0",
+    "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
     "sonner": "^2.0.5",
     "tailwind-merge": "^2.6.0",

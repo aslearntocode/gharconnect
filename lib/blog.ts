@@ -13,6 +13,91 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'mumbai-redevelopment-guide-2025',
+    title: 'Mumbai Redevelopment Guide 2025: How Old Buildings Become New Towers',
+    excerpt: 'Redevelopment in Mumbai usually means rebuilding old or dilapidated buildings—especially those built before the 1980s—with new, taller, and modern buildings. Learn how this process works and what it means for residents.',
+    content: `
+    Mumbai Redevelopment Guide 2025: How Old Buildings Become New Towers
+
+Redevelopment in Mumbai usually means rebuilding old or dilapidated buildings especially those built before the 1980s with new, taller, and modern buildings. It's common in areas like Dadar, Andheri, Bandra, or Dharavi, where space is tight and buildings are decades old.
+
+Here's a simple explanation of how it works:
+
+🏚️ Why Redevelopment Happens
+
+Mumbai has many:
+
+- Old chawls or buildings with poor safety and infrastructure
+- Tenants living in small houses for decades
+- Land with high potential but underused
+
+Builders or the government step in to redevelop the land and give everyone a better deal.
+
+🏗️ Who's Involved
+
+- Society or building residents
+- Builder/developer
+- Municipal authorities (like BMC or MHADA)
+
+🔁 Step-by-Step Redevelopment Process
+
+| Step | What Happens |
+|------|-------------|
+| 1. Agreement | Residents agree that their building is old and needs redevelopment. |
+| 2. Developer Selection | A builder is chosen (by society or government) to handle construction. |
+| 3. Temporary Shift | Residents move to rented flats or temporary housing (builder pays rent). |
+| 4. Demolition | Old building is demolished. |
+| 5. Construction | New, taller building is constructed with better flats and amenities. |
+| 6. Reallocation | Original residents get new flats—usually bigger (e.g., from 300 sq.ft. to 500 sq.ft.). |
+| 7. Extra Sale Units | Builder sells extra flats (the new space gained through extra FSI) to earn profit. |
+
+🏢 Example
+
+If 100 families live in an old 3-storey building, a builder can construct a 15-storey tower with 100 free flats for the original families + 100 more flats to sell in the open market.
+
+💰 How Builders Make Money
+
+- Builders get extra FSI (Floor Space Index) as an incentive.
+- They sell the additional units built on the same plot.
+- Government may waive some fees or offer tax benefits.
+
+🏘️ Major Redevelopment Examples
+
+**Dharavi Redevelopment:** Asia's biggest slum being transformed into residential + commercial space.
+
+**BDD Chawls (Worli, Naigaon, NM Joshi Marg):** Massive housing schemes of the 1920s being rebuilt into towers.
+
+**MHADA Colony projects:** Areas like Goregaon, Andheri, and Bandra East seeing vertical redevelopment.
+
+✅ Pros of Redevelopment
+
+- Better living conditions (water, lifts, security)
+- Free new flats for residents
+- More housing stock in city
+- Builders make money through sales
+
+⚠️ Challenges
+
+- Project delays
+- Disputes between builders and societies
+- Some tenants not agreeing to shift
+- Poor construction quality if not monitored
+
+🏠 What This Means for Mumbai Residents
+
+Redevelopment is transforming Mumbai's skyline and living standards. For residents in old buildings, it offers a chance to upgrade their living space without moving away from their established neighborhoods. For the city, it means more modern housing stock and better infrastructure.
+
+However, the process requires careful planning, transparent communication between all parties, and proper monitoring to ensure quality construction and timely completion.
+
+Whether you're a resident considering redevelopment for your building or someone interested in Mumbai's real estate transformation, understanding this process helps make informed decisions about the future of your home and community.
+`,
+    author: 'GharConnect Team',
+    date: '2025-07-21',
+    readTime: '8 min read',
+    category: 'Mumbai Real Estate',
+    image: '/blog/mumbai-redevelopment-guide-2025.jpg'
+  },
+  {
     slug: 'rent-property-without-brokerage-gharconnect-packages',
     title: 'Rent Your Property Without Brokerage Using GharConnect\'s Silver, Gold & Platinum Packages',
     excerpt: 'Finding the right tenant can be stressful, expensive, and time-consuming — especially when traditional platforms involve hefty brokerage, subscription fees, or agent interference. At GharConnect.in, we believe property owners should have full control over their rental journey — without paying brokerage or worrying about listing fees.',
