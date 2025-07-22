@@ -20,12 +20,13 @@ export default function MumbaiRentTypeSelection() {
     },
     {
       name: 'Silver',
-      price: '₹2,999',
+      price: '₹999',
+      originalPrice: '₹2,999',
       icon: '🥈',
       description: 'For property owners who want essential services',
       features: [
         'Property Promotion on the Website',
-        'Property Showings on Owner\'s Behalf',
+        '5 Property Showings on Owner\'s Behalf',
         'Privacy of Owner\'s Contact Details'
       ],
       borderColor: 'border-gray-200',
@@ -33,13 +34,14 @@ export default function MumbaiRentTypeSelection() {
     },
     {
       name: 'Gold',
-      price: '₹4,999',
+      price: '₹2,999',
+      originalPrice: '₹4,999',
       icon: '🥇',
       description: 'Premium services for your property',
       features: [
         'Everything in Silver',
         'Professional Property Photoshoot',
-        '10 Additional Property Showings on Owner\'s Behalf',
+        '5 Additional Property Showings on Owner\'s Behalf',
         'Privacy of Owner\'s Contact Details'
       ],
       borderColor: 'border-yellow-400',
@@ -48,7 +50,8 @@ export default function MumbaiRentTypeSelection() {
     },
     {
       name: 'Platinum',
-      price: '₹6,999',
+      price: '₹4,999',
+      originalPrice: '₹6,999',
       icon: '💎',
       description: 'Complete peace of mind for property owners',
       features: [
@@ -139,7 +142,16 @@ export default function MumbaiRentTypeSelection() {
                             <span className="text-xl">{pkg.icon}</span>
                           </div>
                           <h3 className="text-xl font-bold text-gray-900 mb-1">{pkg.name}</h3>
-                          <div className="text-2xl font-bold text-indigo-600 mb-1">{pkg.price}</div>
+                          <div className="text-2xl font-bold text-indigo-600 mb-1">
+                            {pkg.originalPrice ? (
+                              <div className="flex items-center justify-center gap-2">
+                                <span className="text-sm md:text-lg text-gray-400 line-through">{pkg.originalPrice}</span>
+                                <span className="text-lg md:text-2xl text-indigo-600 transform -rotate-2 bg-yellow-100 px-2 py-1 rounded-lg shadow-sm">{pkg.price}</span>
+                              </div>
+                            ) : (
+                              pkg.price
+                            )}
+                          </div>
                           <p className="text-gray-600 text-xs mb-4">
                             {pkg.description}
                           </p>
@@ -213,7 +225,12 @@ export default function MumbaiRentTypeSelection() {
                   <span className="text-lg">🥈</span>
                 </div>
                 <h3 className="text-base font-bold text-gray-900 mb-1">Silver</h3>
-                <div className="text-xl font-bold text-indigo-600 mb-1">₹2,999</div>
+                <div className="text-xl font-bold text-indigo-600 mb-1">
+                  <div className="flex items-center justify-center gap-1">
+                    <span className="text-sm text-gray-400 line-through">₹2,999</span>
+                    <span className="text-xl text-indigo-600 transform -rotate-1 bg-yellow-100 px-1.5 py-0.5 rounded shadow-sm">₹999</span>
+                  </div>
+                </div>
                 <p className="text-gray-600 text-xs mb-3">
                   For property owners who want essential services
                 </p>
@@ -234,7 +251,7 @@ export default function MumbaiRentTypeSelection() {
                     <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-xs leading-tight">10 Property Showings on Owner's Behalf</span>
+                    <span className="text-xs leading-tight">5 Property Showings on Owner's Behalf</span>
                   </li>
                   <li className="flex items-start">
                     <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -254,7 +271,12 @@ export default function MumbaiRentTypeSelection() {
                   <span className="text-lg">🥇</span>
                 </div>
                 <h3 className="text-base font-bold text-gray-900 mb-1">Gold</h3>
-                <div className="text-xl font-bold text-indigo-600 mb-1">₹4,999</div>
+                <div className="text-xl font-bold text-indigo-600 mb-1">
+                  <div className="flex items-center justify-center gap-1">
+                    <span className="text-sm text-gray-400 line-through">₹4,999</span>
+                    <span className="text-xl text-indigo-600 transform -rotate-1 bg-yellow-100 px-1.5 py-0.5 rounded shadow-sm">₹2,999</span>
+                  </div>
+                </div>
                 <p className="text-gray-600 text-xs mb-3">
                   Premium services for your property
                 </p>
@@ -275,7 +297,7 @@ export default function MumbaiRentTypeSelection() {
                     <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-xs leading-tight">10 Additional Property Showings on Owner's Behalf</span>
+                    <span className="text-xs leading-tight">5 Additional Property Showings on Owner's Behalf</span>
                   </li>
                   <li className="flex items-start">
                     <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
@@ -292,7 +314,12 @@ export default function MumbaiRentTypeSelection() {
                   <span className="text-lg">💎</span>
                 </div>
                 <h3 className="text-base font-bold text-gray-900 mb-1">Platinum</h3>
-                <div className="text-xl font-bold text-indigo-600 mb-1">₹6,999</div>
+                <div className="text-xl font-bold text-indigo-600 mb-1">
+                  <div className="flex items-center justify-center gap-1">
+                    <span className="text-sm text-gray-400 line-through">₹6,999</span>
+                    <span className="text-xl text-indigo-600 transform -rotate-1 bg-yellow-100 px-1.5 py-0.5 rounded shadow-sm">₹4,999</span>
+                  </div>
+                </div>
                 <p className="text-gray-600 text-xs mb-3">
                   Complete peace of mind for property owners
                 </p>
