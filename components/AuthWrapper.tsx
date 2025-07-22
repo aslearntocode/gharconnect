@@ -14,7 +14,7 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
 
   // Determine the society from the pathname
   const getSocietyFromPath = (path: string) => {
-    if (path.startsWith('/parel')) return 'parel'
+    if (path.startsWith('/mumbai/community')) return 'parel'
     if (path.startsWith('/ag-sewri')) return 'ag-sewri'
     return 'parel' // default to parel
   }

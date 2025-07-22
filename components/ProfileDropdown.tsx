@@ -30,10 +30,16 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
   const [error, setError] = useState<string | null>(null)
   const supabase = createClientComponentClient()
 
-  // Extract area from pathname (e.g., /parel/connect -> parel, /worli/connect -> worli)
+  // Extract area from pathname (e.g., /mumbai/community/connect -> mumbai/community, /bangalore/connect -> bangalore)
   const getCurrentArea = () => {
     const pathSegments = pathname.split('/')
-    return pathSegments[1] || 'parel' // Default to parel if no area found
+    if (pathSegments[1] === 'mumbai' && pathSegments[2] === 'community') {
+      return 'mumbai/community'
+    }
+    if (pathSegments[1] === 'bangalore') {
+      return 'bangalore'
+    }
+    return 'mumbai/community' // Default to mumbai/community if no area found
   }
 
   const currentArea = getCurrentArea()

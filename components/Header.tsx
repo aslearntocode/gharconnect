@@ -25,8 +25,15 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
   // Extract society from pathname
   const getSocietyFromPath = () => {
     const pathParts = pathname.split('/')
-    // Assuming URL structure is /society-name/...
-    return pathParts[1] || 'parel' // Default to parel if no society in path
+    // Handle new URL structure: /mumbai/community/... or /bangalore/...
+    if (pathParts[1] === 'mumbai' && pathParts[2] === 'community') {
+      return 'mumbai/community'
+    }
+    if (pathParts[1] === 'bangalore') {
+      return 'bangalore'
+    }
+    // Default to mumbai/community if no society in path
+    return 'mumbai/community'
   }
 
   const currentSociety = getSocietyFromPath()

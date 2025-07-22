@@ -20,11 +20,11 @@ Allow: /mumbai/rent
 Allow: /bangalore/rent
 Allow: /mumbai/aaprtment
 Allow: /bangalore/list-apartment
-Allow: /parel
+Allow: /mumbai/community
 Allow: /worli
 Allow: /bandra
-Allow: /parel/services
-Allow: /parel/delivery
+Allow: /mumbai/community/services
+Allow: /mumbai/community/delivery
 Allow: /worli/services
 Allow: /worli/delivery
 Allow: /blog

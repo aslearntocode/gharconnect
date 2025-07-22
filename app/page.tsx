@@ -26,58 +26,10 @@ export const metadata: Metadata = {
 
 const communities = [
   {
-    name: 'Parel, Mumbai',
+    name: 'Mumbai Community',
     description: 'Parel, Sewri, Bhoiwada, Wadala',
-    href: '/parel',
+    href: '/mumbai/community',
     status: 'active'
-  },
-  {
-    name: 'Worli, Mumbai',
-    description: 'Worli, Lower Parel',
-    href: '/worli',
-    status: 'active'
-  },
-  {
-    name: 'Mahalaxmi, Mumbai',
-    description: 'Mahalaxmi, Tardeo',
-    href: '/mahalaxmi',
-    status: 'coming-soon'
-  },
-  {
-    name: 'Bandra, Mumbai',
-    description: 'Bandra, Khar',
-    href: '/bandra',
-    status: 'coming-soon'
-  },
-  {
-    name: 'Andheri, Mumbai',
-    description: 'Andheri, Santacruz',
-    href: '/andheri',
-    status: 'coming-soon'
-  },
-  {
-    name: 'Juhu, Mumbai',
-    description: 'Juhu, Vile Parle',
-    href: '/juhu',
-    status: 'coming-soon'
-  },
-  {
-    name: 'Malad, Mumbai',
-    description: 'Malad, Kandivali, Borivali',
-    href: '/malad',
-    status: 'coming-soon'
-  },
-  {
-    name: 'Powai, Mumbai',
-    description: 'Powai, Chandivali',
-    href: '/powai',
-    status: 'coming-soon'
-  },
-  {
-    name: 'Thane, Mumbai',
-    description: 'Thane, Ghodbunder Road',
-    href: '/thane',
-    status: 'coming-soon'
   }
 ];
 
@@ -172,7 +124,7 @@ export default function SocietiesPage() {
                             </svg>
                           </div>
                         ) : (
-                          <Link href={`${city.href}/services`} className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs px-3 py-2 rounded transition-all duration-300">
+                          <Link href="/mumbai/community" className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs px-3 py-2 rounded transition-all duration-300">
                             Society Services
                             <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />

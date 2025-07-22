@@ -12,11 +12,11 @@ export default function Footer() {
     const pathSegments = pathname.split('/').filter(segment => segment);
     
     // Handle different URL patterns
-    if (pathSegments.length === 0) {
-      return '/parel/blog'; // Default for main page
+    if (pathname === '/') {
+      return '/mumbai/community/blog'; // Default for main page
     }
     
-    // For society pages like /parel, /worli
+    // For society pages like /mumbai/community, /worli
     if (pathSegments.length === 1) {
       return `/${pathSegments[0]}/blog`;
     }
@@ -54,10 +54,10 @@ export default function Footer() {
                 <Link href="/about" className="hover:text-white/90">About Us</Link>
               </li> */}
               <li>
-                <Link href="/parel/careers" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Careers</Link>
+                <Link href="/mumbai/community/careers" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Careers</Link>
               </li>
               <li>
-                <Link href="/parel/faq" className="text-sm md:text-base hover:text-indigo-600 transition-colors">FAQ</Link>
+                <Link href="/mumbai/community/faq" className="text-sm md:text-base hover:text-indigo-600 transition-colors">FAQ</Link>
               </li>
               <li>
                 <Link href={isMainPage ? "/terms" : `/${pathname.split('/')[1] || 'parel'}/terms`} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Terms & Conditions</Link>
@@ -91,7 +91,7 @@ export default function Footer() {
                 <Link href="/mumbai/rent" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Mumbai Rentals</Link>
               </li>
               <li>
-                <Link href="/mumbai/services" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Mumbai Society Services</Link>
+                <Link href="/mumbai/community" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Mumbai Society Services</Link>
               </li>
               <li>
                 <Link href="/bangalore/rent" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Bangalore Rentals</Link>

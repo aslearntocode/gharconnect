@@ -17,10 +17,10 @@ export default function CityFooter() {
             <h3 className="text-lg font-semibold text-gray-900">Company</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/parel/careers" className="hover:text-indigo-600 transition-colors">Careers</Link>
+                <Link href="/mumbai/community/careers" className="hover:text-indigo-600 transition-colors">Careers</Link>
               </li>
               <li>
-                <Link href="/parel/faq" className="hover:text-indigo-600 transition-colors">FAQ</Link>
+                <Link href="/mumbai/community/faq" className="hover:text-indigo-600 transition-colors">FAQ</Link>
               </li>
               <li>
                 <Link href={isMainPage ? "/terms" : `/${society}/terms`} className="hover:text-indigo-600 transition-colors">Terms & Conditions</Link>

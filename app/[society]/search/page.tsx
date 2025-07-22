@@ -9,23 +9,23 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
 // Import actual vendor data
-import { vendors as plumberVendors } from '@/app/parel/data/services/plumber'
-import { vendors as physicalTrainingVendors } from '@/app/parel/data/services/physical-training'
-import { vendors as yogaVendors } from '@/app/parel/data/services/yoga'
-import { vendors as laundryVendors } from '@/app/parel/data/services/laundry'
-import { vendors as carpenterVendors } from '@/app/parel/data/services/carpenter'
-import { vendors as electricianVendors } from '@/app/parel/data/services/electrician'
-import { doctors } from '@/app/parel/data/services/doctors'
+import { vendors as plumberVendors } from '@/app/mumbai/community/data/services/plumber'
+import { vendors as physicalTrainingVendors } from '@/app/mumbai/community/data/services/physical-training'
+import { vendors as yogaVendors } from '@/app/mumbai/community/data/services/yoga'
+import { vendors as laundryVendors } from '@/app/mumbai/community/data/services/laundry'
+import { vendors as carpenterVendors } from '@/app/mumbai/community/data/services/carpenter'
+import { vendors as electricianVendors } from '@/app/mumbai/community/data/services/electrician'
+import { doctors } from '@/app/mumbai/community/data/services/doctors'
 
 // Import delivery vendors
-import { vendors as dairyVendors } from '@/app/parel/data/delivery/dairy'
-import { vendors as meatVendors } from '@/app/parel/data/delivery/meat'
-import { vendors as eggsVendors } from '@/app/parel/data/delivery/eggs'
-import { vendors as flowersVendors } from '@/app/parel/data/delivery/flowers'
-import { vendors as vegetablesVendors } from '@/app/parel/data/delivery/vegetables'
-import { vendors as fruitsVendors } from '@/app/parel/data/delivery/fruits'
-import { vendors as dryFruitsVendors } from '@/app/parel/data/delivery/dry-fruits'
-import { vendors as pharmacyVendors } from '@/app/parel/data/delivery/pharmacy'
+import { vendors as dairyVendors } from '@/app/mumbai/community/data/delivery/dairy'
+import { vendors as meatVendors } from '@/app/mumbai/community/data/delivery/meat'
+import { vendors as eggsVendors } from '@/app/mumbai/community/data/delivery/eggs'
+import { vendors as flowersVendors } from '@/app/mumbai/community/data/delivery/flowers'
+import { vendors as vegetablesVendors } from '@/app/mumbai/community/data/delivery/vegetables'
+import { vendors as fruitsVendors } from '@/app/mumbai/community/data/delivery/fruits'
+import { vendors as dryFruitsVendors } from '@/app/mumbai/community/data/delivery/dry-fruits'
+import { vendors as pharmacyVendors } from '@/app/mumbai/community/data/delivery/pharmacy'
 
 interface SearchResult {
   id: string

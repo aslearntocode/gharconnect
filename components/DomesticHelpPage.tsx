@@ -15,7 +15,13 @@ import { useMediaQuery } from 'react-responsive';
 // Utility function to get current area from URL path
 const getCurrentArea = (pathname: string): string => {
   const pathSegments = pathname.split('/');
-  // URL pattern: /{area}/services/domestic-help
+  
+  // Handle new URL structure: /mumbai/community/services/domestic-help
+  if (pathSegments[1] === 'mumbai' && pathSegments[2] === 'community') {
+    return 'parel'; // Default to parel for mumbai/community
+  }
+  
+  // Handle old URL structure: /{area}/services/domestic-help
   const areaIndex = pathSegments.findIndex(segment => 
     ['parel', 'worli', 'bandra', 'juhu', 'malad', 'powai', 'thane', 'andheri', 'mahalaxmi'].includes(segment)
   );
@@ -75,6 +81,7 @@ export default function DomesticHelpPage() {
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const pathname = usePathname();
   const currentArea = getCurrentArea(pathname);
+  const [selectedArea, setSelectedArea] = useState(currentArea.charAt(0).toUpperCase() + currentArea.slice(1));
 
   // Use the same vendor ID generation logic as VendorCard and VendorRating
   const generateVendorId = (vendorId: string | null | undefined, vendorName?: string): string => {
@@ -120,9 +127,9 @@ export default function DomesticHelpPage() {
         .from("vendor_weekly_availability")
         .select("vendor_id, name, mobile_no, area, societies, date, services, morning, afternoon, evening, is_verified")
         .gte("date", todayDateString)
-        .ilike("area", `%${currentArea}%`) // Filter for current area only
+        .ilike("area", `%${selectedArea}%`) // Filter for selected area
         .order("date", { ascending: true });
-      console.log(`Fetched vendor_weekly_availability for ${currentArea}:`, data, error);
+      console.log(`Fetched vendor_weekly_availability for ${selectedArea}:`, data, error);
       if (!error && data) {
         // Group all rows by vendor_id
         const vendorMap: Record<string, any[]> = {};
@@ -137,7 +144,7 @@ export default function DomesticHelpPage() {
       setLoading(false);
     };
     fetchVendors();
-  }, [currentArea]); // Re-fetch when area changes
+  }, [selectedArea]); // Re-fetch when selected area changes
 
   // Fetch ratings for all vendors
   useEffect(() => {
@@ -295,7 +302,7 @@ export default function DomesticHelpPage() {
       const { data, error } = await supabase
         .from("vendor_permanent_availability")
         .select("vendor_id, name, mobile_no, area, societies, services, slot_type, slot_start_time, slot_end_time, is_verified")
-        .ilike("area", `%${currentArea}%`)
+        .ilike("area", `%${selectedArea}%`)
         .order("created_at", { ascending: false });
 
       if (!error && data) {
@@ -341,7 +348,7 @@ export default function DomesticHelpPage() {
       }
     };
     fetchSlots();
-  }, [currentArea]);
+  }, [selectedArea]);
 
   useEffect(() => {
     if (activeTab === 'permanent') {
@@ -403,7 +410,7 @@ export default function DomesticHelpPage() {
       {/* Indigo Banner */}
       <div className="relative">
         <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white text-center md:text-left">Domestic Help & Drivers - {currentArea.charAt(0).toUpperCase() + currentArea.slice(1)}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-white text-center md:text-left">Domestic Help & Drivers - {selectedArea.charAt(0).toUpperCase() + selectedArea.slice(1)}</h1>
         </div>
       </div>
       <div className="py-8 px-4 max-w-7xl mx-auto">
@@ -436,6 +443,31 @@ export default function DomesticHelpPage() {
           >
             Temporary
           </button>
+        </div>
+        {/* Area Selector */}
+        <div className="mb-6 flex justify-center">
+          <div className="bg-white rounded-lg shadow-md p-1 inline-flex">
+            <button
+              onClick={() => setSelectedArea('Parel')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                selectedArea === 'Parel'
+                  ? 'bg-indigo-600 text-white'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Parel
+            </button>
+            <button
+              onClick={() => setSelectedArea('Worli')}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                selectedArea === 'Worli'
+                  ? 'bg-indigo-600 text-white'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Worli
+            </button>
+          </div>
         </div>
         {/* Filters */}
         <div className="flex flex-wrap gap-4 mb-8">

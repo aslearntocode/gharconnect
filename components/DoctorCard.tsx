@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Doctor } from '@/app/parel/data/services/doctors';
+import { Doctor } from '@/app/mumbai/community/data/services/doctors';
 import { FiPhone, FiMapPin, FiClock, FiAward, FiBookOpen, FiPlusSquare } from 'react-icons/fi';
 import LoginModal from './LoginModal';
 import { auth } from '@/lib/firebase';

@@ -421,7 +421,7 @@ Be the first to know about community events, alerts, and happenings around your 
 Move beyond silent elevators and locked doors — connect meaningfully with those who live nearby.
 
 ## 🔗 Try It Now
-Just go to your locality page (like gharconnect.in/parel) and scroll to the "Community Chat" section.
+Just go to your locality page (like gharconnect.in/mumbai/community) and scroll to the "Community Chat" section.
 Post something. Reply to someone. Start a conversation.
 
 At GharConnect.in, we're not just about listings — we're about building stronger, smarter, and more connected neighborhoods.

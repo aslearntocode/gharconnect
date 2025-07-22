@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import Footer from '@/components/Footer';
+import { usePathname } from 'next/navigation';
 
 export const metadata: Metadata = {
   title: 'Mumbai Rental Apartments - No Brokerage | GharConnect',
@@ -35,7 +36,7 @@ export default function RentLayout({
   return (
     <>
       {children}
-      <Footer />
+      {/* Footer is handled by individual page layouts to avoid duplicates */}
     </>
   );
 } 
