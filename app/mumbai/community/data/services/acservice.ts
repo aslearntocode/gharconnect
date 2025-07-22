@@ -23,8 +23,8 @@ export interface Vendor {
         unit: 'job'
       }],
       mobile: '+91 84549 87547',
-      areaServed: ['Parel'],
-      buildingServed: ['L&T Crescent Bay','Ashok Gardens','ICC']
+      areaServed: ['Parel','Worli'],
+      buildingServed: ['All']
     },
     {
       name: 'Hamid',
