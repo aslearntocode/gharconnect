@@ -87,7 +87,7 @@ export default function MumbaiRentTypeSelection() {
         <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
           {/* Apartments Card */}
           <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 w-full max-w-md flex flex-col items-start">
-            <h2 className="text-xl font-bold mb-2">Apartments</h2>
+            <h2 className="text-xl font-bold mb-2">Premium Apartments</h2>
             <p className="text-gray-700 mb-4">Browse and rent full apartments in Mumbai. No brokerage, direct from owners.</p>
             <Link href="/mumbai/rent/apartment" className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg shadow transition-all">
               Explore
@@ -98,7 +98,7 @@ export default function MumbaiRentTypeSelection() {
           </div>
           {/* PG Card */}
           <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 w-full max-w-md flex flex-col items-start">
-            <h2 className="text-xl font-bold mb-2">PG Accommodation</h2>
+            <h2 className="text-xl font-bold mb-2">Premium PG Accommodation</h2>
             <p className="text-gray-700 mb-4">Find Paying Guest (PG) accommodation options for students and working professionals.</p>
             <Link href="/mumbai/rent/pg" className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg shadow transition-all">
               Explore

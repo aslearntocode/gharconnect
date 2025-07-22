@@ -362,7 +362,7 @@ export default function RentApartmentPage() {
       {/* Blue CTA Section */}
       <div className="w-full bg-indigo-600 p-4 md:py-12 mt-12 flex flex-col items-center justify-center max-w-md mx-auto md:max-w-none">
         <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 text-center">Have a Property to Rent?</h2>
-        <p className="text-base md:text-lg text-white mb-6 max-w-2xl text-center">If you want to list your property for rent, then login and fill this form to reach potential tenants in your community or just WhatsApp us.</p>
+        {/* <p className="text-base md:text-lg text-white mb-6 max-w-2xl text-center">If you want to list your property for rent, then login and fill this form to reach potential tenants in your community or just WhatsApp us.</p> */}
         <Link href="/bangalore/list-apartment" className="inline-flex items-center bg-green-500 text-white font-semibold px-4 py-2 md:px-6 md:py-3 rounded-xl shadow-lg hover:bg-green-600 transition-all text-base md:text-lg">
           List Your Property
           <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
