@@ -18,7 +18,7 @@ export const vendors: Vendor[] = [
     name: 'Arvind Fruit Seller',
     products: [{
       name: 'All Fruits',
-      description: 'Premium quality Fruits',
+      description: 'Fruits',
       price: 'Call for price',
       unit: 'kg'
     }],
@@ -30,7 +30,7 @@ export const vendors: Vendor[] = [
     name: 'Vijay Fruit Seller',
     products: [{
       name: 'All Fruits',
-      description: 'Premium quality Fruits',
+      description: 'Fruits',
       price: 'Call for price',
       unit: 'kg'
     }],
@@ -42,7 +42,7 @@ export const vendors: Vendor[] = [
     name: 'Surender Fruit Seller',
     products: [{
       name: 'All Fruits',
-      description: 'Premium quality Fruits',
+      description: 'Fruits',
       price: 'Call for price',
       unit: 'kg'
     }],

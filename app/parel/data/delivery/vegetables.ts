@@ -31,7 +31,7 @@ export const vendors: Vendor[] = [
     name: 'Krishna Gupta Groceries',
     products: [{
       name: 'Tomatoes',
-      description: 'Farm fresh vegetables',
+      description: 'Vegetables',
       price: "Call for price",
       unit: 'gms'
     }],
@@ -44,7 +44,7 @@ export const vendors: Vendor[] = [
     name: 'Manilal Vegetable Shop',
     products: [{
       name: 'Vegetables',
-      description: 'Farm fresh vegetables',
+      description: 'Vegetables',
       price: "Call for price",
       unit: 'gms'
     }],
