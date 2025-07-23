@@ -7,12 +7,27 @@ import { FiSearch, FiHome, FiTool, FiTruck, FiMapPin, FiStar, FiDollarSign } fro
 import { FaBuilding } from 'react-icons/fa'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { useRouter } from 'next/navigation'
 
 // Import vendor data directly
 import { vendors as plumberVendors } from '@/app/mumbai/community/data/services/plumber'
 import { vendors as carpenterVendors } from '@/app/mumbai/community/data/services/carpenter'
 import { vendors as electricianVendors } from '@/app/mumbai/community/data/services/electrician'
 import { doctors } from '@/app/mumbai/community/data/services/doctors'
+
+// Import delivery data
+import { vendors as dairyVendors } from '@/app/mumbai/community/data/delivery/dairy'
+import { vendors as flowersVendors } from '@/app/mumbai/community/data/delivery/flowers'
+import { vendors as eggsVendors } from '@/app/mumbai/community/data/delivery/eggs'
+import { vendors as fruitsVendors } from '@/app/mumbai/community/data/delivery/fruits'
+import { vendors as vegetablesVendors } from '@/app/mumbai/community/data/delivery/vegetables'
+import { vendors as meatVendors } from '@/app/mumbai/community/data/delivery/meat'
+import { vendors as dryFruitsVendors } from '@/app/mumbai/community/data/delivery/dry-fruits'
+import { vendors as pharmacyVendors } from '@/app/mumbai/community/data/delivery/pharmacy'
+
+// Import apartment data
+import { rentApartments } from '@/app/mumbai/community/data/rentApartments'
+import { sellApartments } from '@/app/mumbai/community/data/sellApartments'
 
 interface SearchResult {
   id: string
@@ -29,6 +44,7 @@ interface SearchResult {
   buildingName?: string
   tags?: string[]
   mobile?: string
+  relevanceScore?: number
 }
 
 function SearchContent() {
@@ -37,6 +53,7 @@ function SearchContent() {
   const [results, setResults] = useState<SearchResult[]>([])
   const [loading, setLoading] = useState(false)
   const [activeFilter, setActiveFilter] = useState<string>('all')
+  const router = useRouter()
 
   // Fuzzy search function
   const fuzzySearch = (searchTerm: string, text: string): boolean => {
@@ -61,6 +78,115 @@ function SearchContent() {
       text.toLowerCase().includes(variation) ||
       text.toLowerCase().replace(/\s+/g, '').includes(variation)
     )
+  }
+
+  // Calculate relevance score for search results
+  const calculateRelevanceScore = (searchQuery: string, item: SearchResult): number => {
+    const query = searchQuery.toLowerCase()
+    let score = 0
+    
+    // Special handling for apartment searches
+    if (item.type === 'apartment') {
+      // Handle "2 BHK" or "2bhk" searches
+      if (query.match(/\d+\s*bhk/i)) {
+        const bhkMatch = query.match(/(\d+)\s*bhk/i)
+        if (bhkMatch) {
+          const bedroomCount = bhkMatch[1]
+          if (item.apartmentType?.includes(`${bedroomCount} BHK`)) {
+            score += 200 // Very high priority for exact BHK match
+          }
+          if (item.tags?.some(tag => tag.includes(`${bedroomCount}bhk`) || tag.includes(`${bedroomCount} bhk`))) {
+            score += 150
+          }
+        }
+      }
+      
+      // Handle "apartment" searches
+      if (query.includes('apartment')) {
+        if (item.title.toLowerCase().includes('apartment')) {
+          score += 120
+        }
+        if (item.tags?.some(tag => tag.includes('apartment'))) {
+          score += 100
+        }
+      }
+      
+      // Handle "flat" searches
+      if (query.includes('flat')) {
+        if (item.title.toLowerCase().includes('flat')) {
+          score += 120
+        }
+        if (item.tags?.some(tag => tag.includes('flat'))) {
+          score += 100
+        }
+      }
+    }
+    
+    // Exact title match (highest priority)
+    if (item.title.toLowerCase().includes(query)) {
+      score += 100
+    }
+    
+    // Exact apartment type match
+    if (item.apartmentType && item.apartmentType.toLowerCase().includes(query)) {
+      score += 90
+    }
+    
+    // Exact category match
+    if (item.category && item.category.toLowerCase().includes(query)) {
+      score += 80
+    }
+    
+    // Exact tag match
+    if (item.tags) {
+      const tagMatches = item.tags.filter(tag => tag.toLowerCase().includes(query))
+      score += tagMatches.length * 70
+    }
+    
+    // Partial title match
+    const titleWords = item.title.toLowerCase().split(' ')
+    const queryWords = query.split(' ')
+    const titleMatches = queryWords.filter(word => 
+      titleWords.some(titleWord => titleWord.includes(word))
+    )
+    score += titleMatches.length * 60
+    
+    // Description match
+    if (item.description && item.description.toLowerCase().includes(query)) {
+      score += 50
+    }
+    
+    // Vendor name match
+    if (item.vendorName && item.vendorName.toLowerCase().includes(query)) {
+      score += 40
+    }
+    
+    // Location match
+    if (item.location && item.location.toLowerCase().includes(query)) {
+      score += 30
+    }
+    
+    // Building name match
+    if (item.buildingName && item.buildingName.toLowerCase().includes(query)) {
+      score += 20
+    }
+    
+    // Fuzzy match (lowest priority)
+    if (fuzzySearch(searchQuery, item.title) || 
+        fuzzySearch(searchQuery, item.description || '') ||
+        fuzzySearch(searchQuery, item.category || '')) {
+      score += 10
+    }
+    
+    return score
+  }
+
+  // Enhanced search function with relevance scoring
+  const enhancedSearch = (searchQuery: string, item: SearchResult): { matches: boolean, score: number } => {
+    const score = calculateRelevanceScore(searchQuery, item)
+    const matches = score > 0
+    
+    return { matches, score }
   }
 
   // Generate search data
@@ -157,122 +283,6 @@ function SearchContent() {
       })
     })
 
-    // Add general services
-    const generalServices = [
-      {
-        title: 'Electrician',
-        description: 'Certified electrician for all electrical work and repairs',
-        url: '/mumbai/community/services/electrician',
-        category: 'Electrical',
-        tags: ['electrician', 'electrical', 'wiring', 'repair', 'installation', 'power', 'lights']
-      },
-      {
-        title: 'Carpenter',
-        description: 'Skilled carpenter for furniture and woodwork',
-        url: '/mumbai/community/services/carpenter',
-        category: 'Carpentry',
-        tags: ['carpenter', 'carpentry', 'furniture', 'woodwork', 'repair', 'installation']
-      },
-      {
-        title: 'Plumber',
-        description: 'Professional plumbing services and repairs',
-        url: '/mumbai/community/services/plumber',
-        category: 'Plumbing',
-        tags: ['plumber', 'plumbing', 'water', 'repair', 'installation', 'pipes']
-      },
-      {
-        title: 'AC Service',
-        description: 'Professional AC installation, repair and maintenance',
-        url: '/mumbai/community/services/ac-service',
-        category: 'HVAC',
-        tags: ['ac', 'air conditioning', 'hvac', 'cooling', 'repair', 'maintenance', 'installation']
-      },
-      {
-        title: 'Pest Control',
-        description: 'Effective pest control and extermination services',
-        url: '/mumbai/community/services/pest-control',
-        category: 'Pest Control',
-        tags: ['pest control', 'extermination', 'insects', 'rodents', 'cleaning', 'hygiene']
-      },
-      {
-        title: 'Domestic Help & Drivers',
-        description: 'Reliable domestic help and professional drivers',
-        url: '/mumbai/community/services/domestic-help',
-        category: 'Domestic',
-        tags: ['domestic help', 'drivers', 'housekeeping', 'cleaning', 'transport', 'maid']
-      },
-      {
-        title: 'Car Clean',
-        description: 'Professional car cleaning and detailing services',
-        url: '/mumbai/community/services/car-clean',
-        category: 'Automotive',
-        tags: ['car clean', 'car wash', 'detailing', 'automotive', 'cleaning', 'vehicle']
-      },
-      {
-        title: 'Painter',
-        description: 'Professional painting services for homes and offices',
-        url: '/mumbai/community/services/painter',
-        category: 'Painting',
-        tags: ['painter', 'painting', 'interior', 'exterior', 'wall paint', 'decor']
-      },
-      {
-        title: 'Gardener',
-        description: 'Professional gardening and landscaping services',
-        url: '/mumbai/community/services/gardener',
-        category: 'Gardening',
-        tags: ['gardener', 'gardening', 'landscaping', 'plants', 'lawn', 'maintenance']
-      },
-      {
-        title: 'Laptop Repair',
-        description: 'Expert laptop repair and maintenance services',
-        url: '/mumbai/community/services/laptop-repair',
-        category: 'Electronics',
-        tags: ['laptop repair', 'computer', 'electronics', 'repair', 'maintenance', 'hardware']
-      },
-      {
-        title: 'Electronics Repair',
-        description: 'Professional electronics repair and maintenance',
-        url: '/mumbai/community/services/electronics-repair',
-        category: 'Electronics',
-        tags: ['electronics repair', 'repair', 'maintenance', 'gadgets', 'devices']
-      },
-      {
-        title: 'Notary',
-        description: 'Professional notary services for document verification',
-        url: '/mumbai/community/services/notary',
-        category: 'Legal',
-        tags: ['notary', 'legal', 'document', 'verification', 'stamp', 'certification']
-      },
-      {
-        title: 'Pigeon Net',
-        description: 'Professional pigeon net installation services',
-        url: '/mumbai/community/services/piegon-net',
-        category: 'Installation',
-        tags: ['pigeon net', 'installation', 'balcony', 'terrace', 'protection', 'mesh']
-      },
-      {
-        title: 'Kids Classes',
-        description: 'Educational and fun classes for children',
-        url: '/mumbai/community/services/kids-classes',
-        category: 'Education',
-        tags: ['kids classes', 'education', 'children', 'learning', 'tuition', 'activities']
-      }
-    ]
-
-    generalServices.forEach(service => {
-      results.push({
-        id: `service-${idCounter++}`,
-        title: service.title,
-        description: service.description,
-        type: 'service',
-        url: service.url,
-        category: service.category,
-        rating: 4.5,
-        price: 'Call for price',
-        tags: service.tags
-      })
-    })
-
     // Add rental pages
     results.push(
       {
@@ -297,55 +307,219 @@ function SearchContent() {
       }
     )
 
-    // Add apartment types
-    const apartmentTypes = [
-      {
-        title: '2 BHK Apartment',
-        description: 'Spacious 2 bedroom apartment available for rent',
-        category: '2 BHK',
-        price: '₹45,000/month',
-        apartmentType: '2 BHK',
-        tags: ['2 bhk', '2bhk', '2 bedroom', 'apartment', 'rent', 'spacious']
-      },
-      {
-        title: '3 BHK Apartment',
-        description: 'Large 3 bedroom apartment with modern amenities',
-        category: '3 BHK',
-        price: '₹65,000/month',
-        apartmentType: '3 BHK',
-        tags: ['3 bhk', '3bhk', '3 bedroom', 'apartment', 'rent', 'large']
-      },
-      {
-        title: '1 BHK Apartment',
-        description: 'Compact 1 bedroom apartment perfect for singles or couples',
-        category: '1 BHK',
-        price: '₹25,000/month',
-        apartmentType: '1 BHK',
-        tags: ['1 bhk', '1bhk', '1 bedroom', 'apartment', 'rent', 'compact']
-      },
-      {
-        title: 'Studio Apartment',
-        description: 'Modern studio apartment with all amenities',
-        category: 'Studio',
-        price: '₹20,000/month',
-        apartmentType: 'Studio',
-        tags: ['studio', 'apartment', 'rent', 'modern', 'compact', 'single room']
-      }
-    ]
+    // Add delivery vendors
+    // Dairy vendors
+    dairyVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
+        results.push({
+          id: `dairy-${idCounter++}`,
+          title: `${vendor.name} - ${product.name}`,
+          description: product.description,
+          type: 'delivery',
+          url: '/mumbai/community/delivery/dairy',
+          category: 'Dairy',
+          rating: 4.6,
+          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
+          vendorName: vendor.name,
+          mobile: vendor.mobile,
+          location: vendor.areaServed?.join(', '),
+          tags: generateTags(vendor.name, product.name, product.description)
+        })
+      })
+    })
 
-    apartmentTypes.forEach(apt => {
+    // Flowers vendors
+    flowersVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
+        results.push({
+          id: `flowers-${idCounter++}`,
+          title: `${vendor.name} - ${product.name}`,
+          description: product.description,
+          type: 'delivery',
+          url: '/mumbai/community/delivery/flowers',
+          category: 'Flowers',
+          rating: 4.5,
+          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
+          vendorName: vendor.name,
+          mobile: vendor.mobile,
+          location: vendor.areaServed?.join(', '),
+          tags: generateTags(vendor.name, product.name, product.description)
+        })
+      })
+    })
+
+    // Eggs vendors
+    eggsVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
+        results.push({
+          id: `eggs-${idCounter++}`,
+          title: `${vendor.name} - ${product.name}`,
+          description: product.description,
+          type: 'delivery',
+          url: '/mumbai/community/delivery/eggs',
+          category: 'Eggs',
+          rating: 4.5,
+          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
+          vendorName: vendor.name,
+          mobile: vendor.mobile,
+          location: vendor.areaServed?.join(', '),
+          tags: generateTags(vendor.name, product.name, product.description)
+        })
+      })
+    })
+
+    // Fruits vendors
+    fruitsVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
+        results.push({
+          id: `fruits-${idCounter++}`,
+          title: `${vendor.name} - ${product.name}`,
+          description: product.description,
+          type: 'delivery',
+          url: '/mumbai/community/delivery/fruits',
+          category: 'Fruits',
+          rating: 4.5,
+          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
+          vendorName: vendor.name,
+          mobile: vendor.mobile,
+          location: vendor.areaServed?.join(', '),
+          tags: generateTags(vendor.name, product.name, product.description)
+        })
+      })
+    })
+
+    // Vegetables vendors
+    vegetablesVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
+        results.push({
+          id: `vegetables-${idCounter++}`,
+          title: `${vendor.name} - ${product.name}`,
+          description: product.description,
+          type: 'delivery',
+          url: '/mumbai/community/delivery/vegetables',
+          category: 'Vegetables',
+          rating: 4.5,
+          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
+          vendorName: vendor.name,
+          mobile: vendor.mobile,
+          location: vendor.areaServed?.join(', '),
+          tags: generateTags(vendor.name, product.name, product.description)
+        })
+      })
+    })
+
+    // Meat vendors
+    meatVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
+        results.push({
+          id: `meat-${idCounter++}`,
+          title: `${vendor.name} - ${product.name}`,
+          description: product.description,
+          type: 'delivery',
+          url: '/mumbai/community/delivery/meat',
+          category: 'Meat',
+          rating: 4.5,
+          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
+          vendorName: vendor.name,
+          mobile: vendor.mobile,
+          location: vendor.areaServed?.join(', '),
+          tags: generateTags(vendor.name, product.name, product.description)
+        })
+      })
+    })
+
+    // Dry fruits vendors
+    dryFruitsVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
+        results.push({
+          id: `dry-fruits-${idCounter++}`,
+          title: `${vendor.name} - ${product.name}`,
+          description: product.description,
+          type: 'delivery',
+          url: '/mumbai/community/delivery/dry-fruits',
+          category: 'Dry Fruits',
+          rating: 4.5,
+          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
+          vendorName: vendor.name,
+          mobile: vendor.mobile,
+          location: vendor.areaServed?.join(', '),
+          tags: generateTags(vendor.name, product.name, product.description)
+        })
+      })
+    })
+
+    // Pharmacy vendors
+    pharmacyVendors.forEach((vendor: any) => {
+      vendor.products?.forEach((product: any) => {
+        results.push({
+          id: `pharmacy-${idCounter++}`,
+          title: `${vendor.name} - ${product.name}`,
+          description: product.description,
+          type: 'delivery',
+          url: '/mumbai/community/delivery/pharmacy',
+          category: 'Pharmacy',
+          rating: 4.5,
+          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
+          vendorName: vendor.name,
+          mobile: vendor.mobile,
+          location: vendor.areaServed?.join(', '),
+          tags: generateTags(vendor.name, product.name, product.description)
+        })
+      })
+    })
+
+    // Add rental apartments
+    rentApartments.forEach((apartment: any) => {
+      const bhkText = `${apartment.bedrooms} BHK`
+      const locationText = apartment.tower || 'Mumbai'
+      const priceText = `₹${apartment.monthlyRent.toLocaleString()}/month`
+      
       results.push({
-        id: `apartment-${idCounter++}`,
-        title: apt.title,
-        description: apt.description,
+        id: `rent-apt-${idCounter++}`,
+        title: `${bhkText} Apartment for Rent - ${locationText}`,
+        description: apartment.description,
         type: 'apartment',
         url: '/mumbai/community/rent',
-        category: apt.category,
+        category: bhkText,
         rating: 4.4,
-        price: apt.price,
-        apartmentType: apt.apartmentType,
-        buildingName: 'Various Buildings',
-        tags: apt.tags
+        price: priceText,
+        apartmentType: bhkText,
+        buildingName: apartment.tower,
+        location: locationText,
+        tags: [
+          'apartment', 'rent', 'mumbai', locationText.toLowerCase(),
+          `${apartment.bedrooms}bhk`, `${apartment.bedrooms} bhk`,
+          'flat', 'property', 'rental', 'accommodation',
+          apartment.furnishingStatus, apartment.facing?.toLowerCase(),
+          `floor ${apartment.floor}`, apartment.type.toLowerCase()
+        ]
+      })
+    })
+
+    // Add sale apartments
+    sellApartments.forEach((apartment: any) => {
+      const bhkText = `${apartment.bedrooms} BHK`
+      const locationText = apartment.tower || 'Mumbai'
+      const priceText = `₹${apartment.price.toLocaleString()}`
+      
+      results.push({
+        id: `sale-apt-${idCounter++}`,
+        title: `${bhkText} Apartment for Sale - ${locationText}`,
+        description: apartment.description,
+        type: 'apartment',
+        url: '/mumbai/community/sell',
+        category: bhkText,
+        rating: 4.4,
+        price: priceText,
+        apartmentType: bhkText,
+        buildingName: apartment.tower,
+        location: locationText,
+        tags: [
+          'apartment', 'sale', 'buy', 'mumbai', locationText.toLowerCase(),
+          `${apartment.bedrooms}bhk`, `${apartment.bedrooms} bhk`,
+          'flat', 'property', 'purchase', 'real estate',
+          `floor ${apartment.floor}`, apartment.type.toLowerCase()
+        ]
       })
     })
 
@@ -365,33 +539,82 @@ function SearchContent() {
   const performSearch = (searchQuery: string) => {
     setLoading(true)
     
-    // Simulate API delay
+    // Check for direct redirects first
+    const query = searchQuery.toLowerCase().trim()
+    
+    // Apartment-related searches - redirect to rent page
+    if (query.includes('apartment') || query.includes('flat') || query.includes('rent') || 
+        query.includes('bhk') || query.includes('property') || query.includes('house')) {
+      router.push('/mumbai/rent/apartment')
+      return
+    }
+    
+    // Delivery-related searches - redirect to delivery pages
+    if (query.includes('coconut')) {
+      router.push('/mumbai/community/delivery/fruits')
+      return
+    }
+    if (query.includes('flower')) {
+      router.push('/mumbai/community/delivery/flowers')
+      return
+    }
+    if (query.includes('milk') || query.includes('dairy')) {
+      router.push('/mumbai/community/delivery/dairy')
+      return
+    }
+    if (query.includes('egg')) {
+      router.push('/mumbai/community/delivery/eggs')
+      return
+    }
+    if (query.includes('fruit')) {
+      router.push('/mumbai/community/delivery/fruits')
+      return
+    }
+    if (query.includes('vegetable')) {
+      router.push('/mumbai/community/delivery/vegetables')
+      return
+    }
+    if (query.includes('meat') || query.includes('chicken')) {
+      router.push('/mumbai/community/delivery/meat')
+      return
+    }
+    if (query.includes('dry fruit') || query.includes('nut')) {
+      router.push('/mumbai/community/delivery/dry-fruits')
+      return
+    }
+    if (query.includes('medicine') || query.includes('pharmacy')) {
+      router.push('/mumbai/community/delivery/pharmacy')
+      return
+    }
+    
+    // Service-related searches - redirect to service pages
+    if (query.includes('plumber')) {
+      router.push('/mumbai/community/services/plumber')
+      return
+    }
+    if (query.includes('electrician')) {
+      router.push('/mumbai/community/services/electrician')
+      return
+    }
+    if (query.includes('carpenter')) {
+      router.push('/mumbai/community/services/carpenter')
+      return
+    }
+    if (query.includes('doctor')) {
+      router.push('/mumbai/community/services/doctors')
+      return
+    }
+    
+    // If no direct redirect, show search results
     setTimeout(() => {
-      const filteredResults = searchData.filter(item => {
-        const searchTerm = searchQuery.toLowerCase()
-        
-        // Search in multiple fields with fuzzy logic
-        const searchableText = [
-          item.title,
-          item.description,
-          item.category,
-          item.location,
-          item.vendorName,
-          item.apartmentType,
-          item.buildingName,
-          ...(item.tags || []) // Include tags in search
-        ].filter(Boolean).join(' ').toLowerCase()
-        
-        // Use fuzzy search for better matching
-        return fuzzySearch(searchQuery, searchableText) ||
-               fuzzySearch(searchQuery, item.title) ||
-               fuzzySearch(searchQuery, item.description) ||
-               fuzzySearch(searchQuery, item.category || '') ||
-               fuzzySearch(searchQuery, item.vendorName || '') ||
-               fuzzySearch(searchQuery, item.apartmentType || '') ||
-               // Search in tags specifically
-               (item.tags && item.tags.some(tag => fuzzySearch(searchQuery, tag)))
-      })
+      const searchResults = searchData.map(item => ({
+        ...item,
+        relevanceScore: calculateRelevanceScore(searchQuery, item)
+      }))
+      
+      const filteredResults = searchResults
+        .filter(item => item.relevanceScore > 0)
+        .sort((a, b) => b.relevanceScore - a.relevanceScore)
 
       setResults(filteredResults)
       setLoading(false)
