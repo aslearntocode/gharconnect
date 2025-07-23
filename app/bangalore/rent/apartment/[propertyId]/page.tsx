@@ -13,7 +13,6 @@ import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import PropertyInquiryModal from '@/components/PropertyInquiryModal';
 import { FiMapPin, FiPhone, FiArrowLeft, FiHeart, FiShare2 } from 'react-icons/fi';
 import Link from 'next/link';
-import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function BangaloreApartmentPropertyPage() {
@@ -97,10 +96,8 @@ export default function BangaloreApartmentPropertyPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <Header />
-
       {/* Navigation and Action Buttons */}
-      <div className="bg-white shadow-sm border-b pt-16 md:pt-16">
+      <div className="bg-white shadow-sm border-b pt-8 md:pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <Link 
