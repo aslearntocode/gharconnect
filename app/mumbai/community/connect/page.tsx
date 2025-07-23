@@ -418,6 +418,7 @@ export default function ParelConnectPage() {
         'Environment': 'environment',
         'Entertainment': 'entertainment',
         'Work': 'work',
+        'Sports': 'sports',
       };
       
       const targetCategory = filterToCategory[activeFilter];
@@ -533,7 +534,7 @@ export default function ParelConnectPage() {
               {isFilterDropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                   <div className="p-2 max-h-64 overflow-y-auto space-y-1">
-                    {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Work'].map(filter => (
+                    {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Work', 'Sports'].map(filter => (
                       <button
                         key={filter}
                         onClick={() => {
@@ -652,7 +653,7 @@ export default function ParelConnectPage() {
                 {isFilterDropdownOpen && (
                   <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                     <div className="p-2 max-h-64 overflow-y-auto space-y-1">
-                      {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Work'].map(filter => (
+                      {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Work', 'Sports'].map(filter => (
                         <button
                           key={filter}
                           onClick={() => {
