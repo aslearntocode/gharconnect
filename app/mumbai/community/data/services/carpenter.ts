@@ -85,5 +85,17 @@ export const vendors: Vendor[] = [
     mobile: '+91 83691 23195',
     areaServed: ['All'],
     buildingServed: ['All']
+  },
+  {
+    name: 'Omprakash Aluwind',
+    products: [{
+      name: 'Carpentry',
+      description: 'Custome Furniture & Wardrobe. Balcony Door Lock Installation',
+      price: 'Call for price',
+      unit: 'job'
+    }],
+    mobile: '+91 70391 34863',
+    areaServed: ['Parel','Worli','Bandra','Mahalaxmi'],
+    buildingServed: ['All']
   }
 ];
