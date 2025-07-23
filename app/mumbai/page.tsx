@@ -7,9 +7,9 @@ export default function MumbaiRedirect() {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect to main page after a short delay
+    // Redirect to Mumbai community page after a short delay
     const timer = setTimeout(() => {
-      router.push('/');
+      router.push('/mumbai/community');
     }, 100);
 
     return () => clearTimeout(timer);
@@ -20,7 +20,7 @@ export default function MumbaiRedirect() {
       <div className="text-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto mb-4"></div>
         <h1 className="text-xl font-semibold text-gray-700 mb-2">Redirecting...</h1>
-        <p className="text-gray-500">Taking you to the main page to select your destination</p>
+        <p className="text-gray-500">Taking you to Mumbai Community</p>
       </div>
     </div>
   );
