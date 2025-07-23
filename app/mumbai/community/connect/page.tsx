@@ -572,8 +572,8 @@ export default function ParelConnectPage() {
               </button>
               {isAreaFilterDropdownOpen && (
                 <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-                  <div className="p-2 max-h-64 overflow-y-auto space-y-1">
-                    {['All', 'Parel', 'Worli'].map(area => (
+                  <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
+                    {['All', 'Parel', 'Worli', 'Bandra', 'Mahalaxmi', 'Powai', 'Andheri', 'Malad', 'Goregaon'].map(area => (
                       <button
                         key={area}
                         onClick={() => {
@@ -613,8 +613,8 @@ export default function ParelConnectPage() {
                 </button>
                 {isAreaFilterDropdownOpen && (
                   <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-                    <div className="p-2 space-y-1">
-                      {['All', 'Parel', 'Worli'].map(area => (
+                    <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
+                      {['All', 'Parel', 'Worli', 'Bandra', 'Mahalaxmi', 'Powai', 'Andheri', 'Malad', 'Goregaon'].map(area => (
                         <button
                           key={area}
                           onClick={() => {
@@ -652,7 +652,7 @@ export default function ParelConnectPage() {
                 </button>
                 {isFilterDropdownOpen && (
                   <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
-                    <div className="p-2 max-h-64 overflow-y-auto space-y-1">
+                    <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
                       {['All', 'Cleanliness', 'Food', 'Travel', 'Safety', 'Events', 'Services', 'Health', 'Governance', 'Crime', 'Education', 'Environment', 'Entertainment', 'Work', 'Sports'].map(filter => (
                         <button
                           key={filter}
