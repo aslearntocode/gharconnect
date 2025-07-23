@@ -18,6 +18,7 @@ import TravelDiariesContainer from "@/components/TravelDiariesContainer"
 import Head from 'next/head'
 import VideoEmbed from '@/components/VideoEmbed'
 import VideoPlayer from '@/components/VideoPlayer'
+import TestimonialCarousel from "@/components/TestimonialCarousel"
 
 
 interface AllocationItem {
@@ -1354,61 +1355,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* GharCare+ Subscription Section */}
-        <div className="bg-gradient-to-br from-blue-50 to-green-50 py-10 px-4 md:px-0">
-          <div className="max-w-4xl mx-auto rounded-2xl shadow-lg bg-white/80 p-8 flex flex-col items-center">
-            <h2 className="text-2xl md:text-3xl font-bold text-indigo-700 mb-2 text-center">GharCare+ Subscription</h2>
-            <p className="text-gray-700 text-center mb-6 max-w-2xl">Subscribe to <span className="font-semibold text-indigo-700">GharCare+</span> and get annual coverage for <span className="font-semibold">Pest Control</span>, <span className="font-semibold">AC Servicing</span>, and <span className="font-semibold">Water Purifier Servicing</span> at a special price. Hassle-free, reliable, and trusted by your community.</p>
-            <div className="flex flex-row gap-6 mb-6 w-full justify-center">
-              <div className="flex flex-col items-center flex-1">
-                <span className="bg-indigo-100 text-indigo-600 rounded-full p-4 mb-2"><FiShield className="w-7 h-7" /></span>
-                <span className="font-semibold text-gray-900 text-center">Pest<br/>Control</span>
-              </div>
-              <div className="flex flex-col items-center flex-1">
-                <span className="bg-indigo-100 text-blue-600 rounded-full p-4 mb-2"><FiZap className="w-7 h-7" /></span>
-                <span className="font-semibold text-gray-900 text-center">AC<br/>Servicing</span>
-              </div>
-              <div className="flex flex-col items-center flex-1">
-                <span className="bg-green-100 text-green-600 rounded-full p-4 mb-2"><FiDroplet className="w-7 h-7" /></span>
-                <span className="font-semibold text-gray-900 text-center">Water Purifier<br/>Servicing</span>
-              </div>
-            </div>
-            <a href="https://wa.me/919321314553?text=I%20want%20to%20subscribe%20to%20GharCare%2B" target="_blank" rel="noopener noreferrer" className="inline-block px-8 py-3 bg-indigo-600 text-white font-bold rounded-lg shadow-md hover:bg-indigo-700 transition-colors text-lg mt-2">Subscribe Now</a>
-          </div>
-        </div>
-
-        {/* Domestic Help Container */}
-        <div className="bg-indigo-600 py-12">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-white mb-4">Looking for Domestic Help & Drivers?</h2>
-            <p className="text-indigo-100 mb-6">
-              The domestic help and drivers put in their availability for the next 10 days 
-              and you can book them for a few hours or for a few days to meet your emergency needs.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a 
-                href="/mumbai/community/services/domestic-help"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors duration-200"
-              >
-                For Hiring - Click Here
-                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </a>
-              <a 
-                href="https://gharconnect.in/vendor"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 border-2 border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-indigo-600 transition-colors duration-200"
-              >
-                Looking for Work - Click Here
-                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
         {/* Numbers Since Launch Section */}
         <div className="bg-white py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1453,8 +1399,45 @@ export default function Home() {
           </div>
         </div>
 
+        {/* Domestic Help Container */}
+        <div className="bg-indigo-600 py-12">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold text-white mb-4">Looking for Domestic Help & Drivers?</h2>
+            <p className="text-indigo-100 mb-6">
+              The domestic help and drivers put in their availability for the next 10 days 
+              and you can book them for a few hours or for a few days to meet your emergency needs.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a 
+                href="/mumbai/community/services/domestic-help"
+                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors duration-200"
+              >
+                For Hiring - Click Here
+                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </a>
+              <a 
+                href="https://gharconnect.in/vendor"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center px-6 py-3 border-2 border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-indigo-600 transition-colors duration-200"
+              >
+                Looking for Work - Click Here
+                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+
         {/* Travel Diaries Container */}
         {/* <TravelDiariesContainer /> */}
+
+        {/* Testimonial Carousel */}
+        <TestimonialCarousel />
       </main>
     </>
   )
