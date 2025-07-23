@@ -13,7 +13,7 @@ import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import PropertyInquiryModal from '@/components/PropertyInquiryModal';
 import { FiMapPin, FiPhone, FiArrowLeft, FiHeart, FiShare2 } from 'react-icons/fi';
 import Link from 'next/link';
-import RentalHeader from '@/components/RentalHeader';
+import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function PropertyDetailsPage() {
@@ -96,7 +96,7 @@ export default function PropertyDetailsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <RentalHeader />
+      <Header />
 
       {/* Navigation and Action Buttons */}
       <div className="bg-white shadow-sm border-b pt-16 md:pt-16">

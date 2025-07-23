@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { CalendarDays, Clock, User, ArrowLeft } from 'lucide-react';
 import { getBlogPost, getRelatedPosts } from '@/lib/blog';
 import { notFound } from 'next/navigation';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -45,21 +47,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Simplified Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-8">
-              <Link href="/" className="text-xl font-bold text-gray-900 hover:text-indigo-600 transition-colors">
-                Home
-              </Link>
-              <Link href="/blog" className="text-xl font-semibold text-gray-900 hover:text-indigo-600 transition-colors">
-                All Blogs
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Content with top padding for fixed header */}
       <div className="pt-16">
@@ -166,6 +154,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           </section>
         )}
       </div>
+      <Footer />
     </div>
   );
 } 
