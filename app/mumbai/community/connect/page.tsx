@@ -47,7 +47,7 @@ export default function ParelConnectPage() {
   const [user, setUser] = useState<any>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [newPost, setNewPost] = useState({ title: '', body: '', category: 'general', area: 'Parel', images: [] as string[] });
+  const [newPost, setNewPost] = useState({ title: '', body: '', category: 'general', area: 'All', images: [] as string[] });
   const [submitting, setSubmitting] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -83,6 +83,7 @@ export default function ParelConnectPage() {
     { value: 'entertainment', label: 'Entertainment' },
     { value: 'work', label: 'Work & Business' },
     { value: 'cleanliness', label: 'Cleanliness' },
+    { value: 'sports', label: 'Sports' },
   ];
 
   useEffect(() => {
@@ -240,7 +241,7 @@ export default function ParelConnectPage() {
     }
     setSubmitting(false);
     if (!error) {
-      setNewPost({ title: '', body: '', category: 'general', area: 'Parel', images: [] });
+      setNewPost({ title: '', body: '', category: 'general', area: 'All', images: [] });
       fetchPosts();
       setImageUploadReset(true); // Reset image upload state after successful post
     } else {
@@ -731,7 +732,7 @@ export default function ParelConnectPage() {
                       <button
                         onClick={() => {
                           setIsPostFormOpen(false);
-                          setNewPost({ title: '', body: '', category: 'general', area: 'Parel', images: [] });
+                          setNewPost({ title: '', body: '', category: 'general', area: 'All', images: [] });
                           setImageUploadReset(true); // Reset image upload state
                         }}
                         className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -770,6 +771,7 @@ export default function ParelConnectPage() {
                         required
                         aria-label="Select area"
                       >
+                        <option value="All">All</option>
                         <option value="Parel">Parel</option>
                         <option value="Worli">Worli</option>
                       </select>
@@ -802,7 +804,7 @@ export default function ParelConnectPage() {
                           type="button" 
                           onClick={() => {
                             setIsPostFormOpen(false);
-                            setNewPost({ title: '', body: '', category: 'general', area: 'Parel', images: [] });
+                            setNewPost({ title: '', body: '', category: 'general', area: 'All', images: [] });
                             setImageUploadReset(true); // Reset image upload state
                           }}
                           className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm md:text-base px-6 py-2"
