@@ -1213,7 +1213,7 @@ export default function Home() {
                       Social
                     </h3>
                     <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
-                      Join the conversation! Ask questions, share updates, and connect with your neighbors in Worli.
+                      Join the conversation! Ask questions, share updates, post about civic issues and more.
                     </p>
                   </>
                 )}
