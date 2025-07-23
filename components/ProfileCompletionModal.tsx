@@ -157,8 +157,8 @@ export function ProfileCompletionModal({
         </DialogHeader>
         
         <div className="mb-4 p-3 bg-blue-50 text-blue-700 rounded-md text-sm">
-          <p className="font-medium mb-2">Please complete your profile before rating vendors.</p>
-          <p className="text-xs">This helps us maintain the quality of reviews in our community.</p>
+          <p className="font-medium mb-2">Please complete your profile before posting or commenting.</p>
+          <p className="text-xs">This helps us maintain the quality of our community interactions.</p>
         </div>
 
         {error && (

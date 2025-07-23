@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { getSupabaseClient } from '@/lib/supabase';
 import { auth } from '@/lib/firebase';
 import { generateAnonymousId } from '@/lib/anonymousId';
+import { checkProfileCompletion } from '@/lib/profileUtils';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
 import Link from 'next/link';
@@ -10,6 +11,7 @@ import { FiSearch } from 'react-icons/fi';
 import { FiHeart } from 'react-icons/fi';
 import Head from 'next/head';
 import LoginModal from '@/components/LoginModal'
+import { ProfileCompletionModal } from '@/components/ProfileCompletionModal';
 import { usePathname } from 'next/navigation'
 import ImageUpload from '@/components/ImageUpload';
 import React from 'react'; // Added missing import for React.Fragment
@@ -56,6 +58,8 @@ export default function ParelConnectPage() {
   const [replyTo, setReplyTo] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false)
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [missingFields, setMissingFields] = useState<string[]>([]);
   const pathname = usePathname();
   const [likesLoading, setLikesLoading] = useState<string | null>(null);
   const [userLikedPosts, setUserLikedPosts] = useState<{ [postId: string]: boolean }>({});
@@ -182,7 +186,7 @@ export default function ParelConnectPage() {
         total_activity: (postCounts[userId] || 0) + (commentCounts[userId] || 0)
       }));
       
-      // Sort by total activity and take top 3
+      // Sort by total activity and take top 10
       const sortedTopUsers = topUsersData
         .sort((a, b) => b.total_activity - a.total_activity)
         .slice(0, 3);
@@ -191,12 +195,36 @@ export default function ParelConnectPage() {
     }
   };
 
+  const checkProfileAndProceed = async () => {
+    try {
+      const { isComplete, missingFields: fields } = await checkProfileCompletion()
+      
+      if (!isComplete) {
+        setMissingFields(fields)
+        setShowProfileModal(true)
+        return false
+      }
+      
+      return true
+    } catch (error) {
+      console.error('Error checking profile completion:', error)
+      return false
+    }
+  }
+
   const handleNewPost = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) {
       console.log('No user found');
       return;
     }
+
+    // Check profile completion before proceeding
+    const profileComplete = await checkProfileAndProceed()
+    if (!profileComplete) {
+      return
+    }
+
     console.log('Submitting post:', newPost);
     console.log('User UID:', user.uid);
     setSubmitting(true);
@@ -277,6 +305,13 @@ export default function ParelConnectPage() {
   const handleNewComment = async (e: React.FormEvent, parentId?: string | null) => {
     e.preventDefault();
     if (!user || !selectedPost) return;
+
+    // Check profile completion before proceeding
+    const profileComplete = await checkProfileAndProceed()
+    if (!profileComplete) {
+      return
+    }
+
     setCommentLoading(true);
     const supabase = await getSupabaseClient();
     const firebaseUid = user.uid;
@@ -954,9 +989,9 @@ export default function ParelConnectPage() {
           </div>
           {/* Right Sidebar (Desktop only) */}
           <aside className="hidden lg:block w-72 flex-shrink-0 sticky top-24 self-start">
-            <div className="bg-white rounded-xl shadow border border-gray-100 p-4 mb-6">
-              <h3 className="text-lg font-bold mb-3 text-indigo-700">Top Liked Posts</h3>
-              <ul className="space-y-3">
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-3 mb-4">
+              <h3 className="text-lg font-bold mb-2 text-indigo-700">Top Liked Posts</h3>
+              <ul className="space-y-2">
                 {topLikedPosts.map(post => (
                   <li key={post.id} className="flex items-center justify-between">
                     <Link href={`/mumbai/community/connect/${post.id}`} className="text-blue-700 font-medium hover:underline line-clamp-1 flex-1">{post.title}</Link>
@@ -965,9 +1000,9 @@ export default function ParelConnectPage() {
                 ))}
               </ul>
             </div>
-            <div className="bg-white rounded-xl shadow border border-gray-100 p-4 mb-6">
-              <h3 className="text-lg font-bold mb-3 text-indigo-700">Top Commented Posts</h3>
-              <ul className="space-y-3">
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-3 mb-4">
+              <h3 className="text-lg font-bold mb-2 text-indigo-700">Top Commented Posts</h3>
+              <ul className="space-y-2">
                 {topCommentedPosts.map(post => (
                   <li key={post.id} className="flex items-center justify-between">
                     <Link href={`/mumbai/community/connect/${post.id}`} className="text-blue-700 font-medium hover:underline line-clamp-1 flex-1">{post.title}</Link>
@@ -976,9 +1011,9 @@ export default function ParelConnectPage() {
                 ))}
               </ul>
             </div>
-            <div className="bg-white rounded-xl shadow border border-gray-100 p-4">
-              <h3 className="text-lg font-bold mb-3 text-indigo-700">Top Users</h3>
-              <ul className="space-y-3">
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-3">
+              <h3 className="text-lg font-bold mb-2 text-indigo-700">Top Users</h3>
+              <ul className="space-y-2">
                 {topUsers.map((user, index) => (
                   <li key={user.user_id} className="flex items-center justify-between">
                     <div className="flex items-center gap-2 flex-1">
@@ -1019,12 +1054,12 @@ export default function ParelConnectPage() {
               </ul>
             </div>
             {/* Neighbor Service Providers Link */}
-            <div className="bg-white rounded-xl shadow border border-gray-100 p-4 mt-6">
-              <h3 className="text-lg font-bold mb-3 text-indigo-700">Neighbors Providing Services</h3>
-              <p className="text-sm text-gray-600 mb-4">Connect with trusted service providers in your neighborhood</p>
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-3 mt-4">
+              <h3 className="text-lg font-bold mb-2 text-indigo-700">Neighbors Providing Services</h3>
+              <p className="text-sm text-gray-600 mb-3">Connect with trusted service providers in your neighborhood</p>
               <Link 
                 href="/mumbai/community/home-service-provider" 
-                className="inline-flex items-center justify-center w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-4 rounded-lg transition-colors"
+                className="inline-flex items-center justify-center w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
               >
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -1035,6 +1070,25 @@ export default function ParelConnectPage() {
           </aside>
         </div>
       </main>
+      
+      {showProfileModal && (
+        <ProfileCompletionModal
+          isOpen={showProfileModal}
+          onClose={() => setShowProfileModal(false)}
+          onProfileComplete={() => {
+            setShowProfileModal(false);
+            // Re-trigger the action that was blocked
+            if (newPost.title || newPost.body) {
+              // If there's a post being written, allow it to proceed
+              handleNewPost(new Event('submit') as any);
+            } else if (newComment) {
+              // If there's a comment being written, allow it to proceed
+              handleNewComment(new Event('submit') as any, replyTo);
+            }
+          }}
+          missingFields={missingFields}
+        />
+      )}
     </>
   );
 } 
