@@ -17,6 +17,7 @@ import "yet-another-react-lightbox/plugins/thumbnails.css";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import PropertyInquiryModal from '@/components/PropertyInquiryModal';
 import PropertyCard from '@/components/PropertyCard';
+import Footer from '@/components/Footer';
 
 export default function PGPage() {
   // Data states
@@ -398,6 +399,7 @@ export default function PGPage() {
           <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
         </Link>
       </div>
+      <Footer />
       
       {/* SEO Structured Data */}
       <SEOScript location="Mumbai" type="pg" />

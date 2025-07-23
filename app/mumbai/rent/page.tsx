@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import Footer from '@/components/Footer';
 
 export default function MumbaiRentTypeSelection() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -370,6 +371,7 @@ export default function MumbaiRentTypeSelection() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

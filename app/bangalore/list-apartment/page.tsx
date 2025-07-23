@@ -32,6 +32,7 @@ import { Button } from '@/components/ui/button';
 import { HiMagnifyingGlassCircle, HiFaceSmile, HiDocumentText } from 'react-icons/hi2';
 import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
+import Footer from '@/components/Footer';
 
 export default function RentApartmentPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -307,6 +308,7 @@ export default function RentApartmentPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 } 
