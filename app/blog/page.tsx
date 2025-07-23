@@ -2,6 +2,8 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { CalendarDays, Clock, User } from 'lucide-react';
 import { getBlogPosts } from '@/lib/blog';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'Blog - GharConnect | Real Estate Insights & Community Living Tips',
@@ -20,19 +22,7 @@ export default function BlogPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Simplified Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-8">
-              <Link href="/" className="text-xl font-bold text-gray-900 hover:text-indigo-600 transition-colors">
-                Home
-              </Link>
-              <h1 className="text-xl font-semibold text-gray-900">All Blogs</h1>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Content with top padding for fixed header */}
       <div className="pt-16">
@@ -114,6 +104,7 @@ export default function BlogPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 } 

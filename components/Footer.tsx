@@ -60,19 +60,19 @@ export default function Footer() {
                 <Link href="/mumbai/community/faq" className="text-sm md:text-base hover:text-indigo-600 transition-colors">FAQ</Link>
               </li>
               <li>
-                <Link href={isMainPage ? "/terms" : `/${pathname.split('/')[1] || 'parel'}/terms`} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Terms & Conditions</Link>
+                <Link href={isMainPage ? "/terms" : "/mumbai/community/terms"} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Terms & Conditions</Link>
               </li>
               <li>
-                <Link href={isMainPage ? "/privacy" : `/${pathname.split('/')[1] || 'parel'}/privacy`} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Privacy Policy</Link>
+                <Link href={isMainPage ? "/privacy" : "/mumbai/community/privacy"} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Privacy Policy</Link>
               </li>
               {!isMainPage && (
                 <li>
-                  <Link href="/blog" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Blogs</Link>
+                  <Link href="/mumbai/community/blog" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Blogs</Link>
                 </li>
               )}
               {!isMainPage && (
                 <li>
-                  <Link href={`/${pathname.split('/')[1] || 'parel'}/rental-procedure`} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Rental Procedure</Link>
+                  <Link href="/mumbai/community/rental-procedure" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Rental Procedure</Link>
                 </li>
               )}
               {!isMainPage && (
@@ -85,16 +85,10 @@ export default function Footer() {
 
           {/* Offerings */}
           <div className="space-y-4">
-            <h3 className="text-base md:text-lg font-semibold text-gray-900">Offerings</h3>
+            <h3 className="text-base md:text-lg font-semibold text-gray-900">Cities Covered</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/mumbai/rent" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Mumbai Rentals</Link>
-              </li>
-              <li>
-                <Link href="/mumbai/community" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Mumbai Society Services</Link>
-              </li>
-              <li>
-                <Link href="/bangalore/rent" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Bangalore Rentals</Link>
+                <Link href="/mumbai/community" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Mumbai</Link>
               </li>
             </ul>
           </div>

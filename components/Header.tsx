@@ -773,7 +773,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                 </Link>
                 <Link href={`/${currentSociety}/delivery/pharmacy`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
                   Pharmacy
-                </Link>
+            </Link>
               </div>
             )}
           </div>
