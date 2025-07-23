@@ -423,7 +423,7 @@ export default function DomesticHelpPage() {
         <div className="flex border-b border-gray-200 mb-6 gap-2">
           <button
             onClick={() => setActiveTab('permanent')}
-            className={`px-6 py-2 text-lg font-bold rounded-t-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
+            className={`px-6 py-2 text-base md:text-lg font-bold rounded-t-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
               activeTab === 'permanent'
                 ? 'bg-indigo-600 text-white shadow-md'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -434,39 +434,32 @@ export default function DomesticHelpPage() {
           </button>
           <button
             onClick={() => setActiveTab('temporary')}
-            className={`px-6 py-2 text-lg font-bold rounded-t-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
+            className={`px-6 py-2 text-base md:text-lg font-bold rounded-t-lg transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-400 ${
               activeTab === 'temporary'
                 ? 'bg-indigo-600 text-white shadow-md'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
             aria-current={activeTab === 'temporary' ? 'page' : undefined}
           >
-            Temporary
+            Next 10 Days Availability
           </button>
         </div>
         {/* Area Selector */}
         <div className="mb-6 flex justify-center">
-          <div className="bg-white rounded-lg shadow-md p-1 inline-flex">
-            <button
-              onClick={() => setSelectedArea('Parel')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                selectedArea === 'Parel'
-                  ? 'bg-indigo-600 text-white'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Parel
-            </button>
-            <button
-              onClick={() => setSelectedArea('Worli')}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
-                selectedArea === 'Worli'
-                  ? 'bg-indigo-600 text-white'
-                  : 'text-gray-600 hover:text-gray-900'
-              }`}
-            >
-              Worli
-            </button>
+          <div className="bg-white rounded-lg shadow-md p-1 inline-flex flex-wrap gap-1">
+            {['Parel', 'Worli', 'Bandra', 'Mahalaxmi', 'Juhu', 'Powai', 'Malad', 'Andheri', 'Goregaon', 'Thane'].map(area => (
+              <button
+                key={area}
+                onClick={() => setSelectedArea(area)}
+                className={`px-2 md:px-3 py-1.5 md:py-2 rounded-md text-xs md:text-sm font-medium transition-colors ${
+                  selectedArea === area
+                    ? 'bg-indigo-600 text-white'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                {area}
+              </button>
+            ))}
           </div>
         </div>
         {/* Filters */}
