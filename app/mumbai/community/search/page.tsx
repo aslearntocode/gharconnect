@@ -8,6 +8,12 @@ import { FaBuilding } from 'react-icons/fa'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
+// Import vendor data directly
+import { vendors as plumberVendors } from '@/app/mumbai/community/data/services/plumber'
+import { vendors as carpenterVendors } from '@/app/mumbai/community/data/services/carpenter'
+import { vendors as electricianVendors } from '@/app/mumbai/community/data/services/electrician'
+import { doctors } from '@/app/mumbai/community/data/services/doctors'
+
 interface SearchResult {
   id: string
   title: string
@@ -31,126 +37,6 @@ export default function SearchPage() {
   const [results, setResults] = useState<SearchResult[]>([])
   const [loading, setLoading] = useState(false)
   const [activeFilter, setActiveFilter] = useState<string>('all')
-
-  // Get the society from the URL path
-  const getSocietyFromPath = () => {
-    if (typeof window !== 'undefined') {
-      const pathParts = window.location.pathname.split('/')
-      // Handle new URL structure: /mumbai/community/... or /bangalore/...
-      if (pathParts[1] === 'mumbai' && pathParts[2] === 'community') {
-        return 'mumbai/community'
-      }
-      if (pathParts[1] === 'bangalore') {
-        return 'bangalore'
-      }
-      // Default to mumbai/community if no society in path
-      return 'mumbai/community'
-    }
-    return 'mumbai/community'
-  }
-
-  const currentSociety = getSocietyFromPath()
-
-  // Dynamic imports based on current society
-  const [vendorData, setVendorData] = useState<any>({
-    plumberVendors: [],
-    physicalTrainingVendors: [],
-    yogaVendors: [],
-    laundryVendors: [],
-    carpenterVendors: [],
-    electricianVendors: [],
-    doctors: [],
-    dairyVendors: [],
-    meatVendors: [],
-    eggsVendors: [],
-    flowersVendors: [],
-    vegetablesVendors: [],
-    fruitsVendors: [],
-    dryFruitsVendors: [],
-    pharmacyVendors: []
-  })
-
-  // Load vendor data for the current society
-  useEffect(() => {
-    const loadVendorData = async () => {
-      try {
-        // Only load data for mumbai/community since that's where the data files exist
-        if (currentSociety === 'mumbai/community') {
-          // Import only essential data files to avoid import errors
-        const [
-          { vendors: plumberVendors },
-          { vendors: carpenterVendors },
-          { vendors: electricianVendors },
-            { doctors }
-        ] = await Promise.all([
-            import('@/app/mumbai/community/data/services/plumber').catch(() => ({ vendors: [] })),
-            import('@/app/mumbai/community/data/services/carpenter').catch(() => ({ vendors: [] })),
-            import('@/app/mumbai/community/data/services/electrician').catch(() => ({ vendors: [] })),
-            import('@/app/mumbai/community/data/services/doctors').catch(() => ({ doctors: [] }))
-        ])
-
-        setVendorData({
-            plumberVendors: plumberVendors || [],
-            physicalTrainingVendors: [],
-            yogaVendors: [],
-            laundryVendors: [],
-            carpenterVendors: carpenterVendors || [],
-            electricianVendors: electricianVendors || [],
-            doctors: doctors || [],
-            dairyVendors: [],
-            meatVendors: [],
-            eggsVendors: [],
-            flowersVendors: [],
-            vegetablesVendors: [],
-            fruitsVendors: [],
-            dryFruitsVendors: [],
-            pharmacyVendors: []
-        })
-        } else {
-          // For other societies (like bangalore), use empty data
-          setVendorData({
-            plumberVendors: [],
-            physicalTrainingVendors: [],
-            yogaVendors: [],
-            laundryVendors: [],
-            carpenterVendors: [],
-            electricianVendors: [],
-            doctors: [],
-            dairyVendors: [],
-            meatVendors: [],
-            eggsVendors: [],
-            flowersVendors: [],
-            vegetablesVendors: [],
-            fruitsVendors: [],
-            dryFruitsVendors: [],
-            pharmacyVendors: []
-          })
-        }
-      } catch (error) {
-        console.error('Error loading vendor data:', error)
-        // If data doesn't exist for this society, use empty arrays
-        setVendorData({
-          plumberVendors: [],
-          physicalTrainingVendors: [],
-          yogaVendors: [],
-          laundryVendors: [],
-          carpenterVendors: [],
-          electricianVendors: [],
-          doctors: [],
-          dairyVendors: [],
-          meatVendors: [],
-          eggsVendors: [],
-          flowersVendors: [],
-          vegetablesVendors: [],
-          fruitsVendors: [],
-          dryFruitsVendors: [],
-          pharmacyVendors: []
-        })
-      }
-    }
-
-    loadVendorData()
-  }, [currentSociety])
 
   // Fuzzy search function
   const fuzzySearch = (searchTerm: string, text: string): boolean => {
@@ -177,7 +63,7 @@ export default function SearchPage() {
     )
   }
 
-  // Generate search data dynamically from actual vendor data
+  // Generate search data
   const generateSearchData = (): SearchResult[] => {
     const results: SearchResult[] = []
     let idCounter = 1
@@ -197,20 +83,15 @@ export default function SearchPage() {
       ]
     }
 
-    // Helper function to replace [society] with actual society path
-    const getSocietyUrl = (path: string) => {
-      return path.replace('[society]', currentSociety)
-    }
-
     // Add plumber vendors
-    vendorData.plumberVendors.forEach((vendor: any) => {
+    plumberVendors.forEach((vendor: any) => {
       vendor.services?.forEach((service: any) => {
         results.push({
           id: `plumber-${idCounter++}`,
           title: `${vendor.name} - ${service.name}`,
           description: service.description,
           type: 'vendor',
-          url: getSocietyUrl('/[society]/services/plumber'),
+          url: '/mumbai/community/services/plumber',
           category: 'Plumbing',
           rating: 4.6,
           price: typeof service.price === 'number' ? `₹${service.price}` : service.price,
@@ -221,72 +102,15 @@ export default function SearchPage() {
       })
     })
 
-    // Add physical training vendors
-    vendorData.physicalTrainingVendors.forEach((vendor: any) => {
-      vendor.products?.forEach((product: any) => {
-        results.push({
-          id: `pt-${idCounter++}`,
-          title: `${vendor.name} - ${product.name}`,
-          description: product.description,
-          type: 'vendor',
-          url: getSocietyUrl('/[society]/services/physical-training'),
-          category: 'Physical Training',
-          rating: 4.7,
-          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
-          vendorName: vendor.name,
-          mobile: vendor.mobile,
-          tags: generateTags(vendor.name, product.name, product.description)
-        })
-      })
-    })
-
-    // Add yoga vendors
-    vendorData.yogaVendors.forEach((vendor: any) => {
-      vendor.products?.forEach((product: any) => {
-        results.push({
-          id: `yoga-${idCounter++}`,
-          title: vendor.name,
-          description: product.description,
-          type: 'vendor',
-          url: getSocietyUrl('/[society]/services/yoga'),
-          category: 'Yoga',
-          rating: 4.6,
-          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
-          vendorName: vendor.name,
-          mobile: vendor.mobile,
-          tags: generateTags(vendor.name, product.name, product.description)
-        })
-      })
-    })
-
-    // Add laundry vendors
-    vendorData.laundryVendors.forEach((vendor: any) => {
-      vendor.services?.forEach((service: any) => {
-        results.push({
-          id: `laundry-${idCounter++}`,
-          title: `${vendor.name} - ${service.name}`,
-          description: service.description,
-          type: 'vendor',
-          url: getSocietyUrl('/[society]/services/laundry'),
-          category: 'Laundry',
-          rating: 4.4,
-          price: typeof service.price === 'number' ? `₹${service.price}` : service.price,
-          vendorName: vendor.name,
-          mobile: vendor.mobile,
-          tags: generateTags(vendor.name, service.name, service.description)
-        })
-      })
-    })
-
     // Add carpenter vendors
-    vendorData.carpenterVendors.forEach((vendor: any) => {
+    carpenterVendors.forEach((vendor: any) => {
       vendor.products?.forEach((product: any) => {
         results.push({
           id: `carpenter-${idCounter++}`,
           title: `${vendor.name} - ${product.name}`,
           description: product.description,
           type: 'vendor',
-          url: getSocietyUrl('/[society]/services/carpenter'),
+          url: '/mumbai/community/services/carpenter',
           category: 'Carpentry',
           rating: 4.5,
           price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
@@ -298,14 +122,14 @@ export default function SearchPage() {
     })
 
     // Add electrician vendors
-    vendorData.electricianVendors.forEach((vendor: any) => {
+    electricianVendors.forEach((vendor: any) => {
       vendor.services?.forEach((service: any) => {
         results.push({
           id: `electrician-${idCounter++}`,
           title: `${vendor.name} - ${service.name}`,
           description: service.description,
           type: 'vendor',
-          url: getSocietyUrl('/[society]/services/electrician'),
+          url: '/mumbai/community/services/electrician',
           category: 'Electrical',
           rating: 4.5,
           price: typeof service.price === 'number' ? `₹${service.price}` : service.price,
@@ -317,13 +141,13 @@ export default function SearchPage() {
     })
 
     // Add doctors
-    vendorData.doctors.forEach((doctor: any) => {
+    doctors.forEach((doctor: any) => {
       results.push({
         id: `doctor-${idCounter++}`,
         title: doctor.name,
         description: `${doctor.specialization} - ${doctor.qualification}`,
         type: 'vendor',
-        url: getSocietyUrl('/[society]/services/doctors'),
+        url: '/mumbai/community/services/doctors',
         category: 'Medical',
         rating: 4.7,
         price: doctor.consultationFee,
@@ -333,249 +157,103 @@ export default function SearchPage() {
       })
     })
 
-    // Add delivery vendors
-    // Dairy vendors
-    vendorData.dairyVendors.forEach((vendor: any) => {
-      vendor.products?.forEach((product: any) => {
-        results.push({
-          id: `dairy-${idCounter++}`,
-          title: `${vendor.name} - ${product.name}`,
-          description: product.description,
-          type: 'vendor',
-          url: getSocietyUrl('/[society]/delivery/dairy'),
-          category: 'Dairy',
-          rating: 4.6,
-          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
-          vendorName: vendor.name,
-          mobile: vendor.mobile,
-          tags: generateTags(vendor.name, product.name, product.description)
-        })
-      })
-    })
-
-    // Meat vendors
-    vendorData.meatVendors.forEach((vendor: any) => {
-      vendor.products?.forEach((product: any) => {
-        results.push({
-          id: `meat-${idCounter++}`,
-          title: `${vendor.name} - ${product.name}`,
-          description: product.description,
-          type: 'vendor',
-          url: getSocietyUrl('/[society]/delivery/meat'),
-          category: 'Meat',
-          rating: 4.5,
-          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
-          vendorName: vendor.name,
-          mobile: vendor.mobile,
-          tags: generateTags(vendor.name, product.name, product.description)
-        })
-      })
-    })
-
-    // Eggs vendors
-    vendorData.eggsVendors.forEach((vendor: any) => {
-      vendor.products?.forEach((product: any) => {
-        results.push({
-          id: `eggs-${idCounter++}`,
-          title: `${vendor.name} - ${product.name}`,
-          description: product.description,
-          type: 'vendor',
-          url: getSocietyUrl('/[society]/delivery/eggs'),
-          category: 'Eggs',
-          rating: 4.6,
-          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
-          vendorName: vendor.name,
-          mobile: vendor.mobile,
-          tags: generateTags(vendor.name, product.name, product.description)
-        })
-      })
-    })
-
-    // Flowers vendors
-    vendorData.flowersVendors.forEach((vendor: any) => {
-      vendor.products?.forEach((product: any) => {
-        results.push({
-          id: `flowers-${idCounter++}`,
-          title: `${vendor.name} - ${product.name}`,
-          description: product.description,
-          type: 'vendor',
-          url: getSocietyUrl('/[society]/delivery/flowers'),
-          category: 'Flowers',
-          rating: 4.6,
-          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
-          vendorName: vendor.name,
-          mobile: vendor.mobile,
-          tags: generateTags(vendor.name, product.name, product.description)
-        })
-      })
-    })
-
-    // Vegetables vendors
-    vendorData.vegetablesVendors.forEach((vendor: any) => {
-      vendor.products?.forEach((product: any) => {
-        results.push({
-          id: `vegetables-${idCounter++}`,
-          title: `${vendor.name} - ${product.name}`,
-          description: product.description,
-          type: 'vendor',
-          url: getSocietyUrl('/[society]/delivery/vegetables'),
-          category: 'Vegetables',
-          rating: 4.5,
-          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
-          vendorName: vendor.name,
-          mobile: vendor.mobile,
-          tags: generateTags(vendor.name, product.name, product.description)
-        })
-      })
-    })
-
-    // Fruits vendors
-    vendorData.fruitsVendors.forEach((vendor: any) => {
-      vendor.products?.forEach((product: any) => {
-        results.push({
-          id: `fruits-${idCounter++}`,
-          title: `${vendor.name} - ${product.name}`,
-          description: product.description,
-          type: 'vendor',
-          url: getSocietyUrl('/[society]/delivery/fruits'),
-          category: 'Fruits',
-          rating: 4.6,
-          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
-          vendorName: vendor.name,
-          mobile: vendor.mobile,
-          tags: generateTags(vendor.name, product.name, product.description)
-        })
-      })
-    })
-
-    // Dry fruits vendors
-    vendorData.dryFruitsVendors.forEach((vendor: any) => {
-      vendor.products?.forEach((product: any) => {
-        results.push({
-          id: `dryfruits-${idCounter++}`,
-          title: `${vendor.name} - ${product.name}`,
-          description: product.description,
-          type: 'vendor',
-          url: getSocietyUrl('/[society]/delivery/dry-fruits'),
-          category: 'Dry Fruits',
-          rating: 4.6,
-          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
-          vendorName: vendor.name,
-          mobile: vendor.mobile,
-          tags: generateTags(vendor.name, product.name, product.description)
-        })
-      })
-    })
-
-    // Pharmacy vendors
-    vendorData.pharmacyVendors.forEach((vendor: any) => {
-      vendor.products?.forEach((product: any) => {
-        results.push({
-          id: `pharmacy-${idCounter++}`,
-          title: `${vendor.name} - ${product.name}`,
-          description: product.description,
-          type: 'vendor',
-          url: getSocietyUrl('/[society]/delivery/pharmacy'),
-          category: 'Pharmacy',
-          rating: 4.7,
-          price: typeof product.price === 'number' ? `₹${product.price}` : product.price,
-          vendorName: vendor.name,
-          mobile: vendor.mobile,
-          tags: generateTags(vendor.name, product.name, product.description)
-        })
-      })
-    })
-
     // Add general services
     const generalServices = [
       {
         title: 'Electrician',
         description: 'Certified electrician for all electrical work and repairs',
-        url: getSocietyUrl('/[society]/services/electrician'),
+        url: '/mumbai/community/services/electrician',
         category: 'Electrical',
         tags: ['electrician', 'electrical', 'wiring', 'repair', 'installation', 'power', 'lights']
       },
       {
         title: 'Carpenter',
         description: 'Skilled carpenter for furniture and woodwork',
-        url: getSocietyUrl('/[society]/services/carpenter'),
+        url: '/mumbai/community/services/carpenter',
         category: 'Carpentry',
         tags: ['carpenter', 'carpentry', 'furniture', 'woodwork', 'repair', 'installation']
       },
       {
+        title: 'Plumber',
+        description: 'Professional plumbing services and repairs',
+        url: '/mumbai/community/services/plumber',
+        category: 'Plumbing',
+        tags: ['plumber', 'plumbing', 'water', 'repair', 'installation', 'pipes']
+      },
+      {
         title: 'AC Service',
         description: 'Professional AC installation, repair and maintenance',
-        url: getSocietyUrl('/[society]/services/ac-service'),
+        url: '/mumbai/community/services/ac-service',
         category: 'HVAC',
         tags: ['ac', 'air conditioning', 'hvac', 'cooling', 'repair', 'maintenance', 'installation']
       },
       {
         title: 'Pest Control',
         description: 'Effective pest control and extermination services',
-        url: getSocietyUrl('/[society]/services/pest-control'),
+        url: '/mumbai/community/services/pest-control',
         category: 'Pest Control',
         tags: ['pest control', 'extermination', 'insects', 'rodents', 'cleaning', 'hygiene']
       },
       {
         title: 'Domestic Help & Drivers',
         description: 'Reliable domestic help and professional drivers',
-        url: getSocietyUrl('/[society]/services/domestic-help'),
+        url: '/mumbai/community/services/domestic-help',
         category: 'Domestic',
         tags: ['domestic help', 'drivers', 'housekeeping', 'cleaning', 'transport', 'maid']
       },
       {
         title: 'Car Clean',
         description: 'Professional car cleaning and detailing services',
-        url: getSocietyUrl('/[society]/services/car-clean'),
+        url: '/mumbai/community/services/car-clean',
         category: 'Automotive',
         tags: ['car clean', 'car wash', 'detailing', 'automotive', 'cleaning', 'vehicle']
       },
       {
         title: 'Painter',
         description: 'Professional painting services for homes and offices',
-        url: getSocietyUrl('/[society]/services/painter'),
+        url: '/mumbai/community/services/painter',
         category: 'Painting',
         tags: ['painter', 'painting', 'interior', 'exterior', 'wall paint', 'decor']
       },
       {
         title: 'Gardener',
         description: 'Professional gardening and landscaping services',
-        url: getSocietyUrl('/[society]/services/gardener'),
+        url: '/mumbai/community/services/gardener',
         category: 'Gardening',
         tags: ['gardener', 'gardening', 'landscaping', 'plants', 'lawn', 'maintenance']
       },
       {
         title: 'Laptop Repair',
         description: 'Expert laptop repair and maintenance services',
-        url: getSocietyUrl('/[society]/services/laptop-repair'),
+        url: '/mumbai/community/services/laptop-repair',
         category: 'Electronics',
         tags: ['laptop repair', 'computer', 'electronics', 'repair', 'maintenance', 'hardware']
       },
       {
         title: 'Electronics Repair',
         description: 'Professional electronics repair and maintenance',
-        url: getSocietyUrl('/[society]/services/electronics-repair'),
+        url: '/mumbai/community/services/electronics-repair',
         category: 'Electronics',
         tags: ['electronics repair', 'repair', 'maintenance', 'gadgets', 'devices']
       },
       {
         title: 'Notary',
         description: 'Professional notary services for document verification',
-        url: getSocietyUrl('/[society]/services/notary'),
+        url: '/mumbai/community/services/notary',
         category: 'Legal',
         tags: ['notary', 'legal', 'document', 'verification', 'stamp', 'certification']
       },
       {
         title: 'Pigeon Net',
         description: 'Professional pigeon net installation services',
-        url: getSocietyUrl('/[society]/services/piegon-net'),
+        url: '/mumbai/community/services/piegon-net',
         category: 'Installation',
         tags: ['pigeon net', 'installation', 'balcony', 'terrace', 'protection', 'mesh']
       },
       {
         title: 'Kids Classes',
         description: 'Educational and fun classes for children',
-        url: getSocietyUrl('/[society]/services/kids-classes'),
+        url: '/mumbai/community/services/kids-classes',
         category: 'Education',
         tags: ['kids classes', 'education', 'children', 'learning', 'tuition', 'activities']
       }
@@ -602,7 +280,7 @@ export default function SearchPage() {
         title: 'Find Rental Properties',
         description: 'Browse and find rental properties in your area',
         type: 'rent',
-        url: getSocietyUrl('/[society]/rent'),
+        url: '/mumbai/community/rent',
         category: 'Rental Search',
         rating: 4.5,
         tags: ['rent', 'rental', 'properties', 'apartments', 'houses', 'search']
@@ -612,7 +290,7 @@ export default function SearchPage() {
         title: 'List Your Property',
         description: 'List your property for rent as a landlord',
         type: 'landlord',
-        url: getSocietyUrl('/[society]/rent-apartment'),
+        url: '/mumbai/community/rent-apartment',
         category: 'Property Listing',
         rating: 4.4,
         tags: ['list property', 'landlord', 'rent out', 'property listing', 'advertise']
@@ -661,7 +339,7 @@ export default function SearchPage() {
         title: apt.title,
         description: apt.description,
         type: 'apartment',
-        url: getSocietyUrl('/[society]/rent'),
+        url: '/mumbai/community/rent',
         category: apt.category,
         rating: 4.4,
         price: apt.price,
@@ -682,7 +360,7 @@ export default function SearchPage() {
     } else {
       setResults([])
     }
-  }, [query, vendorData])
+  }, [query])
 
   const performSearch = (searchQuery: string) => {
     setLoading(true)
@@ -713,10 +391,7 @@ export default function SearchPage() {
                fuzzySearch(searchQuery, item.apartmentType || '') ||
                // Search in tags specifically
                (item.tags && item.tags.some(tag => fuzzySearch(searchQuery, tag)))
-      }).map(item => ({
-        ...item,
-        url: item.url.replace('[society]', currentSociety)
-      }))
+      })
 
       setResults(filteredResults)
       setLoading(false)

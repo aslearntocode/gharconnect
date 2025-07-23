@@ -44,7 +44,7 @@ const rentalCities = [
     name: 'Bangalore',
     description: 'Bangalore',
     href: '/bangalore/rent',
-    status: 'active'
+    status: 'coming-soon'
   },
   {
     name: 'Pune',
@@ -98,42 +98,19 @@ export default function SocietiesPage() {
             {rentalCities.map((city) => (
               <div
                 key={city.name}
-                className={`bg-white rounded-lg shadow border border-gray-200 overflow-hidden ${city.status === 'coming-soon' ? 'opacity-75' : 'hover:border-indigo-500'} transition-all duration-300`}
+                className={`bg-white rounded-lg shadow border border-gray-200 overflow-hidden ${city.status === 'coming-soon' ? 'opacity-75' : 'hover:border-indigo-500 hover:shadow-lg'} transition-all duration-300`}
               >
                 {city.status === 'active' ? (
-                  <div className="block group h-full">
+                  <Link href={city.name === 'Mumbai' ? '/mumbai/community' : city.href} className="block group h-full">
                     <div className="px-6 py-4">
                       <h3 className="text-lg font-bold mb-2 text-gray-900 group-hover:text-indigo-600 transition-colors">
                         {city.name}
                       </h3>
-                      <p className="text-gray-600 text-sm mb-4">
+                      <p className="text-gray-600 text-sm">
                         {city.description}
                       </p>
-                      <div className="flex flex-row gap-2">
-                        <Link href={city.href.includes('/rent') ? city.href : `${city.href}/rent`} className="inline-flex items-center justify-center bg-green-600 hover:bg-green-700 text-white font-semibold text-xs px-3 py-2 rounded transition-all duration-300">
-                          Rentals
-                          <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                          </svg>
-                        </Link>
-                        {city.name === 'Bangalore' ? (
-                          <div className="inline-flex items-center justify-center bg-gray-400 text-white font-semibold text-xs px-3 py-2 rounded cursor-not-allowed">
-                            Society Services
-                            <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                          </div>
-                        ) : (
-                          <Link href="/mumbai/community" className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs px-3 py-2 rounded transition-all duration-300">
-                            Society Services
-                            <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                          </Link>
-                        )}
-                      </div>
                     </div>
-                  </div>
+                  </Link>
                 ) : (
                   <div className="block h-full">
                     <div className="bg-gray-100 px-6 py-4">
@@ -145,15 +122,9 @@ export default function SocietiesPage() {
                           SOON
                         </span>
                       </div>
-                      <p className="text-gray-600 text-sm mb-4">
+                      <p className="text-gray-600 text-sm">
                         {city.description}
                       </p>
-                      <div className="inline-flex items-center bg-gray-400 text-white font-semibold text-sm px-3 py-2 rounded cursor-not-allowed">
-                        Explore City
-                        <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                      </div>
                     </div>
                   </div>
                 )}

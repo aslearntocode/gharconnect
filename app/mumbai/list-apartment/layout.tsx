@@ -1,4 +1,4 @@
-import RentalHeader from '@/components/RentalHeader';
+import Header from '@/components/Header';
 
 export default function RentApartmentLayout({
   children,
@@ -7,7 +7,7 @@ export default function RentApartmentLayout({
 }) {
   return (
     <div className="flex flex-col min-h-screen">
-      <RentalHeader />
+      <Header />
       <main className="flex-grow pt-16">{children}</main>
     </div>
   );

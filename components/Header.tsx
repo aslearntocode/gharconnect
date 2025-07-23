@@ -18,6 +18,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
   const [isPropertiesDropdownOpen, setIsPropertiesDropdownOpen] = useState(false)
   const [isCreditScoreDropdownOpen, setIsCreditScoreDropdownOpen] = useState(false)
   const [isDeliveryDropdownOpen, setIsDeliveryDropdownOpen] = useState(false)
+  const [isRentDropdownOpen, setIsRentDropdownOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const router = useRouter()
   const pathname = usePathname()
@@ -92,7 +93,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
     e.preventDefault()
     if (searchQuery.trim()) {
       // Navigate to search results page with the query
-      router.push(`/${currentSociety}/search?q=${encodeURIComponent(searchQuery.trim())}`)
+      router.push(`/mumbai/community/search?q=${encodeURIComponent(searchQuery.trim())}`)
       setSearchQuery("")
     }
   }
@@ -131,7 +132,59 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                 >
                   Home
                 </Link>
-                {/* Properties dropdown removed here */}
+                
+                {/* Rent Dropdown */}
+                <div className="relative" style={{ zIndex: 50 }}>
+                  <div className="flex items-center">
+                    <button 
+                      onClick={() => setIsRentDropdownOpen(!isRentDropdownOpen)}
+                      className={`py-2 text-base flex items-center transition-colors duration-300 ${
+                        isScrolled 
+                          ? 'text-white hover:text-gray-300' 
+                          : 'text-black hover:text-gray-700'
+                      }`}
+                    >
+                      Rent
+                      <svg
+                        className={`ml-2 h-5 w-5 transform inline-block ${isRentDropdownOpen ? 'rotate-180' : ''}`}
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                  <div 
+                    className={`
+                      absolute w-80 bg-white rounded-lg shadow-lg py-4 px-4
+                      ${isRentDropdownOpen ? 'block' : 'hidden'}
+                    `}
+                    style={{
+                      zIndex: 1000,
+                      top: '2.5rem',
+                      left: 0
+                    }}
+                  >
+                    <div className="flex flex-col gap-y-2">
+                      <Link href="/mumbai/rent/apartment" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsRentDropdownOpen(false)}>
+                        <FiHome className="w-5 h-5 text-blue-500" />
+                        <span>Apartment</span>
+                      </Link>
+                      <Link href="/mumbai/rent/pg" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsRentDropdownOpen(false)}>
+                        <FiBriefcase className="w-5 h-5 text-green-500" />
+                        <span>PG Accommodation</span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Services Dropdown */}
                 <div className="relative" style={{ zIndex: 50 }}>
                   <div className="flex items-center">
                     <button 
@@ -341,6 +394,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                   </div>
                 </div>
 
+                {/* Delivery Dropdown */}
                 <div className="relative" style={{ zIndex: 50 }}>
                   <div className="flex items-center">
                     <button 
@@ -414,17 +468,6 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                     </div>
                   </div>
                 </div>
-
-                <Link 
-                  href={`/${currentSociety}/marketplace`}
-                  className={`py-2 text-base transition-colors duration-300 ${
-                    isScrolled 
-                      ? 'text-white hover:text-gray-300' 
-                      : 'text-black hover:text-gray-700'
-                  }`}
-                >
-                  Marketplace
-                </Link>
 
                 <div className="relative" style={{ zIndex: 50 }}>
                   <div className="flex items-center">
@@ -516,37 +559,19 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
 
           <div className="relative">
             <button 
-              onClick={() => setIsDeliveryDropdownOpen(isDeliveryDropdownOpen => !isDeliveryDropdownOpen)}
+              onClick={() => setIsRentDropdownOpen(isRentDropdownOpen => !isRentDropdownOpen)}
               className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300"
             >
-              <FiTruck className="w-6 h-6" />
-              <span className="text-xs mt-1">Delivery</span>
+              <FiHome className="w-6 h-6" />
+              <span className="text-xs mt-1">Rent</span>
             </button>
-            {isDeliveryDropdownOpen && (
+            {isRentDropdownOpen && (
               <div className="absolute bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)' }}>
-                <Link href={`/${currentSociety}/delivery/dairy`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Dairy
+                <Link href="/mumbai/rent/apartment" className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsRentDropdownOpen(false)}>
+                  Apartment
                 </Link>
-                <Link href={`/${currentSociety}/delivery/meat`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Meat
-                </Link>
-                <Link href={`/${currentSociety}/delivery/eggs`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Eggs
-                </Link>
-                <Link href={`/${currentSociety}/delivery/flowers`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Flowers
-                </Link>
-                <Link href={`/${currentSociety}/delivery/vegetables`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Vegetables
-                </Link>
-                <Link href={`/${currentSociety}/delivery/fruits`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Fruits
-                </Link>
-                <Link href={`/${currentSociety}/delivery/dry-fruits`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Dry Fruits
-                </Link>
-                <Link href={`/${currentSociety}/delivery/pharmacy`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Pharmacy
+                <Link href="/mumbai/rent/pg" className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsRentDropdownOpen(false)}>
+                  PG Accommodation
                 </Link>
               </div>
             )}
@@ -716,10 +741,41 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
           </div>
 
           <div className="relative">
-            <Link href={`/${currentSociety}/marketplace`} className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300">
-              <FiGrid className="w-6 h-6" />
-              <span className="text-xs mt-1">Marketplace</span>
-            </Link>
+            <button 
+              onClick={() => setIsDeliveryDropdownOpen(isDeliveryDropdownOpen => !isDeliveryDropdownOpen)}
+              className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300"
+            >
+              <FiTruck className="w-6 h-6" />
+              <span className="text-xs mt-1">Delivery</span>
+            </button>
+            {isDeliveryDropdownOpen && (
+              <div className="absolute bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)' }}>
+                <Link href={`/${currentSociety}/delivery/dairy`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                  Dairy
+                </Link>
+                <Link href={`/${currentSociety}/delivery/meat`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                  Meat
+                </Link>
+                <Link href={`/${currentSociety}/delivery/eggs`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                  Eggs
+                </Link>
+                <Link href={`/${currentSociety}/delivery/flowers`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                  Flowers
+                </Link>
+                <Link href={`/${currentSociety}/delivery/vegetables`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                  Vegetables
+                </Link>
+                <Link href={`/${currentSociety}/delivery/fruits`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                  Fruits
+                </Link>
+                <Link href={`/${currentSociety}/delivery/dry-fruits`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                  Dry Fruits
+                </Link>
+                <Link href={`/${currentSociety}/delivery/pharmacy`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
+                  Pharmacy
+                </Link>
+              </div>
+            )}
           </div>
 
           <div className="relative">

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import RentalHeader from '@/components/RentalHeader';
+import Header from '@/components/Header';
 
 export const metadata: Metadata = {
   title: 'PG Accommodation in Mumbai | GharConnect',
@@ -43,7 +43,7 @@ export default function PGLayout({
 }) {
   return (
     <>
-      <RentalHeader />
+      <Header />
       {children}
     </>
   );

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export default function MumbaiRentTypeSelection() {
@@ -75,6 +76,7 @@ export default function MumbaiRentTypeSelection() {
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-white to-indigo-50 pb-12 px-2 pt-8">
+      <Header />
       {/* Back to All Cities Button */}
       <div className="w-full max-w-5xl mx-auto flex justify-start mb-2 px-2">
         <Link href="/" className="inline-flex items-center px-3 py-1.5 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-sm">
