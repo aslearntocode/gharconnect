@@ -787,24 +787,29 @@ export default function Home() {
               <div className="group bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="relative z-10">
+                  {/* Soon Label */}
+                  <div className="absolute top-0 right-0 z-20">
+                    <span className="bg-orange-500 text-white px-2 py-1 rounded-bl-lg text-xs font-semibold shadow-md">Soon</span>
+                  </div>
+                  
                   {/* Mobile: Only heading and button */}
-                  <div className="md:hidden flex flex-col items-center text-center">
+                  <div className="md:hidden flex flex-col items-center text-center pt-6">
                     <h3 className="text-lg font-bold text-gray-900 mb-3">
                       Premium PG Accommodation
                     </h3>
-                    <Link 
-                      href="/mumbai/rent/pg"
-                      className="inline-flex items-center bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold px-4 py-2 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm"
+                    <button 
+                      className="inline-flex items-center bg-gray-400 text-white font-semibold px-4 py-2 rounded-xl transition-all duration-300 shadow-lg text-sm cursor-not-allowed"
+                      disabled
                     >
-                      Explore
+                      Coming Soon
                       <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                    </Link>
+                    </button>
                   </div>
                   
                   {/* Desktop: Full card content */}
-                  <div className="hidden md:block">
+                  <div className="hidden md:block pt-6">
                     <div className="flex items-center mb-4">
                       <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
                         <FiBriefcase className="w-6 h-6 text-green-600" />
@@ -818,18 +823,18 @@ export default function Home() {
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center text-sm text-gray-500">
-                        <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                        Student-friendly
+                        <span className="w-2 h-2 bg-orange-500 rounded-full mr-2"></span>
+                        Coming Soon
                       </div>
-                      <Link 
-                        href="/mumbai/rent/pg"
-                        className="inline-flex items-center bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold px-6 py-3 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                      <button 
+                        className="inline-flex items-center bg-gray-400 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg cursor-not-allowed"
+                        disabled
                       >
-                        Explore
+                        Coming Soon
                         <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </div>
