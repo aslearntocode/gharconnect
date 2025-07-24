@@ -145,12 +145,12 @@ export default function MumbaiRentTypeSelection() {
               <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="relative z-10">
                 {/* Soon Label */}
-                <div className="absolute top-0 right-0 z-20">
+                <div className="absolute -top-3 -right-3 z-20 md:hidden">
                   <span className="bg-orange-500 text-white px-2 py-1 rounded-bl-lg text-xs font-semibold shadow-md">Soon</span>
                 </div>
                 
                 {/* Mobile: Only heading and button */}
-                <div className="md:hidden flex flex-col items-center text-center pt-6">
+                <div className="md:hidden flex flex-col items-center text-center">
                   <h3 className="text-lg font-bold text-gray-900 mb-3">
                     Premium PG Accommodation
                   </h3>
@@ -158,15 +158,15 @@ export default function MumbaiRentTypeSelection() {
                     className="inline-flex items-center bg-gray-400 text-white font-semibold px-4 py-2 rounded-xl transition-all duration-300 shadow-lg text-sm cursor-not-allowed"
                     disabled
                   >
-                    Coming Soon
+                    Explore
                     <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                   </button>
                 </div>
                 
                 {/* Desktop: Full card content */}
-                <div className="hidden md:block pt-6">
+                <div className="hidden md:block">
                   <div className="flex items-center mb-4">
                     <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
                       <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -189,9 +189,9 @@ export default function MumbaiRentTypeSelection() {
                       className="inline-flex items-center bg-gray-400 text-white font-semibold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg cursor-not-allowed"
                       disabled
                     >
-                      Coming Soon
+                      Explore
                       <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
                     </button>
                   </div>
