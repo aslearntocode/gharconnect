@@ -901,7 +901,7 @@ export default function Home() {
         {/* Services Categories Section */}
         <div id="services-categories" className="bg-white py-8 md:py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-2 md:mb-3">Services Rated by Community</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-center mb-2 md:mb-3">Service Providers Rated by Community</h2>
             <p className="text-lg text-gray-600 text-center mb-8">Book trusted home and personal services</p>
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-6 gap-2 md:gap-6">
               <Link href="/mumbai/community/services/laundry" className="block group">
