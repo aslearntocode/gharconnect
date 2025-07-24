@@ -1,10 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import { 
-  FiSearch, 
   FiDroplet, 
   FiTool, 
   FiZap, 
@@ -23,43 +21,14 @@ import {
 } from 'react-icons/fi';
 
 export default function ServicesPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (searchQuery.trim()) {
-      // Navigate to search results page with the query
-      window.location.href = `/mumbai/community/search?q=${encodeURIComponent(searchQuery.trim())}`;
-      setSearchQuery("");
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       {/* Blue Banner */}
-      <div className="relative">
-        <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
-          <h1 className="text-xl md:text-4xl font-bold text-white text-center px-4">Service Providers Rated by Community</h1>
-        </div>
-        {/* Filter/Search Bar */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-7 w-full max-w-2xl z-10">
-          <form onSubmit={handleSearch} className="bg-white rounded-2xl shadow-lg flex items-center px-4 py-3 gap-2">
-            <FiSearch className="text-gray-400 w-5 h-5" />
-            <input
-              type="text"
-              placeholder="Search for a service..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-1 outline-none bg-transparent text-gray-700 text-base"
-            />
-            <button type="submit" className="text-indigo-600 hover:text-indigo-800 font-medium">
-              Search
-            </button>
-          </form>
-        </div>
+      <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
+        <h1 className="text-xl md:text-4xl font-bold text-white text-center px-4">Service Providers Rated by Community</h1>
       </div>
-      <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
+      <main className="pt-8 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {/* Home Maintenance Services */}
