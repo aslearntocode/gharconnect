@@ -872,18 +872,18 @@ export default function ParelConnectPage() {
                     <React.Fragment key={post.id}>
                       <li className="bg-white rounded-xl shadow border border-gray-100 p-3 md:p-5 flex flex-col gap-2">
                         {/* Top row: area, avatar, time */}
-                        <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500 mb-1">
+                        <div className="flex items-center gap-2 text-sm md:text-sm text-gray-500 mb-1">
                           <img src="/GC_Logo.png" alt="avatar" className="w-6 h-6 md:w-8 md:h-8 rounded-full border object-cover" />
-                          <span className="font-semibold text-gray-800 text-xs md:text-sm">{post.category || 'gc/mumbai/community/general'}</span>
+                          <span className="font-semibold text-gray-800 text-sm md:text-sm">{post.category || 'gc/mumbai/community/general'}</span>
                           <span className="mx-1">•</span>
-                          <span className="text-xs md:text-sm">{generateAnonymousId(post.user_id)}</span>
+                          <span className="text-sm md:text-sm">{generateAnonymousId(post.user_id)}</span>
                           <span className="mx-1">•</span>
-                          <span className="text-xs md:text-sm">{timeAgo(post.created_at)}</span>
+                          <span className="text-sm md:text-sm">{timeAgo(post.created_at)}</span>
                         </div>
                         {/* Title and body */}
                         <div className="cursor-pointer" onClick={() => window.location.href = `/mumbai/community/connect/${post.id}`}>
                           <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1 hover:text-indigo-600 transition-colors">{post.title}</h3>
-                          <p className="text-gray-800 text-xs md:text-base mb-2 line-clamp-3 md:line-clamp-4 whitespace-pre-line hover:text-gray-600 transition-colors">
+                          <p className="text-gray-800 text-sm md:text-base mb-2 line-clamp-3 md:line-clamp-4 whitespace-pre-line hover:text-gray-600 transition-colors">
                             {(() => {
                               // Split by line breaks, show only first 2-3 lines/paragraphs
                               const lines = post.body.split(/\r?\n/).filter(l => l.trim() !== '');
@@ -915,7 +915,7 @@ export default function ParelConnectPage() {
                         {/* Action row: like, comment, read more */}
                         <div className="flex gap-2 md:gap-3 mt-2">
                           <button
-                            className={`flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold text-xs md:text-sm ${(post.likes || 0) > 0 ? 'text-red-500' : 'text-gray-700'} ${likesLoading === post.id ? 'opacity-50 cursor-wait' : ''}`}
+                            className={`flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold text-sm md:text-sm ${(post.likes || 0) > 0 ? 'text-red-500' : 'text-gray-700'} ${likesLoading === post.id ? 'opacity-50 cursor-wait' : ''}`}
                             onClick={() => handleLikePost(post.id)}
                             disabled={userLikedPosts[post.id] || likesLoading === post.id}
                             aria-label={userLikedPosts[post.id] ? 'Liked' : 'Like'}
@@ -923,12 +923,12 @@ export default function ParelConnectPage() {
                             <FiHeart fill={(post.likes || 0) > 0 ? 'currentColor' : 'none'} />
                             {post.likes || 0}
                           </button>
-                          <Link href={`/mumbai/community/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
+                          <Link href={`/mumbai/community/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-sm md:text-sm">
                             {/* Speech bubble icon */}
                             <svg className="w-3 md:w-5 h-3 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                             {post.comment_count || 0}
                           </Link>
-                          <Link href={`/mumbai/community/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-xs md:text-sm">
+                          <Link href={`/mumbai/community/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-sm md:text-sm">
                             {/* Arrow right icon */}
                             <svg className="w-3 md:w-5 h-3 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                             Read More
