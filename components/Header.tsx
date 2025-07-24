@@ -17,8 +17,6 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isPropertiesDropdownOpen, setIsPropertiesDropdownOpen] = useState(false)
   const [isCreditScoreDropdownOpen, setIsCreditScoreDropdownOpen] = useState(false)
-  const [isDeliveryDropdownOpen, setIsDeliveryDropdownOpen] = useState(false)
-  const [isRentDropdownOpen, setIsRentDropdownOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const router = useRouter()
   const pathname = usePathname()
@@ -133,339 +131,51 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                   Home
                 </Link>
                 
-                {/* Rent Dropdown */}
+                {/* Rent Link */}
                 <div className="relative" style={{ zIndex: 50 }}>
                   <div className="flex items-center">
-                    <button 
-                      onClick={() => setIsRentDropdownOpen(!isRentDropdownOpen)}
-                      className={`py-2 text-base flex items-center transition-colors duration-300 ${
+                    <Link 
+                      href="/mumbai/rent"
+                      className={`py-2 text-base transition-colors duration-300 ${
                         isScrolled 
                           ? 'text-white hover:text-gray-300' 
                           : 'text-black hover:text-gray-700'
                       }`}
                     >
                       Rent
-                      <svg
-                        className={`ml-2 h-5 w-5 transform inline-block ${isRentDropdownOpen ? 'rotate-180' : ''}`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <div 
-                    className={`
-                      absolute w-80 bg-white rounded-lg shadow-lg py-4 px-4
-                      ${isRentDropdownOpen ? 'block' : 'hidden'}
-                    `}
-                    style={{
-                      zIndex: 1000,
-                      top: '2.5rem',
-                      left: 0
-                    }}
-                  >
-                    <div className="flex flex-col gap-y-2">
-                      <Link href="/mumbai/rent/apartment" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsRentDropdownOpen(false)}>
-                        <FiHome className="w-5 h-5 text-blue-500" />
-                        <span>Apartment</span>
-                      </Link>
-                      <Link href="/mumbai/rent/pg" className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsRentDropdownOpen(false)}>
-                        <FiBriefcase className="w-5 h-5 text-green-500" />
-                        <span>PG Accommodation</span>
-                      </Link>
-                    </div>
+                    </Link>
                   </div>
                 </div>
 
-                {/* Services Dropdown */}
+                {/* Services Link */}
                 <div className="relative" style={{ zIndex: 50 }}>
                   <div className="flex items-center">
-                    <button 
-                      onClick={() => setIsCreditScoreDropdownOpen(!isCreditScoreDropdownOpen)}
-                      className={`py-2 text-base flex items-center transition-colors duration-300 ${
+                    <Link 
+                      href={`/${currentSociety}/services`}
+                      className={`py-2 text-base transition-colors duration-300 ${
                         isScrolled 
                           ? 'text-white hover:text-gray-300' 
                           : 'text-black hover:text-gray-700'
                       }`}
                     >
                       Services
-                      <svg
-                        className={`ml-2 h-5 w-5 transform inline-block ${isCreditScoreDropdownOpen ? 'rotate-180' : ''}`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <div 
-                    className={`
-                      absolute w-[32rem] bg-white rounded-lg shadow-lg py-4 px-4
-                      ${isCreditScoreDropdownOpen ? 'block' : 'hidden'}
-                    `}
-                    style={{
-                      zIndex: 1000,
-                      top: '2.5rem',
-                      left: 0
-                    }}
-                  >
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                      <Link 
-                        href={`/${currentSociety}/services/laundry`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiDroplet className="w-5 h-5 text-blue-500" />
-                        <span>Laundry</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/carpenter`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiTool className="w-5 h-5 text-yellow-600" />
-                        <span>Carpenter</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/tailor`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiEdit className="w-5 h-5 text-pink-500" />
-                        <span>Tailor</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/plumber`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiTool className="w-5 h-5 text-blue-600" />
-                        <span>Plumber</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/electrician`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiZap className="w-5 h-5 text-yellow-500" />
-                        <span>Electrician</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/domestic-help`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiUsers className="w-5 h-5 text-green-600" />
-                        <span>Domestic Help & Drivers</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/car-clean`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <span className="w-5 h-5 text-blue-500 text-lg">🚗</span>
-                        <span>Car Clean</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/painter`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiEdit className="w-5 h-5 text-pink-500" />
-                        <span>Painter</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/gardener`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiHome className="w-5 h-5 text-green-600" />
-                        <span>Gardener</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/ac-service`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiZap className="w-5 h-5 text-blue-500" />
-                        <span>AC Service</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/pest-control`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiShield className="w-5 h-5 text-red-500" />
-                        <span>Pest Control</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/laptop-repair`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiTool className="w-5 h-5 text-red-500" />
-                        <span>Laptop Repair</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/electronics-repair`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiTool className="w-5 h-5 text-red-500" />
-                        <span>Electronics Repair</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/scrap-dealer`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <span className="w-5 h-5 text-orange-500 text-lg">♻️</span>
-                        <span>Scrap Dealer</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/notary`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiFileText className="w-5 h-5 text-blue-500" />
-                        <span>Notary</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/piegon-net`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiGrid className="w-5 h-5 text-green-500" />
-                        <span>Pigeon Net</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/movers-packers`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiTruck className="w-5 h-5 text-blue-500" />
-                        <span>Movers & Packers</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/physical-training`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiTrendingUp className="w-5 h-5 text-indigo-500" />
-                        <span>Physical Training</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/yoga`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiAward className="w-5 h-5 text-green-500" />
-                        <span>Yoga</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/massage`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiHeart className="w-5 h-5 text-pink-500" />
-                        <span>Massage</span>
-                      </Link>
-                      <Link 
-                        href={`/${currentSociety}/services/kids-classes`}
-                        className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded"
-                        onClick={() => setIsCreditScoreDropdownOpen(false)}
-                      >
-                        <FiBookOpen className="w-5 h-5 text-orange-500" />
-                        <span>Kids Classes</span>
-                      </Link>
-                    </div>
+                    </Link>
                   </div>
                 </div>
 
-                {/* Delivery Dropdown */}
+                {/* Delivery Link */}
                 <div className="relative" style={{ zIndex: 50 }}>
                   <div className="flex items-center">
-                    <button 
-                      onClick={() => setIsDeliveryDropdownOpen(!isDeliveryDropdownOpen)}
-                      className={`py-2 text-base flex items-center transition-colors duration-300 ${
+                    <Link 
+                      href={`/${currentSociety}/delivery`}
+                      className={`py-2 text-base transition-colors duration-300 ${
                         isScrolled 
                           ? 'text-white hover:text-gray-300' 
                           : 'text-black hover:text-gray-700'
                       }`}
                     >
                       Delivery
-                      <svg
-                        className={`ml-2 h-5 w-5 transform inline-block ${isDeliveryDropdownOpen ? 'rotate-180' : ''}`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        aria-hidden="true"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <div 
-                    className={`
-                      absolute w-80 bg-white rounded-lg shadow-lg py-4 px-4
-                      ${isDeliveryDropdownOpen ? 'block' : 'hidden'}
-                    `}
-                    style={{
-                      zIndex: 1000,
-                      top: '2.5rem',
-                      left: 0
-                    }}
-                  >
-                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                      <Link href={`/${currentSociety}/delivery/dairy`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                        <FiTruck className="w-5 h-5 text-blue-500" />
-                        <span>Dairy</span>
-                      </Link>
-                      <Link href={`/${currentSociety}/delivery/meat`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                        <FiTruck className="w-5 h-5 text-red-500" />
-                        <span>Meat</span>
-                      </Link>
-                      <Link href={`/${currentSociety}/delivery/eggs`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                        <FiCircle className="w-5 h-5 text-yellow-500" />
-                        <span>Eggs</span>
-                      </Link>
-                      <Link href={`/${currentSociety}/delivery/flowers`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                        <span className="w-5 h-5 text-pink-500 text-lg">💐</span>
-                        <span>Flowers</span>
-                      </Link>
-                      <Link href={`/${currentSociety}/delivery/vegetables`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                        <FiTruck className="w-5 h-5 text-green-500" />
-                        <span>Vegetables</span>
-                      </Link>
-                      <Link href={`/${currentSociety}/delivery/fruits`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                        <FiTruck className="w-5 h-5 text-orange-500" />
-                        <span>Fruits</span>
-                      </Link>
-                      <Link href={`/${currentSociety}/delivery/dry-fruits`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                        <FiTruck className="w-5 h-5 text-amber-500" />
-                        <span>Dry Fruits</span>
-                      </Link>
-                      <Link href={`/${currentSociety}/delivery/pharmacy`} className="flex items-center gap-x-3 px-2 py-1 text-base text-black hover:bg-gray-50 rounded" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                        <FiTruck className="w-5 h-5 text-indigo-500" />
-                        <span>Pharmacy</span>
-                      </Link>
-                    </div>
+                    </Link>
                   </div>
                 </div>
 
@@ -558,224 +268,33 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
           </Link>
 
           <div className="relative">
-            <button 
-              onClick={() => setIsRentDropdownOpen(isRentDropdownOpen => !isRentDropdownOpen)}
+            <Link 
+              href="/mumbai/rent"
               className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300"
             >
               <FiHome className="w-6 h-6" />
               <span className="text-xs mt-1">Rent</span>
-            </button>
-            {isRentDropdownOpen && (
-              <div className="absolute bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)' }}>
-                <Link href="/mumbai/rent/apartment" className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsRentDropdownOpen(false)}>
-                  Apartment
-                </Link>
-                <Link href="/mumbai/rent/pg" className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsRentDropdownOpen(false)}>
-                  PG Accommodation
-                </Link>
-              </div>
-            )}
+            </Link>
           </div>
 
           <div className="relative">
-            <button 
-              onClick={() => setIsCreditScoreDropdownOpen(isCreditScoreDropdownOpen => !isCreditScoreDropdownOpen)}
+            <Link 
+              href={`/${currentSociety}/services`}
               className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300"
             >
               <FiTool className="w-6 h-6" />
               <span className="text-xs mt-1">Services</span>
-            </button>
-            {isCreditScoreDropdownOpen && (
-              <div className="absolute bottom-full mb-2 w-64 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)', maxWidth: '90vw', maxHeight: '60vh', overflowY: 'auto' }}>
-                <div className="max-h-[50vh] overflow-y-auto">
-                  <Link 
-                    href={`/${currentSociety}/services/laundry`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Laundry
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/carpenter`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Carpenter
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/tailor`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Tailor
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/plumber`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Plumber
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/electrician`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Electrician
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/domestic-help`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Domestic Help & Drivers
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/car-clean`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Car Clean
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/painter`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Painter
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/gardener`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Gardener
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/ac-service`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    AC Service
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/pest-control`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Pest Control
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/laptop-repair`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Laptop Repair
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/electronics-repair`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Electronics Repair
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/scrap-dealer`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Scrap Dealer
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/notary`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Notary
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/piegon-net`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Pigeon Net
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/movers-packers`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Movers & Packers
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/physical-training`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Physical Training
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/yoga`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Yoga
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/massage`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Massage
-                  </Link>
-                  <Link 
-                    href={`/${currentSociety}/services/kids-classes`}
-                    className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50"
-                    onClick={() => setIsCreditScoreDropdownOpen(false)}
-                  >
-                    Kids Classes
-                  </Link>
-                </div>
-              </div>
-            )}
+            </Link>
           </div>
 
           <div className="relative">
-            <button 
-              onClick={() => setIsDeliveryDropdownOpen(isDeliveryDropdownOpen => !isDeliveryDropdownOpen)}
+            <Link 
+              href={`/${currentSociety}/delivery`}
               className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300"
             >
               <FiTruck className="w-6 h-6" />
               <span className="text-xs mt-1">Delivery</span>
-            </button>
-            {isDeliveryDropdownOpen && (
-              <div className="absolute bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg py-2" style={{ left: '50%', transform: 'translateX(-50%)' }}>
-                <Link href={`/${currentSociety}/delivery/dairy`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Dairy
-                </Link>
-                <Link href={`/${currentSociety}/delivery/meat`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Meat
-                </Link>
-                <Link href={`/${currentSociety}/delivery/eggs`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Eggs
-                </Link>
-                <Link href={`/${currentSociety}/delivery/flowers`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Flowers
-                </Link>
-                <Link href={`/${currentSociety}/delivery/vegetables`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Vegetables
-                </Link>
-                <Link href={`/${currentSociety}/delivery/fruits`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Fruits
-                </Link>
-                <Link href={`/${currentSociety}/delivery/dry-fruits`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Dry Fruits
-                </Link>
-                <Link href={`/${currentSociety}/delivery/pharmacy`} className="flex items-center px-4 py-1 text-sm text-black hover:bg-gray-50" onClick={() => setIsDeliveryDropdownOpen(false)}>
-                  Pharmacy
             </Link>
-              </div>
-            )}
           </div>
 
           <div className="relative">

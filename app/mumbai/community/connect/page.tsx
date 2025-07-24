@@ -973,7 +973,7 @@ export default function ParelConnectPage() {
                               </div>
                             </div>
                             <Link 
-                              href="/mumbai/rent" 
+                              href="/mumbai/rent/apartment" 
                               className="bg-blue-500 hover:bg-blue-600 text-white text-[10px] md:text-sm font-semibold px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-colors"
                             >
                               Browse Rentals

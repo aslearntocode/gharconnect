@@ -75,46 +75,130 @@ export default function MumbaiRentTypeSelection() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-white to-indigo-50 pb-12 px-2 pt-8">
+    <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
-      {/* Back to All Cities Button */}
-      <div className="w-full max-w-5xl mx-auto flex justify-start mb-2 px-2">
-        <Link href="/" className="inline-flex items-center px-3 py-1.5 bg-white border border-indigo-600 text-indigo-700 font-semibold rounded-lg shadow hover:bg-indigo-50 transition-all text-sm">
-          <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
-          Back to All Cities
-        </Link>
-      </div>
-      <div className="w-full max-w-5xl mx-auto">
-        <h1 className="text-3xl md:text-4xl font-bold text-indigo-700 text-center mb-2 mt-2">Find a Home in Mumbai with No Brokerage</h1>
-        <p className="text-gray-700 text-lg text-center mb-8">Choose the type of rental accommodation you are looking for in Mumbai with no brokerage.</p>
-        <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-          {/* Apartments Card */}
-          <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 w-full max-w-md flex flex-col items-start">
-            <h2 className="text-xl font-bold mb-2">Premium Apartments</h2>
-            <p className="text-gray-700 mb-4">Browse and rent premium apartments in Mumbai. No brokerage, direct from owners.</p>
-            <Link href="/mumbai/rent/apartment" className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg shadow transition-all">
-              Explore
-              <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
-          </div>
-          {/* PG Card */}
-          <div className="bg-white rounded-2xl shadow-md border border-gray-200 p-6 w-full max-w-md flex flex-col items-start">
-            <h2 className="text-xl font-bold mb-2">Premium PG Accommodation</h2>
-            <p className="text-gray-700 mb-4">Find Paying Guest (PG) accommodation options for students and working professionals.</p>
-            <Link href="/mumbai/rent/pg" className="inline-flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg shadow transition-all">
-              Explore
-              <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            </Link>
-          </div>
+      {/* Blue Banner */}
+      <div className="relative">
+        <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
+          <h1 className="text-xl md:text-4xl font-bold text-white text-center px-4">Find a Home in Mumbai with No Brokerage</h1>
         </div>
       </div>
+      <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto">
+          {/* <p className="text-gray-700 text-lg text-center mb-8">Choose the type of rental accommodation you are looking for in Mumbai with no brokerage.</p>  */}
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8 max-w-5xl mx-auto">
+            {/* Apartments Card */}
+            <div className="group bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative z-10">
+                {/* Mobile: Only heading and button */}
+                <div className="md:hidden flex flex-col items-center text-center">
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">
+                    Premium Apartments
+                  </h3>
+                  <Link 
+                    href="/mumbai/rent/apartment"
+                    className="inline-flex items-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold px-4 py-2 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm"
+                  >
+                    Explore
+                    <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </Link>
+                </div>
+                
+                {/* Desktop: Full card content */}
+                <div className="hidden md:block">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                      <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900">
+                      Premium Apartments
+                    </h3>
+                  </div>
+                  <p className="text-base text-gray-600 mb-6 leading-relaxed">
+                    Browse and rent premium apartments in Mumbai. No brokerage, direct from owners.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center text-sm text-gray-500">
+                      <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                      Verified listings
+                    </div>
+                    <Link 
+                      href="/mumbai/rent/apartment"
+                      className="inline-flex items-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold px-6 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                    >
+                      Explore
+                      <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* PG Card */}
+            <div className="group bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="relative z-10">
+                {/* Mobile: Only heading and button */}
+                <div className="md:hidden flex flex-col items-center text-center">
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">
+                    Premium PG Accommodation
+                  </h3>
+                  <Link 
+                    href="/mumbai/rent/pg"
+                    className="inline-flex items-center bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold px-4 py-2 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm"
+                  >
+                    Explore
+                    <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  </Link>
+                </div>
+                
+                {/* Desktop: Full card content */}
+                <div className="hidden md:block">
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mr-4">
+                      <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-900">
+                      Premium PG Accommodation
+                    </h3>
+                  </div>
+                  <p className="text-base text-gray-600 mb-6 leading-relaxed">
+                    Find Paying Guest (PG) accommodation options for students and working professionals.
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center text-sm text-gray-500">
+                      <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                      Student-friendly
+                    </div>
+                    <Link 
+                      href="/mumbai/rent/pg"
+                      className="inline-flex items-center bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold px-6 py-3 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                    >
+                      Explore
+                      <svg className="w-4 h-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
       
       {/* Why You Should List Your Property With Us Section */}
-      <div className="w-full max-w-7xl mx-auto mt-12">
+      <div className="w-full max-w-7xl mx-auto">
         <div className="bg-gray-50 py-8 md:py-12 rounded-2xl">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8">

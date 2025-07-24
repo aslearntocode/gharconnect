@@ -3,147 +3,190 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
-import { FiSearch, FiDroplet, FiTool, FiZap, FiHome, FiEdit, FiTrendingUp, FiAward, FiBookOpen } from 'react-icons/fi';
+import { 
+  FiSearch, 
+  FiDroplet, 
+  FiTool, 
+  FiZap, 
+  FiHome, 
+  FiEdit, 
+  FiTrendingUp, 
+  FiAward, 
+  FiBookOpen,
+  FiUsers,
+  FiTruck,
+  FiMonitor,
+  FiScissors,
+  FiFileText,
+  FiShield,
+  FiHeart
+} from 'react-icons/fi';
 
 export default function ServicesPage() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      // Navigate to search results page with the query
+      window.location.href = `/mumbai/community/search?q=${encodeURIComponent(searchQuery.trim())}`;
+      setSearchQuery("");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 lg:pt-16">
       <Header />
       {/* Blue Banner */}
       <div className="relative">
         <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
-          <h1 className="text-3xl md:text-4xl font-bold text-white">Home Services</h1>
+          <h1 className="text-xl md:text-4xl font-bold text-white text-center px-4">Service Providers Rated by Community</h1>
         </div>
         {/* Filter/Search Bar */}
         <div className="absolute left-1/2 transform -translate-x-1/2 -bottom-7 w-full max-w-2xl z-10">
-          <div className="bg-white rounded-2xl shadow-lg flex items-center px-4 py-3 gap-2">
+          <form onSubmit={handleSearch} className="bg-white rounded-2xl shadow-lg flex items-center px-4 py-3 gap-2">
             <FiSearch className="text-gray-400 w-5 h-5" />
             <input
               type="text"
               placeholder="Search for a service..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="flex-1 outline-none bg-transparent text-gray-700 text-base"
-              disabled
             />
-            {/* Add more filter controls here if needed */}
-          </div>
+            <button type="submit" className="text-indigo-600 hover:text-indigo-800 font-medium">
+              Search
+            </button>
+          </form>
         </div>
       </div>
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Services</h1>
-            <p className="text-xl text-gray-600 mb-12">
-              Find trusted professionals for all your home service needs
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            {/* Home Maintenance Services */}
             <Link href="/mumbai/community/services/laundry" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
-                <FiDroplet className="text-4xl text-blue-500 flex-shrink-0" />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">Laundry</h2>
-                  <p className="text-gray-600 text-sm">Professional laundry and dry cleaning</p>
-                </div>
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiDroplet className="text-2xl md:text-3xl text-blue-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Laundry</h2>
               </div>
             </Link>
             <Link href="/mumbai/community/services/carpenter" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
-                <FiTool className="text-4xl text-yellow-600 flex-shrink-0" />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">Carpenter</h2>
-                  <p className="text-gray-600 text-sm">Woodwork, repairs, and furniture</p>
-                </div>
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiTool className="text-2xl md:text-3xl text-yellow-600 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Carpenter</h2>
+              </div>
+            </Link>
+            <Link href="/mumbai/community/services/tailor" className="block group">
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiScissors className="text-2xl md:text-3xl text-purple-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Tailor</h2>
               </div>
             </Link>
             <Link href="/mumbai/community/services/plumber" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
-                <FiTool className="text-4xl text-blue-600 flex-shrink-0" />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">Plumber</h2>
-                  <p className="text-gray-600 text-sm">Leak repairs, fittings, and more</p>
-                </div>
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiTool className="text-2xl md:text-3xl text-blue-600 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Plumber</h2>
               </div>
             </Link>
             <Link href="/mumbai/community/services/electrician" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
-                <FiZap className="text-4xl text-yellow-500 flex-shrink-0" />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">Electrician</h2>
-                  <p className="text-gray-600 text-sm">Wiring, repairs, and installations</p>
-                </div>
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiZap className="text-2xl md:text-3xl text-yellow-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Electrician</h2>
               </div>
             </Link>
-            <Link href="/mumbai/community/services/house-cleaning" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
-                <FiHome className="text-4xl text-green-600 flex-shrink-0" />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">Cleaning</h2>
-                  <p className="text-gray-600 text-sm">Home and office cleaning</p>
-                </div>
+            <Link href="/mumbai/community/services/domestic-help" className="block group">
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiUsers className="text-2xl md:text-3xl text-indigo-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Domestic Help</h2>
+              </div>
+            </Link>
+            <Link href="/mumbai/community/services/car-clean" className="block group">
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiTruck className="text-2xl md:text-3xl text-blue-600 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Car Clean</h2>
               </div>
             </Link>
             <Link href="/mumbai/community/services/painter" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
-                <FiEdit className="text-4xl text-pink-500 flex-shrink-0" />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">Painter</h2>
-                  <p className="text-gray-600 text-sm">Wall painting and touch-ups</p>
-                </div>
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiEdit className="text-2xl md:text-3xl text-pink-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Painter</h2>
               </div>
             </Link>
             <Link href="/mumbai/community/services/gardener" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
-                <FiHome className="text-4xl text-green-600 flex-shrink-0" />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">Gardener</h2>
-                  <p className="text-gray-600 text-sm">Garden care and landscaping</p>
-                </div>
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiHome className="text-2xl md:text-3xl text-green-600 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Gardener</h2>
               </div>
             </Link>
             <Link href="/mumbai/community/services/ac-service" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
-                <FiZap className="text-4xl text-blue-500 flex-shrink-0" />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">AC Service</h2>
-                  <p className="text-gray-600 text-sm">AC repair and maintenance</p>
-                </div>
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiZap className="text-2xl md:text-3xl text-blue-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">AC Service</h2>
               </div>
             </Link>
             <Link href="/mumbai/community/services/pest-control" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
-                <FiTool className="text-4xl text-red-500 flex-shrink-0" />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">Pest Control</h2>
-                  <p className="text-gray-600 text-sm">Termite and pest removal</p>
-                </div>
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiShield className="text-2xl md:text-3xl text-red-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Pest Control</h2>
+              </div>
+            </Link>
+            <Link href="/mumbai/community/services/laptop-repair" className="block group">
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiMonitor className="text-2xl md:text-3xl text-indigo-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Laptop Repair</h2>
+              </div>
+            </Link>
+            <Link href="/mumbai/community/services/electronics-repair" className="block group">
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiMonitor className="text-2xl md:text-3xl text-blue-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Electronics Repair</h2>
+              </div>
+            </Link>
+            <Link href="/mumbai/community/services/scrap-dealer" className="block group">
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiTool className="text-2xl md:text-3xl text-gray-600 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Scrap Dealer</h2>
+              </div>
+            </Link>
+            <Link href="/mumbai/community/services/notary" className="block group">
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiFileText className="text-2xl md:text-3xl text-green-600 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Notary</h2>
+              </div>
+            </Link>
+            <Link href="/mumbai/community/services/piegon-net" className="block group">
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiShield className="text-2xl md:text-3xl text-purple-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Pigeon Net</h2>
+              </div>
+            </Link>
+            <Link href="/mumbai/community/services/movers-packers" className="block group">
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiTruck className="text-2xl md:text-3xl text-orange-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Movers & Packers</h2>
               </div>
             </Link>
             <Link href="/mumbai/community/services/physical-training" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
-                <FiTrendingUp className="text-4xl text-indigo-500 flex-shrink-0" />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">Physical Training</h2>
-                  <p className="text-gray-600 text-sm">Personal and group training</p>
-                </div>
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiTrendingUp className="text-2xl md:text-3xl text-indigo-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Physical Training</h2>
               </div>
             </Link>
             <Link href="/mumbai/community/services/yoga" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
-                <FiAward className="text-4xl text-green-500 flex-shrink-0" />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">Yoga</h2>
-                  <p className="text-gray-600 text-sm">Yoga classes and workshops</p>
-                </div>
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiAward className="text-2xl md:text-3xl text-green-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Yoga</h2>
+              </div>
+            </Link>
+            <Link href="/mumbai/community/services/massage" className="block group">
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiHeart className="text-2xl md:text-3xl text-pink-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Massage</h2>
               </div>
             </Link>
             <Link href="/mumbai/community/services/kids-classes" className="block group">
-              <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6 border border-gray-100 group-hover:border-indigo-200 flex items-center gap-4">
-                <FiBookOpen className="text-4xl text-orange-500 flex-shrink-0" />
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1 group-hover:text-indigo-600 transition-colors duration-300">Kids Classes</h2>
-                  <p className="text-gray-600 text-sm">Learning and fun for kids</p>
-                </div>
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <FiBookOpen className="text-2xl md:text-3xl text-orange-500 flex-shrink-0 mb-1 md:mb-2" />
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Kids Classes</h2>
               </div>
             </Link>
           </div>
