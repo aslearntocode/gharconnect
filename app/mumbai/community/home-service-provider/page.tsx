@@ -125,7 +125,7 @@ export default function ParelNeighborhoodServiceProviderPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredTalents.map((talent) => (
-                <Link href={`/parel/home-service-provider/${talent.id}`} key={talent.id} className="block group">
+                <Link href={`/mumbai/community/home-service-provider/${talent.id}`} key={talent.id} className="block group">
                   <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group-hover:border-indigo-200">
                     {/* Image */}
                     <div className="w-full h-48 overflow-hidden bg-white flex items-center justify-center">
