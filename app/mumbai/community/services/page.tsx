@@ -158,6 +158,12 @@ export default function ServicesPage() {
                 <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Kids Classes</h2>
               </div>
             </Link>
+            <Link href="/mumbai/community/services/music-classes" className="block group">
+              <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-300 p-3 md:p-4 border border-gray-100 group-hover:border-indigo-200 flex flex-col items-center justify-center text-center h-20 md:h-auto min-h-[80px] md:min-h-0 overflow-hidden">
+                <span className="text-2xl md:text-3xl text-purple-500 flex-shrink-0 mb-1 md:mb-2">🎵</span>
+                <h2 className="text-xs md:text-lg font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 leading-none">Music Classes</h2>
+              </div>
+            </Link>
           </div>
         </div>
       </main>

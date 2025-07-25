@@ -27,30 +27,6 @@ export const vendors: Vendor[] = [
     buildingServed: ['All']
   },
   {
-    name: 'Brijesh Joshi - Music Classes',
-    services: [{
-      name: 'Music Classes',
-      description: 'Guitar lessons for children and adults',
-      price: 'Call for price',
-      unit: 'per month'
-    }],
-    mobile: '+91 73583 65827',
-    areaServed: ['Parel'],
-    buildingServed: ['L&T Crescent Bay']
-  },
-  {
-    name: 'Rajesh - Guitar Lessons',
-    services: [{
-      name: 'Guitar Lessons',
-      description: 'Guitar lessons for children and adults',
-      price: 'Call for price',
-      unit: 'per month'
-    }],
-    mobile: '+91 99676 55503',
-    areaServed: ['Parel'],
-    buildingServed: ['L&T Crescent Bay']
-  },
-  {
     name: 'Noel - Swimming Coach',
     services: [{
       name: 'Swimming Coaching',
@@ -132,18 +108,6 @@ export const vendors: Vendor[] = [
     }],
     mobile: '+91 85918 61692',
     areaServed: ['South Bombay'],
-    buildingServed: ['All']
-  },
-  {
-    name: 'Bhaviraj House of Music',
-    services: [{
-      name: 'Music Lessons',
-      description: 'Music lessons for children including singing, piano, guitar, etc.',
-      price: 'Call for price',
-      unit: 'per month'
-    }],
-    mobile: '+91 90825 03460',
-    areaServed: ['All'],
     buildingServed: ['All']
   },
   {
