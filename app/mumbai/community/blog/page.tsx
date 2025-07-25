@@ -1,5 +1,5 @@
 import BlogPage from '@/app/components/BlogPage';
 
-export default function ParelBlogPage() {
-  return <BlogPage society="parel" />;
+export default function MumbaiBlogPage() {
+  return <BlogPage society="mumbai" />;
 } 

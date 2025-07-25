@@ -168,7 +168,7 @@ export default async function BlogPostPage({ params, society }: BlogPostPageProp
         <div className="bg-white border-b border-gray-100">
           <div className="max-w-6xl mx-auto px-4 py-4">
             <Link 
-              href={`/${society}/blog`} 
+              href={`/${society}/community/blog`} 
               className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 transition-colors font-medium"
             >
               <ArrowLeft className="w-4 h-4" />
@@ -235,7 +235,7 @@ export default async function BlogPostPage({ params, society }: BlogPostPageProp
                 {relatedPosts.map((relatedPost) => (
                   <Link 
                     key={relatedPost.slug} 
-                    href={`/${society}/blog/${relatedPost.slug}`}
+                    href={`/${society}/community/blog/${relatedPost.slug}`}
                     className="block bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow border border-gray-100"
                   >
                     <h3 className="text-lg font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors">

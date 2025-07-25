@@ -50,7 +50,7 @@ export default function BlogPage({ society }: BlogPageProps) {
                 </div>
                 
                 <h2 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 leading-tight">
-                  <Link href={`/${society}/blog/${post.slug}`} className="hover:text-blue-600 transition-colors">
+                  <Link href={`/${society}/community/blog/${post.slug}`} className="hover:text-blue-600 transition-colors">
                     {post.title}
                   </Link>
                 </h2>
