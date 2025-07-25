@@ -27,6 +27,7 @@ interface Post {
   category?: string;
   images?: string[];
   area?: string;
+  featured?: boolean;
 }
 
 interface Comment {
@@ -70,6 +71,7 @@ export default function ParelConnectPage() {
   const [isPostFormOpen, setIsPostFormOpen] = useState(false);
   const [topUsers, setTopUsers] = useState<TopUser[]>([]);
   const [imageUploadReset, setImageUploadReset] = useState(false);
+  const [featuredPosts, setFeaturedPosts] = useState<Post[]>([]);
 
   // Available communities for Parel
   const parelCommunities = [
@@ -113,6 +115,7 @@ export default function ParelConnectPage() {
     });
     fetchPosts();
     fetchTopUsers(); // Call fetchTopUsers here
+    fetchFeaturedPosts(); // Call fetchFeaturedPosts here
     return () => unsubscribe();
   }, []);
 
@@ -145,6 +148,19 @@ export default function ParelConnectPage() {
       setPosts(transformedData);
     }
     setLoading(false);
+  };
+
+  const fetchFeaturedPosts = async () => {
+    const supabase = await getSupabaseClient();
+    const { data, error } = await supabase
+      .from('posts')
+      .select(`*`)
+      .eq('featured', true)
+      .order('created_at', { ascending: false })
+      .limit(4); // Fetch 4 featured posts
+    if (!error && data) {
+      setFeaturedPosts(data);
+    }
   };
 
   const fetchTopUsers = async () => {
@@ -551,6 +567,50 @@ export default function ParelConnectPage() {
             />
           </div>
         </div>
+
+        {/* Hot Topics Section */}
+        {featuredPosts.length > 0 && (
+          <div className="max-w-7xl mx-auto px-4 mb-6">
+            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4">
+              {/* Mobile: Heading and topics stacked, small font, max two rows */}
+              <div className="md:hidden">
+                <div className="flex items-center text-lg font-bold text-gray-900 whitespace-nowrap pl-2 pr-2 mb-1">
+                  <span className="text-red-500 mr-1">🔥</span> Recent Topics
+                </div>
+                <div className="grid grid-cols-2 gap-2 px-2">
+                  {featuredPosts.slice(0, 4).map((post) => (
+                    <div
+                      key={post.id}
+                      className="bg-gradient-to-r from-orange-100 to-red-100 rounded-full px-2 py-1 border border-orange-200 cursor-pointer hover:shadow-md transition-all duration-200 hover:from-orange-200 hover:to-red-200 flex items-center text-xs font-medium text-gray-800 whitespace-nowrap"
+                      onClick={() => window.location.href = `/mumbai/community/connect/${post.id}`}
+                    >
+                      {post.title.length > 20 ? post.title.substring(0, 20) + '...' : post.title}
+                      <span className="text-orange-600 text-xs font-bold ml-1">{'>'}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Desktop: Centered single row (unchanged) */}
+              <div className="hidden md:flex flex-wrap items-center justify-center gap-4">
+                <span className="flex items-center text-xl font-bold text-gray-900 whitespace-nowrap mr-2">
+                  <span className="text-red-500 mr-1">🔥</span> Recent Topics
+                </span>
+                {featuredPosts.slice(0, 4).map((post) => (
+                  <div
+                    key={post.id}
+                    className="flex-shrink-0 bg-gradient-to-r from-orange-100 to-red-100 rounded-full px-4 py-2 border border-orange-200 cursor-pointer hover:shadow-md transition-all duration-200 hover:from-orange-200 hover:to-red-200 flex items-center"
+                    onClick={() => window.location.href = `/mumbai/community/connect/${post.id}`}
+                  >
+                    <span className="text-sm font-medium text-gray-800 whitespace-nowrap flex items-center">
+                      {post.title.length > 30 ? post.title.substring(0, 30) + '...' : post.title}
+                    </span>
+                    <span className="text-orange-600 text-xs font-bold ml-1">{'>'}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
         <div className="max-w-7xl mx-auto py-8 px-2 lg:px-4 flex flex-col lg:flex-row gap-4 lg:gap-6">
           {/* Mobile Filter Dropdown */}
           <div className="lg:hidden mb-2">
