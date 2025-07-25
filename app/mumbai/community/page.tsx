@@ -113,7 +113,23 @@ export default function Home() {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [currentBackgroundImage, setCurrentBackgroundImage] = useState(0);
   
+  const backgroundImages = [
+    '/images/woodenhouse.jpg',
+    '/images/mhouses.jpg',
+    '/images/europe.jpg'
+  ];
+
+  // Background image slider effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBackgroundImage((prev) => (prev + 1) % backgroundImages.length);
+    }, 5000); // Change every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [backgroundImages.length]);
+
   const testimonials = [
     {
       initial: 'R',
@@ -713,14 +729,22 @@ export default function Home() {
 
         
         {/* Rental Accommodation Section - hero Section*/}
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 pt-6 md:pt-12 pb-12 md:pb-20 relative overflow-hidden">
+        <div
+          className="bg-gradient-to-br from-blue-50 to-indigo-50 pt-6 md:pt-12 pb-12 md:pb-20 relative overflow-hidden transition-all duration-1000 ease-in-out"
+          style={{
+            backgroundImage: `url(${backgroundImages[currentBackgroundImage]})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
           {/* Background decorative elements */}
-          <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute inset-0 overflow-hidden z-10">
             <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-100 rounded-full opacity-20 blur-3xl"></div>
             <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-indigo-100 rounded-full opacity-20 blur-3xl"></div>
           </div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Overlay for readability */}
+          <div className="absolute inset-0 bg-white/50 md:bg-white/40 backdrop-blur-sm z-0 pointer-events-none" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
             <div className="text-center mb-6 md:mb-10">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4 leading-tight">
                 Find a Home in Mumbai with No Brokerage
