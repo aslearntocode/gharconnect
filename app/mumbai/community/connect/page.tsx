@@ -570,7 +570,7 @@ export default function ParelConnectPage() {
 
         {/* Hot Topics Section */}
         {featuredPosts.length > 0 && (
-          <div className="max-w-7xl mx-auto px-4 mb-6">
+          <div className="max-w-7xl mx-auto px-4 mb-2 md:mb-6">
             <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4">
               {/* Mobile: Heading and topics stacked, small font, max two rows */}
               <div className="md:hidden">
