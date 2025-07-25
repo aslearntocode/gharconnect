@@ -9,6 +9,8 @@ import Header from '@/components/Header';
 import Link from 'next/link';
 import Head from 'next/head';
 import ImageModal from '@/components/ImageModal';
+import { FiHeart } from 'react-icons/fi';
+import LoginModal from '@/components/LoginModal';
 
 interface Post {
   id: string;
@@ -18,6 +20,7 @@ interface Post {
   created_at: string;
   category?: string;
   images?: string[];
+  likes?: number;
 }
 
 interface Comment {
@@ -46,6 +49,7 @@ export default function PostDetailPage() {
   const [likesLoading, setLikesLoading] = useState<string | null>(null);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [userLikedComments, setUserLikedComments] = useState<{ [commentId: string]: boolean }>({});
+  const [userLikedPosts, setUserLikedPosts] = useState<{ [postId: string]: boolean }>({});
   const [imageModal, setImageModal] = useState<{ isOpen: boolean; imageUrl: string; alt: string; currentIndex: number }>({
     isOpen: false,
     imageUrl: '',
@@ -74,6 +78,26 @@ export default function PostDetailPage() {
       }
     };
     fetchLikedComments();
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) return;
+    const fetchLikedPosts = async () => {
+      const supabase = await getSupabaseClient();
+      const firebaseUid = user.uid;
+      const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
+      const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
+      const { data, error } = await supabase
+        .from('post_likes')
+        .select('post_id')
+        .eq('user_id', formattedUuid);
+      if (!error && data) {
+        const liked: Record<string, boolean> = {};
+        data.forEach((row: { post_id: string }) => { liked[row.post_id] = true; });
+        setUserLikedPosts(liked);
+      }
+    };
+    fetchLikedPosts();
   }, [user]);
 
   const fetchPostAndComments = async () => {
@@ -157,6 +181,63 @@ export default function PostDetailPage() {
       setComments(prev => prev.map(c => c.id === commentId ? { ...c, likes: (c.likes || 0) + 1 } : c));
       setUserLikedComments(prev => ({ ...prev, [commentId]: true }));
     }
+    setLikesLoading(null);
+  }
+
+  async function handleLikePost(postId: string) {
+    if (!user) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    
+    if (userLikedPosts[postId]) {
+      return;
+    }
+    
+    setLikesLoading(postId);
+    const supabase = await getSupabaseClient();
+    
+    // Convert Firebase UID to UUID format
+    const firebaseUid = user.uid;
+    const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
+    const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
+    
+    try {
+      // Check if already liked in DB
+      const { data: likeRows, error: likeError } = await supabase
+        .from('post_likes')
+        .select('id')
+        .eq('user_id', formattedUuid)
+        .eq('post_id', postId);
+      
+      if (likeRows && likeRows.length > 0) {
+        setUserLikedPosts(prev => ({ ...prev, [postId]: true }));
+        setLikesLoading(null);
+        return;
+      }
+      
+      // Insert like
+      const { error: insertError } = await supabase
+        .from('post_likes')
+        .insert([{ user_id: formattedUuid, post_id: postId }]);
+      
+      if (!insertError) {
+        // Increment post likes
+        const currentLikes = post?.likes || 0;
+        const { error: updateError } = await supabase
+          .from('posts')
+          .update({ likes: currentLikes + 1 })
+          .eq('id', postId);
+        
+        if (!updateError) {
+          setPost(prev => prev ? { ...prev, likes: (prev.likes || 0) + 1 } : null);
+          setUserLikedPosts(prev => ({ ...prev, [postId]: true }));
+        }
+      }
+    } catch (error) {
+      console.error('Error in handleLikePost:', error);
+    }
+    
     setLikesLoading(null);
   }
 
@@ -334,6 +415,19 @@ export default function PostDetailPage() {
                       </div>
                     </div>
                   )}
+                  
+                  {/* Like Button */}
+                  <div className="flex gap-2 mt-4">
+                    <button
+                      className={`flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold text-sm md:text-sm ${(post.likes || 0) > 0 ? 'text-red-500' : 'text-gray-700'} ${likesLoading === post.id ? 'opacity-50 cursor-wait' : ''}`}
+                      onClick={() => handleLikePost(post.id)}
+                      disabled={userLikedPosts[post.id] || likesLoading === post.id}
+                      aria-label={userLikedPosts[post.id] ? 'Liked' : 'Like'}
+                    >
+                      <FiHeart fill={(post.likes || 0) > 0 ? 'currentColor' : 'none'} />
+                      {post.likes || 0}
+                    </button>
+                  </div>
                 </header>
               </article>
               <section>
@@ -408,6 +502,7 @@ export default function PostDetailPage() {
         currentIndex={imageModal.currentIndex}
         onImageChange={(index) => setImageModal(prev => ({ ...prev, currentIndex: index }))}
       />
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
     </>
   );
 } 
