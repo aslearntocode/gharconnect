@@ -575,7 +575,7 @@ export default function ParelConnectPage() {
               {/* Mobile: Heading and topics stacked, small font, max two rows */}
               <div className="md:hidden">
                 <div className="flex items-center text-lg font-bold text-gray-900 whitespace-nowrap pl-2 pr-2 mb-1">
-                  <span className="text-red-500 mr-1">🔥</span> Recent Topics
+                  <span className="text-red-500 mr-1"> Moderated Topics</span>
                 </div>
                 <div className="grid grid-cols-2 gap-2 px-2">
                   {featuredPosts.slice(0, 4).map((post) => (
@@ -593,7 +593,7 @@ export default function ParelConnectPage() {
               {/* Desktop: Centered single row (unchanged) */}
               <div className="hidden md:flex flex-wrap items-center justify-center gap-4">
                 <span className="flex items-center text-xl font-bold text-gray-900 whitespace-nowrap mr-2">
-                  <span className="text-red-500 mr-1">🔥</span> Recent Topics
+                  <span className="text-red-500 mr-1"> Moderated Topics</span>
                 </span>
                 {featuredPosts.slice(0, 4).map((post) => (
                   <div

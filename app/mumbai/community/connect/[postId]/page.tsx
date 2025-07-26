@@ -9,7 +9,7 @@ import Header from '@/components/Header';
 import Link from 'next/link';
 import Head from 'next/head';
 import ImageModal from '@/components/ImageModal';
-import { FiHeart } from 'react-icons/fi';
+import { FiHeart, FiShare2 } from 'react-icons/fi';
 import LoginModal from '@/components/LoginModal';
 
 interface Post {
@@ -189,57 +189,70 @@ export default function PostDetailPage() {
       setIsLoginModalOpen(true);
       return;
     }
-    
-    if (userLikedPosts[postId]) {
-      return;
-    }
-    
+
     setLikesLoading(postId);
-    const supabase = await getSupabaseClient();
-    
-    // Convert Firebase UID to UUID format
-    const firebaseUid = user.uid;
-    const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
-    const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
-    
     try {
-      // Check if already liked in DB
-      const { data: likeRows, error: likeError } = await supabase
+      const supabase = await getSupabaseClient();
+      const firebaseUid = user.uid;
+      const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
+      const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
+
+      // Check if user already liked the post
+      const { data: existingLike } = await supabase
         .from('post_likes')
         .select('id')
+        .eq('post_id', postId)
         .eq('user_id', formattedUuid)
-        .eq('post_id', postId);
-      
-      if (likeRows && likeRows.length > 0) {
-        setUserLikedPosts(prev => ({ ...prev, [postId]: true }));
-        setLikesLoading(null);
-        return;
-      }
-      
-      // Insert like
-      const { error: insertError } = await supabase
-        .from('post_likes')
-        .insert([{ user_id: formattedUuid, post_id: postId }]);
-      
-      if (!insertError) {
-        // Increment post likes
-        const currentLikes = post?.likes || 0;
-        const { error: updateError } = await supabase
-          .from('posts')
-          .update({ likes: currentLikes + 1 })
-          .eq('id', postId);
-        
-        if (!updateError) {
-          setPost(prev => prev ? { ...prev, likes: (prev.likes || 0) + 1 } : null);
+        .single();
+
+      if (existingLike) {
+        // Unlike the post
+        await supabase
+          .from('post_likes')
+          .delete()
+          .eq('post_id', postId)
+          .eq('user_id', formattedUuid);
+
+        // Decrease likes count
+        if (post) {
+          await supabase
+            .from('posts')
+            .update({ likes: (post.likes || 1) - 1 })
+            .eq('id', postId);
+
+          setUserLikedPosts(prev => ({ ...prev, [postId]: false }));
+          setPost(prev => prev ? { ...prev, likes: (prev.likes || 1) - 1 } : null);
+        }
+      } else {
+        // Like the post
+        await supabase
+          .from('post_likes')
+          .insert([{ post_id: postId, user_id: formattedUuid }]);
+
+        // Increase likes count
+        if (post) {
+          await supabase
+            .from('posts')
+            .update({ likes: (post.likes || 0) + 1 })
+            .eq('id', postId);
+
           setUserLikedPosts(prev => ({ ...prev, [postId]: true }));
+          setPost(prev => prev ? { ...prev, likes: (prev.likes || 0) + 1 } : null);
         }
       }
     } catch (error) {
-      console.error('Error in handleLikePost:', error);
+      console.error('Error toggling like:', error);
+    } finally {
+      setLikesLoading(null);
     }
-    
-    setLikesLoading(null);
   }
+
+  const handleSharePost = () => {
+    const currentUrl = window.location.href;
+    const shareText = post ? `Check out this post: "${post.title}"` : 'Check out this post';
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(`${shareText}\n\n${currentUrl}`)}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
   // Helper to recursively render comments
   function renderComments(
@@ -271,10 +284,6 @@ export default function PostDetailPage() {
                 <button className="flex items-center gap-1 hover:text-blue-600 focus:outline-none" onClick={() => setReplyTo(comment.id)} aria-label="Reply to comment">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 10h7V6l7 7-7 7v-4H3z"/></svg>
                   Reply
-                </button>
-                <button className="flex items-center gap-1 hover:text-gray-700 focus:outline-none">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405M19 17V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2h8"/></svg>
-                  Share
                 </button>
               </div>
               {/* Reply input */}
@@ -426,6 +435,14 @@ export default function PostDetailPage() {
                     >
                       <FiHeart fill={(post.likes || 0) > 0 ? 'currentColor' : 'none'} />
                       {post.likes || 0}
+                    </button>
+                    <button
+                      className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold text-sm md:text-sm text-gray-700"
+                      onClick={handleSharePost}
+                      aria-label="Share on WhatsApp"
+                    >
+                      <FiShare2 />
+                      Share
                     </button>
                   </div>
                 </header>
