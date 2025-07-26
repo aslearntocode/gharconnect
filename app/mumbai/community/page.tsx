@@ -749,8 +749,8 @@ export default function Home() {
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4 leading-tight">
                 Find a Home in Mumbai with No Brokerage
               </h2>
-              <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Choose the type of rental accommodation you are looking for in Mumbai with no brokerage.
+              <p className="text-base md:text-lg text-indigo-600 max-w-3xl mx-auto leading-relaxed font-semibold">
+                This is the only no brokerage platform that focuses on rental accommodation in Mumbai.
               </p>
             </div>
             
