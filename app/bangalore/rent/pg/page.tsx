@@ -358,11 +358,10 @@ export default function PGPage() {
                 images={apt.images || []}
                 propertyId={apt.id || ''}
                 status={apt.status}
-                isFavorite={false}
                 code={apt.building_name || 'N/A'}
                 address={apt.street_name ? `${apt.building_name}, ${apt.street_name}` : apt.building_name || 'N/A'}
                 location={apt.location || 'Bangalore'}
-                occupancy={[apt.apartment_type || 'Room']}
+                occupancy={[apt.apartment_type || 'PG']}
                 highlights={formatDescriptionAsBullets(apt.description || '').slice(0, 2)}
                 rent={apt.rent_amount || 0}
                 deposit={apt.security_deposit ? `₹${apt.security_deposit.toLocaleString()}` : undefined}
@@ -371,12 +370,12 @@ export default function PGPage() {
                 vegNonVegAllowed={apt.veg_non_veg_allowed ? 'Non-Veg Allowed' : 'Veg Only'}
                 furnishingStatus={apt.furnishing_status}
                 onBook={() => {
-                                  setSelectedApartment(apt);
-                                  setInquiryModalOpen(true);
-                                }}
+                  setSelectedApartment(apt);
+                  setInquiryModalOpen(true);
+                }}
                 onCall={() => {
                   window.open(`tel:${apt.contact_phone}`);
-                          }}
+                }}
               />
             ))}
           </div>

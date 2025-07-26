@@ -232,7 +232,6 @@ export default function RentApartmentPage() {
                 images={apt.images || []}
                 propertyId={apt.id || ''}
                 status={apt.status}
-                isFavorite={false}
                 code={apt.building_name || 'N/A'}
                 address={apt.street_name ? `${apt.building_name}, ${apt.street_name}` : apt.building_name || 'N/A'}
                 location={apt.location || 'Bangalore'}
