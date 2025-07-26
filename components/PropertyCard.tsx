@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent } from './ui/card';
-import { FiHeart, FiMapPin, FiUser, FiUsers, FiPhone, FiChevronDown } from 'react-icons/fi';
+import { FiMapPin, FiUser, FiUsers, FiPhone, FiChevronDown } from 'react-icons/fi';
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
@@ -11,8 +11,6 @@ import { useRouter } from 'next/navigation';
 interface PropertyCardProps {
   image: string;
   images?: string[];
-  isFavorite?: boolean;
-  onFavoriteToggle?: () => void;
   genderTag?: string;
   code: string;
   address: string;
@@ -50,8 +48,6 @@ const occupancyIcons: Record<string, React.ReactNode> = {
 export default function PropertyCard({
   image,
   images = [],
-  isFavorite,
-  onFavoriteToggle,
   genderTag,
   code,
   address,
@@ -151,12 +147,6 @@ export default function PropertyCard({
             )}
           </div>
         )}
-        <button
-          className="absolute top-2 left-2 bg-white/80 rounded-full p-1.5 shadow hover:bg-white z-10"
-          onClick={e => { e.stopPropagation(); onFavoriteToggle && onFavoriteToggle(); }}
-        >
-          <FiHeart className={`w-5 h-5 ${isFavorite ? 'text-pink-500 fill-pink-500' : 'text-gray-400'}`} />
-        </button>
         {genderTag && (
           <span className="absolute top-2 right-2 bg-pink-500 text-white text-xs font-bold px-2 py-0.5 rounded-full shadow">{genderTag}</span>
         )}
