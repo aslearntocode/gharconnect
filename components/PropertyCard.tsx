@@ -201,12 +201,20 @@ export default function PropertyCard({
         </div>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mt-1 gap-2">
           <div className="flex flex-col gap-0.5">
-            <span className="text-xl md:text-2xl font-bold text-gray-900">₹ {rent.toLocaleString()}
-              <span className="text-xs font-normal text-gray-500 ml-1">/mo</span>
-            </span>
+            {status === 'inactive' ? (
+              <span className="inline-block w-24 h-7 bg-gray-200 rounded animate-pulse mb-1" />
+            ) : (
+              <span className="text-xl md:text-2xl font-bold text-gray-900">₹ {rent.toLocaleString()}
+                <span className="text-xs font-normal text-gray-500 ml-1">/mo</span>
+              </span>
+            )}
             <div className="flex gap-3 mt-0.5 text-xs text-gray-700">
               {deposit && (
-                <span className="flex items-center gap-1"><span className="inline-block w-4 h-4 bg-gray-200 rounded-full flex items-center justify-center mr-1">🎲</span>{deposit} Deposit only</span>
+                status === 'inactive' ? (
+                  <span className="inline-block w-20 h-5 bg-gray-200 rounded animate-pulse" />
+                ) : (
+                  <span className="flex items-center gap-1"><span className="inline-block w-4 h-4 bg-gray-200 rounded-full flex items-center justify-center mr-1">🎲</span>{deposit} Deposit only</span>
+                )
               )}
               {lockin && (
                 <span className="flex items-center gap-1"><span className="inline-block w-4 h-4 bg-gray-200 rounded-full flex items-center justify-center mr-1">📝</span>{lockin} Lock-in</span>

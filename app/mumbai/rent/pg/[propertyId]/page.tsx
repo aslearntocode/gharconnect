@@ -199,19 +199,29 @@ export default function MumbaiPGPropertyPage() {
             {/* Price Card */}
             <div className="bg-white rounded-lg p-6 shadow-sm border">
               <div className="text-center mb-6">
-                <div className="text-3xl font-bold text-gray-900">
-                  ₹{property.rent_amount.toLocaleString()}
-                </div>
+                {property.status === 'inactive' ? (
+                  <span className="inline-block w-32 h-9 bg-gray-200 rounded animate-pulse mb-2" />
+                ) : (
+                  <div className="text-3xl font-bold text-gray-900">
+                    ₹{property.rent_amount.toLocaleString()}
+                  </div>
+                )}
                 <div className="text-gray-500">per month</div>
               </div>
               
               {property.security_deposit && (
-                <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-                  <div className="text-sm text-gray-600">Security Deposit</div>
-                  <div className="font-semibold text-gray-900">
-                    ₹{property.security_deposit.toLocaleString()}
+                property.status === 'inactive' ? (
+                  <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+                    <span className="inline-block w-28 h-6 bg-gray-200 rounded animate-pulse" />
                   </div>
-                </div>
+                ) : (
+                  <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+                    <div className="text-sm text-gray-600">Security Deposit</div>
+                    <div className="font-semibold text-gray-900">
+                      ₹{property.security_deposit.toLocaleString()}
+                    </div>
+                  </div>
+                )
               )}
 
               <div className="space-y-3">
