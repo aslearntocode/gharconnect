@@ -318,6 +318,21 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
 
   const mobileNumber = vendor.mobile_no || vendor.mobile;
 
+  // Function to split and clean phone numbers
+  const getPhoneNumbers = (phoneString: string | undefined): string[] => {
+    if (!phoneString) return [];
+    
+    // Split by common separators and clean up
+    const numbers = phoneString
+      .split(/[\/,;|]/) // Split by /, comma, semicolon, or pipe
+      .map(num => num.trim())
+      .filter(num => num.length > 0);
+    
+    return numbers;
+  };
+
+  const phoneNumbers = getPhoneNumbers(mobileNumber);
+
   return (
     <>
       <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
@@ -397,12 +412,23 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
               Log-in to view number
             </button>
           ) : (
-            <a 
-              href={`tel:${mobileNumber}`}
-              className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3"
-            >
-              {mobileNumber}
-            </a>
+            <div className="mb-3">
+              {phoneNumbers.length > 0 ? (
+                <div className="flex flex-col gap-1">
+                  {phoneNumbers.map((number, index) => (
+                    <a
+                      key={index}
+                      href={`tel:${number}`}
+                      className="text-blue-600 text-sm font-medium hover:text-blue-700 underline focus:outline-none"
+                    >
+                      {number}
+                    </a>
+                  ))}
+                </div>
+              ) : (
+                <span className="text-gray-500 text-sm">No phone number available</span>
+              )}
+            </div>
           )}
           
           {/* WhatsApp Group Link for Eggs */}

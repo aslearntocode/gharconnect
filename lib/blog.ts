@@ -13,6 +13,81 @@ export interface BlogPost {
 // Sample blog posts data - you can replace this with dynamic data from your CMS or database
 export const blogPosts: BlogPost[] = [
   {
+    slug: 'seven-islands-of-bombay-history',
+    title: '🏝️ The Seven Islands of Bombay: What Were They?',
+    excerpt: 'Originally, Mumbai was made up of seven separate islands: Colaba, Little Colaba, Bombay Island, Mazagaon, Worli, Parel, and Mahim. These were marshy, swampy lands separated by creeks, tidal inlets, and the Arabian Sea.',
+    content: `
+
+🏝️ **The Seven Islands of Bombay: What Were They?**
+
+Originally, Mumbai was made up of seven separate islands:
+
+- **Colaba**
+- **Little Colaba** (or Old Woman's Island)
+- **Bombay Island** (now South Mumbai)
+- **Mazagaon**
+- **Worli**
+- **Parel**
+- **Mahim**
+
+These were marshy, swampy lands separated by creeks, tidal inlets, and the Arabian Sea.
+
+⛴️ **Early Control: Portuguese to British**
+
+In 1534, the Portuguese took control of the islands from local rulers.
+
+In 1661, the islands were given to the British as part of Catherine of Braganza's dowry when she married King Charles II of England.
+
+In 1668, Charles II leased the islands to the British East India Company for just £10 a year.
+
+🛠️ **Land Reclamation: The Joining of the Islands**
+
+📍 **The Hornby Vellard Project (1784)**
+The first major reclamation effort, named after Governor William Hornby.
+
+**Objective:** Close the Worli creek, which caused flooding at high tide.
+
+This was the first step in connecting the islands of Bombay, Parel, and Worli.
+
+📍 **19th Century Projects**
+Over the 1800s, several major landfills and causeways were constructed to connect the other islands:
+
+- **Colaba Causeway (1838):** Linked Colaba to Bombay Island.
+- **Mahim and Sion Causeways (1840s):** Linked Mahim and Sion to the rest of the land.
+
+The British reclaimed land from the sea using mud, stone, and debris.
+
+🏙️ **By the Mid-19th Century**
+The once fragmented islands were fully connected.
+
+The result: A single landmass known as Bombay Island, the core of modern-day Mumbai.
+
+🚆 **Railways, Docks & Urban Growth**
+The development of the Great Indian Peninsula Railway (1853) and Bombay docks further spurred urbanization.
+
+The city became a major hub for cotton trade, shipping, and administration.
+
+🌇 **Today's Mumbai**
+Modern-day Mumbai has expanded way beyond the original seven islands, incorporating suburbs, reclaimed coastal areas, and satellite towns.
+
+Reclamation continues even today — think Nariman Point, BKC, and upcoming Mumbai Coastal Road Project.
+
+🎯 **Summary**
+Mumbai's journey from seven islands to India's financial capital is a story of:
+
+- Colonial engineering
+- Land reclamation
+- Economic opportunity
+- Urban planning (and sometimes, lack thereof!)
+
+`,
+    author: 'GharConnect Team',
+    date: '2025-01-27',
+    readTime: '6 min read',
+    category: 'Mumbai History',
+    image: '/blog/seven-islands-bombay.jpg'
+  },
+  {
     slug: 'rise-of-new-mumbai-residential-areas-2025',
     title: '3 Upcoming Residential Areas Worth Exploring in Mumbai',
     excerpt: 'Mumbai has always been a city of dreams but those dreams often come with a hefty price tag. While South Mumbai and the Bandra-Andheri belt continue to be hotspots, they\'re increasingly out of reach for most middle-income families and professionals. That\'s where the new wave of emerging residential pockets comes in.',
