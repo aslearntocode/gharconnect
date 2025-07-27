@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FiX, FiPhone, FiMail, FiUser, FiHome } from 'react-icons/fi';
+import { FiX, FiPhone, FiMail, FiUser, FiHome, FiDollarSign } from 'react-icons/fi';
 import { getSupabaseClient } from '@/lib/supabase';
 import { Apartment } from '@/types/apartment';
 
@@ -20,6 +20,7 @@ interface OwnerDetails {
 export default function PropertyInquiryModal({ isOpen, onClose, apartment }: PropertyInquiryModalProps) {
   const [mobile, setMobile] = useState('');
   const [email, setEmail] = useState('');
+  const [willingnessToPay, setWillingnessToPay] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showOwnerDetails, setShowOwnerDetails] = useState(false);
   const [ownerDetails, setOwnerDetails] = useState<OwnerDetails | null>(null);
@@ -52,6 +53,7 @@ export default function PropertyInquiryModal({ isOpen, onClose, apartment }: Pro
           apartment_id: apartment.id,
           user_mobile: mobile.trim(),
           user_email: email.trim() || null,
+          user_willingness_to_pay: willingnessToPay ? parseInt(willingnessToPay) : null,
           owner_contact_phone: apartment.contact_phone,
           owner_name: apartment.contact_name,
           owner_email: apartment.contact_email
@@ -82,6 +84,7 @@ export default function PropertyInquiryModal({ isOpen, onClose, apartment }: Pro
   const handleClose = () => {
     setMobile('');
     setEmail('');
+    setWillingnessToPay('');
     setError(null);
     setShowOwnerDetails(false);
     setOwnerDetails(null);
@@ -114,6 +117,20 @@ export default function PropertyInquiryModal({ isOpen, onClose, apartment }: Pro
           {!showOwnerDetails ? (
             // Inquiry Form
             <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Asking Price Display */}
+              {apartment && apartment.rent_amount && (
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <FiDollarSign className="text-blue-600 w-5 h-5" />
+                    <span className="text-sm font-medium text-blue-800">Asking Price</span>
+                  </div>
+                  <p className="text-2xl font-bold text-blue-900">
+                    ₹{apartment.rent_amount.toLocaleString()}
+                    <span className="text-sm font-normal text-blue-700 ml-1">/month</span>
+                  </p>
+                </div>
+              )}
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Mobile Number <span className="text-red-500">*</span>
@@ -146,6 +163,25 @@ export default function PropertyInquiryModal({ isOpen, onClose, apartment }: Pro
                     className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  How much are you willing to pay? <span className="text-gray-500">(Optional)</span>
+                </label>
+                <div className="relative">
+                  <FiDollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <input
+                    type="text"
+                    value={willingnessToPay}
+                    onChange={(e) => setWillingnessToPay(e.target.value.replace(/\D/g, ''))}
+                    placeholder="Enter amount in ₹"
+                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  This helps the owner understand your budget expectations
+                </p>
               </div>
 
               {error && (
