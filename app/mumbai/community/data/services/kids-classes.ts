@@ -169,5 +169,17 @@ export const vendors: Vendor[] = [
     mobile: '+91 81498 17757',
     areaServed: ['Parel'],
     buildingServed: ['L&T Crescent Bay']
+  },
+  {
+    name: 'Sensei Hersh Satya - Karate Classes',
+    services: [{
+      name: 'Karate Classes',
+      description: 'Karate classes for children. Classes conducted at St. Mary\'s School',
+      price: 'Call for price',
+      unit: 'per month'
+    }],
+    mobile: '+91 99203 59050',
+    areaServed: ['All'],
+    buildingServed: ['All']
   }
 ]; 
