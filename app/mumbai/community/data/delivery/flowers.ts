@@ -24,7 +24,7 @@ export interface Product {
         price: 'Call for price',
         unit: 'piece'
       }],
-      mobile: '+91 88982 93935 / 98200 43803',
+      mobile: '+91 88982 93935 / +91 98200 43803',
       areaServed: ['All'],
       buildingServed: ['All']
     },

@@ -23,20 +23,8 @@ export const vendors: Vendor[] = [
       price: 'Call for price',
       unit: 'litre'
     }],
-    mobile: '+91 9820180456 / 9930494032',
+    mobile: '+91 98201 80456 / +91 99304 94032',
     areaServed: ['Parel', 'Worli'],
     buildingServed: ['All']
-  },
-  {
-    name: 'Gautam Dairy',
-    products: [{
-      name: 'Cow Milk',
-      description: 'Fresh cow milk delivered daily',
-      price: 'Call for price',
-      unit: 'litre'
-    }],
-    mobile: '+91 9221568717',
-    areaServed: ['Parel', 'Worli'],
-    buildingServed: ['L&T Crescent Bay']
   }
 ]; 
