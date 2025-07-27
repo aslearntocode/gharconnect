@@ -254,6 +254,12 @@ export default function PostDetailPage() {
     window.open(whatsappUrl, '_blank');
   };
 
+  // Handle successful login - keep user on current post
+  const handleLoginSuccess = () => {
+    // User stays on the current post, no redirect needed
+    console.log('User logged in successfully, staying on current post');
+  };
+
   // Helper to recursively render comments
   function renderComments(
     grouped: { [key: string]: Comment[] },
@@ -321,7 +327,17 @@ export default function PostDetailPage() {
                     </Button>
                   </form>
                 ) : (
-                  <div className="text-center text-gray-600 my-2 font-semibold">Login to View or Post Comments</div>
+                  <div className="text-center my-6">
+                    <button
+                      onClick={() => setIsLoginModalOpen(true)}
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                      </svg>
+                      Login to Comment
+                    </button>
+                  </div>
                 )
               )}
               {/* Render replies recursively */}
@@ -503,7 +519,17 @@ export default function PostDetailPage() {
                     </form>
                   </section>
                 ) : (
-                  <div className="text-center text-gray-600 my-6 font-semibold">Login to View or Post Comments</div>
+                  <div className="text-center my-6">
+                    <button
+                      onClick={() => setIsLoginModalOpen(true)}
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors shadow-sm hover:shadow-md"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                      </svg>
+                      Login to Comment
+                    </button>
+                  </div>
                 )
               )}
             </>
@@ -519,7 +545,7 @@ export default function PostDetailPage() {
         currentIndex={imageModal.currentIndex}
         onImageChange={(index) => setImageModal(prev => ({ ...prev, currentIndex: index }))}
       />
-      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
+      <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onLoginSuccess={handleLoginSuccess} />
     </>
   );
 } 
