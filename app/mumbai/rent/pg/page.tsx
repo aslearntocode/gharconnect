@@ -432,7 +432,7 @@ export default function PGPage() {
                 propertyId={apt.id || ''}
                 status={apt.status}
                 code={apt.building_name || 'N/A'}
-                address={apt.street_name ? `${apt.building_name}, ${apt.street_name}` : apt.building_name || 'N/A'}
+                address={apt.street_name ? `${apt.building_name}, ${apt.street_name}${apt.location ? `, ${apt.location}` : ''}` : `${apt.building_name || 'N/A'}${apt.location ? `, ${apt.location}` : ''}`}
                 location={apt.location || 'Mumbai'}
                 occupancy={[apt.apartment_type || 'PG']}
                 highlights={formatDescriptionAsBullets(apt.description || '').slice(0, 2)}

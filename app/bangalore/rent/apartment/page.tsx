@@ -236,7 +236,7 @@ export default function RentApartmentPage() {
                 propertyId={apt.id || ''}
                 status={apt.status}
                 code={apt.building_name || 'N/A'}
-                address={apt.street_name ? `${apt.building_name}, ${apt.street_name}` : apt.building_name || 'N/A'}
+                address={apt.street_name ? `${apt.building_name}, ${apt.street_name}${apt.location ? `, ${apt.location}` : ''}` : `${apt.building_name || 'N/A'}${apt.location ? `, ${apt.location}` : ''}`}
                 location={apt.location || 'Bangalore'}
                 occupancy={[apt.apartment_type || 'Apartment']}
                 highlights={formatDescriptionAsBullets(apt.description || '').slice(0, 2)}

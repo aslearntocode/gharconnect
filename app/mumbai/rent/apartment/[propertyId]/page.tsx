@@ -250,7 +250,7 @@ export default function MumbaiApartmentPropertyPage() {
                     {property.tower && (
                       <div className="text-sm text-gray-600">Tower: {property.tower}</div>
                     )}
-                    <div className="text-sm text-gray-500">{property.street_name}, {property.city}</div>
+                    <div className="text-sm text-gray-500">{property.street_name}{property.location ? `, ${property.location}` : ''}, {property.city}</div>
                   </div>
                 </div>
               </div>
