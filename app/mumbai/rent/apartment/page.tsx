@@ -29,6 +29,7 @@ export default function RentApartmentPage() {
 
   // Filter states
   const [building, setBuilding] = useState('');
+  const [location, setLocation] = useState(''); // Add location filter state
   const [minArea, setMinArea] = useState('');
   const [maxArea, setMaxArea] = useState('');
   const [size, setSize] = useState('');
@@ -194,6 +195,8 @@ export default function RentApartmentPage() {
   const filteredApartments = apartments.filter((apt: Apartment) => {
     // Building name (building_name)
     if (building && !apt.building_name?.toLowerCase().includes(building.toLowerCase())) return false;
+    // Location (area)
+    if (location && !apt.location?.toLowerCase().includes(location.toLowerCase())) return false;
     // Min area
     if (minArea && apt.carpet_area < parseInt(minArea)) return false;
     // Max area
@@ -266,9 +269,9 @@ export default function RentApartmentPage() {
       {/* Filter Bar below the blue box */}
       <div className="w-full flex justify-center mt-[-1.5rem] mb-0">
         <div className="max-w-5xl w-full flex flex-wrap md:flex-nowrap justify-center gap-2 md:gap-4 bg-white rounded-2xl shadow-lg px-4 py-3">
+          <input type="text" placeholder="Location (Area)" className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 min-w-[120px]" value={location} onChange={e => setLocation(e.target.value)} />
           <input type="text" placeholder="Building name" className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 min-w-[120px]" value={building} onChange={e => setBuilding(e.target.value)} />
           <input type="text" placeholder="Min Area" className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 min-w-[100px]" value={minArea} onChange={e => setMinArea(e.target.value.replace(/\D/g, ''))} />
-          <input type="text" placeholder="Max Area" className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 min-w-[100px]" value={maxArea} onChange={e => setMaxArea(e.target.value.replace(/\D/g, ''))} />
           <div className="flex gap-2 w-full md:w-auto">
             <select className="px-3 py-2 rounded-lg border border-gray-200 text-sm flex-1 md:flex-none md:min-w-[120px]" value={size} onChange={e => setSize(e.target.value)}>
               <option value="">Size (BHK)</option>
