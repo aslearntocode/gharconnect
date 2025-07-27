@@ -6,6 +6,7 @@ import { vendors } from '@/app/mumbai/community/data/services/music-classes';
 import { VendorCard } from '@/components/VendorCard';
 import { FiSearch } from 'react-icons/fi';
 import { searchVendors } from '@/utils/searchUtils';
+import Disclaimer from '@/components/Disclaimer';
 
 export default function MusicClassesPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -78,6 +79,7 @@ export default function MusicClassesPage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

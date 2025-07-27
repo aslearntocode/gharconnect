@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Header from '@/components/Header';
+import Disclaimer from '@/components/Disclaimer';
 import { vendors } from '@/app/mumbai/community/data/services/plumber';
 import { VendorCard } from '@/components/VendorCard';
 import { FiSearch } from 'react-icons/fi';
@@ -80,6 +81,7 @@ export default function PlumberPage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

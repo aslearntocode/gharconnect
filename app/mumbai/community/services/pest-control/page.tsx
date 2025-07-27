@@ -6,6 +6,7 @@ import { FiSearch } from 'react-icons/fi';
 import { pestControlServices } from '@/app/mumbai/community/data/services/pest-control';
 import { VendorCard } from '@/components/VendorCard';
 import { searchVendors } from '@/utils/searchUtils';
+import Disclaimer from '@/components/Disclaimer';
 
 export default function PestControlPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -80,6 +81,7 @@ export default function PestControlPage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

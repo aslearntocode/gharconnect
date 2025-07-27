@@ -6,6 +6,7 @@ import { FiSearch } from 'react-icons/fi';
 import { vendors } from '@/app/mumbai/community/data/delivery/pharmacy';
 import { VendorCard } from '@/components/VendorCard';
 import { searchVendors } from '@/utils/searchUtils';
+import Disclaimer from '@/components/Disclaimer';
 
 export default function PharmacyPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -80,6 +81,7 @@ export default function PharmacyPage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

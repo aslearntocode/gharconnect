@@ -6,6 +6,7 @@ import { FiSearch } from 'react-icons/fi';
 import { acServiceServices as vendors } from '@/app/mumbai/community/data/services/acservice';
 import { VendorCard } from '@/components/VendorCard';
 import { searchVendors } from '@/utils/searchUtils';
+import Disclaimer from '@/components/Disclaimer';
 
 export default function ACServicePage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -80,6 +81,7 @@ export default function ACServicePage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import { gardenerServices } from '@/app/mumbai/community/data/services/gardener';
 import { VendorCard } from '@/components/VendorCard';
 import { FiSearch } from 'react-icons/fi';
+import Disclaimer from '@/components/Disclaimer';
 
 export default function GardenerPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -90,6 +91,7 @@ export default function GardenerPage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

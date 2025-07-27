@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
+import Disclaimer from '@/components/Disclaimer';
 import { FiSearch, FiStar, FiMapPin, FiPhone, FiMail, FiUser, FiAward, FiMusic, FiCamera, FiEdit3, FiCode, FiImage, FiBookOpen, FiHeart, FiTrendingUp } from 'react-icons/fi';
 import { Talent, TalentCategory } from '@/types/talent';
 import { getProvidersBySociety, searchProviders, getProvidersByCategory } from '@/data/home-service-providers';
@@ -202,6 +203,7 @@ export default function ParelNeighborhoodServiceProviderPage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

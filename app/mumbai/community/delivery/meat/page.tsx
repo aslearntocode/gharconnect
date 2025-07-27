@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Header from '@/components/Header';
+import Disclaimer from '@/components/Disclaimer';
 import { FiSearch } from 'react-icons/fi';
 import { vendors } from '@/app/mumbai/community/data/delivery/meat';
 import { VendorCard } from '@/components/VendorCard';
@@ -80,6 +81,7 @@ export default function MeatPage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

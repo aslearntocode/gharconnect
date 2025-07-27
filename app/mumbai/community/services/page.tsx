@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Header from '@/components/Header';
+import Disclaimer from '@/components/Disclaimer';
 import { 
   FiDroplet, 
   FiTool, 
@@ -166,6 +167,7 @@ export default function ServicesPage() {
             </Link>
           </div>
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

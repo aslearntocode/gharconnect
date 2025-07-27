@@ -5,6 +5,7 @@ import { doctors } from '@/app/mumbai/community/data/services/doctors';
 import { DoctorCard } from '@/components/DoctorCard';
 import { FiShield } from 'react-icons/fi';
 import { useState } from 'react';
+import Disclaimer from '@/components/Disclaimer';
 
 export default function DoctorsPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -88,6 +89,7 @@ export default function DoctorsPage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

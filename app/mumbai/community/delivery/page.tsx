@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import Header from '@/components/Header';
+import Disclaimer from '@/components/Disclaimer';
 import { 
   FiTruck,
   FiCircle
@@ -69,6 +70,7 @@ export default function DeliveryPage() {
             </Link>
           </div>
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

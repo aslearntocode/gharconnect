@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Header from '@/components/Header';
+import Disclaimer from '@/components/Disclaimer';
 import { FiSearch } from 'react-icons/fi';
 import { vendors } from '@/app/mumbai/community/data/delivery/dry-fruits';
 import { VendorCard } from '@/components/VendorCard';
@@ -78,6 +79,7 @@ export default function DryFruitsPage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

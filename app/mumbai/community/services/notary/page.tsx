@@ -6,6 +6,7 @@ import { vendors } from '@/app/mumbai/community/data/services/notary';
 import { VendorCard } from '@/components/VendorCard';
 import { FiSearch } from 'react-icons/fi';
 import { searchVendors } from '@/utils/searchUtils';
+import Disclaimer from '@/components/Disclaimer';
 
 export default function NotaryPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -80,6 +81,7 @@ export default function NotaryPage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

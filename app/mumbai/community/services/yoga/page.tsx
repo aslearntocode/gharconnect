@@ -6,6 +6,7 @@ import { FiSearch } from 'react-icons/fi';
 import { vendors } from '@/app/mumbai/community/data/services/yoga';
 import { VendorCard } from '@/components/VendorCard';
 import { searchVendors } from '@/utils/searchUtils';
+import Disclaimer from '@/components/Disclaimer';
 
 export default function YogaPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -78,6 +79,7 @@ export default function YogaPage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

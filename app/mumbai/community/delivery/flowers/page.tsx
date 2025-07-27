@@ -6,6 +6,7 @@ import { FiSearch } from 'react-icons/fi';
 import { vendors } from '@/app/mumbai/community/data/delivery/flowers';
 import { VendorCard } from '@/components/VendorCard';
 import { searchVendors } from '@/utils/searchUtils';
+import Disclaimer from '@/components/Disclaimer';
 
 export default function FlowersPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -80,6 +81,7 @@ export default function FlowersPage() {
             </div>
           )}
         </div>
+        <Disclaimer />
       </main>
     </div>
   );

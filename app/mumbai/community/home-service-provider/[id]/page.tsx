@@ -4,6 +4,7 @@ import { getProviderById } from '@/data/home-service-providers';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
+import Disclaimer from '@/components/Disclaimer';
 import { FiStar, FiMapPin, FiPhone, FiMail, FiChevronLeft, FiHeart, FiShare2, FiZoomIn, FiX, FiChevronRight, FiChevronLeft as FiChevronLeftIcon, FiInstagram, FiFacebook, FiLinkedin, FiTwitter, FiYoutube, FiGlobe } from 'react-icons/fi';
 import { VendorRating } from '@/components/VendorRating';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -595,6 +596,7 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
           </div>
         </div>
       )}
+      <Disclaimer />
       <Footer />
     </div>
   );
