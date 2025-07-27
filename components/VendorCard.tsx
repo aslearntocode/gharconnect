@@ -316,6 +316,23 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
     }
   };
 
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      // You could add a toast notification here
+      alert('Phone number copied to clipboard!');
+    } catch (err) {
+      console.error('Failed to copy: ', err);
+    }
+  };
+
+  const openWhatsApp = (phoneNumber: string) => {
+    // Remove any non-digit characters except + for WhatsApp
+    const cleanNumber = phoneNumber.replace(/[^\d+]/g, '');
+    const whatsappUrl = `https://wa.me/${cleanNumber}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   const mobileNumber = vendor.mobile_no || vendor.mobile;
 
   // Function to split and clean phone numbers
@@ -416,13 +433,23 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
               {phoneNumbers.length > 0 ? (
                 <div className="flex flex-col gap-1">
                   {phoneNumbers.map((number, index) => (
-                    <a
-                      key={index}
-                      href={`tel:${number}`}
-                      className="text-blue-600 text-sm font-medium hover:text-blue-700 underline focus:outline-none"
-                    >
-                      {number}
-                    </a>
+                    <div key={index} className="flex items-center gap-2">
+                      <span 
+                        className="text-blue-600 text-sm font-medium hover:text-blue-700 cursor-pointer flex items-center gap-1" 
+                        onClick={() => openWhatsApp(number)}
+                        title="Click to open WhatsApp"
+                      >
+                        <span className="text-green-500">📱</span>
+                        {number}
+                      </span>
+                      <button
+                        onClick={() => copyToClipboard(number)}
+                        className="text-gray-500 hover:text-gray-700 text-sm p-1 rounded hover:bg-gray-100"
+                        title="Copy to clipboard"
+                      >
+                        📋
+                      </button>
+                    </div>
                   ))}
                 </div>
               ) : (
