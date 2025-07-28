@@ -2,7 +2,7 @@
 User-agent: *
 Allow: /
 
-# Sitemap location
+# Sitemap location (canonical HTTPS URL)
 Sitemap: https://gharconnect.in/sitemap.xml
 
 # Disallow crawling of private or admin areas
@@ -13,12 +13,12 @@ Disallow: /*.json$
 Disallow: /*.js$
 Disallow: /*.css$
 
-# Allow crawling of important pages
+# Allow crawling of important pages (canonical URLs)
 Allow: /mumbai
 Allow: /bangalore
 Allow: /mumbai/rent
 Allow: /bangalore/rent
-Allow: /mumbai/rent/aaprtment
+Allow: /mumbai/rent/apartment
 Allow: /mumbai/rent/pg
 Allow: /mumbai/list-apartment
 Allow: /mumbai/community
@@ -26,4 +26,7 @@ Allow: /mumbai/community/services
 Allow: /mumbai/community/delivery
 Allow: /mumbai/community/blog
 Allow: /about
-Allow: /mumbai/community/faq 
+Allow: /mumbai/community/faq
+
+# Additional SEO directives
+Crawl-delay: 1 

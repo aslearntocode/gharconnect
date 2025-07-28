@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import { Toaster } from '@/components/ui/toaster';
 import Script from 'next/script';
+import SEOScript from '@/components/SEOScript';
 
 export const metadata: Metadata = {
   title: 'GharConnect - Find Apartments & Local Services | Connect with Your Neighbors',
@@ -21,6 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+        {/* SEO Component for canonical URLs and meta tags */}
+        <SEOScript canonicalUrl="https://gharconnect.in" />
+        
         {/* Meta Pixel Code */}
         <Script
           id="fb-pixel"
