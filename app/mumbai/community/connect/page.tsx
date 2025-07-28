@@ -50,7 +50,7 @@ export default function ParelConnectPage() {
   const [user, setUser] = useState<any>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [newPost, setNewPost] = useState({ title: '', body: '', category: 'general', area: 'All', images: [] as string[] });
+  const [newPost, setNewPost] = useState({ title: '', body: '', category: 'general', area: 'Mumbai', images: [] as string[] });
   const [submitting, setSubmitting] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -285,7 +285,7 @@ export default function ParelConnectPage() {
     }
     setSubmitting(false);
     if (!error) {
-      setNewPost({ title: '', body: '', category: 'general', area: 'All', images: [] });
+      setNewPost({ title: '', body: '', category: 'general', area: 'Mumbai', images: [] });
       fetchPosts();
       setImageUploadReset(true); // Reset image upload state after successful post
     } else {
@@ -447,9 +447,14 @@ export default function ParelConnectPage() {
     
     // Area filtering
     let matchesArea = true;
-    if (activeAreaFilter !== 'All') {
+    if (activeAreaFilter === 'Mumbai') {
+      // Show only posts with category starting with gc/mumbai/
+      matchesArea = post.category?.startsWith('gc/mumbai/') ?? false;
+    } else if (activeAreaFilter !== 'All') {
+      // For specific areas, check the area field
       matchesArea = post.area === activeAreaFilter;
     }
+    // If activeAreaFilter is 'All', matchesArea remains true (show all posts)
     
     // Topic filtering
     let matchesFilter = true;
@@ -671,7 +676,7 @@ export default function ParelConnectPage() {
                   {isAreaFilterDropdownOpen && (
                     <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                       <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
-                        {['All', 'Parel', 'Worli', 'Bandra', 'Mahalaxmi', 'Powai', 'Andheri', 'Malad', 'Goregaon'].map(area => (
+                        {['All', 'Mumbai', 'Parel', 'Worli', 'Bandra', 'Mahalaxmi', 'Powai', 'Andheri', 'Malad', 'Goregaon'].map(area => (
                           <button
                             key={area}
                             onClick={() => {
@@ -714,7 +719,7 @@ export default function ParelConnectPage() {
                 {isAreaFilterDropdownOpen && (
                   <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                     <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
-                      {['All', 'Parel', 'Worli', 'Bandra', 'Mahalaxmi', 'Powai', 'Andheri', 'Malad', 'Goregaon'].map(area => (
+                      {['All', 'Mumbai', 'Parel', 'Worli', 'Bandra', 'Mahalaxmi', 'Powai', 'Andheri', 'Malad', 'Goregaon'].map(area => (
                         <button
                           key={area}
                           onClick={() => {
@@ -833,7 +838,7 @@ export default function ParelConnectPage() {
                       <button
                         onClick={() => {
                           setIsPostFormOpen(false);
-                          setNewPost({ title: '', body: '', category: 'general', area: 'All', images: [] });
+                          setNewPost({ title: '', body: '', category: 'general', area: 'Mumbai', images: [] });
                           setImageUploadReset(true); // Reset image upload state
                         }}
                         className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -872,7 +877,7 @@ export default function ParelConnectPage() {
                         required
                         aria-label="Select area"
                       >
-                        <option value="All">All</option>
+                        <option value="Mumbai">Mumbai</option>
                         <option value="Parel">Parel</option>
                         <option value="Worli">Worli</option>
                       </select>
@@ -905,7 +910,7 @@ export default function ParelConnectPage() {
                           type="button" 
                           onClick={() => {
                             setIsPostFormOpen(false);
-                            setNewPost({ title: '', body: '', category: 'general', area: 'All', images: [] });
+                            setNewPost({ title: '', body: '', category: 'general', area: 'Mumbai', images: [] });
                             setImageUploadReset(true); // Reset image upload state
                           }}
                           className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm md:text-base px-6 py-2"
@@ -939,7 +944,7 @@ export default function ParelConnectPage() {
                         {/* Top row: area, avatar, time */}
                         <div className="flex items-center gap-2 text-sm md:text-sm text-gray-500 mb-1">
                           <img src="/GC_Logo.png" alt="avatar" className="w-6 h-6 md:w-8 md:h-8 rounded-full border object-cover" />
-                          <span className="font-semibold text-gray-800 text-sm md:text-sm">{post.category || 'gc/mumbai/community/general'}</span>
+                          <span className="font-semibold text-gray-800 text-sm md:text-sm">{post.category || 'gc/mumbai/general'}</span>
                           <span className="mx-1">•</span>
                           <span className="text-sm md:text-sm">{generateAnonymousId(post.user_id)}</span>
                           <span className="mx-1">•</span>
