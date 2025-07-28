@@ -596,14 +596,14 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // Fetch latest 3 connect posts for Parel
+    // Fetch 3 featured posts
     const fetchConnectPosts = async () => {
       const { getSupabaseClient } = await import("@/lib/supabase");
       const supabase = await getSupabaseClient();
       const { data, error } = await supabase
         .from("posts")
         .select("id,title,body,created_at")
-        .eq("area", "Parel")
+        .eq("featured", true)
         .order("created_at", { ascending: false })
         .limit(3);
       if (!error && data) setConnectPosts(data);
@@ -1220,165 +1220,91 @@ export default function Home() {
           </div>
         </div>
 
-                {/* Property Management Services Section */}
-                <div className="relative bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600 text-white overflow-hidden my-0 pt-1 md:pt-2">
+        {/* Social Community Section */}
+        <div className="relative bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-700 text-white overflow-hidden my-0 pt-6 md:pt-8 pb-6 md:pb-8">
+          {/* Background decorative elements */}
           <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/50 via-transparent to-indigo-600/50"></div>
-          <div className="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
-            <div className="py-6 flex flex-col items-center justify-center gap-4 relative">
-              {/* Content */}
-              <div className="flex-1 text-center w-full">
-                {carouselIndex === 0 ? (
-                  <>
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 break-words w-full max-w-full">
-                      Marketplace
-                    </h3>
-                    <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
-                      Discover items for sale from your community. Buy or list your own items for neighbors to see.
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 break-words w-full max-w-full">
-                      Social
-                    </h3>
-                    <p className="text-base text-white/90 mb-3 max-w-full mx-auto px-2 sm:px-0 break-words">
-                      Join the conversation! Ask questions, share updates, post about civic issues and more.
-                    </p>
-                  </>
-                )}
-                <div className="w-full max-w-xl md:max-w-4xl mx-auto my-4 overflow-x-hidden">
-                  <div
-                    className="relative overflow-hidden rounded-lg w-full max-w-full"
-                    ref={carouselRef}
-                    onTouchStart={e => { if (!isMobile) handleTouchStart(e); }}
-                    onTouchMove={e => { if (!isMobile) handleTouchMove(e); }}
-                    onTouchEnd={() => { if (!isMobile) handleTouchEnd(); }}
-                  >
-                    <div
-                      className="flex transition-transform duration-500 w-full max-w-full"
-                      style={{ transform: `translateX(-${carouselIndex * 100}%)` }}
-                    >
-                      {/* Marketplace Slide */}
-                      <div className="min-w-full w-full max-w-full bg-gradient-to-br from-blue-50 to-indigo-100 p-3 flex flex-col items-center text-center">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-md">
-                          <span className="text-lg">🛍️</span>
-                        </div>
-                        {/* <h4 className="text-sm font-bold text-gray-900 mb-1 leading-none">Marketplace</h4> */}
-                        <div className="w-full overflow-x-auto">
-                          <div className="flex flex-row gap-2 w-full justify-center flex-nowrap">
-                            {marketplaceProducts.length === 0 ? (
-                              <div className="flex-1 text-center text-gray-500 py-3">No products listed yet.</div>
-                            ) : (
-                              (isMobile ? marketplaceProducts.slice(0, 2) : marketplaceProducts).map((product) => (
-                                <div key={product.id} className="bg-white rounded-md shadow p-1 flex flex-col items-center text-center border border-gray-100 hover:shadow-md transition-all min-w-[110px] md:min-w-[160px] max-w-[140px] md:max-w-[200px] w-full">
-                                  <div className="w-full h-14 md:h-20 flex items-center justify-center mb-1 overflow-hidden rounded">
-                                    {product.images && product.images.length > 0 ? (
-                                      <img
-                                        src={product.images[0]}
-                                        alt={product.title}
-                                        className="object-cover w-full h-full"
-                                        onError={e => (e.currentTarget.src = '/placeholder-image.svg')}
-                                      />
-                                    ) : (
-                                      <div className="w-full h-full flex items-center justify-center text-gray-300 bg-gray-100 text-xs">No Image</div>
-                                    )}
-                                  </div>
-                                  <div className="font-semibold text-[11px] md:text-sm text-gray-900 line-clamp-2 mb-0.5">{product.title}</div>
-                                  <div className="text-[9px] md:text-xs text-gray-500 mb-0.5">{product.condition}</div>
-                                  <div className="text-xs md:text-sm font-bold text-green-600 mb-0.5">₹{product.price.toLocaleString('en-IN')}</div>
-                                  {product.building_name && (
-                                    <div className="text-[8px] md:text-xs text-gray-400 mb-0.5 truncate">{product.building_name}</div>
-                                  )}
-                                </div>
-                              ))
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex flex-row justify-center items-end gap-2 md:gap-3 mt-2 w-full grow">
-                          <a 
-                            href="/mumbai/community/marketplace" 
-                            className="inline-flex items-center px-2 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 rounded text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
-                            style={{ minHeight: '24px' }}
-                          >
-                            <span>Browse</span>
-                            <svg className="w-3 h-3 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                            </svg>
-                          </a>
-                        </div>
+          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/30 via-transparent to-purple-600/30"></div>
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-300/10 rounded-full blur-3xl"></div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="text-center mb-6 md:mb-8">
+
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 bg-gradient-to-r from-white to-indigo-100 bg-clip-text text-transparent">
+                Join the Conversation
+              </h3>
+              <p className="text-base md:text-lg text-indigo-100 max-w-5xl mx-auto leading-relaxed">
+                Connect with your neighbors, share updates, ask questions, and stay informed about your community.
+              </p>
+            </div>
+            
+            <div className="max-w-5xl mx-auto">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-4 md:p-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
+                  {connectPosts.length === 0 ? (
+                    <div className="col-span-full text-center py-8">
+                      <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                        </svg>
                       </div>
-                      {/* Connect Slide */}
-                      <div className="min-w-full w-full max-w-full bg-gradient-to-br from-blue-50 to-indigo-100 p-3 flex flex-col items-center text-center">
-                        <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center mb-2 shadow-md">
-                          <span className="text-lg">💬</span>
-                        </div>
-                        {/* <h4 className="text-sm font-bold text-gray-900 mb-1 leading-none">Connect</h4> */}
-                        <div className="w-full overflow-x-auto">
-                          <div className="flex flex-row gap-2 w-full justify-center flex-nowrap">
-                            {connectPosts.length === 0 ? (
-                              <div className="flex-1 text-center text-gray-500 py-3">No posts yet.</div>
-                            ) : (
-                              (isMobile ? connectPosts.slice(0, 2) : connectPosts).map((post) => (
-                                <div key={post.id} className="p-1 bg-white rounded-md shadow-sm border border-gray-100 hover:shadow-md transition-shadow mb-0 w-full min-w-[140px] md:min-w-[180px] max-w-[180px] md:max-w-[220px] flex-shrink-0 flex flex-col items-start">
-                                  <div className="flex items-center justify-between mb-0.5 w-full">
-                                    <span className="text-xs md:text-sm font-bold text-gray-800 bg-indigo-100 px-1 py-0.5 rounded-full truncate max-w-[70%]">{post.title}</span>
-                                    <span className="text-xs md:text-sm text-gray-500 bg-gray-100 px-1 py-0.5 rounded-full">{new Date(post.created_at).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}</span>
-                                  </div>
-                                  <p className="text-xs md:text-sm text-gray-600 leading-relaxed line-clamp-4 w-full">{post.body}</p>
-                                </div>
-                              ))
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex flex-row justify-center items-end gap-2 md:gap-3 mt-1 w-full grow">
-                          <a 
-                            href="/mumbai/community/connect" 
-                            className="inline-flex items-center px-2 py-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 rounded text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
-                            style={{ minHeight: '24px' }}
-                          >
-                            <span>Join</span>
-                            <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                            </svg>
-                          </a>
-                        </div>
-                      </div>
+                      <h4 className="text-lg font-semibold text-white mb-2">Be the First to Post!</h4>
+                      <p className="text-indigo-100 text-sm">Start the conversation in your community</p>
                     </div>
-                    {/* Carousel Arrows (mobile only) */}
-                    <button
-                      className="block md:hidden absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-3 shadow hover:bg-opacity-100 transition z-30 pointer-events-auto"
-                      onClick={handlePrev}
-                      aria-label="Previous"
-                      style={{ left: 4 }}
-                    >
-                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
-                    </button>
-                    <button
-                      className="block md:hidden absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-3 shadow hover:bg-opacity-100 transition z-30 pointer-events-auto"
-                      onClick={handleNext}
-                      aria-label="Next"
-                    >
-                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                    </button>
-                    {/* Carousel Arrows (desktop only) */}
-                    <button
-                      className="hidden md:block absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-opacity-100 transition z-10"
-                      onClick={handlePrev}
-                      aria-label="Previous"
-                      style={{ left: 4 }}
-                    >
-                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
-                    </button>
-                    <button
-                      className="hidden md:block absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-1 shadow hover:bg-opacity-100 transition z-10"
-                      onClick={handleNext}
-                      aria-label="Next"
-                      style={{ right: 4 }}
-                    >
-                      <svg className="w-4 h-4 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
-                    </button>
-                  </div>
+                  ) : (
+                    connectPosts.slice(0, isMobile ? 2 : 3).map((post, index) => (
+                      <div key={post.id} className="group bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-3 hover:bg-white/10 transition-all duration-300 hover:scale-105">
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-6 h-6 bg-gradient-to-br from-indigo-400 to-purple-400 rounded-full flex items-center justify-center">
+                              <span className="text-white text-xs font-semibold">
+                                {post.title.charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                            <div>
+                              <h4 className="text-xs font-semibold text-white line-clamp-1">
+                                {post.title}
+                              </h4>
+                              <p className="text-xs text-indigo-200">
+                                {new Date(post.created_at).toLocaleDateString('en-IN', { 
+                                  day: 'numeric', 
+                                  month: 'short',
+                                  year: 'numeric'
+                                })}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <p className="text-xs text-indigo-100 leading-relaxed line-clamp-3 mb-3">
+                          {post.body}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2">
+                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                            <span className="text-xs text-indigo-200">Active discussion</span>
+                          </div>
+                          <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
+                            <svg className="w-2 h-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/>
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+                
+                <div className="text-center mt-6">
+                  <a 
+                    href="/mumbai/community/connect" 
+                    className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-white to-indigo-100 text-indigo-700 hover:from-indigo-100 hover:to-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-base"
+                  >
+                    <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                    </svg>
+                    Post or Comment Now
+                  </a>
                 </div>
               </div>
             </div>
@@ -1405,24 +1331,17 @@ export default function Home() {
                 </span>
               </div>
               <div className="flex flex-col items-center px-8 md:px-12">
-                <span className="text-blue-700 text-4xl font-bold mb-1">3</span>
+                <span className="text-blue-700 text-4xl font-bold mb-1">2</span>
                 <span className="text-gray-800 text-base text-center">
-                  <span className="block md:hidden">Mumbai Areas<br/>Covered</span>
-                  <span className="hidden md:block">Mumbai Areas<br/>Covered</span>
+                  <span className="block md:hidden">Cities<br/>Covered</span>
+                  <span className="hidden md:block">Cities<br/>Covered</span>
                 </span>
               </div>
               <div className="flex flex-col items-center px-8 md:px-12">
-                <span className="text-blue-700 text-4xl font-bold mb-1">200+</span>
+                <span className="text-blue-700 text-4xl font-bold mb-1">100+</span>
                 <span className="text-gray-800 text-base text-center">
-                  <span className="block md:hidden">Marketplace<br/>Items Sold</span>
-                  <span className="hidden md:block">Marketplace<br/>Items Sold</span>
-                </span>
-              </div>
-              <div className="flex flex-col items-center px-8 md:px-12">
-                <span className="text-blue-700 text-4xl font-bold mb-1">50+</span>
-                <span className="text-gray-800 text-base text-center">
-                  <span className="block md:hidden">GharCare+<br/>Subscribers</span>
-                  <span className="hidden md:block">GharCare+<br/>Subscribers</span>
+                  <span className="block md:hidden">Users Connected<br/>on Social</span>
+                  <span className="hidden md:block">Users Connected<br/>on Social</span>
                 </span>
               </div>
             </div>
