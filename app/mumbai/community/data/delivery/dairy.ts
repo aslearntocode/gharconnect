@@ -27,7 +27,7 @@ export const vendors: Vendor[] = [
       unit: 'litre'
     }],
     mobile: '+91 98201 80456 / +91 99304 94032',
-    areaServed: ['Parel', 'Worli'],
+    areaServed: ['Parel'],
     buildingServed: ['All']
   },
   {
@@ -77,7 +77,7 @@ export const vendors: Vendor[] = [
       }
     ],
     mobile: '+91 93213 14553',
-    areaServed: ['Parel'],
+    areaServed: ['Parel','Worli','Wadala','Chembur','Dadar','Sion','Mahalaxmi','Bandra','Juhu','Powai','Malad','Andheri','Goregaon','Thane'],
     buildingServed: ['All'],
     whatsappGroup: 'https://chat.whatsapp.com/DC5egpe5FQn7YQTEI9DQg5?mode=ac_t',
     // blogLink: '/mumbai/community/blog/dairy-products-guide',

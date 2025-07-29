@@ -71,10 +71,16 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
       return vendor.vendor_id;
     }
     
-    // If vendor has a name, use that as the ID
+    // Create a unique ID based on vendor name and area served to prevent review mixing
     if (vendor.name && typeof vendor.name === 'string' && vendor.name.trim() !== '') {
-      console.log('Using vendor.name as ID:', vendor.name);
-      return vendor.name;
+      // Include area served in the ID to make it unique per area
+      const areaServed = Array.isArray(vendor.areaServed) && vendor.areaServed.length > 0 
+        ? vendor.areaServed.join('_') 
+        : 'unknown_area';
+      
+      const uniqueId = `${vendor.name}_${areaServed}`;
+      console.log('Using vendor name + area as ID:', uniqueId);
+      return uniqueId;
     }
     
     // If no name, create a hash based on vendor properties
@@ -143,7 +149,11 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
         // If no ratings found with the generated ID, try with vendor name as fallback
         if (!data || data.length === 0) {
           console.log('No ratings found with generated ID, trying with vendor name');
-          const fallbackId = vendor.name || `vendor_${Date.now()}`;
+          // Use the same unique ID generation logic for fallback
+          const areaServed = Array.isArray(vendor.areaServed) && vendor.areaServed.length > 0 
+            ? vendor.areaServed.join('_') 
+            : 'unknown_area';
+          const fallbackId = vendor.name ? `${vendor.name}_${areaServed}` : `vendor_${Date.now()}`;
           const { data: fallbackData, error: fallbackError } = await supabase
             .from('reviews')
             .select('rating')
@@ -198,7 +208,11 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
       // If no ratings found with the generated ID, try with vendor name as fallback
       if (!data || data.length === 0) {
         console.log('No ratings found with generated ID, trying with vendor name');
-        const fallbackId = vendor.name || `vendor_${Date.now()}`;
+        // Use the same unique ID generation logic for fallback
+        const areaServed = Array.isArray(vendor.areaServed) && vendor.areaServed.length > 0 
+          ? vendor.areaServed.join('_') 
+          : 'unknown_area';
+        const fallbackId = vendor.name ? `${vendor.name}_${areaServed}` : `vendor_${Date.now()}`;
         const { data: fallbackData, error: fallbackError } = await supabase
           .from('reviews')
           .select('rating')
@@ -250,7 +264,11 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
       // If no reviews found with the generated ID, try with vendor name as fallback
       if (!data || data.length === 0) {
         console.log('No reviews found with generated ID, trying with vendor name');
-        const fallbackId = vendor.name || `vendor_${Date.now()}`;
+        // Use the same unique ID generation logic for fallback
+        const areaServed = Array.isArray(vendor.areaServed) && vendor.areaServed.length > 0 
+          ? vendor.areaServed.join('_') 
+          : 'unknown_area';
+        const fallbackId = vendor.name ? `${vendor.name}_${areaServed}` : `vendor_${Date.now()}`;
         const { data: fallbackData, error: fallbackError } = await supabase
           .from('reviews')
           .select('*')
@@ -507,9 +525,6 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
           
           {/* Area Served and Building Served */}
           <div className="mb-3 space-y-1">
-            <div className="text-sm text-gray-600">
-              <span className="font-medium">Area Served:</span> {Array.isArray(vendor.areaServed) && vendor.areaServed.length > 0 ? vendor.areaServed.join(', ') : ''}
-            </div>
             <div className="text-sm text-gray-600">
               <span className="font-medium">Building Served:</span> {Array.isArray(vendor.buildingServed) && vendor.buildingServed.length > 0 ? vendor.buildingServed.join(', ') : ''}
             </div>
