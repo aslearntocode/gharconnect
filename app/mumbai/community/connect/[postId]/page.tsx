@@ -44,12 +44,12 @@ export default function PostDetailPage() {
   const [newComment, setNewComment] = useState('');
   const [commentLoading, setCommentLoading] = useState(false);
   const [replyTo, setReplyTo] = useState<string | null>(null);
-  const [search, setSearch] = useState('');
   // Add state to track likes loading
   const [likesLoading, setLikesLoading] = useState<string | null>(null);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [userLikedComments, setUserLikedComments] = useState<{ [commentId: string]: boolean }>({});
   const [userLikedPosts, setUserLikedPosts] = useState<{ [postId: string]: boolean }>({});
+  const [collapsedComments, setCollapsedComments] = useState<{ [commentId: string]: boolean }>({});
   const [imageModal, setImageModal] = useState<{ isOpen: boolean; imageUrl: string; alt: string; currentIndex: number }>({
     isOpen: false,
     imageUrl: '',
@@ -104,7 +104,7 @@ export default function PostDetailPage() {
     setLoading(true);
     const supabase = await getSupabaseClient();
     const { data: postData } = await supabase.from('posts').select('*').eq('id', postId).single();
-    const { data: commentsData } = await supabase.from('comments').select('*').eq('post_id', postId).order('created_at', { ascending: true });
+    const { data: commentsData } = await supabase.from('comments').select('*').eq('post_id', postId).order('created_at', { ascending: false });
     setPost(postData || null);
     setComments(commentsData || []);
     setLoading(false);
@@ -266,82 +266,135 @@ export default function PostDetailPage() {
     parentId: string,
     level: number = 0
   ) {
+    // For root level, always show comments. For nested levels, default to collapsed
+    const isCollapsed = level === 0 ? false : (collapsedComments[parentId] !== false);
+    const commentsToRender = isCollapsed ? [] : grouped[parentId];
+    const hasReplies = grouped[parentId]?.length > 0;
+
     return (
       <ul className={level === 0 ? 'mb-2 space-y-2' : `ml-${Math.min(level * 4, 24)} mt-2 space-y-2`}>
-        {grouped[parentId]?.map(comment => (
+        {commentsToRender?.map(comment => (
           <li key={comment.id} className={`bg-white p-3 rounded shadow-sm border border-gray-100 relative` + (level > 0 ? ' mt-2' : '')}>
             <article>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="font-semibold text-sm text-indigo-700">{generateAnonymousId(comment.user_id)}</span>
-                <time className="text-xs text-gray-400" dateTime={comment.created_at}>
-                  {new Date(comment.created_at).toLocaleString()}
-                </time>
-              </div>
-              <p className="text-gray-800 text-sm mb-2">{comment.body}</p>
-              <div className="flex items-center gap-4 text-xs text-gray-500">
-                <button
-                  className={`flex items-center gap-1 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold ${(comment.likes || 0) > 0 ? 'text-red-500' : 'text-gray-700'} ${likesLoading === comment.id ? 'opacity-50 cursor-wait' : ''}`}
-                  onClick={() => handleLikeComment(comment.id)}
-                  disabled={userLikedComments[comment.id] || likesLoading === comment.id}
-                >
-                  <svg className="w-5 h-5" fill={(comment.likes || 0) > 0 ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-                  {comment.likes || 0}
-                </button>
-                <button className="flex items-center gap-1 hover:text-blue-600 focus:outline-none" onClick={() => setReplyTo(comment.id)} aria-label="Reply to comment">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 10h7V6l7 7-7 7v-4H3z"/></svg>
-                  Reply
-                </button>
-              </div>
-              {/* Reply input */}
-              {replyTo === comment.id && (
-                user ? (
-                  <form
-                    onSubmit={e => handleNewComment(e, comment.id)}
-                    className="flex gap-2 mt-2"
-                  >
-                    <textarea
-                      className="flex-1 border rounded p-2 resize-none min-h-[40px] max-h-32 overflow-y-auto"
-                      placeholder="Reply..."
-                      value={newComment}
-                      onChange={e => {
-                        setNewComment(e.target.value);
-                        // Auto-resize textarea
-                        e.target.style.height = 'auto';
-                        e.target.style.height = Math.min(e.target.scrollHeight, 128) + 'px';
-                      }}
-                      onKeyDown={e => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
-                          e.preventDefault();
-                          handleNewComment(e, comment.id);
-                        }
-                      }}
-                      required
-                      aria-label="Reply to comment"
-                      rows={1}
-                    />
-                    <Button type="submit" disabled={commentLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
-                      {commentLoading ? 'Posting...' : 'Reply'}
-                    </Button>
-                    <Button type="button" onClick={() => setReplyTo(null)} className="bg-gray-200 text-gray-700">
-                      Cancel
-                    </Button>
-                  </form>
-                ) : (
-                  <div className="text-center my-6">
+              <div className="flex items-start gap-3">
+                {/* Expand/Collapse Button - Only show if there are actual replies */}
+                {grouped[comment.id]?.length > 0 && (
+                  <div className="flex flex-col items-center mt-1">
                     <button
-                      onClick={() => setIsLoginModalOpen(true)}
-                      className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors shadow-sm hover:shadow-md"
+                      onClick={() => setCollapsedComments(prev => ({ ...prev, [comment.id]: !prev[comment.id] }))}
+                      className="w-6 h-6 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center text-gray-600 hover:text-gray-800 transition-colors"
+                      aria-label={collapsedComments[comment.id] !== false ? 'Expand replies' : 'Collapse replies'}
                     >
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                      </svg>
-                      Login to Comment
+                      {collapsedComments[comment.id] !== false ? (
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                      ) : (
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 12H4" />
+                        </svg>
+                      )}
+                    </button>
+                    {/* Vertical line connecting to replies */}
+                    {collapsedComments[comment.id] === false && grouped[comment.id]?.length > 0 && (
+                      <div className="w-px h-full bg-gray-200 mt-2 flex-1"></div>
+                    )}
+                  </div>
+                )}
+                
+                {/* Comment Content */}
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="font-semibold text-sm text-indigo-700">{generateAnonymousId(comment.user_id)}</span>
+                    <time className="text-xs text-gray-400" dateTime={comment.created_at}>
+                      {new Date(comment.created_at).toLocaleString()}
+                    </time>
+                  </div>
+                  <p className="text-gray-800 text-sm mb-2">{comment.body}</p>
+                  <div className="flex items-center gap-4 text-xs text-gray-500">
+                    <button
+                      className={`flex items-center gap-1 px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 font-semibold ${(comment.likes || 0) > 0 ? 'text-red-500' : 'text-gray-700'} ${likesLoading === comment.id ? 'opacity-50 cursor-wait' : ''}`}
+                      onClick={() => handleLikeComment(comment.id)}
+                      disabled={userLikedComments[comment.id] || likesLoading === comment.id}
+                    >
+                      <svg className="w-5 h-5" fill={(comment.likes || 0) > 0 ? 'currentColor' : 'none'} stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                      {comment.likes || 0}
+                    </button>
+                    <button className="flex items-center gap-1 hover:text-blue-600 focus:outline-none" onClick={() => setReplyTo(comment.id)} aria-label="Reply to comment">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 10h7V6l7 7-7 7v-4H3z"/></svg>
+                      Reply
                     </button>
                   </div>
-                )
+                  {/* Reply input */}
+                  {replyTo === comment.id && (
+                    user ? (
+                      <form
+                        onSubmit={e => handleNewComment(e, comment.id)}
+                        className="flex gap-2 mt-2"
+                      >
+                        <textarea
+                          className="flex-1 border rounded p-2 resize-none min-h-[40px] max-h-32 overflow-y-auto"
+                          placeholder="Reply..."
+                          value={newComment}
+                          onChange={e => {
+                            setNewComment(e.target.value);
+                            // Auto-resize textarea
+                            e.target.style.height = 'auto';
+                            e.target.style.height = Math.min(e.target.scrollHeight, 128) + 'px';
+                          }}
+                          onKeyDown={e => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                              e.preventDefault();
+                              handleNewComment(e, comment.id);
+                            }
+                          }}
+                          required
+                          aria-label="Reply to comment"
+                          rows={1}
+                        />
+                        <Button type="submit" disabled={commentLoading} className="bg-indigo-600 hover:bg-indigo-700 text-white">
+                          {commentLoading ? 'Posting...' : 'Reply'}
+                        </Button>
+                        <Button type="button" onClick={() => setReplyTo(null)} className="bg-gray-200 text-gray-700">
+                          Cancel
+                        </Button>
+                      </form>
+                    ) : (
+                      <div className="text-center my-6">
+                        <button
+                          onClick={() => setIsLoginModalOpen(true)}
+                          className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors shadow-sm hover:shadow-md"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                          </svg>
+                          Login to Comment
+                        </button>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+              
+              {/* Show expand button if comment is collapsed and has replies */}
+              {collapsedComments[comment.id] !== false && grouped[comment.id]?.length > 0 && (
+                <div className="mt-2 ml-9">
+                  <button
+                    onClick={() => setCollapsedComments(prev => ({ ...prev, [comment.id]: false }))}
+                    className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                    </div>
+                    <span>{grouped[comment.id]?.length || 0} more replies</span>
+                  </button>
+                </div>
               )}
+              
               {/* Render replies recursively */}
-              {grouped[comment.id]?.length > 0 && renderComments(grouped, comment.id, level + 1)}
+              {collapsedComments[comment.id] === false && grouped[comment.id]?.length > 0 && renderComments(grouped, comment.id, level + 1)}
             </article>
           </li>
         ))}
@@ -463,34 +516,11 @@ export default function PostDetailPage() {
                   </div>
                 </header>
               </article>
-              <section>
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2 gap-2">
-                  <h2 className="font-semibold">Comments ({comments.length})</h2>
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="text"
-                      placeholder="Search comments..."
-                      className="border rounded px-2 py-1 text-sm"
-                      value={search}
-                      onChange={e => setSearch(e.target.value)}
-                    />
-                    <select className="border rounded px-2 py-1 text-sm">
-                      <option>Sort by Best</option>
-                      <option>Sort by Newest</option>
-                      <option>Sort by Oldest</option>
-                    </select>
-                  </div>
-                </div>
-                {grouped['root']?.length === 0 ? (
-                  <div className="text-gray-500 mb-2">No comments yet.</div>
-                ) : (
-                  renderComments(grouped, 'root', 0)
-                )}
-              </section>
-              {/* Top-level comment input */}
+              
+              {/* Add Comment Section - moved here to appear right after post */}
               {replyTo === null && (
                 user ? (
-                  <section>
+                  <section className="bg-white p-4 rounded shadow mb-6">
                     <h3 className="mb-2 font-semibold">Add a Comment</h3>
                     <form onSubmit={e => handleNewComment(e, null)} className="flex gap-2 mt-2">
                       <textarea
@@ -519,7 +549,7 @@ export default function PostDetailPage() {
                     </form>
                   </section>
                 ) : (
-                  <div className="text-center my-6">
+                  <div className="bg-white p-4 rounded shadow mb-6 text-center">
                     <button
                       onClick={() => setIsLoginModalOpen(true)}
                       className="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors shadow-sm hover:shadow-md"
@@ -532,6 +562,17 @@ export default function PostDetailPage() {
                   </div>
                 )
               )}
+              
+              <section>
+                <div className="mb-2">
+                  <h2 className="font-semibold">Comments ({comments.length})</h2>
+                </div>
+                {grouped['root']?.length === 0 ? (
+                  <div className="text-gray-500 mb-2">No comments yet.</div>
+                ) : (
+                  renderComments(grouped, 'root', 0)
+                )}
+              </section>
             </>
           )}
         </div>
