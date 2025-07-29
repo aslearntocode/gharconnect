@@ -25,17 +25,5 @@ export const vendors: Vendor[] = [
     mobile: '+91 8454892526',
     areaServed: ['Parel'],
     buildingServed: ['L&T Crescent Bay']
-  },
-  {
-    name: 'Car Cleaners',
-    services: [{
-      name: 'Car Cleaning',
-      description: 'Exterior and interior car cleaning',
-      price: 'Call for price',
-      unit: 'car'
-    }],
-    mobile: '+91 98765 43213',
-    areaServed: ['Parel'],
-    buildingServed: ['L&T Crescent Bay']
   }
 ];

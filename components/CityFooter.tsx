@@ -141,7 +141,7 @@ export default function CityFooter() {
         </div>
 
         <div className="border-t border-blue-100 mt-12 pt-8 text-center">
-          <p className="text-gray-600">&copy; {new Date().getFullYear()} GharConnect Platform. All rights reserved.</p>
+          <p className="text-gray-600">&copy; {new Date().getFullYear()} FHAI Services Pvt Ltd | All rights reserved.</p>
         </div>
       </div>
     </footer>

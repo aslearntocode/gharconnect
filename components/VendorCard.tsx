@@ -27,6 +27,9 @@ interface VendorCardProps {
     buildingServed?: string | string[];
     id?: string; // Added for new vendorId logic
     vendor_id?: string; // Added for new vendorId logic
+    whatsappGroup?: string; // Added for WhatsApp group link
+    blogLink?: string; // Added for blog link
+    blogTitle?: string; // Added for blog title
   };
   type: 'service' | 'delivery';
 }
@@ -470,6 +473,18 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
             </a>
           )}
           
+          {/* WhatsApp Group Link for Dairy */}
+          {type === 'delivery' && vendor.whatsappGroup && (
+            <a 
+              href={vendor.whatsappGroup}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-green-600 text-sm font-medium hover:text-green-700 block mb-3 underline focus:outline-none"
+            >
+              or Join WhatsApp Group Here
+            </a>
+          )}
+          
           {/* Learn More About Eggs Link */}
           {type === 'delivery' && vendor.name.includes('Egg') && (
             <a 
@@ -477,6 +492,16 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
               className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3 underline focus:outline-none"
             >
               Learn about the difference between farm and country eggs
+            </a>
+          )}
+          
+          {/* Learn More About Dairy Link */}
+          {type === 'delivery' && vendor.blogLink && (
+            <a 
+              href={vendor.blogLink}
+              className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3 underline focus:outline-none"
+            >
+              {vendor.blogTitle || 'Learn more about dairy products'}
             </a>
           )}
           

@@ -177,7 +177,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-blue-100 mt-12 pt-8 text-center">
-          <p className="text-gray-600 text-sm md:text-base">&copy; {new Date().getFullYear()} GharConnect Platform. All rights reserved.</p>
+          <p className="text-gray-600 text-sm md:text-base">&copy; {new Date().getFullYear()} FHAI Services Pvt Ltd | All rights reserved.</p>
           <p className="text-gray-500 mt-2 text-sm md:text-base flex items-center justify-center gap-1">
             Made in India With Love
             <svg className="w-4 h-4 md:w-5 md:h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24">

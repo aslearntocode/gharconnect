@@ -7,6 +7,8 @@ import Footer from '@/components/Footer';
 
 export default function MumbaiRentTypeSelection() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState('');
   const packages = [
     {
       name: 'Bronze',
@@ -219,7 +221,7 @@ export default function MumbaiRentTypeSelection() {
                   >
                     {packages.map((pkg, index) => (
                       <div key={index} className="w-full flex-shrink-0 px-2">
-                        <div className={`bg-white rounded-xl shadow-lg p-4 text-center hover:shadow-xl transition-shadow border-2 ${pkg.borderColor} relative h-80 flex flex-col`}>
+                        <div className={`bg-white rounded-xl shadow-lg p-4 text-center hover:shadow-xl transition-shadow border-2 ${pkg.borderColor} relative h-80 flex flex-col pb-6`}>
                           {pkg.isPopular && (
                             <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
                               <span className="bg-yellow-400 text-white px-2 py-0.5 rounded-full text-xs font-semibold">MOST POPULAR</span>
@@ -252,6 +254,25 @@ export default function MumbaiRentTypeSelection() {
                               </li>
                             ))}
                           </ul>
+                          {/* Pay Now Button for Silver, Gold, and Platinum */}
+                          {pkg.name !== 'Bronze' ? (
+                            <button 
+                              onClick={() => {
+                                setSelectedPackage(pkg.name);
+                                setShowQRModal(true);
+                              }}
+                              className={`inline-flex items-center justify-center w-full font-semibold px-4 py-2 rounded-lg transition-colors duration-200 text-sm ${
+                                pkg.name === 'Silver' ? 'bg-green-600 hover:bg-green-700 text-white' :
+                                pkg.name === 'Gold' ? 'bg-yellow-600 hover:bg-yellow-700 text-white' :
+                                pkg.name === 'Platinum' ? 'bg-purple-600 hover:bg-purple-700 text-white' :
+                                'bg-gray-400 text-white'
+                              }`}
+                            >
+                              Pay Now
+                            </button>
+                          ) : (
+                            <div className="h-10"></div>
+                          )}
                         </div>
                       </div>
                     ))}
@@ -281,7 +302,7 @@ export default function MumbaiRentTypeSelection() {
             {/* Desktop Grid */}
             <div className="hidden md:grid md:grid-cols-4 gap-3 max-w-7xl mx-auto">
               {/* Bronze Package */}
-              <div className="bg-white rounded-xl shadow-lg p-3 text-center hover:shadow-xl transition-shadow border-2 border-orange-300">
+              <div className="bg-white rounded-xl shadow-lg p-3 text-center hover:shadow-xl transition-shadow border-2 border-orange-300 flex flex-col h-full">
                 <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
                   <span className="text-lg">🥉</span>
                 </div>
@@ -290,7 +311,7 @@ export default function MumbaiRentTypeSelection() {
                 <p className="text-gray-600 text-xs mb-3">
                   Basic listing
                 </p>
-                <ul className="text-left text-gray-700 space-y-1 mb-3">
+                <ul className="text-left text-gray-700 space-y-1 mb-3 flex-grow">
                   <li className="flex items-start">
                     <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -304,10 +325,11 @@ export default function MumbaiRentTypeSelection() {
                     <span className="text-xs leading-tight">Privacy of Owner's Contact Details</span>
                   </li>
                 </ul>
+                <div className="h-10"></div>
               </div>
 
               {/* Silver Package */}
-              <div className="bg-white rounded-xl shadow-lg p-3 text-center hover:shadow-xl transition-shadow border-2 border-gray-200">
+              <div className="bg-white rounded-xl shadow-lg p-3 text-center hover:shadow-xl transition-shadow border-2 border-gray-200 flex flex-col h-full">
                 <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-2">
                   <span className="text-lg">🥈</span>
                 </div>
@@ -321,7 +343,7 @@ export default function MumbaiRentTypeSelection() {
                 <p className="text-gray-600 text-xs mb-3">
                   For property owners who want essential services
                 </p>
-                <ul className="text-left text-gray-700 space-y-1 mb-3">
+                <ul className="text-left text-gray-700 space-y-1 mb-3 flex-grow">
                   <li className="flex items-start">
                     <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -347,10 +369,29 @@ export default function MumbaiRentTypeSelection() {
                     <span className="text-xs leading-tight">Privacy of Owner's Contact Details</span>
                   </li>
                 </ul>
+                {/* Payment Links - Commented out for now
+                <a 
+                  href="https://payments-test.cashfree.com/links?code=d8ua85k5ah00"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-full bg-green-600 hover:bg-green-700 text-white font-semibold px-3 py-2 rounded-lg transition-colors duration-200 text-sm"
+                >
+                  Pay Now
+                </a>
+                */}
+                <button 
+                  onClick={() => {
+                    setSelectedPackage('Silver');
+                    setShowQRModal(true);
+                  }}
+                  className="inline-flex items-center justify-center w-full bg-green-600 hover:bg-green-700 text-white font-semibold px-3 py-2 rounded-lg transition-colors duration-200 text-sm"
+                >
+                  Pay Now
+                </button>
               </div>
 
               {/* Gold Package */}
-              <div className="bg-white rounded-xl shadow-lg p-3 text-center hover:shadow-xl transition-shadow border-2 border-yellow-400 relative">
+              <div className="bg-white rounded-xl shadow-lg p-3 text-center hover:shadow-xl transition-shadow border-2 border-yellow-400 relative flex flex-col h-full">
                 <div className="absolute -top-1.5 left-1/2 transform -translate-x-1/2">
                   <span className="bg-yellow-400 text-white px-1.5 py-0.5 rounded-full text-xs font-semibold">MOST POPULAR</span>
                 </div>
@@ -367,7 +408,7 @@ export default function MumbaiRentTypeSelection() {
                 <p className="text-gray-600 text-xs mb-3">
                   Premium services for your property
                 </p>
-                <ul className="text-left text-gray-700 space-y-1 mb-3">
+                <ul className="text-left text-gray-700 space-y-1 mb-3 flex-grow">
                   <li className="flex items-start">
                     <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -393,10 +434,29 @@ export default function MumbaiRentTypeSelection() {
                     <span className="text-xs leading-tight">Privacy of Owner's Contact Details</span>
                   </li>
                 </ul>
+                {/* Payment Links - Commented out for now
+                <a 
+                  href="https://payments-test.cashfree.com/links?code=D8uaaoua4h00"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-3 py-2 rounded-lg transition-colors duration-200 text-sm"
+                >
+                  Pay Now
+                </a>
+                */}
+                <button 
+                  onClick={() => {
+                    setSelectedPackage('Gold');
+                    setShowQRModal(true);
+                  }}
+                  className="inline-flex items-center justify-center w-full bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-3 py-2 rounded-lg transition-colors duration-200 text-sm"
+                >
+                  Pay Now
+                </button>
               </div>
 
               {/* Platinum Package */}
-              <div className="bg-white rounded-xl shadow-lg p-3 text-center hover:shadow-xl transition-shadow border-2 border-purple-400">
+              <div className="bg-white rounded-xl shadow-lg p-3 text-center hover:shadow-xl transition-shadow border-2 border-purple-400 flex flex-col h-full">
                 <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
                   <span className="text-lg">💎</span>
                 </div>
@@ -410,7 +470,7 @@ export default function MumbaiRentTypeSelection() {
                 <p className="text-gray-600 text-xs mb-3">
                   Complete peace of mind for property owners
                 </p>
-                <ul className="text-left text-gray-700 space-y-1 mb-3">
+                <ul className="text-left text-gray-700 space-y-1 mb-3 flex-grow">
                   <li className="flex items-start">
                     <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -430,6 +490,25 @@ export default function MumbaiRentTypeSelection() {
                     <span className="text-xs leading-tight">Privacy of Owner's Contact Details</span>
                   </li>
                 </ul>
+                {/* Payment Links - Commented out for now
+                <a 
+                  href="https://payments-test.cashfree.com/links?code=m8uaar6t2h00"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold px-3 py-2 rounded-lg transition-colors duration-200 text-sm"
+                >
+                  Pay Now
+                </a>
+                */}
+                <button 
+                  onClick={() => {
+                    setSelectedPackage('Platinum');
+                    setShowQRModal(true);
+                  }}
+                  className="inline-flex items-center justify-center w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold px-3 py-2 rounded-lg transition-colors duration-200 text-sm"
+                >
+                  Pay Now
+                </button>
               </div>
             </div>
 
@@ -457,6 +536,60 @@ export default function MumbaiRentTypeSelection() {
           </div>
         </div>
       </div>
+      
+      {/* QR Code Modal */}
+      {showQRModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-md w-full">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-gray-900">Pay for {selectedPackage} Package</h3>
+              <button 
+                onClick={() => setShowQRModal(false)}
+                className="text-gray-400 hover:text-gray-600"
+              >
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            <div className="text-center">
+              <div className="flex items-center justify-center mb-4">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                  <span className="text-2xl">G</span>
+                </div>
+                <span className="text-xl font-semibold text-gray-900">GharConnect</span>
+              </div>
+              
+              <div className="bg-gray-50 rounded-xl p-4 mb-4">
+                <div className="bg-white rounded-lg p-4 mb-3">
+                  {/* QR Code */}
+                  <div className="w-48 h-48 mx-auto bg-white rounded-lg flex items-center justify-center">
+                    <img 
+                      src="/GC_QR.jpeg" 
+                      alt="GharConnect QR Code" 
+                      className="w-full h-full object-contain"
+                    />
+                  </div>
+                </div>
+                <p className="text-sm text-gray-700 font-medium">UPI ID: gharconnectindia@okicici</p>
+              </div>
+              
+              <p className="text-sm text-gray-600 mb-4">
+                Scan the QR code with any UPI app to complete your payment for the {selectedPackage} package.
+              </p>
+              
+              <button 
+                onClick={() => setShowQRModal(false)}
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      
       <Footer />
     </div>
   );
