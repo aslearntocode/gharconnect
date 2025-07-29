@@ -1170,7 +1170,7 @@ export default function Home() {
                       {/* Logos */}
                       <div className="flex items-center gap-4">
                         <img src="/GC_Logo.png" alt="GharConnect Logo" className="h-8 md:h-10 object-contain" />
-                        <img src="Ads/therecyclingcompany.png" alt="The Recycling Company Logo" className="h-8 md:h-10 object-contain" />
+                        <img src="/Ads/therecyclingcompany.png" alt="The Recycling Company Logo" className="h-8 md:h-10 object-contain" />
                       </div>
                       
                       {/* Photo Carousel */}
@@ -1237,7 +1237,7 @@ export default function Home() {
                       {/* Logos */}
                       <div className="flex items-center gap-4">
                         <img src="/GC_Logo.png" alt="GharConnect Logo" className="h-8 md:h-10 object-contain" />
-                        <img src="Ads/ECOIL_Logo.png" alt="ECOIL Logo" className="h-8 md:h-10 object-contain" />
+                        <img src="/Ads/ECOIL_Logo.png" alt="ECOIL Logo" className="h-8 md:h-10 object-contain" />
                       </div>
                       
                       {/* Photo */}
