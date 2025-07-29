@@ -135,7 +135,7 @@ export default function ParelConnectPage() {
     
     // Define Mumbai areas
     const mumbaiAreas = [
-      'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
+      'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
       'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur',
       'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba',
       'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon',
@@ -168,7 +168,7 @@ export default function ParelConnectPage() {
     
     // Define Mumbai areas
     const mumbaiAreas = [
-      'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
+      'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
       'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur',
       'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba',
       'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon',
@@ -194,7 +194,7 @@ export default function ParelConnectPage() {
     
     // Define Mumbai areas
     const mumbaiAreas = [
-      'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
+      'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
       'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur',
       'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba',
       'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon',
@@ -721,7 +721,7 @@ export default function ParelConnectPage() {
                   {isAreaFilterDropdownOpen && (
                     <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                       <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
-                        {['All', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi', 'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur', 'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba', 'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon', 'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar', 'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli', 'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'].map(area => (
+                        {['All', 'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi', 'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur', 'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba', 'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon', 'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar', 'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli', 'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'].map(area => (
                           <button
                             key={area}
                             onClick={() => {
@@ -764,7 +764,7 @@ export default function ParelConnectPage() {
                 {isAreaFilterDropdownOpen && (
                   <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                     <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
-                      {['All', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi', 'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur', 'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba', 'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon', 'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar', 'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli', 'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'].map(area => (
+                      {['All', 'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi', 'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur', 'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba', 'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon', 'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar', 'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli', 'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'].map(area => (
                         <button
                           key={area}
                           onClick={() => {
@@ -922,6 +922,7 @@ export default function ParelConnectPage() {
                         required
                         aria-label="Select area"
                       >
+                        <option value="India">India</option>
                         <option value="Mumbai">Mumbai</option>
                         <option value="Parel">Parel</option>
                         <option value="Worli">Worli</option>

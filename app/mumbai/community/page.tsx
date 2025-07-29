@@ -596,14 +596,14 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // Fetch 3 featured posts
+    // Fetch 3 featured posts for Mumbai and its areas
     const fetchConnectPosts = async () => {
       const { getSupabaseClient } = await import("@/lib/supabase");
       const supabase = await getSupabaseClient();
       const { data, error } = await supabase
         .from("posts")
         .select("id,title,body,created_at")
-        .eq("featured", true)
+        .in("area", mumbaiAreas)
         .order("created_at", { ascending: false })
         .limit(3);
       if (!error && data) setConnectPosts(data);
@@ -624,6 +624,11 @@ export default function Home() {
     if (touchStart - touchEndX > 50) handleNext();
     if (touchEndX - touchStart > 50) handlePrev();
   };
+
+  // Mumbai areas
+  const mumbaiAreas = [
+    'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi', 'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur', 'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba', 'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon', 'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar', 'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli', 'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'
+  ];
 
   return (
     <>

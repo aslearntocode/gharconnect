@@ -135,7 +135,7 @@ export default function ParelConnectPage() {
     
     // Define Pune areas
     const puneAreas = [
-      'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar',
+      'India', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar',
       'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Koregaon Park',
       'Bund Garden', 'Yerwada', 'Kalyani Nagar', 'Vishrantwadi', 'Lohegaon', 'Dhanori',
       'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus',
@@ -170,7 +170,7 @@ export default function ParelConnectPage() {
     
     // Define Pune areas
     const puneAreas = [
-      'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar',
+      'India', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar',
       'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Koregaon Park',
       'Bund Garden', 'Yerwada', 'Kalyani Nagar', 'Vishrantwadi', 'Lohegaon', 'Dhanori',
       'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus',
@@ -198,7 +198,7 @@ export default function ParelConnectPage() {
     
     // Define Pune areas
     const puneAreas = [
-      'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar',
+      'India', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar',
       'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Koregaon Park',
       'Bund Garden', 'Yerwada', 'Kalyani Nagar', 'Vishrantwadi', 'Lohegaon', 'Dhanori',
       'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus',
@@ -727,7 +727,7 @@ export default function ParelConnectPage() {
                   {isAreaFilterDropdownOpen && (
                     <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                       <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
-                        {['All', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar', 'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Bund Garden', 'Yerwada', 'Vishrantwadi', 'Lohegaon', 'Dhanori', 'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus', 'Bavdhan', 'Katraj', 'Dhankawadi', 'Sahakar Nagar', 'Warje', 'Karve Nagar', 'Erandwane', 'Deccan Gymkhana', 'FC Road', 'JM Road', 'Law College Road', 'Ganeshkhind', 'University Road', 'Senapati Bapat Road', 'Sinhagad Road', 'Paud Road', 'Mumbai-Pune Expressway', 'Hinjewadi Phase 1', 'Hinjewadi Phase 2', 'Hinjewadi Phase 3', 'Rajiv Gandhi Infotech Park', 'MIDC', 'Chakan', 'Talegaon'].map(area => (
+                        {['All', 'India', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar', 'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Bund Garden', 'Yerwada', 'Vishrantwadi', 'Lohegaon', 'Dhanori', 'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus', 'Bavdhan', 'Katraj', 'Dhankawadi', 'Sahakar Nagar', 'Warje', 'Karve Nagar', 'Erandwane', 'Deccan Gymkhana', 'FC Road', 'JM Road', 'Law College Road', 'Ganeshkhind', 'University Road', 'Senapati Bapat Road', 'Sinhagad Road', 'Paud Road', 'Mumbai-Pune Expressway', 'Hinjewadi Phase 1', 'Hinjewadi Phase 2', 'Hinjewadi Phase 3', 'Rajiv Gandhi Infotech Park', 'MIDC', 'Chakan', 'Talegaon'].map(area => (
                           <button
                             key={area}
                             onClick={() => {
@@ -770,7 +770,7 @@ export default function ParelConnectPage() {
                 {isAreaFilterDropdownOpen && (
                   <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                     <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
-                      {['All', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar', 'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Bund Garden', 'Yerwada', 'Vishrantwadi', 'Lohegaon', 'Dhanori', 'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus', 'Bavdhan', 'Katraj', 'Dhankawadi', 'Sahakar Nagar', 'Warje', 'Karve Nagar', 'Erandwane', 'Deccan Gymkhana', 'FC Road', 'JM Road', 'Law College Road', 'Ganeshkhind', 'University Road', 'Senapati Bapat Road', 'Sinhagad Road', 'Paud Road', 'Mumbai-Pune Expressway', 'Hinjewadi Phase 1', 'Hinjewadi Phase 2', 'Hinjewadi Phase 3', 'Rajiv Gandhi Infotech Park', 'MIDC', 'Chakan', 'Talegaon'].map(area => (
+                      {['All', 'India', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar', 'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Bund Garden', 'Yerwada', 'Vishrantwadi', 'Lohegaon', 'Dhanori', 'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus', 'Bavdhan', 'Katraj', 'Dhankawadi', 'Sahakar Nagar', 'Warje', 'Karve Nagar', 'Erandwane', 'Deccan Gymkhana', 'FC Road', 'JM Road', 'Law College Road', 'Ganeshkhind', 'University Road', 'Senapati Bapat Road', 'Sinhagad Road', 'Paud Road', 'Mumbai-Pune Expressway', 'Hinjewadi Phase 1', 'Hinjewadi Phase 2', 'Hinjewadi Phase 3', 'Rajiv Gandhi Infotech Park', 'MIDC', 'Chakan', 'Talegaon'].map(area => (
                         <button
                           key={area}
                           onClick={() => {
@@ -928,6 +928,7 @@ export default function ParelConnectPage() {
                         required
                         aria-label="Select area"
                       >
+                        <option value="India">India</option>
                         <option value="Pune">Pune</option>
                         <option value="Hinjewadi">Hinjewadi</option>
                         <option value="Wakad">Wakad</option>

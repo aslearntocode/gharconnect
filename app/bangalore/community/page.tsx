@@ -603,7 +603,7 @@ export default function Home() {
       
       // Bangalore areas
       const bangaloreAreas = [
-        'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur', 
+        'India', 'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur', 
         'Marathahalli', 'Whitefield', 'Electronic City', 'JP Nagar', 'Banashankari', 
         'Jayanagar', 'Basavanagudi', 'Malleshwaram', 'Rajajinagar', 'Vijayanagar', 
         'Hebbal', 'Yelahanka', 'Yeshwanthpur', 'Peenya', 'Mahadevapura', 'Sarjapur', 

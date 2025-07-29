@@ -135,7 +135,7 @@ export default function ParelConnectPage() {
     
     // Define Bangalore areas
     const bangaloreAreas = [
-      'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur',
+      'India', 'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur',
       'Marathahalli', 'Whitefield', 'Electronic City', 'JP Nagar', 'Banashankari',
       'Jayanagar', 'Basavanagudi', 'Malleswaram', 'Rajajinagar', 'Vijayanagar',
       'Hebbal', 'Yelahanka', 'Yeshwanthpur', 'Peenya', 'Mahalakshmi Layout',
@@ -170,7 +170,7 @@ export default function ParelConnectPage() {
     
     // Define Bangalore areas
     const bangaloreAreas = [
-      'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur',
+      'India', 'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur',
       'Marathahalli', 'Whitefield', 'Electronic City', 'JP Nagar', 'Banashankari',
       'Jayanagar', 'Basavanagudi', 'Malleswaram', 'Rajajinagar', 'Vijayanagar',
       'Hebbal', 'Yelahanka', 'Yeshwanthpur', 'Peenya', 'Mahalakshmi Layout',
@@ -198,7 +198,7 @@ export default function ParelConnectPage() {
     
     // Define Bangalore areas
     const bangaloreAreas = [
-      'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur',
+      'India', 'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur',
       'Marathahalli', 'Whitefield', 'Electronic City', 'JP Nagar', 'Banashankari',
       'Jayanagar', 'Basavanagudi', 'Malleswaram', 'Rajajinagar', 'Vijayanagar',
       'Hebbal', 'Yelahanka', 'Yeshwanthpur', 'Peenya', 'Mahalakshmi Layout',
@@ -727,7 +727,7 @@ export default function ParelConnectPage() {
                   {isAreaFilterDropdownOpen && (
                     <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                       <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
-                        {['All', 'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur', 'Marathahalli', 'Whitefield', 'Electronic City', 'JP Nagar', 'Banashankari', 'Jayanagar', 'Basavanagudi', 'Malleswaram', 'Rajajinagar', 'Vijayanagar', 'Hebbal', 'Yelahanka', 'Yeshwanthpur', 'Peenya', 'Mahalakshmi Layout', 'Seshadripuram', 'Shivajinagar', 'Fraser Town', 'Cox Town', 'Richmond Town', 'Langford Town', 'Shanthinagar', 'Wilson Garden', 'Adugodi', 'Ejipura', 'Agaram', 'Murugeshpalya', 'Bommanahalli', 'Hosur Road', 'Sarjapur', 'Outer Ring Road', 'Old Airport Road', 'New Airport Road', 'Bannerghatta Road', 'Kanakapura Road', 'Mysore Road', 'Tumkur Road', 'Old Madras Road'].map(area => (
+                        {['All', 'India', 'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur', 'Marathahalli', 'Whitefield', 'Electronic City', 'JP Nagar', 'Banashankari', 'Jayanagar', 'Basavanagudi', 'Malleswaram', 'Rajajinagar', 'Vijayanagar', 'Hebbal', 'Yelahanka', 'Yeshwanthpur', 'Peenya', 'Mahalakshmi Layout', 'Seshadripuram', 'Shivajinagar', 'Fraser Town', 'Cox Town', 'Richmond Town', 'Langford Town', 'Shanthinagar', 'Wilson Garden', 'Adugodi', 'Ejipura', 'Agaram', 'Murugeshpalya', 'Bommanahalli', 'Hosur Road', 'Sarjapur', 'Outer Ring Road', 'Old Airport Road', 'New Airport Road', 'Bannerghatta Road', 'Kanakapura Road', 'Mysore Road', 'Tumkur Road', 'Old Madras Road'].map(area => (
                           <button
                             key={area}
                             onClick={() => {
@@ -753,7 +753,7 @@ export default function ParelConnectPage() {
 
           {/* Desktop Floating Filters */}
           <aside className="hidden lg:block w-64 flex-shrink-0 sticky top-24 self-start">
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4 mb-4">
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-4 mb-4">
               <h3 className="text-lg font-bold mb-4 text-indigo-700">Filter by Area</h3>
               <div className="relative">
                 <button
@@ -770,7 +770,7 @@ export default function ParelConnectPage() {
                 {isAreaFilterDropdownOpen && (
                   <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                     <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
-                      {['All', 'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur', 'Marathahalli', 'Whitefield', 'Electronic City', 'JP Nagar', 'Banashankari', 'Jayanagar', 'Basavanagudi', 'Malleswaram', 'Rajajinagar', 'Vijayanagar', 'Hebbal', 'Yelahanka', 'Yeshwanthpur', 'Peenya', 'Mahalakshmi Layout', 'Seshadripuram', 'Shivajinagar', 'Fraser Town', 'Cox Town', 'Richmond Town', 'Langford Town', 'Shanthinagar', 'Wilson Garden', 'Adugodi', 'Ejipura', 'Agaram', 'Murugeshpalya', 'Bommanahalli', 'Hosur Road', 'Sarjapur', 'Outer Ring Road', 'Old Airport Road', 'New Airport Road', 'Bannerghatta Road', 'Kanakapura Road', 'Mysore Road', 'Tumkur Road', 'Old Madras Road'].map(area => (
+                      {['All', 'India', 'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur', 'Marathahalli', 'Whitefield', 'Electronic City', 'JP Nagar', 'Banashankari', 'Jayanagar', 'Basavanagudi', 'Malleswaram', 'Rajajinagar', 'Vijayanagar', 'Hebbal', 'Yelahanka', 'Yeshwanthpur', 'Peenya', 'Mahalakshmi Layout', 'Seshadripuram', 'Shivajinagar', 'Fraser Town', 'Cox Town', 'Richmond Town', 'Langford Town', 'Shanthinagar', 'Wilson Garden', 'Adugodi', 'Ejipura', 'Agaram', 'Murugeshpalya', 'Bommanahalli', 'Hosur Road', 'Sarjapur', 'Outer Ring Road', 'Old Airport Road', 'New Airport Road', 'Bannerghatta Road', 'Kanakapura Road', 'Mysore Road', 'Tumkur Road', 'Old Madras Road'].map(area => (
                         <button
                           key={area}
                           onClick={() => {
@@ -792,7 +792,7 @@ export default function ParelConnectPage() {
               </div>
             </div>
             
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4">
+            <div className="bg-white rounded-xl shadow border border-gray-100 p-4">
               <h3 className="text-lg font-bold mb-4 text-indigo-700">Filter by Topic</h3>
               <div className="relative">
                 <button
@@ -928,6 +928,7 @@ export default function ParelConnectPage() {
                         required
                         aria-label="Select area"
                       >
+                        <option value="India">India</option>
                         <option value="Bangalore">Bangalore</option>
                         <option value="Koramangala">Koramangala</option>
                         <option value="Domlur">Domlur</option>

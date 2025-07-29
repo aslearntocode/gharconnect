@@ -604,7 +604,7 @@ export default function Home() {
       
       // Pune areas
       const puneAreas = [
-        'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar', 
+        'India', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar', 
         'Koregaon Park', 'Kalyani Nagar', 'Aundh', 'Baner', 'Pashan', 'Sus', 
         'Magarpatta', 'Hadapsar', 'Kondhwa', 'Katraj', 'Bibwewadi', 'Dhankawadi', 
         'Sinhagad Road', 'Warje', 'Karve Nagar', 'Kothrud', 'Deccan', 'FC Road', 
