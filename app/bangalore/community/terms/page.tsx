@@ -3,7 +3,7 @@
 import Header from "@/components/Header"
 import TermsContent from "@/components/TermsContent"
 
-export default function ParelTermsPage() {
+export default function BangaloreTermsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       <Header />

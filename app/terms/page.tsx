@@ -84,7 +84,22 @@ export default function TermsPage() {
             </section>
 
             <section className="mb-8">
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">5. Contact Information</h2>
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">5. Refund & Cancellation Policy</h2>
+              <p className="text-gray-700 mb-4">
+                GharConnect operates as a community platform and does not directly process payments or handle transactions between users and vendors. However, we have established the following policies:
+              </p>
+              <ul className="list-disc pl-6 text-gray-700 mb-4 space-y-2">
+                <li><strong>No Direct Transactions:</strong> GharConnect does not process payments or handle financial transactions between users and vendors</li>
+                <li><strong>Vendor Responsibility:</strong> All refund and cancellation policies are determined by individual vendors and service providers</li>
+                <li><strong>User Discretion:</strong> Users are responsible for understanding and agreeing to vendor-specific terms before engaging services</li>
+                <li><strong>Dispute Resolution:</strong> Any disputes regarding payments, refunds, or cancellations should be resolved directly with the vendor</li>
+                <li><strong>Platform Support:</strong> While we cannot mediate financial disputes, we may assist in connecting users with vendors for resolution</li>
+                <li><strong>No Refunds:</strong> GharConnect does not offer refunds for rental services</li>
+              </ul>
+            </section>
+
+            <section className="mb-8">
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">6. Contact Information</h2>
               <p className="text-gray-700 mb-4">
                 If you have any questions about these Terms & Conditions, please contact us at:
               </p>
