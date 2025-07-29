@@ -750,7 +750,7 @@ export default function Home() {
                 Find a Home in Mumbai with No Brokerage
               </h2>
               <p className="text-base md:text-lg text-indigo-600 max-w-3xl mx-auto leading-relaxed font-semibold">
-                This is the only no brokerage platform that focuses on rental accommodation in Mumbai.
+                The only no brokerage platform that focuses on rental accommodations only.
               </p>
             </div>
             
