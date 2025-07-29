@@ -104,7 +104,7 @@ export default function SocietiesPage() {
       <div className="w-full flex justify-center mb-8 px-4">
         <p className="max-w-6xl text-center text-gray-600 text-sm md:text-lg leading-relaxed">
           One Powerful Platform.
-          Whether you're renting, or hiring a domestic help or a driver - GharConnect.in has it all!
+          Whether you're renting without a broker, or hiring a domestic help or ordering milk - <br></br><strong>GharConnect.in</strong> has it all!
         </p>
       </div>
       {/* Main Sections */}
