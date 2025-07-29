@@ -50,7 +50,7 @@ export default function ParelConnectPage() {
   const [user, setUser] = useState<any>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [newPost, setNewPost] = useState({ title: '', body: '', category: 'general', area: 'Mumbai', images: [] as string[] });
+  const [newPost, setNewPost] = useState({ title: '', body: '', category: 'general', area: 'Pune', images: [] as string[] });
   const [submitting, setSubmitting] = useState(false);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -133,15 +133,17 @@ export default function ParelConnectPage() {
     setLoading(true);
     const supabase = await getSupabaseClient();
     
-    // Define Mumbai areas
-    const mumbaiAreas = [
-      'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
-      'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur',
-      'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba',
-      'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon',
-      'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar',
-      'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli',
-      'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'
+    // Define Pune areas
+    const puneAreas = [
+      'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar',
+      'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Koregaon Park',
+      'Bund Garden', 'Yerwada', 'Kalyani Nagar', 'Vishrantwadi', 'Lohegaon', 'Dhanori',
+      'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus',
+      'Bavdhan', 'Katraj', 'Dhankawadi', 'Sahakar Nagar', 'Warje', 'Karve Nagar',
+      'Erandwane', 'Deccan Gymkhana', 'FC Road', 'JM Road', 'Law College Road',
+      'Ganeshkhind', 'University Road', 'Senapati Bapat Road', 'Sinhagad Road',
+      'Paud Road', 'Mumbai-Pune Expressway', 'Hinjewadi Phase 1', 'Hinjewadi Phase 2',
+      'Hinjewadi Phase 3', 'Rajiv Gandhi Infotech Park', 'MIDC', 'Chakan', 'Talegaon'
     ];
     
     const { data, error } = await supabase
@@ -150,7 +152,7 @@ export default function ParelConnectPage() {
         *,
         comment_count:comments(count)
       `)
-      .in('area', mumbaiAreas)
+      .in('area', puneAreas)
       .order('created_at', { ascending: false });
     if (!error) {
       // Transform the data to flatten the comment_count
@@ -166,22 +168,24 @@ export default function ParelConnectPage() {
   const fetchFeaturedPosts = async () => {
     const supabase = await getSupabaseClient();
     
-    // Define Mumbai areas
-    const mumbaiAreas = [
-      'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
-      'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur',
-      'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba',
-      'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon',
-      'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar',
-      'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli',
-      'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'
+    // Define Pune areas
+    const puneAreas = [
+      'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar',
+      'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Koregaon Park',
+      'Bund Garden', 'Yerwada', 'Kalyani Nagar', 'Vishrantwadi', 'Lohegaon', 'Dhanori',
+      'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus',
+      'Bavdhan', 'Katraj', 'Dhankawadi', 'Sahakar Nagar', 'Warje', 'Karve Nagar',
+      'Erandwane', 'Deccan Gymkhana', 'FC Road', 'JM Road', 'Law College Road',
+      'Ganeshkhind', 'University Road', 'Senapati Bapat Road', 'Sinhagad Road',
+      'Paud Road', 'Mumbai-Pune Expressway', 'Hinjewadi Phase 1', 'Hinjewadi Phase 2',
+      'Hinjewadi Phase 3', 'Rajiv Gandhi Infotech Park', 'MIDC', 'Chakan', 'Talegaon'
     ];
     
     const { data, error } = await supabase
       .from('posts')
       .select(`*`)
       .eq('featured', true)
-      .in('area', mumbaiAreas)
+      .in('area', puneAreas)
       .order('created_at', { ascending: false })
       .limit(4); // Fetch 4 featured posts
     if (!error && data) {
@@ -192,34 +196,36 @@ export default function ParelConnectPage() {
   const fetchTopUsers = async () => {
     const supabase = await getSupabaseClient();
     
-    // Define Mumbai areas
-    const mumbaiAreas = [
-      'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
-      'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur',
-      'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba',
-      'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon',
-      'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar',
-      'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli',
-      'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'
+    // Define Pune areas
+    const puneAreas = [
+      'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar',
+      'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Koregaon Park',
+      'Bund Garden', 'Yerwada', 'Kalyani Nagar', 'Vishrantwadi', 'Lohegaon', 'Dhanori',
+      'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus',
+      'Bavdhan', 'Katraj', 'Dhankawadi', 'Sahakar Nagar', 'Warje', 'Karve Nagar',
+      'Erandwane', 'Deccan Gymkhana', 'FC Road', 'JM Road', 'Law College Road',
+      'Ganeshkhind', 'University Road', 'Senapati Bapat Road', 'Sinhagad Road',
+      'Paud Road', 'Mumbai-Pune Expressway', 'Hinjewadi Phase 1', 'Hinjewadi Phase 2',
+      'Hinjewadi Phase 3', 'Rajiv Gandhi Infotech Park', 'MIDC', 'Chakan', 'Talegaon'
     ];
     
-    // Get posts count by user for Mumbai areas only
+    // Get posts count by user for Pune areas only
     const { data: postsData, error: postsError } = await supabase
       .from('posts')
       .select('user_id')
-      .in('area', mumbaiAreas);
+      .in('area', puneAreas);
     
-    // Get Mumbai area post IDs first
-    const { data: mumbaiPostIds, error: postIdsError } = await supabase
+    // Get Pune area post IDs first
+    const { data: punePostIds, error: postIdsError } = await supabase
       .from('posts')
       .select('id')
-      .in('area', mumbaiAreas);
+      .in('area', puneAreas);
     
-    // Get comments count by user for Mumbai area posts only
+    // Get comments count by user for Pune area posts only
     const { data: commentsData, error: commentsError } = await supabase
       .from('comments')
       .select('user_id')
-      .in('post_id', mumbaiPostIds?.map(post => post.id) || []);
+      .in('post_id', punePostIds?.map(post => post.id) || []);
     
     if (!postsError && !commentsError && !postIdsError) {
       // Count posts by user
@@ -330,7 +336,7 @@ export default function ParelConnectPage() {
     }
     setSubmitting(false);
     if (!error) {
-      setNewPost({ title: '', body: '', category: 'general', area: 'Mumbai', images: [] });
+      setNewPost({ title: '', body: '', category: 'general', area: 'Pune', images: [] });
       fetchPosts();
       setImageUploadReset(true); // Reset image upload state after successful post
     } else {
@@ -492,9 +498,9 @@ export default function ParelConnectPage() {
     
     // Area filtering
     let matchesArea = true;
-    if (activeAreaFilter === 'Mumbai') {
-      // Show only posts with category starting with gc/mumbai/
-      matchesArea = post.category?.startsWith('gc/mumbai/') ?? false;
+    if (activeAreaFilter === 'Pune') {
+      // Show only posts with category starting with gc/pune/
+      matchesArea = post.category?.startsWith('gc/pune/') ?? false;
     } else if (activeAreaFilter !== 'All') {
       // For specific areas, check the area field
       matchesArea = post.area === activeAreaFilter;
@@ -583,12 +589,12 @@ export default function ParelConnectPage() {
         <meta property="og:title" content="Community Discussions & Connect with Neighbors in Parel | GharConnect" />
         <meta property="og:description" content="Join the Parel community discussion forum. Share thoughts, ask questions, and connect with neighbors. Find local recommendations, events, and community updates in Parel." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://gharconnect.in/mumbai/community/connect" />
+        <meta property="og:url" content="https://gharconnect.in/pune/community/connect" />
         <meta property="og:site_name" content="GharConnect" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Community Discussions & Connect with Neighbors in Parel | GharConnect" />
         <meta name="twitter:description" content="Join the Parel community discussion forum. Share thoughts, ask questions, and connect with neighbors." />
-        <link rel="canonical" href="https://gharconnect.in/mumbai/community/connect" />
+        <link rel="canonical" href="https://gharconnect.in/pune/community/connect" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -632,7 +638,7 @@ export default function ParelConnectPage() {
                     <div
                       key={post.id}
                       className="bg-gradient-to-r from-orange-100 to-red-100 rounded-full px-2 py-1 border border-orange-200 cursor-pointer hover:shadow-md transition-all duration-200 hover:from-orange-200 hover:to-red-200 flex items-center text-xs font-medium text-gray-800 whitespace-nowrap"
-                      onClick={() => window.location.href = `/mumbai/community/connect/${post.id}`}
+                      onClick={() => window.location.href = `/pune/community/connect/${post.id}`}
                     >
                       {post.title.length > 20 ? post.title.substring(0, 20) + '...' : post.title}
                       <span className="text-orange-600 text-xs font-bold ml-1">{'>'}</span>
@@ -649,7 +655,7 @@ export default function ParelConnectPage() {
                   <div
                     key={post.id}
                     className="flex-shrink-0 bg-gradient-to-r from-orange-100 to-red-100 rounded-full px-4 py-2 border border-orange-200 cursor-pointer hover:shadow-md transition-all duration-200 hover:from-orange-200 hover:to-red-200 flex items-center"
-                    onClick={() => window.location.href = `/mumbai/community/connect/${post.id}`}
+                    onClick={() => window.location.href = `/pune/community/connect/${post.id}`}
                   >
                     <span className="text-sm font-medium text-gray-800 whitespace-nowrap flex items-center">
                       {post.title.length > 30 ? post.title.substring(0, 30) + '...' : post.title}
@@ -721,7 +727,7 @@ export default function ParelConnectPage() {
                   {isAreaFilterDropdownOpen && (
                     <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                       <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
-                        {['All', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi', 'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur', 'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba', 'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon', 'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar', 'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli', 'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'].map(area => (
+                        {['All', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar', 'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Bund Garden', 'Yerwada', 'Vishrantwadi', 'Lohegaon', 'Dhanori', 'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus', 'Bavdhan', 'Katraj', 'Dhankawadi', 'Sahakar Nagar', 'Warje', 'Karve Nagar', 'Erandwane', 'Deccan Gymkhana', 'FC Road', 'JM Road', 'Law College Road', 'Ganeshkhind', 'University Road', 'Senapati Bapat Road', 'Sinhagad Road', 'Paud Road', 'Mumbai-Pune Expressway', 'Hinjewadi Phase 1', 'Hinjewadi Phase 2', 'Hinjewadi Phase 3', 'Rajiv Gandhi Infotech Park', 'MIDC', 'Chakan', 'Talegaon'].map(area => (
                           <button
                             key={area}
                             onClick={() => {
@@ -764,7 +770,7 @@ export default function ParelConnectPage() {
                 {isAreaFilterDropdownOpen && (
                   <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-10">
                     <div className="p-2 max-h-48 overflow-y-auto space-y-1" style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db #f3f4f6' }}>
-                      {['All', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi', 'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur', 'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba', 'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon', 'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar', 'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli', 'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'].map(area => (
+                      {['All', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar', 'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Bund Garden', 'Yerwada', 'Vishrantwadi', 'Lohegaon', 'Dhanori', 'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus', 'Bavdhan', 'Katraj', 'Dhankawadi', 'Sahakar Nagar', 'Warje', 'Karve Nagar', 'Erandwane', 'Deccan Gymkhana', 'FC Road', 'JM Road', 'Law College Road', 'Ganeshkhind', 'University Road', 'Senapati Bapat Road', 'Sinhagad Road', 'Paud Road', 'Mumbai-Pune Expressway', 'Hinjewadi Phase 1', 'Hinjewadi Phase 2', 'Hinjewadi Phase 3', 'Rajiv Gandhi Infotech Park', 'MIDC', 'Chakan', 'Talegaon'].map(area => (
                         <button
                           key={area}
                           onClick={() => {
@@ -883,7 +889,7 @@ export default function ParelConnectPage() {
                       <button
                         onClick={() => {
                           setIsPostFormOpen(false);
-                          setNewPost({ title: '', body: '', category: 'general', area: 'Mumbai', images: [] });
+                          setNewPost({ title: '', body: '', category: 'general', area: 'Pune', images: [] });
                           setImageUploadReset(true); // Reset image upload state
                         }}
                         className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -922,52 +928,53 @@ export default function ParelConnectPage() {
                         required
                         aria-label="Select area"
                       >
-                        <option value="Mumbai">Mumbai</option>
-                        <option value="Parel">Parel</option>
-                        <option value="Worli">Worli</option>
-                        <option value="Lower Parel">Lower Parel</option>
-                        <option value="Dadar">Dadar</option>
-                        <option value="Mahalakshmi">Mahalakshmi</option>
-                        <option value="Prabhadevi">Prabhadevi</option>
-                        <option value="Bandra">Bandra</option>
-                        <option value="Andheri">Andheri</option>
-                        <option value="Juhu">Juhu</option>
-                        <option value="Vile Parle">Vile Parle</option>
-                        <option value="Santacruz">Santacruz</option>
-                        <option value="Khar">Khar</option>
-                        <option value="Chembur">Chembur</option>
-                        <option value="Powai">Powai</option>
-                        <option value="Kanjurmarg">Kanjurmarg</option>
-                        <option value="Wadala">Wadala</option>
-                        <option value="Sewri">Sewri</option>
-                        <option value="Byculla">Byculla</option>
-                        <option value="Mazgaon">Mazgaon</option>
-                        <option value="Colaba">Colaba</option>
-                        <option value="Nariman Point">Nariman Point</option>
-                        <option value="Churchgate">Churchgate</option>
-                        <option value="Marine Lines">Marine Lines</option>
-                        <option value="Grant Road">Grant Road</option>
-                        <option value="Girgaon">Girgaon</option>
-                        <option value="Gamdevi">Gamdevi</option>
-                        <option value="Tardeo">Tardeo</option>
-                        <option value="Nana Chowk">Nana Chowk</option>
-                        <option value="Matunga">Matunga</option>
-                        <option value="Sion">Sion</option>
-                        <option value="Kurla">Kurla</option>
-                        <option value="Ghatkopar">Ghatkopar</option>
-                        <option value="Vikhroli">Vikhroli</option>
-                        <option value="Bhandup">Bhandup</option>
-                        <option value="Mulund">Mulund</option>
-                        <option value="Thane">Thane</option>
-                        <option value="Navi Mumbai">Navi Mumbai</option>
-                        <option value="Airoli">Airoli</option>
-                        <option value="Ghansoli">Ghansoli</option>
-                        <option value="Kopar Khairane">Kopar Khairane</option>
-                        <option value="Vashi">Vashi</option>
-                        <option value="Nerul">Nerul</option>
-                        <option value="Belapur">Belapur</option>
-                        <option value="Kharghar">Kharghar</option>
-                        <option value="Panvel">Panvel</option>
+                        <option value="Pune">Pune</option>
+                        <option value="Hinjewadi">Hinjewadi</option>
+                        <option value="Wakad">Wakad</option>
+                        <option value="Pimpri-Chinchwad">Pimpri-Chinchwad</option>
+                        <option value="Kharadi">Kharadi</option>
+                        <option value="Viman Nagar">Viman Nagar</option>
+                        <option value="Koregaon Park">Koregaon Park</option>
+                        <option value="Camp">Camp</option>
+                        <option value="Deccan">Deccan</option>
+                        <option value="Shivajinagar">Shivajinagar</option>
+                        <option value="Kalyani Nagar">Kalyani Nagar</option>
+                        <option value="Bund Garden">Bund Garden</option>
+                        <option value="Yerwada">Yerwada</option>
+                        <option value="Vishrantwadi">Vishrantwadi</option>
+                        <option value="Lohegaon">Lohegaon</option>
+                        <option value="Dhanori">Dhanori</option>
+                        <option value="Wagholi">Wagholi</option>
+                        <option value="Hadapsar">Hadapsar</option>
+                        <option value="Magarpatta">Magarpatta</option>
+                        <option value="Aundh">Aundh</option>
+                        <option value="Baner">Baner</option>
+                        <option value="Pashan">Pashan</option>
+                        <option value="Sus">Sus</option>
+                        <option value="Bavdhan">Bavdhan</option>
+                        <option value="Katraj">Katraj</option>
+                        <option value="Dhankawadi">Dhankawadi</option>
+                        <option value="Sahakar Nagar">Sahakar Nagar</option>
+                        <option value="Warje">Warje</option>
+                        <option value="Karve Nagar">Karve Nagar</option>
+                        <option value="Erandwane">Erandwane</option>
+                        <option value="Deccan Gymkhana">Deccan Gymkhana</option>
+                        <option value="FC Road">FC Road</option>
+                        <option value="JM Road">JM Road</option>
+                        <option value="Law College Road">Law College Road</option>
+                        <option value="Ganeshkhind">Ganeshkhind</option>
+                        <option value="University Road">University Road</option>
+                        <option value="Senapati Bapat Road">Senapati Bapat Road</option>
+                        <option value="Sinhagad Road">Sinhagad Road</option>
+                        <option value="Paud Road">Paud Road</option>
+                        <option value="Mumbai-Pune Expressway">Mumbai-Pune Expressway</option>
+                        <option value="Hinjewadi Phase 1">Hinjewadi Phase 1</option>
+                        <option value="Hinjewadi Phase 2">Hinjewadi Phase 2</option>
+                        <option value="Hinjewadi Phase 3">Hinjewadi Phase 3</option>
+                        <option value="Rajiv Gandhi Infotech Park">Rajiv Gandhi Infotech Park</option>
+                        <option value="MIDC">MIDC</option>
+                        <option value="Chakan">Chakan</option>
+                        <option value="Talegaon">Talegaon</option>
                       </select>
                       <textarea
                         className="w-full border rounded-lg p-3 mb-4 text-sm md:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
@@ -998,7 +1005,7 @@ export default function ParelConnectPage() {
                           type="button" 
                           onClick={() => {
                             setIsPostFormOpen(false);
-                            setNewPost({ title: '', body: '', category: 'general', area: 'Mumbai', images: [] });
+                            setNewPost({ title: '', body: '', category: 'general', area: 'Pune', images: [] });
                             setImageUploadReset(true); // Reset image upload state
                           }}
                           className="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm md:text-base px-6 py-2"
@@ -1032,14 +1039,14 @@ export default function ParelConnectPage() {
                         {/* Top row: area, avatar, time */}
                         <div className="flex items-center gap-2 text-sm md:text-sm text-gray-500 mb-1">
                           <img src="/GC_Logo.png" alt="avatar" className="w-6 h-6 md:w-8 md:h-8 rounded-full border object-cover" />
-                          <span className="font-semibold text-gray-800 text-sm md:text-sm">{post.category || 'gc/mumbai/general'}</span>
+                          <span className="font-semibold text-gray-800 text-sm md:text-sm">{post.category || 'gc/pune/general'}</span>
                           <span className="mx-1">•</span>
                           <span className="text-sm md:text-sm">{generateAnonymousId(post.user_id)}</span>
                           <span className="mx-1">•</span>
                           <span className="text-sm md:text-sm">{timeAgo(post.created_at)}</span>
                         </div>
                         {/* Title and body */}
-                        <div className="cursor-pointer" onClick={() => window.location.href = `/mumbai/community/connect/${post.id}`}>
+                        <div className="cursor-pointer" onClick={() => window.location.href = `/pune/community/connect/${post.id}`}>
                           <h3 className="text-sm md:text-lg font-bold text-gray-900 mb-1 hover:text-indigo-600 transition-colors">{post.title}</h3>
                           <p className="text-gray-800 text-sm md:text-base mb-2 line-clamp-3 md:line-clamp-4 whitespace-pre-line hover:text-gray-600 transition-colors">
                             {(() => {
@@ -1051,7 +1058,7 @@ export default function ParelConnectPage() {
                         </div>
                         {/* Images */}
                         {post.images && post.images.length > 0 && (
-                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mb-2 cursor-pointer" onClick={() => window.location.href = `/mumbai/community/connect/${post.id}`}>
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 mb-2 cursor-pointer" onClick={() => window.location.href = `/pune/community/connect/${post.id}`}>
                             {post.images.slice(0, 3).map((imageUrl, index) => (
                               <div key={index} className="relative">
                                 <img
@@ -1081,12 +1088,12 @@ export default function ParelConnectPage() {
                             <FiHeart fill={(post.likes || 0) > 0 ? 'currentColor' : 'none'} />
                             {post.likes || 0}
                           </button>
-                          <Link href={`/mumbai/community/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-sm md:text-sm">
+                          <Link href={`/pune/community/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-sm md:text-sm">
                             {/* Speech bubble icon */}
                             <svg className="w-3 md:w-5 h-3 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
                             {post.comment_count || 0}
                           </Link>
-                          <Link href={`/mumbai/community/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-sm md:text-sm">
+                          <Link href={`/pune/community/connect/${post.id}`} className="flex items-center gap-1 px-2 md:px-4 py-1.5 md:py-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold text-sm md:text-sm">
                             {/* Arrow right icon */}
                             <svg className="w-3 md:w-5 h-3 md:h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
                             Read More
@@ -1108,7 +1115,7 @@ export default function ParelConnectPage() {
                               </div>
                             </div>
                             <Link 
-                              href="/mumbai/community/delivery/eggs" 
+                              href="/pune/community/delivery/eggs" 
                               className="bg-yellow-500 hover:bg-yellow-600 text-white text-[10px] md:text-sm font-semibold px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-colors"
                             >
                               Order Now
@@ -1117,7 +1124,7 @@ export default function ParelConnectPage() {
                         </li>
                       )}
                       {index === 2 && (
-                        <li key="mumbai-rentals-card" className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4">
+                        <li key="pune-rentals-card" className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -1131,7 +1138,7 @@ export default function ParelConnectPage() {
                               </div>
                             </div>
                             <Link 
-                              href="/mumbai/rent/" 
+                              href="/pune/rent/" 
                               className="bg-blue-500 hover:bg-blue-600 text-white text-[10px] md:text-sm font-semibold px-3 md:px-4 py-1.5 md:py-2 rounded-full transition-colors"
                             >
                               Browse Rentals
@@ -1152,7 +1159,7 @@ export default function ParelConnectPage() {
               <ul className="space-y-2">
                 {topLikedPosts.map(post => (
                   <li key={post.id} className="flex items-center justify-between">
-                    <Link href={`/mumbai/community/connect/${post.id}`} className="text-blue-700 font-medium hover:underline line-clamp-1 flex-1">{post.title}</Link>
+                    <Link href={`/pune/community/connect/${post.id}`} className="text-blue-700 font-medium hover:underline line-clamp-1 flex-1">{post.title}</Link>
                     <span className="ml-2 flex items-center text-gray-500 text-sm"><svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>{post.likes || 0}</span>
                   </li>
                 ))}
@@ -1163,7 +1170,7 @@ export default function ParelConnectPage() {
               <ul className="space-y-2">
                 {topCommentedPosts.map(post => (
                   <li key={post.id} className="flex items-center justify-between">
-                    <Link href={`/mumbai/community/connect/${post.id}`} className="text-blue-700 font-medium hover:underline line-clamp-1 flex-1">{post.title}</Link>
+                    <Link href={`/pune/community/connect/${post.id}`} className="text-blue-700 font-medium hover:underline line-clamp-1 flex-1">{post.title}</Link>
                     <span className="ml-2 flex items-center text-gray-500 text-sm"><svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>{post.comment_count || 0}</span>
                   </li>
                 ))}
@@ -1216,7 +1223,7 @@ export default function ParelConnectPage() {
               <h3 className="text-lg font-bold mb-2 text-indigo-700">Neighbors Providing Services</h3>
               <p className="text-sm text-gray-600 mb-3">Connect with trusted service providers in your neighborhood</p>
               <Link 
-                href="/mumbai/community/home-service-provider" 
+                href="/pune/community/home-service-provider" 
                 className="inline-flex items-center justify-center w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
               >
                 <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

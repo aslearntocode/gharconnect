@@ -37,37 +37,37 @@ const rentalCities = [
   {
     name: 'Mumbai',
     description: 'Mumbai, Navi Mumbai, Thane',
-    href: '/mumbai',
+    href: '/mumbai/community',
     status: 'active'
   },
   {
     name: 'Bangalore',
     description: 'Bangalore',
-    href: '/bangalore/rent',
-    status: 'coming-soon'
+    href: '/bangalore/community/',
+    status: 'active'
   },
   {
     name: 'Pune',
     description: 'Pune',
-    href: '/pune',
-    status: 'coming-soon'
+    href: '/pune/community/',
+    status: 'active'
   },
   {
     name: 'Hyderabad',
     description: 'Hyderabad, Secunderabad',
-    href: '/hyderabad',
+    href: '/hyderabad/community',
     status: 'coming-soon'
   },
   {
     name: 'Delhi',
     description: 'Delhi, NCR',
-    href: '/delhi',
+    href: '/delhi/community',
     status: 'coming-soon'
   },
   {
     name: 'Chennai',
     description: 'Chennai',
-    href: '/chennai',
+    href: '/chennai/community',
     status: 'coming-soon'
   }
 ];

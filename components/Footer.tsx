@@ -7,6 +7,25 @@ export default function Footer() {
   const pathname = usePathname();
   const isMainPage = pathname === '/';
   
+  // Function to determine the current city from pathname
+  const getCurrentCity = () => {
+    const pathSegments = pathname.split('/').filter(segment => segment);
+    
+    // Handle different URL patterns
+    if (pathname === '/') {
+      return 'mumbai'; // Default for main page
+    }
+    
+    // For society pages like /mumbai/community, /bangalore/community, /pune/community
+    if (pathSegments.length >= 1) {
+      return pathSegments[0]; // First segment is the city
+    }
+    
+    return 'mumbai'; // Default fallback
+  };
+
+  const currentCity = getCurrentCity();
+
   // Function to determine the correct blog URL based on current pathname
   const getBlogUrl = () => {
     const pathSegments = pathname.split('/').filter(segment => segment);
@@ -54,25 +73,25 @@ export default function Footer() {
                 <Link href="/about" className="hover:text-white/90">About Us</Link>
               </li> */}
               <li>
-                <Link href="/mumbai/community/careers" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Careers</Link>
+                <Link href={`/${currentCity}/community/careers`} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Careers</Link>
               </li>
               <li>
-                <Link href="/mumbai/community/faq" className="text-sm md:text-base hover:text-indigo-600 transition-colors">FAQ</Link>
+                <Link href={`/${currentCity}/community/faq`} className="text-sm md:text-base hover:text-indigo-600 transition-colors">FAQ</Link>
               </li>
               <li>
-                <Link href={isMainPage ? "/terms" : "/mumbai/community/terms"} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Terms & Conditions</Link>
+                <Link href={isMainPage ? "/terms" : `/${currentCity}/community/terms`} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Terms & Conditions</Link>
               </li>
               <li>
-                <Link href={isMainPage ? "/privacy" : "/mumbai/community/privacy"} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Privacy Policy</Link>
+                <Link href={isMainPage ? "/privacy" : `/${currentCity}/community/privacy`} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Privacy Policy</Link>
               </li>
               {!isMainPage && (
                 <li>
-                  <Link href="/mumbai/community/blog" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Blogs</Link>
+                  <Link href={`/${currentCity}/community/blog`} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Blogs</Link>
                 </li>
               )}
               {!isMainPage && (
                 <li>
-                  <Link href="/mumbai/community/rental-procedure" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Rental Procedure</Link>
+                  <Link href={`/${currentCity}/community/rental-procedure`} className="text-sm md:text-base hover:text-indigo-600 transition-colors">Rental Procedure</Link>
                 </li>
               )}
               {!isMainPage && (
@@ -89,6 +108,12 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <Link href="/mumbai/community" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Mumbai</Link>
+              </li>
+              <li>
+                <Link href="/bangalore/community" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Bangalore</Link>
+              </li>
+              <li>
+                <Link href="/pune/community" className="text-sm md:text-base hover:text-indigo-600 transition-colors">Pune</Link>
               </li>
             </ul>
           </div>

@@ -1,31 +1,22 @@
 import { Metadata } from 'next';
-import RentalHeader from '@/components/RentalHeader';
+import Header from '@/components/Header';
 
 export const metadata: Metadata = {
-  title: 'PG Accommodation in Bangalore | GharConnect',
-  description: 'Find Paying Guest (PG) accommodation in Bangalore. Browse verified PG listings with no brokerage fees.',
-  keywords: 'PG accommodation Bangalore, paying guest Bangalore, shared accommodation Bangalore, student accommodation Bangalore, working professional PG Bangalore',
+  title: 'Bangalore PG Accommodation - No Brokerage | GharConnect',
+  description: 'Find PG accommodation in Bangalore with minimal brokerage fees. GharConnect offers the best PG deals in Bangalore with transparent pricing and no hidden charges. Browse verified PG listings for students and professionals.',
+  keywords: 'Bangalore PG accommodation, Bangalore paying guest, low brokerage PG Bangalore, Bangalore student accommodation, Bangalore working professional PG, PG accommodation Bangalore, Bangalore society PG, minimal brokerage PG Bangalore, Bangalore PG deals, Bangalore PG search, Bangalore PG listings, Bangalore furnished PG, Bangalore semi-furnished PG, Bangalore unfurnished PG, Bangalore PG prices, Bangalore PG market, Bangalore PG agents, Bangalore PG brokers, Bangalore PG services, Bangalore PG assistance, Bangalore PG support, Bangalore PG guidance, Bangalore PG consultation, Bangalore PG advice, Bangalore PG tips, Bangalore PG guide, Bangalore PG information, Bangalore PG resources, Bangalore PG help, Bangalore PG solutions',
   openGraph: {
-    title: 'PG Accommodation in Bangalore | GharConnect',
-    description: 'Find Paying Guest (PG) accommodation in Bangalore. Browse verified PG listings with no brokerage fees.',
+    title: 'Bangalore PG Accommodation - No Brokerage | GharConnect',
+    description: 'Find PG accommodation in Bangalore with minimal brokerage fees. Transparent pricing, no hidden charges.',
+    type: 'website',
     url: 'https://gharconnect.in/bangalore/rent/pg',
     siteName: 'GharConnect',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'PG Accommodation in Bangalore',
-      },
-    ],
-    locale: 'en_US',
-    type: 'website',
+    locale: 'en_IN',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'PG Accommodation in Bangalore | GharConnect',
-    description: 'Find Paying Guest (PG) accommodation in Bangalore. Browse verified PG listings with no brokerage fees.',
-    images: ['/og-image.jpg'],
+    title: 'Bangalore PG Accommodation - No Brokerage | GharConnect',
+    description: 'Find PG accommodation in Bangalore with minimal brokerage fees.',
   },
   robots: {
     index: true,
@@ -43,7 +34,7 @@ export default function PGLayout({
 }) {
   return (
     <>
-      <RentalHeader />
+      <Header />
       {children}
     </>
   );

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
-export default function BangaloreRentTypeSelection() {
+export default function PuneRentTypeSelection() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [showQRModal, setShowQRModal] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState('');
@@ -82,12 +82,12 @@ export default function BangaloreRentTypeSelection() {
       {/* Blue Banner */}
       <div className="relative">
         <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
-          <h1 className="text-xl md:text-4xl font-bold text-white text-center px-4">Find a Home in Bangalore with No Brokerage</h1>
+          <h1 className="text-xl md:text-4xl font-bold text-white text-center px-4">Find a Home in Pune with No Brokerage</h1>
         </div>
       </div>
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          {/* <p className="text-gray-700 text-lg text-center mb-8">Choose the type of rental accommodation you are looking for in Bangalore with no brokerage.</p>  */}
+          {/* <p className="text-gray-700 text-lg text-center mb-8">Choose the type of rental accommodation you are looking for in Pune with no brokerage.</p>  */}
           <div className="grid grid-cols-2 md:grid-cols-2 gap-4 md:gap-8 max-w-5xl mx-auto">
             {/* Apartments Card */}
             <div className="group bg-white rounded-2xl shadow-lg border border-gray-100 p-4 md:p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 relative overflow-hidden">
@@ -99,7 +99,7 @@ export default function BangaloreRentTypeSelection() {
                     Premium Apartments
                   </h3>
                   <Link 
-                    href="/bangalore/rent/apartment"
+                    href="/pune/rent/apartment"
                     className="inline-flex items-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold px-4 py-2 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-sm"
                   >
                     Explore
@@ -122,7 +122,7 @@ export default function BangaloreRentTypeSelection() {
                     </h3>
                   </div>
                   <p className="text-base text-gray-600 mb-6 leading-relaxed">
-                    Browse and rent premium apartments in Bangalore. No brokerage, direct from owners.
+                    Browse and rent premium apartments in Pune. No brokerage, direct from owners.
                   </p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center text-sm text-gray-500">
@@ -130,7 +130,7 @@ export default function BangaloreRentTypeSelection() {
                       Verified listings
                     </div>
                     <Link 
-                      href="/bangalore/rent/apartment"
+                      href="/pune/rent/apartment"
                       className="inline-flex items-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold px-6 py-3 rounded-xl hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                     >
                       Explore
@@ -524,7 +524,7 @@ export default function BangaloreRentTypeSelection() {
             {/* CTA Button */}
             <div className="text-center mt-8">
               <a 
-                href="/bangalore/list-apartment" 
+                href="/pune/list-apartment" 
                 className="inline-flex items-center px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 List Your Property Now

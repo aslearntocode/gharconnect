@@ -24,12 +24,15 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
   // Extract society from pathname
   const getSocietyFromPath = () => {
     const pathParts = pathname.split('/')
-    // Handle new URL structure: /mumbai/community/... or /bangalore/...
+    // Handle new URL structure: /mumbai/community/... or /bangalore/... or /pune/...
     if (pathParts[1] === 'mumbai' && pathParts[2] === 'community') {
       return 'mumbai/community'
     }
     if (pathParts[1] === 'bangalore') {
       return 'bangalore'
+    }
+    if (pathParts[1] === 'pune') {
+      return 'pune'
     }
     // Default to mumbai/community if no society in path
     return 'mumbai/community'
@@ -121,7 +124,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
               
               <div className="hidden md:flex items-center space-x-8 ml-8">
                 <Link 
-                  href={`/${currentSociety}`} 
+                  href={`/${currentSociety.includes('/community') ? currentSociety : `${currentSociety}/community`}`} 
                   className={`py-2 text-base transition-colors duration-300 ${
                     isScrolled 
                       ? 'text-white hover:text-gray-300' 
@@ -135,7 +138,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                 <div className="relative" style={{ zIndex: 50 }}>
                   <div className="flex items-center">
                     <Link 
-                      href="/mumbai/rent"
+                      href={`/${currentSociety.replace('/community', '')}/rent`}
                       className={`py-2 text-base transition-colors duration-300 ${
                         isScrolled 
                           ? 'text-white hover:text-gray-300' 
@@ -151,7 +154,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                 <div className="relative" style={{ zIndex: 50 }}>
                   <div className="flex items-center">
                     <Link 
-                      href={`/${currentSociety}/services`}
+                      href={currentSociety === 'mumbai/community' ? `/${currentSociety}/services` : `/${currentSociety}/community/services`}
                       className={`py-2 text-base transition-colors duration-300 ${
                         isScrolled 
                           ? 'text-white hover:text-gray-300' 
@@ -167,7 +170,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                 <div className="relative" style={{ zIndex: 50 }}>
                   <div className="flex items-center">
                     <Link 
-                      href={`/${currentSociety}/delivery`}
+                      href={currentSociety === 'mumbai/community' ? `/${currentSociety}/delivery` : `/${currentSociety}/community/delivery`}
                       className={`py-2 text-base transition-colors duration-300 ${
                         isScrolled 
                           ? 'text-white hover:text-gray-300' 
@@ -182,7 +185,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                 <div className="relative" style={{ zIndex: 50 }}>
                   <div className="flex items-center">
                     <Link 
-                      href={`/${currentSociety}/connect`}
+                      href={`/${currentSociety.includes('/community') ? currentSociety : `${currentSociety}/community`}/connect`}
                       className={`py-2 text-base transition-colors duration-300 ${
                         isScrolled 
                           ? 'text-white hover:text-gray-300' 
@@ -262,14 +265,14 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
       {/* Mobile Navigation Bar - Fixed at Bottom */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
         <div className="flex justify-around items-center py-2 px-1">
-          <Link href={`/${currentSociety}`} className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300">
+          <Link href={`/${currentSociety.includes('/community') ? currentSociety : `${currentSociety}/community`}`} className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300">
             <FiHome className="w-6 h-6" />
             <span className="text-xs mt-1">Home</span>
           </Link>
 
           <div className="relative">
             <Link 
-              href="/mumbai/rent"
+              href={`/${currentSociety.replace('/community', '')}/rent`}
               className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300"
             >
               <FiHome className="w-6 h-6" />
@@ -279,7 +282,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
 
           <div className="relative">
             <Link 
-              href={`/${currentSociety}/services`}
+              href={currentSociety === 'mumbai/community' ? `/${currentSociety}/services` : `/${currentSociety}/community/services`}
               className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300"
             >
               <FiTool className="w-6 h-6" />
@@ -289,7 +292,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
 
           <div className="relative">
             <Link 
-              href={`/${currentSociety}/delivery`}
+              href={currentSociety === 'mumbai/community' ? `/${currentSociety}/delivery` : `/${currentSociety}/community/delivery`}
               className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300"
             >
               <FiTruck className="w-6 h-6" />
@@ -298,7 +301,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
           </div>
 
           <div className="relative">
-            <Link href={`/${currentSociety}/connect`} className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300">
+            <Link href={`/${currentSociety.includes('/community') ? currentSociety : `${currentSociety}/community`}/connect`} className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300">
               <FiUsers className="w-6 h-6" />
               <span className="text-xs mt-1">Social</span>
             </Link>
