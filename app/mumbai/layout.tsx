@@ -3,8 +3,8 @@ import Footer from '@/components/Footer';
 import { usePathname } from 'next/navigation';
 
 export const metadata: Metadata = {
-  title: 'Mumbai Rental Apartments - No Brokerage | GharConnect',
-  description: 'Find rental apartments in Mumbai with minimal brokerage fees. GharConnect offers the best rental deals in Mumbai with transparent pricing and no hidden charges. Browse 1BHK, 2BHK, 3BHK apartments for rent.',
+  title: 'Find Services and Rental Apartments with No Brokerage in Mumbai | GharConnect',
+  description: 'Find rental apartments in Mumbai with no brokerage. GharConnect offers the best rental deals in Mumbai with transparent pricing and no hidden charges. Browse 1BHK, 2BHK, 3BHK apartments for rent.',
   keywords: 'Mumbai rental apartments, Mumbai flats for rent, low brokerage rental Mumbai, Mumbai 1BHK rent, Mumbai 2BHK rent, Mumbai 3BHK rent, rental apartments Mumbai, Mumbai society rentals, minimal brokerage Mumbai, Mumbai rental deals, Mumbai apartment search, Mumbai rental listings, Mumbai furnished apartments, Mumbai semi-furnished apartments, Mumbai unfurnished apartments, Mumbai rental prices, Mumbai rental market, Mumbai rental agents, Mumbai rental brokers, Mumbai rental services, Mumbai rental assistance, Mumbai rental support, Mumbai rental guidance, Mumbai rental consultation, Mumbai rental advice, Mumbai rental tips, Mumbai rental guide, Mumbai rental information, Mumbai rental resources, Mumbai rental help, Mumbai rental solutions',
   openGraph: {
     title: 'Mumbai Rental Apartments - No Brokerage | GharConnect',

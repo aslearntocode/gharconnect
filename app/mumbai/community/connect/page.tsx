@@ -576,18 +576,20 @@ export default function ParelConnectPage() {
   return (
     <>
       <Head>
-        <title>Community Discussions & Connect with Neighbors in Parel | GharConnect</title>
-        <meta name="description" content="Join the Parel community discussion forum. Share thoughts, ask questions, and connect with neighbors. Find local recommendations, events, and community updates in Parel." />
-        <meta name="keywords" content="Parel community, neighborhood discussions, local events Parel, community forum, connect with neighbors, Parel residents, local recommendations" />
+        <title>Community Discussions & Connect with Neighbors in Mumbai | GharConnect</title>
+        <meta name="description" content="Join the Mumbai community discussion forum. Share thoughts, ask questions, and connect with neighbors. Find local recommendations, events, and community updates across Mumbai." />
+        <meta name="keywords" content="Mumbai community, neighborhood discussions, local events Mumbai, community forum, connect with neighbors, Mumbai residents, local recommendations, Mumbai society discussions" />
         <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="Community Discussions & Connect with Neighbors in Parel | GharConnect" />
-        <meta property="og:description" content="Join the Parel community discussion forum. Share thoughts, ask questions, and connect with neighbors. Find local recommendations, events, and community updates in Parel." />
+        <meta property="og:title" content="Community Discussions & Connect with Neighbors in Mumbai | GharConnect" />
+        <meta property="og:description" content="Join the Mumbai community discussion forum. Share thoughts, ask questions, and connect with neighbors. Find local recommendations, events, and community updates across Mumbai." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://gharconnect.in/mumbai/community/connect" />
         <meta property="og:site_name" content="GharConnect" />
+        <meta property="og:image" content="https://gharconnect.in/GC_Logo.png" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Community Discussions & Connect with Neighbors in Parel | GharConnect" />
-        <meta name="twitter:description" content="Join the Parel community discussion forum. Share thoughts, ask questions, and connect with neighbors." />
+        <meta name="twitter:title" content="Community Discussions & Connect with Neighbors in Mumbai | GharConnect" />
+        <meta name="twitter:description" content="Join the Mumbai community discussion forum. Share thoughts, ask questions, and connect with neighbors." />
+        <meta name="twitter:image" content="https://gharconnect.in/GC_Logo.png" />
         <link rel="canonical" href="https://gharconnect.in/mumbai/community/connect" />
         <script
           type="application/ld+json"

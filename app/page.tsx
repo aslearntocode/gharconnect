@@ -3,25 +3,46 @@ import { Metadata } from 'next';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'GharConnect - Society Connect Platform',
-  description: 'Connect with your society members, manage amenities, and stay updated with your community. Join GharConnect for seamless society management.',
-  keywords: 'society management, community platform, residential complex, society amenities, Mumbai societies',
+  title: 'GharConnect - Community Platform for Rentals & Local Services',
+  description: 'Find brokerage-free apartments for rent in Mumbai, Bangalore, and Pune. Connect with neighbors, discover local services, and join your community marketplace. No hidden charges, transparent pricing.',
+  keywords: 'rental apartments, no brokerage, community platform, local services, society management, Mumbai rentals, Bangalore rentals, Pune rentals, domestic help, driver services, marketplace, neighborhood connect, society amenities, community discussions',
   openGraph: {
-    title: 'GharConnect - Society Connect Platform',
-    description: 'Connect with your society members, manage amenities, and stay updated with your community.',
+    title: 'GharConnect - Community Platform for Rentals & Local Services',
+    description: 'Find brokerage-free apartments for rent in Mumbai, Bangalore, and Pune. Connect with neighbors, discover local services, and join your community marketplace.',
     type: 'website',
-    locale: 'en_IN',
+    url: 'https://gharconnect.in',
     siteName: 'GharConnect',
+    locale: 'en_IN',
+    images: [
+      {
+        url: 'https://gharconnect.in/GC_Logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'GharConnect - Community Platform',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GharConnect - Society Connect Platform',
-    description: 'Connect with your society members, manage amenities, and stay updated with your community.',
+    title: 'GharConnect - Community Platform for Rentals & Local Services',
+    description: 'Find brokerage-free apartments for rent in Mumbai, Bangalore, and Pune. Connect with neighbors, discover local services.',
+    images: ['https://gharconnect.in/GC_Logo.png'],
+    creator: '@gharconnect',
   },
   robots: {
     index: true,
     follow: true,
-  }
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: 'https://gharconnect.in',
+  },
 };
 
 const communities = [

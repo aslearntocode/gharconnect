@@ -639,8 +639,58 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Rent, Services & Delivery in Parel | GharConnect</title>
-        <meta name="description" content="Find rental properties, local services, and delivery options in Parel. Connect with residents, businesses, and property owners on GharConnect." />
+        <title>Pune Community - No Brokerage Rentals and Local Services | GharConnect</title>
+        <meta name="description" content="Join the Pune community platform. Find rental properties, local services, delivery options, and connect with neighbors across Pune. Discover marketplace items and community discussions." />
+        <meta name="keywords" content="Pune community, Pune rentals, Pune services, Pune marketplace, Pune neighbors, Pune local services, Pune delivery, Pune society, Pune residential, Pune community platform" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content="Pune Community - Rent, Services & Local Marketplace | GharConnect" />
+        <meta property="og:description" content="Join the Pune community platform. Find rental properties, local services, delivery options, and connect with neighbors across Pune." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://gharconnect.in/pune/community" />
+        <meta property="og:site_name" content="GharConnect" />
+        <meta property="og:image" content="https://gharconnect.in/GC_Logo.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Pune Community Platform" />
+        <meta property="og:locale" content="en_IN" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@gharconnect" />
+        <meta name="twitter:creator" content="@gharconnect" />
+        <meta name="twitter:title" content="Pune Community - Rent, Services & Local Marketplace | GharConnect" />
+        <meta name="twitter:description" content="Join the Pune community platform. Find rental properties, local services, delivery options, and connect with neighbors." />
+        <meta name="twitter:image" content="https://gharconnect.in/GC_Logo.png" />
+        <meta name="twitter:image:alt" content="Pune Community Platform" />
+        <link rel="canonical" href="https://gharconnect.in/pune/community" />
+        <meta name="author" content="GharConnect" />
+        <meta name="language" content="English" />
+        <meta name="geo.region" content="IN-MH" />
+        <meta name="geo.placename" content="Pune" />
+        <meta name="theme-color" content="#4F46E5" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              "name": "GharConnect Pune Community",
+              "description": "Pune community platform for rentals, services, and local marketplace",
+              "url": "https://gharconnect.in/pune/community",
+              "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://gharconnect.in/pune/community?search={search_term_string}",
+                "query-input": "required name=search_term_string"
+              },
+              "publisher": {
+                "@type": "Organization",
+                "name": "GharConnect",
+                "logo": {
+                  "@type": "ImageObject",
+                  "url": "https://gharconnect.in/GC_Logo.png"
+                }
+              }
+            })
+          }}
+        />
       </Head>
       <main className="min-h-screen bg-white pt-12 md:pt-16">
         <Header isScrolled={isScrolled} />

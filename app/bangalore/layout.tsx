@@ -2,8 +2,8 @@ import { Metadata } from 'next';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Bangalore Rental Apartments - No Brokerage | GharConnect',
-  description: 'Find rental apartments in Bangalore with minimal brokerage fees. GharConnect offers the best rental deals in Bangalore with transparent pricing and no hidden charges. Browse 1BHK, 2BHK, 3BHK apartments for rent.',
+  title: 'Find Services and Rental Apartments with No Brokerage in Bangalore | GharConnect',
+  description: 'Find rental apartments in Bangalore with no brokerage. GharConnect offers the best rental deals in Bangalore with transparent pricing and no hidden charges. Browse 1BHK, 2BHK, 3BHK apartments for rent.',
   keywords: 'Bangalore rental apartments, Bangalore flats for rent, low brokerage rental Bangalore, Bangalore 1BHK rent, Bangalore 2BHK rent, Bangalore 3BHK rent, rental apartments Bangalore, Bangalore society rentals, minimal brokerage Bangalore, Bangalore rental deals, Bangalore apartment search, Bangalore rental listings, Bangalore furnished apartments, Bangalore semi-furnished apartments, Bangalore unfurnished apartments, Bangalore rental prices, Bangalore rental market, Bangalore rental agents, Bangalore rental brokers, Bangalore rental services, Bangalore rental assistance, Bangalore rental support, Bangalore rental guidance, Bangalore rental consultation, Bangalore rental advice, Bangalore rental tips, Bangalore rental guide, Bangalore rental information, Bangalore rental resources, Bangalore rental help, Bangalore rental solutions',
   openGraph: {
     title: 'Bangalore Rental Apartments - No Brokerage | GharConnect',

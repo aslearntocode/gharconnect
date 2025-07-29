@@ -2,8 +2,39 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
-  title: 'Terms & Conditions - GharConnect',
-  description: 'Terms and conditions for using GharConnect platform. Important information about vendor listings and user responsibilities.',
+  title: 'Terms & Conditions - GharConnect Community Platform',
+  description: 'Terms and conditions for using GharConnect platform. Important information about vendor listings, user responsibilities, refund policies, and community guidelines.',
+  keywords: 'GharConnect terms, community platform terms, rental terms, vendor responsibility, refund policy, user agreement, community guidelines, platform policies',
+  openGraph: {
+    title: 'Terms & Conditions - GharConnect Community Platform',
+    description: 'Terms and conditions for using GharConnect platform. Important information about vendor listings, user responsibilities, and community guidelines.',
+    type: 'website',
+    url: 'https://gharconnect.in/terms',
+    siteName: 'GharConnect',
+    locale: 'en_IN',
+    images: [
+      {
+        url: 'https://gharconnect.in/GC_Logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'GharConnect Terms & Conditions',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Terms & Conditions - GharConnect Community Platform',
+    description: 'Terms and conditions for using GharConnect platform. Important information about vendor listings and user responsibilities.',
+    images: ['https://gharconnect.in/GC_Logo.png'],
+    creator: '@gharconnect',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: 'https://gharconnect.in/terms',
+  },
 };
 
 export default function TermsPage() {

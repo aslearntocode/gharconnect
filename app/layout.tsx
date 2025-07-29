@@ -8,6 +8,41 @@ import SEOScript from '@/components/SEOScript';
 export const metadata: Metadata = {
   title: 'GharConnect - Find Apartments & Local Services | Connect with Your Neighbors',
   description: 'Find brokerage free apartments for rent, connect with your neighbors and discover local services and marketplace in your community.',
+  keywords: 'rental apartments, no brokerage, community platform, local services, society management, Mumbai rentals, Bangalore rentals, Pune rentals, domestic help, driver services, marketplace, neighborhood connect',
+  openGraph: {
+    title: 'GharConnect - Find Apartments & Local Services | Connect with Your Neighbors',
+    description: 'Find brokerage free apartments for rent, connect with your neighbors and discover local services and marketplace in your community.',
+    type: 'website',
+    url: 'https://gharconnect.in',
+    siteName: 'GharConnect',
+    locale: 'en_IN',
+    images: [
+      {
+        url: 'https://gharconnect.in/GC_Logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'GharConnect - Community Platform',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GharConnect - Find Apartments & Local Services | Connect with Your Neighbors',
+    description: 'Find brokerage free apartments for rent, connect with your neighbors and discover local services and marketplace in your community.',
+    images: ['https://gharconnect.in/GC_Logo.png'],
+    creator: '@gharconnect',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
@@ -15,6 +50,11 @@ export const metadata: Metadata = {
   },
   icons: {
     apple: '/GC_Logo.png',
+    icon: '/GC_Logo.png',
+    shortcut: '/GC_Logo.png',
+  },
+  alternates: {
+    canonical: 'https://gharconnect.in',
   },
 }
 
