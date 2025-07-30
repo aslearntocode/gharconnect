@@ -3,42 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FiChevronLeft, FiChevronRight, FiPlay, FiClock, FiShare } from 'react-icons/fi';
 
-interface TestimonialVideo {
-  id: string;
-  title: string;
-  videoUrl: string;
-  thumbnail?: string;
-  duration?: string;
-  source?: string;
-}
-
-const testimonialVideos: TestimonialVideo[] = [
-  {
-    id: '1',
-    title: 'GharConnect Reviews - Why our customers love us',
-    videoUrl: '/testimonial/User_1.mp4',
-    duration: '2:45',
-    source: 'YouTube'
-  },
-  // Add more testimonial videos here as needed
-];
-
 export default function TestimonialCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonialVideos.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + testimonialVideos.length) % testimonialVideos.length);
-  };
-
-  const handlePlay = () => {
-    setIsPlaying(true);
-  };
-
   return (
     <div className="w-full bg-white py-12 md:py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -49,94 +14,8 @@ export default function TestimonialCarousel() {
           </h2>
         </div>
 
-        {/* Video Carousel */}
-        <div className="relative">
-          {/* Main Video Player */}
-          <div className="max-w-3xl mx-auto mb-8">
-            <div className="relative bg-black rounded-lg overflow-hidden shadow-2xl">
-              {/* Video Player */}
-              <div className="relative aspect-video">
-                {isPlaying ? (
-                  <video
-                    src={testimonialVideos[currentIndex].videoUrl}
-                    controls
-                    autoPlay
-                    className="w-full h-full object-contain"
-                  />
-                ) : (
-                  <div className="w-full h-full bg-gray-800 flex items-center justify-center relative overflow-hidden">
-                    {/* Video Thumbnail Background */}
-                    <div 
-                      className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                      style={{
-                        backgroundImage: `url('/House_IMG.png')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center'
-                      }}
-                    >
-                      {/* Overlay for better text readability */}
-                      <div className="absolute inset-0 bg-black/40"></div>
-                    </div>
-                    
-                    {/* Fallback gradient if image doesn't load */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 opacity-80"></div>
-                    
-                    {/* Play Button Overlay */}
-                    <button
-                      onClick={handlePlay}
-                      className="absolute inset-0 w-full h-full flex items-center justify-center group"
-                    >
-                      <div className="w-20 h-20 md:w-24 md:h-24 bg-red-600 rounded-full flex items-center justify-center shadow-2xl group-hover:bg-red-700 transition-colors duration-200 group-hover:scale-110">
-                        <FiPlay className="w-10 h-10 md:w-12 md:h-12 text-white ml-1" />
-                      </div>
-                    </button>
-                  </div>
-                )}
-              </div>
-
-              {/* Video Info Overlay */}
-              <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
-                    <span className="text-white text-xs font-bold">%</span>
-                  </div>
-                  <span className="text-white text-sm font-medium">
-                    {testimonialVideos[currentIndex].title}
-                  </span>
-                </div>
-              </div>
-
-              {/* Video Source */}
-              <div className="absolute bottom-4 left-4 flex items-center space-x-2">
-                <span className="text-white text-sm">Watch on</span>
-                <div className="bg-red-600 text-white px-2 py-1 rounded text-xs font-bold">
-                  YouTube
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Navigation Arrows */}
-          {testimonialVideos.length > 1 && (
-            <>
-              <button
-                onClick={prevSlide}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full p-2 md:p-3 transition-all duration-200"
-              >
-                <FiChevronLeft className="w-6 h-6" />
-              </button>
-              <button
-                onClick={nextSlide}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-20 hover:bg-opacity-30 text-white rounded-full p-2 md:p-3 transition-all duration-200"
-              >
-                <FiChevronRight className="w-6 h-6" />
-              </button>
-            </>
-          )}
-        </div>
-
         {/* Text Testimonials Grid */}
-        <div className="hidden md:grid md:grid-cols-3 gap-6 mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
           {[
             {
               name: 'Kritika Desai',
