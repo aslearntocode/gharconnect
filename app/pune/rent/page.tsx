@@ -45,7 +45,7 @@ export default function PuneRentTypeSelection() {
       features: [
         'Everything in Silver',
         'Professional Property Photoshoot',
-        '5 Additional Property Showings on Owner\'s Behalf',
+        '5 More Property Showings on Owner\'s Behalf',
         'Privacy of Owner\'s Contact Details'
       ],
       borderColor: 'border-yellow-400',
@@ -425,7 +425,7 @@ export default function PuneRentTypeSelection() {
                     <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-xs leading-tight">5 Additional Property Showings on Owner's Behalf</span>
+                    <span className="text-xs leading-tight">5 More Property Showings on Owner's Behalf</span>
                   </li>
                   <li className="flex items-start">
                     <svg className="w-3 h-3 text-green-500 mr-1.5 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
