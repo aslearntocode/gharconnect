@@ -76,4 +76,16 @@ export const vendors: Vendor[] = [
     areaServed: ['Parel'],
     buildingServed: ['L&T Crescent Bay','ICC','Ruparel Ariana']
   },
+  {
+    name: 'Mayank Fresh Vegetables Delivery',
+    products: [{
+      name: 'Vegetables',
+      description: 'Fresh vegetables',
+      price: 'Call for price',
+      unit: 'kg'
+    }],
+    mobile: '+91 70213 73761',
+    areaServed: ['Worli'],
+    buildingServed: ['All']
+  }
 ]; 

@@ -79,5 +79,17 @@ export const vendors: Vendor[] = [
       unit: 'piece'
     }],
     mobile: '+91 82913 35456'
+  },
+  {
+    name: 'Mayank Fresh Fruits Delivery',
+    products: [{
+      name: 'Fruits',
+      description: 'Fresh fruits',
+      price: 'Call for price',
+      unit: 'kg'
+    }],
+    mobile: '+91 70213 73761',
+    areaServed: ['Worli'],
+    buildingServed: ['All']
   }
 ];
