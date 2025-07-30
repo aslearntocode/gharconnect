@@ -61,16 +61,6 @@ export const vendors: Vendor[] = [
     mobile: '+91 7406470702'
   },
   {
-    name: 'Kriya Organics',
-    products: [{
-      name: 'Fruits',
-      description: 'Fruits',
-      price: 'Call for price',
-      unit: 'kg'
-    }],
-    mobile: '+91 9987066551 / 9004336536'
-  },
-  {
     name: 'Rahman Coconut Delivery',
     products: [{
       name: 'Coconut',
