@@ -137,7 +137,7 @@ export default function TermsPage() {
               <div className="bg-gray-50 p-4 rounded-lg">
                 <p className="text-gray-700">
                   <strong>Email:</strong> gharconnectindia@gmail.com<br />
-                  <strong>Phone:</strong> +91 9321314553
+                  <strong>Phone:</strong> +91 93213 14553
                 </p>
               </div>
             </section>

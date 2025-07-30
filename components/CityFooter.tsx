@@ -132,7 +132,7 @@ export default function CityFooter() {
               </li>
               <li>
                 <address className="not-italic text-gray-600">
-                  Mumbai 400012<br />
+                  Jerbai Wadia Road, Mumbai 400012<br />
                   India
                 </address>
               </li>

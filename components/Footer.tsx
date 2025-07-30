@@ -188,12 +188,12 @@ export default function Footer() {
               </li>
               <li>
                 <a href="tel:+919321314553" className="text-sm md:text-base hover:text-indigo-600 transition-colors">
-                  +91 9321314553
+                  +91 93213 14553
                 </a>
               </li>
               <li>
                 <address className="not-italic text-gray-600 text-sm md:text-base">
-                  Mumbai 400012<br />
+                  Jerbai Wadia Road, Mumbai 400012<br />
                   India
                 </address>
               </li>
