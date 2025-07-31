@@ -57,14 +57,36 @@ function LogoutPageContent() {
         }
       }
       
+      // Handle new URL structure for cities
+      const pathParts = from.split('/');
+      if (pathParts[1] === 'mumbai' && pathParts[2] === 'community') {
+        return '/mumbai/community';
+      }
+      if (pathParts[1] === 'bangalore') {
+        return '/bangalore/community';
+      }
+      if (pathParts[1] === 'pune') {
+        return '/pune/community';
+      }
+      
       // If the user was on a society subpage, redirect to its homepage
       const society = getSocietyFromPath(from);
       if (society) return `/${society}`;
     }
     // Fallback to current logic
+    const pathParts = pathname.split('/');
+    if (pathParts[1] === 'mumbai' && pathParts[2] === 'community') {
+      return '/mumbai/community';
+    }
+    if (pathParts[1] === 'bangalore') {
+      return '/bangalore/community';
+    }
+    if (pathParts[1] === 'pune') {
+      return '/pune/community';
+    }
     const society = getSocietyFromPath(pathname);
     if (society) return `/${society}`;
-    return '/parel';
+    return '/mumbai/community';
   };
 
   useEffect(() => {
