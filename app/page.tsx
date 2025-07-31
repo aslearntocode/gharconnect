@@ -189,16 +189,16 @@ export default function SocietiesPage() {
                           fill
                           className="object-cover"
                         />
-                      </div>
-                      <div className="bg-gray-100 px-4 py-3">
-                        <div className="flex items-center justify-between mb-1">
-                          <h3 className="text-lg font-bold text-gray-700">
-                            {city.name}
-                          </h3>
+                        <div className="absolute top-2 right-2">
                           <span className="bg-yellow-500 text-yellow-900 text-xs px-2 py-1 rounded-full font-bold">
                             COMING SOON
                           </span>
                         </div>
+                      </div>
+                      <div className="px-4 py-3">
+                        <h3 className="text-lg font-bold mb-1 text-gray-700">
+                          {city.name}
+                        </h3>
                         <p className="text-gray-600 text-sm">
                           {city.description}
                         </p>
