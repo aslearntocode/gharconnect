@@ -670,6 +670,7 @@ export default function ParelConnectPage() {
               {/* Category Filter */}
               <div className="flex-1">
                 <div className="relative">
+                  <div className="text-xs font-medium text-gray-600 mb-1 px-1">Topic</div>
                   <button
                     onClick={() => setIsFilterDropdownOpen(!isFilterDropdownOpen)}
                     className="w-full bg-white rounded-lg shadow border border-gray-200 px-3 py-3 text-left flex items-center justify-between"
@@ -709,6 +710,7 @@ export default function ParelConnectPage() {
               {/* Area Filter */}
               <div className="flex-1">
                 <div className="relative">
+                  <div className="text-xs font-medium text-gray-600 mb-1 px-1">Area</div>
                   <button
                     onClick={() => setIsAreaFilterDropdownOpen(!isAreaFilterDropdownOpen)}
                     className="w-full bg-white rounded-lg shadow border border-gray-200 px-3 py-3 text-left flex items-center justify-between"
@@ -1039,7 +1041,7 @@ export default function ParelConnectPage() {
                           <span className="mx-1">•</span>
                           <span className="text-sm md:text-sm">{generateAnonymousId(post.user_id)}</span>
                           <span className="mx-1">•</span>
-                          <span className="text-sm md:text-sm">{timeAgo(post.created_at)}</span>
+                          <span className="text-xs md:text-sm">{timeAgo(post.created_at)}</span>
                         </div>
                         {/* Title and body */}
                         <div className="cursor-pointer" onClick={() => window.location.href = `/mumbai/community/connect/${post.id}`}>
