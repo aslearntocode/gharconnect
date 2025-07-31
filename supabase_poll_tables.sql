@@ -53,7 +53,7 @@ CREATE POLICY "Users can view their own votes" ON poll_votes
 -- Insert sample poll data for Parel
 INSERT INTO polls (id, question, options, location) VALUES (
   'parel-community-poll-1',
-  'What is the main pain point in your area?',
+  'What are the two main pain points in Mumbai?',
   '[
     {"id": "option1", "text": "Bad Walkability", "votes": 0},
     {"id": "option2", "text": "Bad Connectivity", "votes": 0},

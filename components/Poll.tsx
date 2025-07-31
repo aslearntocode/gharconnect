@@ -31,7 +31,7 @@ export default function Poll({ location }: PollProps) {
   const [user, setUser] = useState<User | null>(null)
   const [pollData, setPollData] = useState<PollData>({
     id: `${location}-community-poll-1`,
-    question: 'What is the main pain point in your area?',
+    question: 'What are the two main pain points in Mumbai?',
     options: [
       { id: 'option1', text: 'Bad Walkability', votes: 0 },
       { id: 'option2', text: 'Bad Connectivity', votes: 0 },
@@ -102,7 +102,7 @@ export default function Poll({ location }: PollProps) {
       const supabase = await getSupabaseClient()
       const defaultPoll = {
         id: `${location}-community-poll-1`,
-        question: 'What is the main pain point in your area?',
+        question: 'What are the two main pain points in Mumbai?',
         options: [
           { id: 'option1', text: 'Bad Walkability', votes: 0 },
           { id: 'option2', text: 'Bad Connectivity', votes: 0 },
