@@ -367,14 +367,15 @@ export default function RentApartmentPage() {
                           </div>
                           <h3 className="text-xl font-bold text-gray-900 mb-1">{pkg.name}</h3>
                           <div className="text-2xl font-bold text-indigo-600 mb-1">
-                            {pkg.originalPrice ? (
+                            {/* {pkg.originalPrice ? (
                               <div className="flex items-center justify-center gap-2">
                                 <span className="text-sm md:text-lg text-gray-400 line-through">{pkg.originalPrice}</span>
                                 <span className="text-lg md:text-2xl text-indigo-600 transform -rotate-2 bg-yellow-100 px-2 py-1 rounded-lg shadow-sm">{pkg.price}</span>
                               </div>
                             ) : (
                               pkg.price
-                            )}
+                            )} */}
+                            {pkg.originalPrice ? pkg.originalPrice : pkg.price}
                           </div>
                           <p className="text-gray-600 text-xs mb-4">
                             {pkg.description}
@@ -470,10 +471,11 @@ export default function RentApartmentPage() {
                 </div>
                 <h3 className="text-base font-bold text-gray-900 mb-1">Silver</h3>
                 <div className="text-xl font-bold text-indigo-600 mb-1">
-                  <div className="flex items-center justify-center gap-1">
+                  {/* <div className="flex items-center justify-center gap-1">
                     <span className="text-sm text-gray-400 line-through">₹2,999</span>
                     <span className="text-xl text-indigo-600 transform -rotate-1 bg-yellow-100 px-1.5 py-0.5 rounded shadow-sm">₹999</span>
-                  </div>
+                  </div> */}
+                  ₹2,999
                 </div>
                 <p className="text-gray-600 text-xs mb-3">
                   For property owners who want essential services
@@ -535,10 +537,11 @@ export default function RentApartmentPage() {
                 </div>
                 <h3 className="text-base font-bold text-gray-900 mb-1">Gold</h3>
                 <div className="text-xl font-bold text-indigo-600 mb-1">
-                  <div className="flex items-center justify-center gap-1">
+                  {/* <div className="flex items-center justify-center gap-1">
                     <span className="text-sm text-gray-400 line-through">₹4,999</span>
                     <span className="text-xl text-indigo-600 transform -rotate-1 bg-yellow-100 px-1.5 py-0.5 rounded shadow-sm">₹2,999</span>
-                  </div>
+                  </div> */}
+                  ₹4,999
                 </div>
                 <p className="text-gray-600 text-xs mb-3">
                   Premium services for your property
@@ -597,10 +600,11 @@ export default function RentApartmentPage() {
                 </div>
                 <h3 className="text-base font-bold text-gray-900 mb-1">Platinum</h3>
                 <div className="text-xl font-bold text-indigo-600 mb-1">
-                  <div className="flex items-center justify-center gap-1">
+                  {/* <div className="flex items-center justify-center gap-1">
                     <span className="text-sm text-gray-400 line-through">₹6,999</span>
                     <span className="text-xl text-indigo-600 transform -rotate-1 bg-yellow-100 px-1.5 py-0.5 rounded shadow-sm">₹4,999</span>
-                  </div>
+                  </div> */}
+                  ₹6,999
                 </div>
                 <p className="text-gray-600 text-xs mb-3">
                   Complete peace of mind for property owners
