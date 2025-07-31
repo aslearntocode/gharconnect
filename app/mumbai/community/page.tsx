@@ -1770,6 +1770,7 @@ export default function Home() {
           // Refresh poll data after login
           window.location.reload();
         }}
+        suppressProfileUpdate={isMobile}
       />
     </>
   )
