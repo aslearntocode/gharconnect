@@ -1516,34 +1516,34 @@ export default function Home() {
         </div>
 
         {/* Numbers Since Launch Section */}
-        <div className="bg-white py-12">
+        <div className="bg-white py-6 md:py-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-3xl font-bold text-gray-900 text-center mb-10">Numbers Since Launch in Mar 2025</h2>
-            <div className="grid grid-cols-2 md:flex md:flex-row justify-center items-center gap-8 md:gap-0 md:divide-x md:divide-gray-200">
-              <div className="flex flex-col items-center px-8 md:px-12">
-                <span className="text-blue-700 text-4xl font-bold mb-1">50+</span>
-                <span className="text-gray-800 text-base text-center">
+            <h2 className="text-xl md:text-3xl font-bold text-gray-900 text-center mb-6 md:mb-10">Numbers Since Launch in Mar 2025</h2>
+            <div className="grid grid-cols-2 md:flex md:flex-row justify-center items-center gap-4 md:gap-8 md:gap-0 md:divide-x md:divide-gray-200">
+              <div className="flex flex-col items-center px-4 md:px-8 lg:px-12">
+                <span className="text-blue-700 text-2xl md:text-4xl font-bold mb-1">50+</span>
+                <span className="text-gray-800 text-xs md:text-base text-center">
                   <span className="block md:hidden">Apartments<br/>Rented</span>
                   <span className="hidden md:block">Apartments Rented</span>
                 </span>
               </div>
-              <div className="flex flex-col items-center px-8 md:px-12">
-                <span className="text-blue-700 text-4xl font-bold mb-1">500+</span>
-                <span className="text-gray-800 text-base text-center">
+              <div className="flex flex-col items-center px-4 md:px-8 lg:px-12">
+                <span className="text-blue-700 text-2xl md:text-4xl font-bold mb-1">500+</span>
+                <span className="text-gray-800 text-xs md:text-base text-center">
                   <span className="block md:hidden">Service<br/>Providers</span>
                   <span className="hidden md:block">Service and Delivery<br/>Providers Listed</span>
                 </span>
               </div>
-              <div className="flex flex-col items-center px-8 md:px-12">
-                <span className="text-blue-700 text-4xl font-bold mb-1">2</span>
-                <span className="text-gray-800 text-base text-center">
+              <div className="flex flex-col items-center px-4 md:px-8 lg:px-12">
+                <span className="text-blue-700 text-2xl md:text-4xl font-bold mb-1">2</span>
+                <span className="text-gray-800 text-xs md:text-base text-center">
                   <span className="block md:hidden">Cities<br/>Covered</span>
                   <span className="hidden md:block">Cities<br/>Covered</span>
                 </span>
               </div>
-              <div className="flex flex-col items-center px-8 md:px-12">
-                <span className="text-blue-700 text-4xl font-bold mb-1">100+</span>
-                <span className="text-gray-800 text-base text-center">
+              <div className="flex flex-col items-center px-4 md:px-8 lg:px-12">
+                <span className="text-blue-700 text-2xl md:text-4xl font-bold mb-1">100+</span>
+                <span className="text-gray-800 text-xs md:text-base text-center">
                   <span className="block md:hidden">Users Connected<br/>on Social</span>
                   <span className="hidden md:block">Users Connected<br/>on Social</span>
                 </span>
@@ -1552,64 +1552,23 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Domestic Help Container */}
-        <div className="bg-indigo-600 py-12">
-          <div className="max-w-4xl mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-white mb-4">Looking for Domestic Help & Drivers?</h2>
-            <p className="text-indigo-100 mb-6">
-              The domestic help and drivers put in their availability for the next 10 days 
-              and you can book them for a few hours or for a few days to meet your emergency needs.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a 
-                href="/mumbai/community/services/domestic-help"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 transition-colors duration-200"
-              >
-                For Hiring - Click Here
-                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </a>
-              <a 
-                href="https://gharconnect.in/vendor"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center px-6 py-3 border-2 border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-indigo-600 transition-colors duration-200"
-              >
-                Looking for Work - Click Here
-                <svg className="ml-2 w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
+        
 
         {/* Polls Section */}
         {currentPoll && (
           <div className="bg-gradient-to-br from-purple-50 to-indigo-50 py-8">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">Community Poll</h2>
-                <p className="text-base text-gray-600">Share your thoughts with the community</p>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">Residents Voice - Let It Get Heard</h2>
+                <p className="text-base text-gray-600">Don't Just Complain - Click, Vote, Change!!!</p>
               </div>
               
               <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
                 {pollSubmitted ? (
                   <div className="space-y-4">
-                    <div className="text-center py-4">
-                      <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <svg className="w-6 h-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">Thank you for participating!</h3>
-                      <p className="text-gray-600">Your response has been recorded.</p>
-                    </div>
-                    
                     {/* Poll Results */}
                     {pollResults && (
-                      <div className="border-t border-gray-200 pt-4">
+                      <div>
                         <h4 className="text-base font-semibold text-gray-900 mb-3">Poll Results</h4>
                         <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
                           {currentPoll.options && currentPoll.options.map((option: any, index: number) => {
@@ -1649,6 +1608,17 @@ export default function Home() {
                         </div>
                       </div>
                     )}
+                    
+                    {/* Thank you message - moved below results */}
+                    <div className="text-center py-2 border-t border-gray-200">
+                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                        <svg className="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <h3 className="text-sm font-semibold text-gray-900 mb-1">Thank you for participating!</h3>
+                      <p className="text-xs text-gray-600">Your response has been recorded.</p>
+                    </div>
                   </div>
                 ) : (
                   <>
