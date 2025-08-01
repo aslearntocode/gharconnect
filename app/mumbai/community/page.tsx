@@ -776,6 +776,14 @@ export default function Home() {
     if (touchEndX - touchStart > 50) handlePrev();
   };
 
+  // Scroll to poll section function
+  const scrollToPollSection = () => {
+    const pollSection = document.querySelector('[data-poll-section]');
+    if (pollSection) {
+      pollSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   // Mumbai areas
   const mumbaiAreas = [
     'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi', 'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur', 'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba', 'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon', 'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar', 'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli', 'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'
@@ -1061,6 +1069,31 @@ export default function Home() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Civic Issues Banner */}
+        <div className="bg-gradient-to-r from-orange-500/90 to-red-500/90 py-4 md:py-6">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <button 
+              onClick={scrollToPollSection}
+              className="w-full text-center group cursor-pointer"
+            >
+              <div className="flex items-center justify-center space-x-3 md:space-x-4">
+                <div className="flex items-center space-x-2">
+                  <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                  </svg>
+                  <span className="text-white font-semibold text-base md:text-lg">Want to let your voice be heard on civic issues in your city?</span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <span className="text-white font-bold text-sm md:text-base">Vote Now</span>
+                  <svg className="w-4 h-4 md:w-5 md:h-5 text-white transform group-hover:translate-x-1 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                  </svg>
+                </div>
+              </div>
+            </button>
           </div>
         </div>
 
@@ -1556,7 +1589,7 @@ export default function Home() {
 
         {/* Polls Section */}
         {currentPoll && (
-          <div className="bg-gradient-to-br from-purple-50 to-indigo-50 py-8">
+          <div className="bg-gradient-to-br from-purple-50 to-indigo-50 py-8" data-poll-section>
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Residents Voice - Let It Get Heard</h2>
