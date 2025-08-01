@@ -1084,7 +1084,7 @@ export default function Home() {
                   <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
                   </svg>
-                  <span className="text-white font-semibold text-base md:text-lg">Want to let your voice be heard on civic issues in your city?</span>
+                  <span className="text-white font-semibold text-base md:text-lg">Let your voice be heard on civic issues in your city?</span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <span className="text-white font-bold text-sm md:text-base">Vote Now</span>
@@ -1590,168 +1590,224 @@ export default function Home() {
         {/* Polls Section */}
         {currentPoll && (
           <div className="bg-gradient-to-br from-purple-50 to-indigo-50 py-8" data-poll-section>
-            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">Residents Voice - Let It Get Heard</h2>
                 <p className="text-base text-gray-600">Don't Just Complain - Click, Vote, Change!!!</p>
               </div>
               
-              <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
-                {pollSubmitted ? (
-                  <div className="space-y-4">
-                    {/* Poll Results */}
-                    {pollResults && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+                {/* Left Side - What We Plan to Do */}
+                <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-6">
+                  <div className="text-center mb-4">
+                    {/* <div className="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <svg className="w-6 h-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div> */}
+                    <h3 className="text-lg font-semibold text-gray-900 mb-2">What We Plan to Do</h3>
+                    <p className="text-sm text-gray-600 mb-4">Your votes will help us push for civic improvements</p>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></div>
                       <div>
-                        <h4 className="text-base font-semibold text-gray-900 mb-3">Poll Results</h4>
-                        <div className="grid grid-cols-2 md:grid-cols-2 gap-3">
-                          {currentPoll.options && currentPoll.options.map((option: any, index: number) => {
-                            const optionId = option.id || index.toString();
-                            // Try multiple ID formats to match votes
-                            let voteCount = pollResults.voteCounts[optionId] || 0;
-                            if (voteCount === 0) {
-                              // Try with different ID formats
-                              voteCount = pollResults.voteCounts[optionId.toString()] || 
-                                         pollResults.voteCounts[parseInt(optionId)] || 
-                                         pollResults.voteCounts[optionId + ""] || 0;
-                            }
-                            const totalSubmissions = pollResults.totalSubmissions || 0;
-                            const totalOptionSelections = Object.values(pollResults.voteCounts || {}).reduce((sum: number, count: any) => sum + count, 0);
-                            const percentage = totalOptionSelections > 0 ? Math.round((voteCount / totalOptionSelections) * 100) : 0;
-                            
-                            return (
-                              <div key={optionId} className="p-3 bg-gray-50 rounded-lg">
-                                <div className="flex items-center justify-between mb-2">
-                                  <span className="text-sm font-medium text-gray-900">{option.text || option}</span>
-                                  <span className="text-sm text-gray-600">
-                                    {voteCount} ({percentage}%)
-                                  </span>
-                                </div>
-                                <div className="w-full bg-gray-200 rounded-full h-2">
-                                  <div 
-                                    className="bg-indigo-600 h-2 rounded-full transition-all duration-300"
-                                    style={{ width: `${percentage}%` }}
-                                  ></div>
-                                </div>
-                              </div>
-                            );
-                          })}
-                        </div>
-                        <div className="text-center mt-3 text-sm text-gray-500">
-                          Total votes: {pollResults.totalSubmissions || 0} • Total selections: {Object.values(pollResults.voteCounts || {}).reduce((sum: number, count: any) => sum + count, 0)}
-                        </div>
+                        <h4 className="text-sm font-medium text-gray-900">Submit to Local Authorities</h4>
+                        <p className="text-xs text-gray-600">Present results to BMC and local government bodies</p>
                       </div>
-                    )}
+                    </div>
                     
-                    {/* Thank you message - moved below results */}
-                    <div className="text-center py-2 border-t border-gray-200">
-                      <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                        <svg className="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-                        </svg>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-900">Submit to Media</h4>
+                        <p className="text-xs text-gray-600">Share resident's voice with the world</p>
                       </div>
-                      <h3 className="text-sm font-semibold text-gray-900 mb-1">Thank you for participating!</h3>
-                      <p className="text-xs text-gray-600">Your response has been recorded.</p>
+                    </div>
+                    
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-900">Regular Updates</h4>
+                        <p className="text-xs text-gray-600">Keep you informed about progress and actions taken</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start space-x-3">
+                      <div className="w-2 h-2 bg-indigo-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <div>
+                        <h4 className="text-sm font-medium text-gray-900">Follow-up Polls to track improvements</h4>
+                        <p className="text-xs text-gray-600">Track improvements and gather feedback on changes</p>
+                      </div>
                     </div>
                   </div>
-                ) : (
-                  <>
-                    <div className="mb-4">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">{currentPoll.question}</h3>
-                      <p className="text-sm text-gray-500">Select up to 2 options</p>
-                    </div>
-                    
-                    <div className="grid grid-cols-2 md:grid-cols-2 gap-3 mb-4">
-                      {currentPoll.options && currentPoll.options.map((option: any, index: number) => (
-                        <label
-                          key={option.id || index}
-                          className={`flex items-center p-3 rounded-lg border-2 cursor-pointer transition-all duration-200 ${
-                            selectedAnswers.includes(option.id || index.toString())
-                              ? 'border-indigo-500 bg-indigo-50'
-                              : 'border-gray-200 hover:border-gray-300'
-                          } ${!user ? 'cursor-not-allowed opacity-60' : ''}`}
-                        >
-                          <input
-                            type="checkbox"
-                            className="sr-only"
-                            checked={selectedAnswers.includes(option.id || index.toString())}
-                            onChange={() => handleAnswerSelect(option.id || index.toString())}
-                            disabled={!user}
-                          />
-                          <div className={`w-4 h-4 rounded border-2 flex items-center justify-center mr-2 flex-shrink-0 ${
-                            selectedAnswers.includes(option.id || index.toString())
-                              ? 'border-indigo-500 bg-indigo-500'
-                              : 'border-gray-300'
-                          }`}>
-                            {selectedAnswers.includes(option.id || index.toString()) && (
-                              <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                              </svg>
-                            )}
+                  
+                  {/* <div className="mt-6 p-3 bg-indigo-50 rounded-lg">
+                    <p className="text-xs text-indigo-700 text-center">
+                      <strong>Your voice matters!</strong> Every vote helps us advocate for better civic infrastructure and services in your area.
+                    </p>
+                  </div> */}
+                </div>
+                
+                {/* Right Side - Poll */}
+                <div className="bg-white rounded-xl shadow-lg border border-gray-100 p-4">
+                  {pollSubmitted ? (
+                    <div className="space-y-3">
+                      {/* Poll Results */}
+                      {pollResults && (
+                        <div>
+                          <h4 className="text-base font-semibold text-gray-900 mb-2">Poll Results</h4>
+                          <div className="grid grid-cols-2 gap-2">
+                            {currentPoll.options && currentPoll.options.map((option: any, index: number) => {
+                              const optionId = option.id || index.toString();
+                              // Try multiple ID formats to match votes
+                              let voteCount = pollResults.voteCounts[optionId] || 0;
+                              if (voteCount === 0) {
+                                // Try with different ID formats
+                                voteCount = pollResults.voteCounts[optionId.toString()] || 
+                                           pollResults.voteCounts[parseInt(optionId)] || 
+                                           pollResults.voteCounts[optionId + ""] || 0;
+                              }
+                              const totalSubmissions = pollResults.totalSubmissions || 0;
+                              const totalOptionSelections = Object.values(pollResults.voteCounts || {}).reduce((sum: number, count: any) => sum + count, 0);
+                              const percentage = totalOptionSelections > 0 ? Math.round((voteCount / totalOptionSelections) * 100) : 0;
+                              
+                              return (
+                                <div key={optionId} className="p-2 bg-gray-50 rounded-lg">
+                                  <div className="flex items-center justify-between mb-1">
+                                    <span className="text-sm font-medium text-gray-900">{option.text || option}</span>
+                                    <span className="text-sm text-gray-600">
+                                      {voteCount} ({percentage}%)
+                                    </span>
+                                  </div>
+                                  <div className="w-full bg-gray-200 rounded-full h-2">
+                                    <div 
+                                      className="bg-indigo-600 h-2 rounded-full transition-all duration-300"
+                                      style={{ width: `${percentage}%` }}
+                                    ></div>
+                                  </div>
+                                </div>
+                              );
+                            })}
                           </div>
-                          <span className="text-gray-900 font-medium text-sm">{option.text || option}</span>
-                        </label>
-                      ))}
-                      {(!currentPoll.options || currentPoll.options.length === 0) && (
-                        <div className="col-span-full text-center py-4 text-gray-500">
-                          <p>No options available for this poll.</p>
+                          <div className="text-center mt-2 text-sm text-gray-500">
+                            Total votes: {pollResults.totalSubmissions || 0} • Total selections: {Object.values(pollResults.voteCounts || {}).reduce((sum: number, count: any) => sum + count, 0)}
+                          </div>
                         </div>
                       )}
-                    </div>
-                    
-                    {!user ? (
-                      <div className="text-center py-4 border-t border-gray-200">
-                        <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                          <svg className="w-5 h-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      
+                      {/* Thank you message - moved below results */}
+                      <div className="text-center py-2 border-t border-gray-200">
+                        <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-1">
+                          <svg className="w-3 h-3 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                           </svg>
                         </div>
-                        <h4 className="text-base font-semibold text-gray-900 mb-1">Login to Vote</h4>
-                        <p className="text-gray-600 mb-3 text-sm">Please log in to participate in this community poll.</p>
-                        <button
-                          onClick={() => setShowLoginPrompt(true)}
-                          className="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors duration-200 text-sm"
-                        >
-                          <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
-                          </svg>
-                          Login to Vote
-                        </button>
+                        <h3 className="text-sm font-semibold text-gray-900 mb-1">Thank you for participating!</h3>
+                        <p className="text-xs text-gray-600">Your response has been recorded.</p>
                       </div>
-                    ) : (
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-                        <p className="text-sm text-gray-500">
-                          {selectedAnswers.length}/2 options selected
-                        </p>
-                        <button
-                          onClick={handlePollSubmit}
-                          disabled={pollLoading || selectedAnswers.length === 0}
-                          className={`inline-flex items-center px-4 py-2 font-semibold rounded-lg transition-colors duration-200 text-sm ${
-                            pollLoading || selectedAnswers.length === 0
-                              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                              : 'bg-indigo-600 hover:bg-indigo-700 text-white'
-                          }`}
-                        >
-                          {pollLoading ? (
-                            <>
-                              <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                              </svg>
-                              Submitting...
-                            </>
-                          ) : (
-                            <>
-                              <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
-                              Submit Vote
-                            </>
-                          )}
-                        </button>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="mb-3 text-center">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-1">{currentPoll.question}</h3>
+                        <p className="text-sm text-gray-500">Select up to 2 options</p>
                       </div>
-                    )}
-                  </>
-                )}
+                      
+                      <div className="grid grid-cols-2 gap-2 mb-3">
+                        {currentPoll.options && currentPoll.options.map((option: any, index: number) => (
+                          <label
+                            key={option.id || index}
+                            className={`flex items-center p-2 rounded-lg border-2 cursor-pointer transition-all duration-200 ${
+                              selectedAnswers.includes(option.id || index.toString())
+                                ? 'border-indigo-500 bg-indigo-50'
+                                : 'border-gray-200 hover:border-gray-300'
+                            } ${!user ? 'cursor-not-allowed opacity-60' : ''}`}
+                          >
+                            <input
+                              type="checkbox"
+                              className="sr-only"
+                              checked={selectedAnswers.includes(option.id || index.toString())}
+                              onChange={() => handleAnswerSelect(option.id || index.toString())}
+                              disabled={!user}
+                            />
+                            <div className={`w-4 h-4 rounded border-2 flex items-center justify-center mr-2 flex-shrink-0 ${
+                              selectedAnswers.includes(option.id || index.toString())
+                                ? 'border-indigo-500 bg-indigo-500'
+                                : 'border-gray-300'
+                            }`}>
+                              {selectedAnswers.includes(option.id || index.toString()) && (
+                                <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              )}
+                            </div>
+                            <span className="text-gray-900 font-medium text-sm">{option.text || option}</span>
+                          </label>
+                        ))}
+                        {(!currentPoll.options || currentPoll.options.length === 0) && (
+                          <div className="col-span-2 text-center py-3 text-gray-500">
+                            <p>No options available for this poll.</p>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {!user ? (
+                        <div className="text-center py-3 border-t border-gray-200">
+                          {/* <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <svg className="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                          </div> */}
+                          {/* <h4 className="text-base font-semibold text-gray-900 mb-1">Login to Vote</h4> */}
+                          {/* <p className="text-gray-600 mb-2 text-sm">Please log in to participate in this community poll.</p> */}
+                          <button
+                            onClick={() => setShowLoginPrompt(true)}
+                            className="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition-colors duration-200 text-sm"
+                          >
+                            <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                            </svg>
+                            Login to Vote
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex items-center justify-between pt-3 border-t border-gray-200">
+                          <p className="text-sm text-gray-500">
+                            {selectedAnswers.length}/2 options selected
+                          </p>
+                          <button
+                            onClick={handlePollSubmit}
+                            disabled={pollLoading || selectedAnswers.length === 0}
+                            className={`inline-flex items-center px-4 py-2 font-semibold rounded-lg transition-colors duration-200 text-sm ${
+                              pollLoading || selectedAnswers.length === 0
+                                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                            }`}
+                          >
+                            {pollLoading ? (
+                              <>
+                                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Submitting...
+                              </>
+                            ) : (
+                              <>
+                                <svg className="w-4 h-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                Submit Vote
+                              </>
+                            )}
+                          </button>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
