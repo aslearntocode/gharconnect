@@ -18,9 +18,9 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     images: [
       {
-        url: 'https://gharconnect.in/GC_Logo.png?v=2',
-        width: 1200,
-        height: 630,
+        url: 'https://gharconnect.in/GC_Logo.png',
+        width: 1024,
+        height: 1024,
         alt: 'GharConnect - Community Platform',
         type: 'image/png',
       },
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'GharConnect - Find Apartments & Local Services | Connect with Your Neighbors',
     description: 'Find brokerage free apartments for rent, connect with your neighbors and discover local services and marketplace in your community.',
-    images: ['https://gharconnect.in/GC_Logo.png?v=2'],
+    images: ['https://gharconnect.in/GC_Logo.png'],
     creator: '@gharconnect',
   },
   robots: {
@@ -58,14 +58,16 @@ export const metadata: Metadata = {
     canonical: 'https://gharconnect.in',
   },
   other: {
-    'og:image:secure_url': 'https://gharconnect.in/GC_Logo.png?v=2',
+    'og:image:secure_url': 'https://gharconnect.in/GC_Logo.png',
     'og:image:type': 'image/png',
-    'og:image:width': '1200',
-    'og:image:height': '630',
+    'og:image:width': '1024',
+    'og:image:height': '1024',
     'og:image:alt': 'GharConnect - Community Platform',
     'theme-color': '#4F46E5',
-    'og:image:url': 'https://gharconnect.in/GC_Logo.png?v=2',
-    'twitter:image:src': 'https://gharconnect.in/GC_Logo.png?v=2',
+    'og:image:url': 'https://gharconnect.in/GC_Logo.png',
+    'twitter:image:src': 'https://gharconnect.in/GC_Logo.png',
+    'og:image:size': '632893',
+    'og:image:updated_time': new Date().toISOString(),
   },
 }
 
@@ -75,6 +77,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* SEO Component for canonical URLs and meta tags */}
         <SEOScript canonicalUrl="https://gharconnect.in" />
+        
+        {/* WhatsApp and Social Media Meta Tags */}
+        <meta property="og:image" content="https://gharconnect.in/GC_Logo.png" />
+        <meta property="og:image:width" content="1024" />
+        <meta property="og:image:height" content="1024" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:alt" content="GharConnect - Community Platform" />
+        <meta name="twitter:image" content="https://gharconnect.in/GC_Logo.png" />
+        <meta name="twitter:image:alt" content="GharConnect - Community Platform" />
         
         {/* Meta Pixel Code */}
         <Script
