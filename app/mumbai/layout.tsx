@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import { usePathname } from 'next/navigation';
 
 export const metadata: Metadata = {
-  title: 'Mumbai - Rental, Services & Community | GharConnect',
+  title: 'Mumbai - Rentals, Services & Community | GharConnect',
   description: 'Find rental apartments, local services, delivery options, and connect with neighbors in Mumbai. GharConnect offers no brokerage rentals and trusted local services.',
   keywords: 'Mumbai, Mumbai rental apartments, Mumbai services, Mumbai community, Mumbai delivery, Mumbai marketplace, Mumbai neighbors, Mumbai local services, Mumbai society, Mumbai residential, Mumbai community platform',
   openGraph: {
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Mumbai - Rental, Services & Community',
+    title: 'Mumbai - Rentals, Services, Delivery & Community',
     description: 'Find rental apartments, local services, delivery options, and connect with neighbors in Mumbai.',
   },
   robots: {
