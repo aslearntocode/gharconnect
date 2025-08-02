@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { Toaster } from '@/components/ui/toaster';
 import Script from 'next/script';
 import SEOScript from '@/components/SEOScript';
+import PWAInstaller from '@/components/PWAInstaller';
 
 export const metadata: Metadata = {
   title: 'GharConnect - Find Apartments & Local Services | Connect with Your Neighbors',
@@ -48,6 +49,21 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black',
+    title: 'GharConnect',
+    startupImage: [
+      {
+        url: '/GC_Logo.png',
+        media: '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)',
+      },
+      {
+        url: '/GC_Logo.png',
+        media: '(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)',
+      },
+      {
+        url: '/GC_Logo.png',
+        media: '(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)',
+      },
+    ],
   },
   icons: {
     apple: '/GC_Logo.png',
@@ -87,6 +103,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="twitter:image" content="https://gharconnect.in/GC_Logo.png" />
         <meta name="twitter:image:alt" content="GharConnect - Community Platform" />
         
+        {/* PWA Meta Tags */}
+        <meta name="application-name" content="GharConnect" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="GharConnect" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="msapplication-config" content="/browserconfig.xml" />
+        <meta name="msapplication-TileColor" content="#4F46E5" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        
+        {/* Apple Touch Icons */}
+        <link rel="apple-touch-icon" href="/GC_Logo.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/GC_Logo.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/GC_Logo.png" />
+        <link rel="apple-touch-icon" sizes="167x167" href="/GC_Logo.png" />
+        
+        {/* Splash Screens */}
+        <link rel="apple-touch-startup-image" href="/GC_Logo.png" />
+        
         {/* Meta Pixel Code */}
         <Script
           id="fb-pixel"
@@ -113,6 +149,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <Analytics />
         <Toaster />
+        <PWAInstaller />
       </body>
     </html>
   );
