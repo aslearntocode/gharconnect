@@ -1,9 +1,6 @@
 const CACHE_NAME = 'gharconnect-v1';
 const urlsToCache = [
   '/',
-  '/mumbai/community',
-  '/bangalore/community',
-  '/pune/community',
   '/GC_Logo.png',
   '/manifest.json'
 ];

@@ -128,6 +128,25 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Splash Screens */}
         <link rel="apple-touch-startup-image" href="/GC_Logo.png" />
         
+        {/* Service Worker Registration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                      console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                      console.log('SW registration failed: ', registrationError);
+                    });
+                });
+              }
+            `,
+          }}
+        />
+        
         {/* Meta Pixel Code */}
         <Script
           id="fb-pixel"
