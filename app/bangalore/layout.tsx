@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   keywords: 'Bangalore rental apartments, Bangalore flats for rent, low brokerage rental Bangalore, Bangalore 1BHK rent, Bangalore 2BHK rent, Bangalore 3BHK rent, rental apartments Bangalore, Bangalore society rentals, minimal brokerage Bangalore, Bangalore rental deals, Bangalore apartment search, Bangalore rental listings, Bangalore furnished apartments, Bangalore semi-furnished apartments, Bangalore unfurnished apartments, Bangalore rental prices, Bangalore rental market, Bangalore rental agents, Bangalore rental brokers, Bangalore rental services, Bangalore rental assistance, Bangalore rental support, Bangalore rental guidance, Bangalore rental consultation, Bangalore rental advice, Bangalore rental tips, Bangalore rental guide, Bangalore rental information, Bangalore rental resources, Bangalore rental help, Bangalore rental solutions',
   openGraph: {
     title: 'Bangalore - Rentals, Services, Delivery & Community',
-    description: 'Find rental apartments in Bangalore with minimal brokerage fees. Transparent pricing, no hidden charges.',
+    description: 'Find rental apartments in Bangalore with no brokerage. Transparent pricing, no hidden charges.',
     type: 'website',
     url: 'https://gharconnect.in/bangalore',
     siteName: 'GharConnect',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Bangalore - Rentals, Services, Delivery & Community',
-    description: 'Find rental apartments in Bangalore with minimal brokerage fees.',
+    description: 'Find rental apartments in Bangalore with no brokerage. Transparent pricing, no hidden charges.',
   },
   robots: {
     index: true,

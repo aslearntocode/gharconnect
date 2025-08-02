@@ -5,11 +5,11 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Mumbai - Rentals, Services, Delivery & Community',
-  description: 'Join the Mumbai community platform. Find local services, delivery options, marketplace items, and connect with neighbors across Mumbai. Discover trusted service providers and community discussions.',
+  description: 'Find rentals with no brokerage, local services, delivery providers, and connect with neighbors across Mumbai.',
   keywords: 'Mumbai community, Mumbai services, Mumbai delivery, Mumbai marketplace, Mumbai neighbors, Mumbai local services, Mumbai society, Mumbai residential, Mumbai community platform, Mumbai service providers, Mumbai delivery vendors, Mumbai marketplace items, Mumbai community discussions',
   openGraph: {
     title: 'Mumbai Community - Rentals, Services, Delivery & Community',
-    description: 'Join the Mumbai community platform. Find local services, delivery options, marketplace items, and connect with neighbors across Mumbai.',
+    description: 'Find rentals with no brokerage, local services, delivery providers, and connect with neighbors across Mumbai.',
     type: 'website',
     url: 'https://gharconnect.in/mumbai/community',
     siteName: 'GharConnect',
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     site: '@gharconnect',
     creator: '@gharconnect',
     title: 'Mumbai - Rentals, Services, Delivery & Community',
-    description: 'Join the Mumbai community platform. Find local services, delivery options, and connect with neighbors.',
+    description: 'Find rentals with no brokerage, local services, delivery providers, and connect with neighbors across Mumbai.',
     images: ['https://gharconnect.in/GC_Logo.png'],
   },
   robots: {

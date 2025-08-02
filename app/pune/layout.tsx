@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   keywords: 'Pune rental apartments, Pune flats for rent, low brokerage rental Pune, Pune 1BHK rent, Pune 2BHK rent, Pune 3BHK rent, rental apartments Pune, Pune society rentals, minimal brokerage Pune, Pune rental deals, Pune apartment search, Pune rental listings, Pune furnished apartments, Pune semi-furnished apartments, Pune unfurnished apartments, Pune rental prices, Pune rental market, Pune rental agents, Pune rental brokers, Pune rental services, Pune rental assistance, Pune rental support, Pune rental guidance, Pune rental consultation, Pune rental advice, Pune rental tips, Pune rental guide, Pune rental information, Pune rental resources, Pune rental help, Pune rental solutions',
   openGraph: {
     title: 'Pune Rental Apartments - No Brokerage | GharConnect',
-    description: 'Find rental apartments in Pune with minimal brokerage fees. Transparent pricing, no hidden charges.',
+    description: 'Find rental apartments in Pune with no brokerage. Transparent pricing, no hidden charges.',
     type: 'website',
     url: 'https://gharconnect.in/pune',
     siteName: 'GharConnect',
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Pune - Rentals, Services, Delivery & Community',
-    description: 'Find rental apartments in Pune with minimal brokerage fees.',
+    description: 'Find rental apartments in Pune with no brokerage.',
   },
   robots: {
     index: true,
