@@ -671,7 +671,7 @@ export default function Home() {
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "GharConnect Pune Community",
-              "description": "Pune community platform for rentals, services, and local marketplace",
+              "description": "Pune community platform for rentals, services, delivery and community",
               "url": "https://gharconnect.in/pune/community",
               "potentialAction": {
                 "@type": "SearchAction",

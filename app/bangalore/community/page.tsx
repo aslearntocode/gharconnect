@@ -670,7 +670,7 @@ export default function Home() {
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "GharConnect Bangalore Community",
-              "description": "Bangalore community platform for rentals, services, and local marketplace",
+              "description": "Bangalore community platform for rentals, services, deliveryand community",
               "url": "https://gharconnect.in/bangalore/community",
               "potentialAction": {
                 "@type": "SearchAction",

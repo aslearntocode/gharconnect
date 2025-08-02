@@ -4,11 +4,11 @@ import { Toaster } from "@/components/ui/toaster"
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Mumbai - Rentals, Services, Delivery & Local Marketplace',
+  title: 'Mumbai - Rentals, Services, Delivery & Community',
   description: 'Join the Mumbai community platform. Find local services, delivery options, marketplace items, and connect with neighbors across Mumbai. Discover trusted service providers and community discussions.',
   keywords: 'Mumbai community, Mumbai services, Mumbai delivery, Mumbai marketplace, Mumbai neighbors, Mumbai local services, Mumbai society, Mumbai residential, Mumbai community platform, Mumbai service providers, Mumbai delivery vendors, Mumbai marketplace items, Mumbai community discussions',
   openGraph: {
-    title: 'Mumbai Community - Rentals, Services, Delivery & Local Marketplace | GharConnect',
+    title: 'Mumbai Community - Rentals, Services, Delivery & Community',
     description: 'Join the Mumbai community platform. Find local services, delivery options, marketplace items, and connect with neighbors across Mumbai.',
     type: 'website',
     url: 'https://gharconnect.in/mumbai/community',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@gharconnect',
     creator: '@gharconnect',
-    title: 'Mumbai - Rentals, Services, Delivery & Local Marketplace',
+    title: 'Mumbai - Rentals, Services, Delivery & Community',
     description: 'Join the Mumbai community platform. Find local services, delivery options, and connect with neighbors.',
     images: ['https://gharconnect.in/GC_Logo.png'],
   },
