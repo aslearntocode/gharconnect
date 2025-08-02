@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     images: [
       {
-        url: 'https://gharconnect.in/GC_Logo.png',
+        url: 'https://gharconnect.in/GC_Logo.png?v=2',
         width: 1200,
         height: 630,
         alt: 'GharConnect - Community Platform',
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'GharConnect - Community Platform for No Brokerage Rentals & Local Services',
     description: 'Find brokerage-free apartments for rent in Mumbai, Bangalore, and Pune. Connect with neighbors, discover local services.',
-    images: ['https://gharconnect.in/GC_Logo.png'],
+    images: ['https://gharconnect.in/GC_Logo.png?v=2'],
     creator: '@gharconnect',
   },
   robots: {

@@ -18,10 +18,11 @@ export const metadata: Metadata = {
     locale: 'en_IN',
     images: [
       {
-        url: 'https://gharconnect.in/GC_Logo.png',
+        url: 'https://gharconnect.in/GC_Logo.png?v=2',
         width: 1200,
         height: 630,
         alt: 'GharConnect - Community Platform',
+        type: 'image/png',
       },
     ],
   },
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'GharConnect - Find Apartments & Local Services | Connect with Your Neighbors',
     description: 'Find brokerage free apartments for rent, connect with your neighbors and discover local services and marketplace in your community.',
-    images: ['https://gharconnect.in/GC_Logo.png'],
+    images: ['https://gharconnect.in/GC_Logo.png?v=2'],
     creator: '@gharconnect',
   },
   robots: {
@@ -55,6 +56,16 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: 'https://gharconnect.in',
+  },
+  other: {
+    'og:image:secure_url': 'https://gharconnect.in/GC_Logo.png?v=2',
+    'og:image:type': 'image/png',
+    'og:image:width': '1200',
+    'og:image:height': '630',
+    'og:image:alt': 'GharConnect - Community Platform',
+    'theme-color': '#4F46E5',
+    'og:image:url': 'https://gharconnect.in/GC_Logo.png?v=2',
+    'twitter:image:src': 'https://gharconnect.in/GC_Logo.png?v=2',
   },
 }
 
