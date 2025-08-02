@@ -128,6 +128,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Splash Screens */}
         <link rel="apple-touch-startup-image" href="/GC_Logo.png" />
         
+        {/* PWA Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+        
         {/* Service Worker Registration */}
         <script
           dangerouslySetInnerHTML={{
