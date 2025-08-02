@@ -24,6 +24,13 @@ self.addEventListener('fetch', (event) => {
     return fetch(event.request);
   }
 
+  // Don't cache authentication-related requests
+  if (event.request.url.includes('/api/auth') || 
+      event.request.url.includes('firebase') ||
+      event.request.url.includes('identitytoolkit')) {
+    return fetch(event.request);
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => {

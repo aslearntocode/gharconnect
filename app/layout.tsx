@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import Script from 'next/script';
 import SEOScript from '@/components/SEOScript';
 import PWAInstaller from '@/components/PWAInstaller';
+import { AuthProvider } from '@/context/AuthContext';
 
 export const metadata: Metadata = {
   title: 'GharConnect - Find Apartments & Local Services | Connect with Your Neighbors',
@@ -173,10 +174,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* End Meta Pixel Code */}
       </head>
       <body className="min-h-screen">
-        {children}
-        <Analytics />
-        <Toaster />
-        <PWAInstaller />
+        <AuthProvider>
+          {children}
+          <Analytics />
+          <Toaster />
+          <PWAInstaller />
+        </AuthProvider>
       </body>
     </html>
   );
