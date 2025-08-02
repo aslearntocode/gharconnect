@@ -12,11 +12,21 @@ export const metadata: Metadata = {
     url: 'https://gharconnect.in/pune',
     siteName: 'GharConnect',
     locale: 'en_IN',
+    images: [
+      {
+        url: 'https://gharconnect.in/GC_Logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'GharConnect - Community Platform',
+        type: 'image/png',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Pune - Rentals, Services, Delivery & Community',
     description: 'Find rental apartments in Pune with no brokerage.',
+    images: ['https://gharconnect.in/GC_Logo.png'],
   },
   robots: {
     index: true,

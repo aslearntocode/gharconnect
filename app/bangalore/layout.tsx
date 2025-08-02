@@ -12,11 +12,21 @@ export const metadata: Metadata = {
     url: 'https://gharconnect.in/bangalore',
     siteName: 'GharConnect',
     locale: 'en_IN',
+    images: [
+      {
+        url: 'https://gharconnect.in/GC_Logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'GharConnect - Community Platform',
+        type: 'image/png',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Bangalore - Rentals, Services, Delivery & Community',
     description: 'Find rental apartments in Bangalore with no brokerage. Transparent pricing, no hidden charges.',
+    images: ['https://gharconnect.in/GC_Logo.png'],
   },
   robots: {
     index: true,

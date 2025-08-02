@@ -19,7 +19,8 @@ export const metadata: Metadata = {
         url: 'https://gharconnect.in/GC_Logo.png',
         width: 1200,
         height: 630,
-        alt: 'Mumbai Community Platform',
+        alt: 'GharConnect - Community Platform',
+        type: 'image/png',
       },
     ],
   },
@@ -43,6 +44,10 @@ export const metadata: Metadata = {
     'geo.region': 'IN-MH',
     'geo.placename': 'Mumbai',
     'theme-color': '#4F46E5',
+    'og:image:secure_url': 'https://gharconnect.in/GC_Logo.png',
+    'og:image:type': 'image/png',
+    'og:image:width': '1200',
+    'og:image:height': '630',
   },
 }
 
