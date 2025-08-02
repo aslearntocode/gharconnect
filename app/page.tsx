@@ -4,11 +4,11 @@ import { Metadata } from 'next';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
-  title: 'GharConnect - Community Platform for Rentals & Local Services',
+  title: 'GharConnect - Community Platform for No Brokerage Rentals & Local Services',
   description: 'Find brokerage-free apartments for rent in Mumbai, Bangalore, and Pune. Connect with neighbors, discover local services, and join your community marketplace. No hidden charges, transparent pricing.',
   keywords: 'rental apartments, no brokerage, community platform, local services, society management, Mumbai rentals, Bangalore rentals, Pune rentals, domestic help, driver services, marketplace, neighborhood connect, society amenities, community discussions',
   openGraph: {
-    title: 'GharConnect - Community Platform for Rentals & Local Services',
+    title: 'GharConnect - Community Platform for No Brokerage Rentals & Local Services',
     description: 'Find brokerage-free apartments for rent in Mumbai, Bangalore, and Pune. Connect with neighbors, discover local services, and join your community marketplace.',
     type: 'website',
     url: 'https://gharconnect.in',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GharConnect - Community Platform for Rentals & Local Services',
+    title: 'GharConnect - Community Platform for No Brokerage Rentals & Local Services',
     description: 'Find brokerage-free apartments for rent in Mumbai, Bangalore, and Pune. Connect with neighbors, discover local services.',
     images: ['https://gharconnect.in/GC_Logo.png'],
     creator: '@gharconnect',
