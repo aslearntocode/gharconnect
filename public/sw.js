@@ -21,6 +21,12 @@ self.addEventListener('install', (event) => {
 
 // Fetch event - serve from cache if available
 self.addEventListener('fetch', (event) => {
+  // Allow ChatGPT and other AI bots to access the site without caching
+  const userAgent = event.request.headers.get('user-agent') || '';
+  if (userAgent.includes('ChatGPT') || userAgent.includes('OpenAI') || userAgent.includes('GPT')) {
+    return fetch(event.request);
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => {

@@ -9,9 +9,11 @@ Sitemap: https://gharconnect.in/sitemap.xml
 Disallow: /api/
 Disallow: /_next/
 Disallow: /static/
-Disallow: /*.json$
-Disallow: /*.js$
-Disallow: /*.css$
+
+# Allow JavaScript and CSS for proper rendering
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.json$
 
 # Allow crawling of important pages (canonical URLs)
 Allow: /mumbai

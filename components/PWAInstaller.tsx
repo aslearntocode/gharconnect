@@ -25,6 +25,12 @@ export default function PWAInstaller() {
       return
     }
 
+    // Don't show PWA installer for AI bots or ChatGPT
+    const userAgent = navigator.userAgent || '';
+    if (userAgent.includes('ChatGPT') || userAgent.includes('OpenAI') || userAgent.includes('GPT')) {
+      return;
+    }
+
     // Listen for beforeinstallprompt event
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault()
