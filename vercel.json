@@ -10,17 +10,6 @@
           "value": "www.gharconnect.in"
         }
       ]
-    },
-    {
-      "source": "/:path*",
-      "destination": "https://gharconnect.in/:path*",
-      "permanent": true,
-      "has": [
-        {
-          "type": "host",
-          "value": "gharconnect.in"
-        }
-      ]
     }
   ],
   "headers": [
