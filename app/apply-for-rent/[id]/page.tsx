@@ -34,7 +34,7 @@ export default function ApplyForRentPage() {
   });
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
       if (user) {
         setUser(user);
         setValue('name', user.displayName || '');

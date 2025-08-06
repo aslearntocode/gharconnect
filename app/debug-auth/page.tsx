@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { User } from 'firebase/auth';
 import { auth } from '@/lib/firebase'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -13,7 +14,7 @@ export default function DebugAuthPage() {
   const [debugInfo, setDebugInfo] = useState<any>({})
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
       setUser(user)
       console.log('Auth state changed:', user?.email || 'null')
     })

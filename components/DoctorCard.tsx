@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { User } from 'firebase/auth';
 import { Doctor } from '@/app/mumbai/community/data/services/doctors';
 import { FiPhone, FiMapPin, FiClock, FiAward, FiBookOpen, FiPlusSquare } from 'react-icons/fi';
 import LoginModal from './LoginModal';
@@ -17,7 +18,7 @@ export function DoctorCard({ doctor }: DoctorCardProps) {
 
   // Track user authentication status
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
       setUser(user);
     });
     return () => unsubscribe();

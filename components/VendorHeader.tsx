@@ -13,7 +13,7 @@ export default function VendorHeader() {
   const router = useRouter()
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
       setUser(user)
     })
     return () => unsubscribe()

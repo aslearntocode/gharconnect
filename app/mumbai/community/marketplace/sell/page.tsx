@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { User } from 'firebase/auth';
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -61,7 +62,7 @@ export default function SellPage() {
   })
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
       if (user) {
         setUser(user)
         // Sync Firebase token to Supabase session

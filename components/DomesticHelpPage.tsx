@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import { User } from 'firebase/auth';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { usePathname } from 'next/navigation';
 import Header from '@/components/Header';
@@ -107,7 +108,7 @@ export default function DomesticHelpPage() {
 
   // Track user authentication status
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
       setUser(user);
     });
     return () => unsubscribe();

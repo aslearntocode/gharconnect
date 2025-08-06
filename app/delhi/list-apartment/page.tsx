@@ -64,7 +64,7 @@ export default function RentApartmentPage() {
   });
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
       setUser(user);
       setLoadingUser(false);
     });

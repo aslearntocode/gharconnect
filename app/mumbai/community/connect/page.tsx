@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { User } from 'firebase/auth';
 import { getSupabaseClient } from '@/lib/supabase';
 import { auth } from '@/lib/firebase';
 import { generateAnonymousId } from '@/lib/anonymousId';
@@ -93,7 +94,7 @@ export default function ParelConnectPage() {
   ];
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
       setUser(user);
       if (user) {
         // Fetch liked posts for this user from Supabase

@@ -41,7 +41,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
   const currentSociety = getSocietyFromPath()
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
       console.log('Header: Auth state changed, user:', user?.email || 'null');
       setUser(user)
       if (user?.uid) {

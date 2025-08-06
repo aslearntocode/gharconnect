@@ -50,7 +50,7 @@ export default function Poll({ location }: PollProps) {
   const [isLoadingPoll, setIsLoadingPoll] = useState(true)
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
       setUser(user)
       if (user) {
         checkUserVote(user.uid)

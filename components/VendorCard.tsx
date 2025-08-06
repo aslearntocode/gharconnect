@@ -1,6 +1,7 @@
 'use client';
 
 import { FiChevronDown, FiChevronUp, FiPhone, FiX, FiChevronLeft, FiChevronRight, FiGlobe } from 'react-icons/fi';
+import { User } from 'firebase/auth';
 import { VendorRating } from './VendorRating';
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -111,7 +112,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
 
   // Track user authentication status
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
       setUser(user);
     });
     return () => unsubscribe();

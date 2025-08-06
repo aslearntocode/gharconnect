@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { User } from 'firebase/auth';
 import { useRouter, useParams } from 'next/navigation';
 import { getSupabaseClient } from '@/lib/supabase';
 import { auth } from '@/lib/firebase';
@@ -58,7 +59,7 @@ export default function PostDetailPage() {
   });
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => setUser(user));
+    const unsubscribe = auth.onAuthStateChanged((user: User | null) => setUser(user));
     fetchPostAndComments();
     return () => unsubscribe();
   }, [postId]);

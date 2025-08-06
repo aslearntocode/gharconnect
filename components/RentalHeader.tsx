@@ -29,7 +29,7 @@ export default function RentalHeader() {
   const currentCity = getCityFromPath()
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
       console.log('RentalHeader: Auth state changed, user:', user?.email || 'null');
       setUser(user)
       if (user?.uid) {

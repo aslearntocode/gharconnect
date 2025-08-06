@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { auth } from '@/lib/firebase';
-import { signOut, setPersistence, browserLocalPersistence } from 'firebase/auth';
+import { signOut, setPersistence, browserLocalPersistence, User } from 'firebase/auth';
 import VendorHeader from '@/components/VendorHeader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -151,7 +151,7 @@ export default function VendorDashboard() {
   useEffect(() => {
     setPersistence(auth, browserLocalPersistence);
     
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
       if (user) {
         setIsLoggedIn(true);
         fetchAvailability();

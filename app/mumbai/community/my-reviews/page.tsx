@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { User } from 'firebase/auth';
 import { useRouter } from 'next/navigation'
 import { auth } from '@/lib/firebase'
 import { getSupabaseClient, type Review } from '@/lib/supabase'
@@ -15,7 +16,7 @@ export default function MyReviews() {
   const router = useRouter()
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
       if (!user) {
         // Redirect to Parel homepage instead of login page
         router.push('/parel')

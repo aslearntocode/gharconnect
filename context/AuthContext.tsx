@@ -25,7 +25,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Initialize Firebase persistence safely (only once)
     initializeFirebasePersistence();
 
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
       setCurrentUser(user);
       setLoading(false);
     });

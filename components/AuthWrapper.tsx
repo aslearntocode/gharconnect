@@ -2,7 +2,7 @@
 
 import { useRouter, usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
-import { onAuthStateChanged, signOut } from "firebase/auth"
+import { onAuthStateChanged, signOut, User } from 'firebase/auth'
 import { auth } from "@/lib/firebase"
 
 const TIMEOUT_DURATION = 30 * 60 * 1000 // 30 minutes in milliseconds

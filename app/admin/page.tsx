@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { auth } from '@/lib/firebase';
-import { signOut } from 'firebase/auth';
+import { signOut, User } from 'firebase/auth';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
@@ -32,7 +32,7 @@ export default function AdminDashboard() {
   const supabase = createClientComponentClient();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
       if (user) {
         setIsLoggedIn(true);
         console.log('User logged in:', user.uid, user.email);

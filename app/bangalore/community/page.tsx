@@ -270,7 +270,7 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
       setUser(user)
       if (user) {
         const supabase = await getSupabaseClient()
