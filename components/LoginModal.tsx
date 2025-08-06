@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from 'react'
 import { auth } from '@/lib/firebase'
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '@/components/ui/dialog'
 import Image from 'next/image'
 import { FirstTimeLoginForm } from './FirstTimeLoginForm'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { signInWithGoogle, debugFirebaseConfig } from '@/lib/auth-utils'
 
 interface LoginModalProps {
   isOpen: boolean
@@ -23,6 +23,7 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
   const [loading, setLoading] = useState(false)
   const [isFirstTimeUser, setIsFirstTimeUser] = useState(false)
   const [hasAttemptedLogin, setHasAttemptedLogin] = useState(false)
+  const [retryCount, setRetryCount] = useState(0)
   const router = useRouter()
   const supabase = createClientComponentClient()
 
@@ -61,17 +62,18 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
     setHasAttemptedLogin(true)
     console.log('Starting Google login process...')
 
+    // Debug Firebase configuration
+    debugFirebaseConfig()
+
     try {
-      const provider = new GoogleAuthProvider()
-      provider.setCustomParameters({
-        prompt: 'select_account'
-      })
+      const result = await signInWithGoogle()
       
-      console.log('Initiating sign in with popup...')
-      const result = await signInWithPopup(auth, provider)
-      console.log('Sign in successful:', result.user?.email)
-      
-      if (result.user) {
+      if (result.success && result.user) {
+        console.log('Sign in successful:', result.user.email)
+        
+        // Reset retry count on success
+        setRetryCount(0)
+        
         console.log('Checking if first time user...')
         const isFirstTime = await checkIfFirstTimeUser(result.user.uid)
         console.log('Is first time user:', isFirstTime)
@@ -86,28 +88,40 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
             router.push(redirectPath)
           }
         }
+      } else {
+        // Handle authentication errors
+        const errorCode = result.errorCode
+        const errorMessage = result.error || 'Authentication failed'
+        
+        console.error('Authentication failed:', { errorCode, errorMessage })
+        
+        if (errorCode === 'auth/popup-closed-by-user') {
+          // User closed the popup - this is not an error, just reset the state
+          console.log('User closed the authentication popup')
+          setError('')
+          return
+        } else if (errorCode === 'auth/cancelled-popup-request') {
+          // User cancelled the popup request - also not an error
+          console.log('User cancelled the authentication popup')
+          setError('')
+          return
+        } else if (errorCode === 'auth/popup-blocked') {
+          // Popup was blocked by browser - show helpful message
+          setError('Please allow popups for this site to sign in with Google')
+        } else if (errorCode === 'auth/missing-or-invalid-nonce') {
+          // Handle the specific nonce error - this usually means OAuth state is corrupted
+          console.error('Nonce error detected:', { errorCode, errorMessage })
+          setError('Authentication session expired. Please refresh the page and try again.')
+          // Reset retry count to allow manual retry
+          setRetryCount(0)
+        } else {
+          // For other errors, show the error message
+          setError(errorMessage)
+        }
       }
     } catch (error: any) {
-      console.error('Login error:', error)
-      
-      // Handle specific Firebase errors gracefully
-      if (error.code === 'auth/popup-closed-by-user') {
-        // User closed the popup - this is not an error, just reset the state
-        console.log('User closed the authentication popup')
-        setError('')
-        return
-      } else if (error.code === 'auth/cancelled-popup-request') {
-        // User cancelled the popup request - also not an error
-        console.log('User cancelled the authentication popup')
-        setError('')
-        return
-      } else if (error.code === 'auth/popup-blocked') {
-        // Popup was blocked by browser - show helpful message
-        setError('Please allow popups for this site to sign in with Google')
-      } else {
-        // For other errors, show the error message
-        setError(error.message || 'An error occurred during sign in')
-      }
+      console.error('Unexpected login error:', error)
+      setError('An unexpected error occurred. Please try again.')
     } finally {
       setLoading(false)
       console.log('Login process completed')
@@ -152,10 +166,12 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
     };
   }, [isOpen, onClose, redirectPath, router, onLoginSuccess, loading, hasAttemptedLogin])
 
-  // Reset hasAttemptedLogin when modal opens
+  // Reset state when modal opens
   useEffect(() => {
     if (isOpen) {
       setHasAttemptedLogin(false)
+      setRetryCount(0)
+      setError('')
     }
   }, [isOpen])
 
