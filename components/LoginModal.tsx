@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '@
 import Image from 'next/image'
 import { FirstTimeLoginForm } from './FirstTimeLoginForm'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { signInWithGoogle, debugFirebaseConfig } from '@/lib/auth-utils'
+import { signInWithGoogle } from '@/lib/auth-utils'
 
 interface LoginModalProps {
   isOpen: boolean
@@ -22,8 +22,6 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [isFirstTimeUser, setIsFirstTimeUser] = useState(false)
-  const [hasAttemptedLogin, setHasAttemptedLogin] = useState(false)
-  const [retryCount, setRetryCount] = useState(0)
   const router = useRouter()
   const supabase = createClientComponentClient()
 
@@ -57,13 +55,10 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
   }
 
   const handleGoogleLogin = async () => {
+    if (loading) return; // Prevent multiple clicks
+    
     setError('')
     setLoading(true)
-    setHasAttemptedLogin(true)
-    console.log('Starting Google login process...')
-
-    // Debug Firebase configuration
-    debugFirebaseConfig()
 
     try {
       const result = await signInWithGoogle()
@@ -71,16 +66,12 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
       if (result.success && result.user) {
         console.log('Sign in successful:', result.user.email)
         
-        // Reset retry count on success
-        setRetryCount(0)
-        
-        console.log('Checking if first time user...')
+        // Check if first time user
         const isFirstTime = await checkIfFirstTimeUser(result.user.uid)
-        console.log('Is first time user:', isFirstTime)
         setIsFirstTimeUser(isFirstTime)
         
         if (!isFirstTime) {
-          console.log('Not first time user, closing modal and redirecting...')
+          // Close modal and redirect
           onClose()
           if (onLoginSuccess) {
             onLoginSuccess()
@@ -93,38 +84,24 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
         const errorCode = result.errorCode
         const errorMessage = result.error || 'Authentication failed'
         
-        console.error('Authentication failed:', { errorCode, errorMessage })
-        
-        if (errorCode === 'auth/popup-closed-by-user') {
-          // User closed the popup - this is not an error, just reset the state
-          console.log('User closed the authentication popup')
+        if (errorCode === 'auth/popup-closed-by-user' || errorCode === 'auth/cancelled-popup-request') {
+          // User closed or cancelled popup - not an error
           setError('')
-          return
-        } else if (errorCode === 'auth/cancelled-popup-request') {
-          // User cancelled the popup request - also not an error
-          console.log('User cancelled the authentication popup')
-          setError('')
-          return
         } else if (errorCode === 'auth/popup-blocked') {
-          // Popup was blocked by browser - show helpful message
           setError('Please allow popups for this site to sign in with Google')
         } else if (errorCode === 'auth/missing-or-invalid-nonce') {
-          // Handle the specific nonce error - this usually means OAuth state is corrupted
-          console.error('Nonce error detected:', { errorCode, errorMessage })
-          setError('Authentication session expired. Please refresh the page and try again.')
-          // Reset retry count to allow manual retry
-          setRetryCount(0)
+          setError('Please try again')
+        } else if (errorCode === 'auth/already-in-progress') {
+          setError('Sign in already in progress')
         } else {
-          // For other errors, show the error message
           setError(errorMessage)
         }
       }
     } catch (error: any) {
-      console.error('Unexpected login error:', error)
-      setError('An unexpected error occurred. Please try again.')
+      console.error('Login error:', error)
+      setError('An error occurred. Please try again.')
     } finally {
       setLoading(false)
-      console.log('Login process completed')
     }
   }
 
@@ -137,40 +114,9 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
     }
   }
 
-  // If user is already authenticated, close the modal and redirect
-  useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      // Only auto-close if the modal is open, we're not in the middle of a login process,
-      // and we have attempted a login (to prevent immediate closing on modal open)
-      if (user && isOpen && !loading && hasAttemptedLogin) {
-        console.log('User authenticated, closing login modal');
-        // Add a small delay to prevent race conditions
-        timeoutId = setTimeout(() => {
-          onClose()
-          if (onLoginSuccess) {
-            onLoginSuccess()
-          } else {
-            router.push(redirectPath)
-          }
-        }, 100);
-      }
-    });
-    
-    return () => {
-      unsubscribe();
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [isOpen, onClose, redirectPath, router, onLoginSuccess, loading, hasAttemptedLogin])
-
   // Reset state when modal opens
   useEffect(() => {
     if (isOpen) {
-      setHasAttemptedLogin(false)
-      setRetryCount(0)
       setError('')
     }
   }, [isOpen])

@@ -20,19 +20,31 @@ if (!firebaseConfig.apiKey || !firebaseConfig.authDomain || !firebaseConfig.proj
   });
 }
 
-// Initialize Firebase only if not already initialized
-export const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+// Singleton pattern to ensure only one Firebase instance
+let firebaseApp: any = null;
+let firebaseAuth: any = null;
+let firebaseDb: any = null;
 
-// Initialize Firebase services
-const auth = getAuth(app);
-const db = getFirestore(app);
+function initializeFirebase() {
+  if (firebaseApp) {
+    return { app: firebaseApp, auth: firebaseAuth, db: firebaseDb };
+  }
 
-// Log Firebase initialization for debugging
-console.log('Firebase initialized:', {
-  appName: app.name,
-  authDomain: firebaseConfig.authDomain,
-  projectId: firebaseConfig.projectId
-});
+  // Initialize Firebase only if not already initialized
+  if (getApps().length === 0) {
+    firebaseApp = initializeApp(firebaseConfig);
+  } else {
+    firebaseApp = getApps()[0];
+  }
+
+  // Initialize Firebase services
+  firebaseAuth = getAuth(firebaseApp);
+  firebaseDb = getFirestore(firebaseApp);
+
+  return { app: firebaseApp, auth: firebaseAuth, db: firebaseDb };
+}
+
+const { auth, db } = initializeFirebase();
 
 export { auth, db }; 
 

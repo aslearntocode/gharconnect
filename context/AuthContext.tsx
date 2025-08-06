@@ -26,7 +26,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     initializeFirebasePersistence();
 
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log('AuthContext: Auth state changed, user:', user?.email || 'null');
       setCurrentUser(user);
       setLoading(false);
     });

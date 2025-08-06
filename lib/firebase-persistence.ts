@@ -12,10 +12,10 @@ export function initializeFirebasePersistence() {
   
   return setPersistence(auth, browserLocalPersistence)
     .then(() => {
-      console.log('Firebase auth persistence set to local');
+      // Persistence set successfully
     })
     .catch((error: Error) => {
       console.error('Error setting Firebase persistence:', error);
-      persistenceSet = false; // Reset flag on error
+      persistenceSet = false;
     });
 } 

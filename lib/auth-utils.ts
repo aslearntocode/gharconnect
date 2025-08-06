@@ -8,8 +8,22 @@ export interface AuthResult {
   errorCode?: string
 }
 
+// Prevent multiple OAuth flows
+let isSigningIn = false;
+
 export async function signInWithGoogle(): Promise<AuthResult> {
+  // Prevent multiple simultaneous sign-in attempts
+  if (isSigningIn) {
+    return {
+      success: false,
+      error: 'Sign in already in progress',
+      errorCode: 'auth/already-in-progress'
+    }
+  }
+
   try {
+    isSigningIn = true;
+
     // Validate Firebase auth is initialized
     if (!auth) {
       return {
@@ -19,25 +33,21 @@ export async function signInWithGoogle(): Promise<AuthResult> {
       }
     }
 
-    // Clear any existing auth state
-    if (auth.currentUser) {
-      console.log('Clearing existing auth state...')
-      await signOut(auth)
-      // Wait for sign out to complete
-      await new Promise(resolve => setTimeout(resolve, 1000))
+    // Clear any existing OAuth state that might cause issues
+    if (typeof window !== 'undefined') {
+      // Clear any stored OAuth state
+      sessionStorage.removeItem('firebase:authUser:gharconnect2025:web');
+      localStorage.removeItem('firebase:authUser:gharconnect2025:web');
     }
 
     // Create a fresh provider instance
     const provider = new GoogleAuthProvider()
     
-    // Add some scopes if needed
+    // Add scopes
     provider.addScope('email')
     provider.addScope('profile')
 
-    console.log('Initiating Google sign in...')
     const result = await signInWithPopup(auth, provider)
-    
-    console.log('Sign in successful:', result.user?.email)
     
     return {
       success: true,
@@ -51,6 +61,8 @@ export async function signInWithGoogle(): Promise<AuthResult> {
       error: error.message || 'Authentication failed',
       errorCode: error.code
     }
+  } finally {
+    isSigningIn = false;
   }
 }
 
