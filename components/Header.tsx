@@ -244,7 +244,19 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                 </form>
               </div>
 
-              {user && <ProfileDropdown user={user} />}
+              {user ? (
+                <ProfileDropdown user={user} />
+              ) : (
+                <Link href={`/${currentSociety}/login`} className={`whitespace-nowrap transition-colors duration-300 ${
+                  isScrolled 
+                    ? 'text-white hover:text-gray-300' 
+                    : 'text-black hover:text-gray-700'
+                }`}>
+                  <Button variant="ghost" className="text-sm md:text-base py-1 md:py-2">
+                    Log in
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </nav>
