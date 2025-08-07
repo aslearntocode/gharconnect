@@ -1,13 +1,10 @@
 'use client';
 
 import { FiChevronDown, FiChevronUp, FiPhone, FiX, FiChevronLeft, FiChevronRight, FiGlobe } from 'react-icons/fi';
-import { User } from 'firebase/auth';
 import { VendorRating } from './VendorRating';
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter, usePathname } from 'next/navigation';
-import LoginModal from './LoginModal';
-import { auth } from '@/lib/firebase';
 
 interface ServiceRating {
   rating: number;
@@ -46,8 +43,6 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const [reviews, setReviews] = useState<any[]>([]);
   const [imageError, setImageError] = useState(false);
   const [showNumber, setShowNumber] = useState(false);
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
   const supabase = createClientComponentClient();
   const router = useRouter();
   const pathname = usePathname();
@@ -109,14 +104,6 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
     console.log('Final vendor ID result:', result, 'type:', typeof result);
     return result;
   };
-
-  // Track user authentication status
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
-      setUser(user);
-    });
-    return () => unsubscribe();
-  }, []);
 
   // Extract society from pathname
   const getSocietyFromPath = () => {
@@ -347,11 +334,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   };
 
   const handleShowNumber = () => {
-    if (user) {
-      setShowNumber(true);
-    } else {
-      setIsLoginModalOpen(true);
-    }
+    setShowNumber(true);
   };
 
   const copyToClipboard = async (text: string) => {
@@ -464,7 +447,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
               onClick={handleShowNumber}
               className="text-blue-600 text-sm font-medium hover:text-blue-700 block mb-3 underline focus:outline-none"
             >
-              Log-in to view number
+              Click to view number
             </button>
           ) : (
             <div className="mb-3">
@@ -783,14 +766,6 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
         </div>
       )}
 
-      <LoginModal
-        isOpen={isLoginModalOpen}
-        onClose={() => setIsLoginModalOpen(false)}
-        onLoginSuccess={() => {
-          setIsLoginModalOpen(false);
-          setShowNumber(true);
-        }}
-      />
     </>
   );
 } 
