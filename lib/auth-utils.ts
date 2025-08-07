@@ -33,33 +33,74 @@ export async function signInWithGoogle(): Promise<AuthResult> {
       }
     }
 
-    // Clear any existing OAuth state that might cause issues
-    if (typeof window !== 'undefined') {
-      // Clear any stored OAuth state
-      sessionStorage.removeItem('firebase:authUser:gharconnect2025:web');
-      localStorage.removeItem('firebase:authUser:gharconnect2025:web');
+    // Ensure Firebase app is ready
+    if (!auth.app) {
+      return {
+        success: false,
+        error: 'Firebase app is not initialized',
+        errorCode: 'auth/app-not-initialized'
+      }
     }
 
-    // Create a fresh provider instance
+    // Create a fresh provider instance with custom parameters
     const provider = new GoogleAuthProvider()
     
     // Add scopes
     provider.addScope('email')
     provider.addScope('profile')
+    
+    // Force fresh OAuth flow
+    provider.setCustomParameters({
+      prompt: 'select_account'
+    });
 
+    console.log('Attempting Google sign in...', {
+      authInitialized: !!auth,
+      appInitialized: !!auth.app,
+      currentUser: auth.currentUser?.email,
+      provider: provider.providerId,
+      scopes: provider.scopes
+    });
+
+    console.log('About to call signInWithPopup...');
     const result = await signInWithPopup(auth, provider)
+    console.log('signInWithPopup completed successfully');
+    
+    console.log('Sign in successful:', result.user.email);
     
     return {
       success: true,
       user: result.user
     }
   } catch (error: any) {
-    console.error('Google sign in error:', error)
+    console.error('Google sign in error:', error);
+    console.error('Error details:', {
+      code: error?.code,
+      message: error?.message,
+      stack: error?.stack,
+      name: error?.name,
+      toString: error?.toString()
+    });
+    
+    // Handle different types of errors
+    let errorMessage = 'Authentication failed';
+    let errorCode = 'auth/unknown-error';
+    
+    if (error?.code) {
+      errorCode = error.code;
+      errorMessage = error.message || 'Authentication failed';
+    } else if (error?.message) {
+      errorMessage = error.message;
+    } else if (typeof error === 'string') {
+      errorMessage = error;
+    } else if (error && typeof error === 'object') {
+      errorMessage = JSON.stringify(error);
+    }
     
     return {
       success: false,
-      error: error.message || 'Authentication failed',
-      errorCode: error.code
+      error: errorMessage,
+      errorCode: errorCode
     }
   } finally {
     isSigningIn = false;

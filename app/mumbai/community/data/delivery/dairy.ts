@@ -211,7 +211,7 @@ export const vendors: Vendor[] = [
     mobile: '+91 93213 14553',
     areaServed: ['Parel','Worli','Wadala','Chembur','Dadar','Sion','Mahalaxmi','Bandra','Juhu','Powai','Malad','Andheri','Goregaon','Thane'],
     buildingServed: ['All'],
-    whatsappGroup: 'https://chat.whatsapp.com/DC5egpe5FQn7YQTEI9DQg5?mode=ac_t',
+    // whatsappGroup: 'https://chat.whatsapp.com/DC5egpe5FQn7YQTEI9DQg5?mode=ac_t',
     // blogLink: '/mumbai/community/blog/dairy-products-guide',
     // blogTitle: 'Learn about different types of dairy products and their benefits'
   }
