@@ -42,35 +42,111 @@ export async function signInWithGoogle(): Promise<AuthResult> {
       }
     }
 
-    // Create a fresh provider instance with custom parameters
+    // Check if user is already signed in
+    if (auth.currentUser) {
+      return {
+        success: true,
+        user: auth.currentUser
+      }
+    }
+
+    // Clear all OAuth-related state to prevent nonce errors
+    if (typeof window !== 'undefined') {
+      // Clear all Firebase-related storage items
+      const keysToRemove = [];
+      
+      // Find all Firebase-related keys in sessionStorage
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        if (key && key.includes('firebase')) {
+          keysToRemove.push(key);
+        }
+      }
+      
+      // Find all Firebase-related keys in localStorage
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.includes('firebase')) {
+          keysToRemove.push(key);
+        }
+      }
+      
+      // Remove all Firebase-related keys
+      keysToRemove.forEach(key => {
+        sessionStorage.removeItem(key);
+        localStorage.removeItem(key);
+      });
+      
+      console.log('Cleared Firebase storage keys:', keysToRemove);
+    }
+
+    // Create a fresh provider instance
     const provider = new GoogleAuthProvider()
     
     // Add scopes
     provider.addScope('email')
     provider.addScope('profile')
-    
-    // Force fresh OAuth flow
-    provider.setCustomParameters({
-      prompt: 'select_account'
-    });
 
     console.log('Attempting Google sign in...', {
       authInitialized: !!auth,
       appInitialized: !!auth.app,
       currentUser: auth.currentUser?.email,
-      provider: provider.providerId,
-      scopes: provider.scopes
+      provider: provider.providerId
     });
 
     console.log('About to call signInWithPopup...');
-    const result = await signInWithPopup(auth, provider)
-    console.log('signInWithPopup completed successfully');
     
-    console.log('Sign in successful:', result.user.email);
-    
-    return {
-      success: true,
-      user: result.user
+    try {
+      const result = await signInWithPopup(auth, provider)
+      console.log('signInWithPopup completed successfully');
+      
+      console.log('Sign in successful:', result.user.email);
+      
+      return {
+        success: true,
+        user: result.user
+      }
+    } catch (popupError: any) {
+      // If we get a nonce error, try one more time after clearing state
+      if (popupError?.code === 'auth/missing-or-invalid-nonce') {
+        console.log('Nonce error detected, retrying after clearing state...');
+        
+        // Clear state again and retry
+        if (typeof window !== 'undefined') {
+          const keysToRemove = [];
+          for (let i = 0; i < sessionStorage.length; i++) {
+            const key = sessionStorage.key(i);
+            if (key && key.includes('firebase')) {
+              keysToRemove.push(key);
+            }
+          }
+          for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key && key.includes('firebase')) {
+              keysToRemove.push(key);
+            }
+          }
+          keysToRemove.forEach(key => {
+            sessionStorage.removeItem(key);
+            localStorage.removeItem(key);
+          });
+        }
+        
+        // Wait a bit longer before retry
+        await new Promise(resolve => setTimeout(resolve, 500));
+        
+        // Retry the sign in
+        const retryResult = await signInWithPopup(auth, provider);
+        console.log('Retry successful:', retryResult.user.email);
+        
+        return {
+          success: true,
+          user: retryResult.user
+        }
+      }
+      
+      // If it's not a nonce error, re-throw it
+      throw popupError;
     }
   } catch (error: any) {
     console.error('Google sign in error:', error);
@@ -94,7 +170,13 @@ export async function signInWithGoogle(): Promise<AuthResult> {
     } else if (typeof error === 'string') {
       errorMessage = error;
     } else if (error && typeof error === 'object') {
-      errorMessage = JSON.stringify(error);
+      // Try to extract meaningful information from the error object
+      const errorKeys = Object.keys(error);
+      if (errorKeys.length > 0) {
+        errorMessage = `Authentication error: ${errorKeys.join(', ')}`;
+      } else {
+        errorMessage = 'Unknown authentication error occurred';
+      }
     }
     
     return {

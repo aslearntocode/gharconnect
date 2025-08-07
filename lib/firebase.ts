@@ -18,6 +18,12 @@ if (!firebaseConfig.apiKey || !firebaseConfig.authDomain || !firebaseConfig.proj
     hasAuthDomain: !!firebaseConfig.authDomain,
     hasProjectId: !!firebaseConfig.projectId,
   });
+} else {
+  console.log('Firebase configuration validated:', {
+    authDomain: firebaseConfig.authDomain,
+    projectId: firebaseConfig.projectId,
+    appId: firebaseConfig.appId
+  });
 }
 
 // Singleton pattern to ensure only one Firebase instance
@@ -45,6 +51,16 @@ function initializeFirebase() {
 }
 
 const { auth, db } = initializeFirebase();
+
+// Log Firebase app details for debugging
+if (typeof window !== 'undefined') {
+  console.log('Firebase app initialized:', {
+    appName: auth.app.name,
+    authDomain: auth.app.options.authDomain,
+    projectId: auth.app.options.projectId,
+    appId: auth.app.options.appId
+  });
+}
 
 export { auth, db }; 
 
