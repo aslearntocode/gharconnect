@@ -316,6 +316,22 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
 
   const items = vendor.services || vendor.products || [];
   const itemType = vendor.services ? 'services' : 'products';
+  
+  // Calculate total items including varieties for the new structure
+  const getTotalItemCount = () => {
+    if (vendor.services) {
+      return items.length;
+    }
+    if (vendor.products) {
+      return items.reduce((total: number, product: any) => {
+        if (product.varieties && Array.isArray(product.varieties)) {
+          return total + product.varieties.length;
+        }
+        return total + 1; // Fallback for old structure
+      }, 0);
+    }
+    return items.length;
+  };
 
   const formatPrice = (price: number | string | undefined | null, unit: string) => {
     if (price === undefined || price === null || price === '') {
@@ -441,7 +457,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
             })()}
           </div>
           <p className="text-sm text-gray-600 mb-2">
-            {items.length} {itemType} available
+            {getTotalItemCount()} {itemType} available
           </p>
           {!showNumber ? (
             <button
@@ -605,7 +621,16 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
                           <span className="text-gray-900 font-medium">{formatPrice(service.price, service.unit)}</span>
                         </div>
                       ))
+                    ) : item.varieties ? (
+                      // New structure with varieties
+                      item.varieties.map((variety: any, idx: number) => (
+                        <div key={idx} className="flex justify-between items-center text-sm">
+                          <span className="text-gray-600">{variety.name}</span>
+                          <span className="text-gray-900 font-medium">{formatPrice(variety.price, variety.unit)}</span>
+                        </div>
+                      ))
                     ) : (
+                      // Old structure (fallback)
                       <div className="flex justify-between items-center text-sm gap-4">
                         <span className="text-gray-600">{item.description}</span>
                         <span className="text-gray-900 font-medium">{formatPrice(item.price, item.unit)}</span>

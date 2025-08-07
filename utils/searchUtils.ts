@@ -29,10 +29,22 @@ export const searchVendors = (vendors: any[], searchQuery: string) => {
     
     // Check products (for delivery pages)
     if (vendor.products && Array.isArray(vendor.products)) {
-      if (vendor.products.some((product: any) => 
-        product.name.toLowerCase().includes(searchLower) ||
-        product.description.toLowerCase().includes(searchLower)
-      )) return true;
+      if (vendor.products.some((product: any) => {
+        // Check product name and description
+        if (product.name.toLowerCase().includes(searchLower) ||
+            product.description.toLowerCase().includes(searchLower)) {
+          return true;
+        }
+        
+        // Check product varieties (new structure)
+        if (product.varieties && Array.isArray(product.varieties)) {
+          if (product.varieties.some((variety: any) => 
+            variety.name.toLowerCase().includes(searchLower)
+          )) return true;
+        }
+        
+        return false;
+      })) return true;
     }
     
     return false;
