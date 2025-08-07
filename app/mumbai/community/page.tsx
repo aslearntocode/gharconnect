@@ -6,6 +6,7 @@ import Image from "next/image"
 import { useEffect, useState, useRef } from "react"
 import { auth } from "@/lib/firebase"
 import { User } from "firebase/auth"
+import { initializeFirebaseAuth } from '@/lib/authUtils'
 import { ProfileDropdown } from "@/components/ProfileDropdown"
 import Testimonials from "@/components/Testimonials"
 import Header from "@/components/Header"
@@ -278,7 +279,7 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const unsubscribe = initializeFirebaseAuth(async (user) => {
       setUser(user)
       if (user) {
         const supabase = await getSupabaseClient()

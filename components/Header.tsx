@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { auth } from "@/lib/firebase"
 import { User } from "firebase/auth"
 import { ProfileDropdown } from "./ProfileDropdown"
 import { useRouter, usePathname } from "next/navigation"
@@ -11,6 +10,7 @@ import { Button } from '@/components/ui/button'
 import { signOut } from 'firebase/auth'
 import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiSearch, FiPlus, FiHeart, FiCircle, FiUsers } from 'react-icons/fi'
 import { FaBuilding } from 'react-icons/fa'
+import { initializeFirebaseAuth } from '@/lib/authUtils'
 
 export default function Header({ isScrolled = false }: { isScrolled?: boolean }) {
   const [user, setUser] = useState<User | null>(null)
@@ -41,7 +41,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
   const currentSociety = getSocietyFromPath()
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
+    const unsubscribe = initializeFirebaseAuth(async (user: User | null) => {
       console.log('Header: Auth state changed, user:', user?.email || 'null');
       setUser(user)
       if (user?.uid) {
