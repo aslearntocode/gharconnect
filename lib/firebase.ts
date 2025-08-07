@@ -1,4 +1,4 @@
-  import { initializeApp, getApps } from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
@@ -11,36 +11,12 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-// Validate Firebase configuration
-if (!firebaseConfig.apiKey || !firebaseConfig.authDomain || !firebaseConfig.projectId) {
-  console.error('Firebase configuration is missing required fields');
-}
+// Initialize Firebase
+export const app = initializeApp(firebaseConfig);
 
-// Singleton pattern to ensure only one Firebase instance
-let firebaseApp: any = null;
-let firebaseAuth: any = null;
-let firebaseDb: any = null;
-
-function initializeFirebase() {
-  if (firebaseApp) {
-    return { app: firebaseApp, auth: firebaseAuth, db: firebaseDb };
-  }
-
-  // Initialize Firebase only if not already initialized
-  if (getApps().length === 0) {
-    firebaseApp = initializeApp(firebaseConfig);
-  } else {
-    firebaseApp = getApps()[0];
-  }
-
-  // Initialize Firebase services
-  firebaseAuth = getAuth(firebaseApp);
-  firebaseDb = getFirestore(firebaseApp);
-
-  return { app: firebaseApp, auth: firebaseAuth, db: firebaseDb };
-}
-
-const { auth, db } = initializeFirebase();
+// Initialize Firebase services
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 export { auth, db }; 
 

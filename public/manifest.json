@@ -6,17 +6,96 @@
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4F46E5",
+  "orientation": "portrait-primary",
   "scope": "/",
+  "lang": "en",
+  "categories": ["business", "lifestyle", "social"],
   "icons": [
-  {
-    "src": "icons/icon-192.png",
-    "sizes": "192x192",
-    "type": "image/png"
-  },
-  {
-    "src": "icons/icon-512.png",
-    "sizes": "512x512",
-    "type": "image/png"
-  }
-]
+    {
+      "src": "/GC_Logo.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/GC_Logo.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/GC_Logo.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/GC_Logo.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/GC_Logo.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/GC_Logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/GC_Logo.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/GC_Logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mumbai Community",
+      "short_name": "Mumbai",
+      "description": "Access Mumbai community services",
+      "url": "/mumbai/community",
+      "icons": [
+        {
+          "src": "/GC_Logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Bangalore Community",
+      "short_name": "Bangalore",
+      "description": "Access Bangalore community services",
+      "url": "/bangalore/community",
+      "icons": [
+        {
+          "src": "/GC_Logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Pune Community",
+      "short_name": "Pune",
+      "description": "Access Pune community services",
+      "url": "/pune/community",
+      "icons": [
+        {
+          "src": "/GC_Logo.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
 } 

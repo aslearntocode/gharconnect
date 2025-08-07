@@ -48,7 +48,7 @@ export default function PWAInstaller() {
     // Register service worker
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker
-        .register('/sw.js', { scope: '/' })
+        .register('/sw.js')
         .then((registration) => {
           console.log('SW registered: ', registration)
         })

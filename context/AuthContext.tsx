@@ -1,9 +1,6 @@
-'use client';
-
 import { createContext, useContext, useEffect, useState } from 'react';
 import { User } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { initializeFirebasePersistence } from '@/lib/firebase-persistence';
 
 export type AuthContextType = {
   currentUser: User | null;
@@ -22,10 +19,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Initialize Firebase persistence safely (only once)
-    initializeFirebasePersistence();
-
-    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      console.log('AuthContext: Auth state changed, user:', user?.email || 'null');
       setCurrentUser(user);
       setLoading(false);
     });

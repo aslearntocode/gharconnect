@@ -1,6 +1,9 @@
 const CACHE_NAME = 'gharconnect-v1';
 const urlsToCache = [
   '/',
+  '/mumbai/community',
+  '/bangalore/community',
+  '/pune/community',
   '/GC_Logo.png',
   '/manifest.json'
 ];
@@ -21,13 +24,6 @@ self.addEventListener('fetch', (event) => {
   // Allow ChatGPT and other AI bots to access the site without caching
   const userAgent = event.request.headers.get('user-agent') || '';
   if (userAgent.includes('ChatGPT') || userAgent.includes('OpenAI') || userAgent.includes('GPT')) {
-    return fetch(event.request);
-  }
-
-  // Don't cache authentication-related requests
-  if (event.request.url.includes('/api/auth') || 
-      event.request.url.includes('firebase') ||
-      event.request.url.includes('identitytoolkit')) {
     return fetch(event.request);
   }
 

@@ -10,14 +10,20 @@ export interface AuthResult {
 
 export async function signInWithGoogle(): Promise<AuthResult> {
   try {
-    // Simple Google sign in
+    // Check if popup is supported (mobile browsers might not support it)
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      return {
+        success: false,
+        error: 'Please use a desktop browser for Google sign-in, or try refreshing the page',
+        errorCode: 'auth/mobile-not-supported'
+      }
+    }
+
+    // Simple Google sign in - no state clearing, no complex logic
     const provider = new GoogleAuthProvider()
     
-    // Clear any existing OAuth state
-    if (typeof window !== 'undefined') {
-      sessionStorage.clear()
-      localStorage.clear()
-    }
+    // Add a small delay to ensure Firebase is fully initialized
+    await new Promise(resolve => setTimeout(resolve, 100));
     
     const result = await signInWithPopup(auth, provider)
     
@@ -27,6 +33,23 @@ export async function signInWithGoogle(): Promise<AuthResult> {
     }
   } catch (error: any) {
     console.error('Google sign in error:', error)
+    
+    // Handle specific errors
+    if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-user') {
+      return {
+        success: false,
+        error: 'Please allow popups for this site and try again',
+        errorCode: error.code
+      }
+    }
+    
+    if (error.code === 'auth/missing-or-invalid-nonce') {
+      return {
+        success: false,
+        error: 'Please refresh the page and try again',
+        errorCode: error.code
+      }
+    }
     
     return {
       success: false,

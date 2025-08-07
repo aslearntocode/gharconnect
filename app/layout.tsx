@@ -5,7 +5,6 @@ import { Toaster } from '@/components/ui/toaster';
 import Script from 'next/script';
 import SEOScript from '@/components/SEOScript';
 import PWAInstaller from '@/components/PWAInstaller';
-import { AuthProvider } from '@/context/AuthContext';
 
 export const metadata: Metadata = {
   title: 'GharConnect - Find Apartments & Local Services | Connect with Your Neighbors',
@@ -129,28 +128,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Splash Screens */}
         <link rel="apple-touch-startup-image" href="/GC_Logo.png" />
         
-        {/* PWA Manifest */}
-        <link rel="manifest" href="/manifest.json" />
-        
-        {/* Service Worker Registration */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js')
-                    .then(function(registration) {
-                      console.log('SW registered: ', registration);
-                    })
-                    .catch(function(registrationError) {
-                      console.log('SW registration failed: ', registrationError);
-                    });
-                });
-              }
-            `,
-          }}
-        />
-        
         {/* Meta Pixel Code */}
         <Script
           id="fb-pixel"
@@ -174,12 +151,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* End Meta Pixel Code */}
       </head>
       <body className="min-h-screen">
-        <AuthProvider>
-          {children}
-          <Analytics />
-          <Toaster />
-          <PWAInstaller />
-        </AuthProvider>
+        {children}
+        <Analytics />
+        <Toaster />
+        <PWAInstaller />
       </body>
     </html>
   );

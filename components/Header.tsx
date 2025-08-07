@@ -223,7 +223,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
 
             <div className="flex items-center">
               {/* Search Box - Mobile */}
-              <div className="md:hidden">
+              <div className="md:hidden absolute left-1/2 transform -translate-x-1/2">
                 <form onSubmit={handleSearch} className="relative">
                   <div className="relative">
                     <input
@@ -231,13 +231,13 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                       placeholder="Search anything..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className={`w-48 pl-8 pr-3 py-1.5 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-colors duration-300 ${
+                      className={`w-56 md:w-64 pl-8 pr-3 py-1.5 md:py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm transition-colors duration-300 ${
                         isScrolled 
                           ? 'border-gray-600 bg-gray-800 text-white placeholder-gray-400' 
                           : 'border-gray-300 bg-white text-black placeholder-gray-500'
                       }`}
                     />
-                    <FiSearch className={`absolute left-2.5 top-1/2 transform -translate-y-1/2 w-3.5 h-3.5 ${
+                    <FiSearch className={`absolute left-2.5 md:left-3 top-1/2 transform -translate-y-1/2 w-3.5 md:w-4 h-3.5 md:h-4 ${
                       isScrolled ? 'text-gray-400' : 'text-gray-400'
                     }`} />
                   </div>
