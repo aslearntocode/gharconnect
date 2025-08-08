@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     'og:image:url': 'https://gharconnect.in/GC_Logo.png',
     'twitter:image:src': 'https://gharconnect.in/GC_Logo.png',
     'og:image:size': '632893',
-    'og:image:updated_time': new Date().toISOString(),
+    'og:image:updated_time': '2025-01-07T00:00:00.000Z',
   },
 }
 

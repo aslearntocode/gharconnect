@@ -115,9 +115,22 @@ export default function ParelConnectPage() {
         }
       }
     });
-    fetchPosts();
-    fetchTopUsers(); // Call fetchTopUsers here
-    fetchFeaturedPosts(); // Call fetchFeaturedPosts here
+    
+    // Initial data fetch
+    const initializeData = async () => {
+      console.log('Initializing data...');
+      
+      // Test Supabase connection first
+      const supabase = await getSupabaseClient();
+      console.log('Supabase client created:', !!supabase);
+      
+      await fetchPosts();
+      await fetchTopUsers();
+      await fetchFeaturedPosts();
+    };
+    
+    initializeData();
+    
     return () => subscription.unsubscribe();
   }, []);
 
@@ -132,37 +145,66 @@ export default function ParelConnectPage() {
   }, [imageUploadReset]);
 
   const fetchPosts = async () => {
-    setLoading(true);
-    const supabase = await getSupabaseClient();
-    
-    // Define Mumbai areas
-    const mumbaiAreas = [
-      'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
-      'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur',
-      'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba',
-      'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon',
-      'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar',
-      'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli',
-      'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'
-    ];
-    
-    const { data, error } = await supabase
-      .from('posts')
-      .select(`
-        *,
-        comment_count:comments(count)
-      `)
-      .in('area', mumbaiAreas)
-      .order('created_at', { ascending: false });
-    if (!error) {
-      // Transform the data to flatten the comment_count
-      const transformedData = (data || []).map(post => ({
-        ...post,
-        comment_count: post.comment_count?.[0]?.count || 0
-      }));
-      setPosts(transformedData);
+    try {
+      console.log('Fetching posts...');
+      setLoading(true);
+      const supabase = await getSupabaseClient();
+      
+      // First, let's check if the posts table exists and has any data
+      console.log('Testing posts table access...');
+      const { data: testData, error: testError } = await supabase
+        .from('posts')
+        .select('id, title, area')
+        .limit(5);
+      
+      console.log('Test query result:', { testData, testError });
+      
+      if (testError) {
+        console.error('Cannot access posts table:', testError);
+        setLoading(false);
+        return;
+      }
+      
+      // Define Mumbai areas
+      const mumbaiAreas = [
+        'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
+        'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur',
+        'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba',
+        'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon',
+        'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar',
+        'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli',
+        'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'
+      ];
+      
+      console.log('Searching for posts in areas:', mumbaiAreas);
+      
+      const { data, error } = await supabase
+        .from('posts')
+        .select(`
+          *,
+          comment_count:comments(count)
+        `)
+        .in('area', mumbaiAreas)
+        .order('created_at', { ascending: false });
+      
+      console.log('Posts fetch result:', { data, error });
+      
+      if (!error) {
+        // Transform the data to flatten the comment_count
+        const transformedData = (data || []).map(post => ({
+          ...post,
+          comment_count: post.comment_count?.[0]?.count || 0
+        }));
+        console.log('Transformed posts:', transformedData);
+        setPosts(transformedData);
+      } else {
+        console.error('Error fetching posts:', error);
+      }
+    } catch (error) {
+      console.error('Exception in fetchPosts:', error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const fetchFeaturedPosts = async () => {
@@ -1019,9 +1061,37 @@ export default function ParelConnectPage() {
             <section>
               <h2 className="text-lg md:text-xl font-semibold mb-4">Recent Discussions</h2>
               {loading ? (
-                <div>Loading posts...</div>
+                <div className="flex items-center justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                  <span className="ml-3 text-gray-600">Loading posts...</span>
+                </div>
+              ) : posts.length === 0 ? (
+                <div className="text-gray-500 text-center py-8">
+                  <div className="mb-4">
+                    <svg className="w-16 h-16 mx-auto text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-700 mb-2">No posts yet</h3>
+                  <p className="text-gray-500 mb-4">Be the first to start a discussion in the Mumbai community!</p>
+                  {user ? (
+                    <button
+                      onClick={() => setIsPostFormOpen(true)}
+                      className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
+                    >
+                      Create First Post
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setIsLoginModalOpen(true)}
+                      className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2 rounded-lg transition-colors"
+                    >
+                      Login to Post
+                    </button>
+                  )}
+                </div>
               ) : filteredPosts.length === 0 ? (
-                <div className="text-gray-500">No results found.</div>
+                <div className="text-gray-500 text-center py-8">No posts match your current filters. Try adjusting your search or filters.</div>
               ) : (
                 <ul className="flex flex-col gap-6">
                   {filteredPosts.map((post, index) => (

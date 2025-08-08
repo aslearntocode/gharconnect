@@ -896,6 +896,8 @@ export default function Home() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
+            minHeight: '400px',
+            maxHeight: '600px',
           }}
         >
           {/* Overlay for readability */}

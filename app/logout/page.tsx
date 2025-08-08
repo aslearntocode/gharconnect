@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signOutUser } from '@/lib/supabase-auth'
 
-export default function LogoutPage() {
+function LogoutContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -34,5 +34,20 @@ export default function LogoutPage() {
         <p className="text-gray-600">Signing out...</p>
       </div>
     </div>
+  )
+}
+
+export default function LogoutPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <LogoutContent />
+    </Suspense>
   )
 } 
