@@ -154,13 +154,14 @@ export function PropertyRating({ propertyId, propertyName, onRatingAdded }: Prop
     })
   }
 
-  const handleRateClick = () => {
-    const { data: { user } } = await supabase.auth.getUser(); if (!user) {
-      setIsOpen(false)
-      setLoginMessage('Login to rate this property')
-      setShowLoginModal(true)
+  const handleRateClick = async () => {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      setIsOpen(false);
+      setLoginMessage('Login to rate this property');
+      setShowLoginModal(true);
     } else {
-      setIsOpen(true)
+      setIsOpen(true);
     }
   }
 
