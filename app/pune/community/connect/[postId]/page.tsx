@@ -151,8 +151,9 @@ export default function PostDetailPage() {
       return;
     }
     setLikesLoading(commentId);
-    const supabase = await getSupabaseClient();
-    const userId = user.id;
+    try {
+      const supabase = await getSupabaseClient();
+      const userId = user.id;
 
       // Check if user already liked the post
       const { data: existingLike } = await supabase

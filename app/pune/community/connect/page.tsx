@@ -74,6 +74,57 @@ export default function ParelConnectPage() {
   const [imageUploadReset, setImageUploadReset] = useState(false);
   const [featuredPosts, setFeaturedPosts] = useState<Post[]>([]);
 
+  // Check profile completion function
+  const checkProfileAndProceed = async () => {
+    if (!user) {
+      setIsLoginModalOpen(true);
+      return false;
+    }
+
+    const { missingFields: fields } = await checkProfileCompletion();
+    if (fields.length > 0) {
+      setMissingFields(fields);
+      setShowProfileModal(true);
+      return false;
+    }
+    return true;
+  };
+
+  // Fetch posts function
+  const fetchPosts = async () => {
+    setLoading(true);
+    const supabase = await getSupabaseClient();
+    const { data, error } = await supabase
+      .from('posts')
+      .select('*')
+      .eq('area', 'Pune')
+      .order('created_at', { ascending: false });
+    
+    if (!error && data) {
+      setPosts(data);
+    }
+    setLoading(false);
+  };
+
+  // Fetch liked posts function
+  const fetchLikedPosts = async () => {
+    if (!user) return;
+    
+    const supabase = await getSupabaseClient();
+    const { data, error } = await supabase
+      .from('post_likes')
+      .select('post_id')
+      .eq('user_id', user.id);
+    
+    if (!error && data) {
+      const likedPostsMap: { [postId: string]: boolean } = {};
+      data.forEach(like => {
+        likedPostsMap[like.post_id] = true;
+      });
+      setUserLikedPosts(likedPostsMap);
+    }
+  };
+
   // Available communities for Parel
   const parelCommunities = [
     { value: 'general', label: 'General Discussion' },
@@ -101,8 +152,25 @@ export default function ParelConnectPage() {
         // Fetch liked posts for this user from Supabase
         const supabase = await getSupabaseClient();
         // Use Supabase user ID directly
-    const userId = user.id;
-    console.log('User ID:', userId);
+        const userId = user.id;
+        console.log('User ID:', userId);
+        
+        // Fetch posts and liked posts
+        fetchPosts();
+        fetchLikedPosts();
+      }
+    });
+
+    // Initial fetch
+    fetchPosts();
+    
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const handleCreatePost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) {
+      setIsLoginModalOpen(true);
       return;
     }
 
@@ -113,23 +181,21 @@ export default function ParelConnectPage() {
     }
 
     console.log('Submitting post:', newPost);
-    console.log('User ID:', userId);
     setSubmitting(true);
     const supabase = await getSupabaseClient();
-    
-    // Test if we can access the posts table
-    console.log('Testing posts table access...');
-    const { data: testData, error: testError } = await supabase
-      .from('posts')
-      .select('id')
-      .limit(1);
-    console.log('Test query result:', { testData, testError });
     
     // Use Supabase user ID directly
     const userId = user.id;
     console.log('User ID:', userId);
-    console.log('Formatted UUID:', userId);
-    console.log('UUID length:', userId.length);
+    
+    const postData = {
+      title: newPost.title,
+      body: newPost.body,
+      category: newPost.category,
+      area: 'Pune',
+      user_id: userId,
+      images: newPost.images
+    };
     
     const { data, error } = await supabase.from('posts').insert([postData]);
     console.log('Post insert result:', { data, error });
@@ -150,7 +216,7 @@ export default function ParelConnectPage() {
     } else {
       console.error('Error creating post:', error);
     }
-  };
+  }
 
   const handleSelectPost = async (post: Post) => {
     setSelectedPost(post);
@@ -706,7 +772,7 @@ export default function ParelConnectPage() {
                         </svg>
                       </button>
                     </div>
-                    <form onSubmit={handleNewPost}>
+                    <form onSubmit={handleCreatePost}>
                       <input
                         className="w-full border rounded-lg p-3 mb-3 text-sm md:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Title"
@@ -1053,7 +1119,7 @@ export default function ParelConnectPage() {
             // Re-trigger the action that was blocked
             if (newPost.title || newPost.body) {
               // If there's a post being written, allow it to proceed
-              handleNewPost(new Event('submit') as any);
+              handleCreatePost(new Event('submit') as any);
             } else if (newComment) {
               // If there's a comment being written, allow it to proceed
               handleNewComment(new Event('submit') as any, replyTo);
