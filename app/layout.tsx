@@ -91,6 +91,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+        {/* Viewport meta tag for mobile Safari */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+        
         {/* SEO Component for canonical URLs and meta tags */}
         <SEOScript canonicalUrl="https://gharconnect.in" />
         
@@ -150,7 +153,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
         {/* End Meta Pixel Code */}
       </head>
-      <body className="min-h-screen">
+      <body className="min-h-screen mobile-safari-fix">
         {children}
         <Analytics />
         <Toaster />

@@ -113,7 +113,7 @@ export default function Home() {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [currentBackgroundImage, setCurrentBackgroundImage] = useState(0);
+
   
   // Poll states
   const [currentPoll, setCurrentPoll] = useState<any>(null);
@@ -123,18 +123,7 @@ export default function Home() {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [pollResults, setPollResults] = useState<any>(null);
   
-  const backgroundImages = [
-    '/images/home/mumbai.png'
-  ];
 
-  // Background image slider effect - removed since we're using static image
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentBackgroundImage((prev) => (prev + 1) % backgroundImages.length);
-  //   }, 5000); // Change every 5 seconds
-
-  //   return () => clearInterval(interval);
-  // }, [backgroundImages.length]);
 
   const testimonials = [
     {
@@ -890,15 +879,7 @@ export default function Home() {
         
         {/* Rental Accommodation Section - hero Section*/}
         <div
-          className="pt-6 md:pt-12 pb-12 md:pb-20 relative overflow-hidden transition-all duration-1000 ease-in-out"
-          style={{
-            backgroundImage: `url(${backgroundImages[currentBackgroundImage]})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            minHeight: '400px',
-            maxHeight: '600px',
-          }}
+          className="pt-6 md:pt-12 pb-12 md:pb-20 relative overflow-hidden transition-all duration-1000 ease-in-out bg-cover bg-center bg-no-repeat bg-mumbai hero-section"
         >
           {/* Overlay for readability */}
           <div className="absolute inset-0 bg-white/20 md:bg-white/15 z-0 pointer-events-none" />

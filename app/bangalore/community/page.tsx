@@ -788,15 +788,9 @@ export default function Home() {
 
         
         {/* Rental Accommodation Section - hero Section*/}
-        <div
-          className="pt-6 md:pt-12 pb-12 md:pb-20 relative overflow-hidden transition-all duration-1000 ease-in-out"
-          style={{
-            backgroundImage: `url(${backgroundImages[currentBackgroundImage]})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-          }}
-        >
+                                      <div
+            className="pt-6 md:pt-12 pb-12 md:pb-20 relative overflow-hidden transition-all duration-1000 ease-in-out bg-cover bg-center bg-no-repeat bg-bangalore hero-section"
+          >
           {/* Overlay for readability */}
           <div className="absolute inset-0 bg-white/20 md:bg-white/15 z-0 pointer-events-none" />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
