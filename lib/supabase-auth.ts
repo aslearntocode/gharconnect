@@ -58,7 +58,8 @@ export async function signInWithGoogle(): Promise<AuthResult> {
     console.log('OAuth flow initiated:', data)
     return {
       success: true,
-      user: data.user || undefined,
+      // OAuth flow initiated, user will be available after redirect
+      user: undefined,
     }
   } catch (error: any) {
     console.error('Google sign in error:', error)
@@ -84,8 +85,9 @@ export async function signOutUser(): Promise<void> {
 }
 
 // Get current user
-export function getCurrentUser(): User | null {
-  return supabase.auth.getUser().then(({ data }) => data.user)
+export async function getCurrentUser(): Promise<User | null> {
+  const { data } = await supabase.auth.getUser()
+  return data.user
 }
 
 

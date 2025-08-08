@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { supabase } from '@/lib/supabase-auth'
+import { User } from '@supabase/supabase-js'
 import { ProfileDropdown } from "./ProfileDropdown"
 import { useRouter } from "next/navigation"
 import Image from 'next/image'

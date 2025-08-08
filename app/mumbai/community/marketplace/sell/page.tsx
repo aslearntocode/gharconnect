@@ -65,21 +65,15 @@ export default function SellPage() {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       const user = session?.user || null;
       if (user) {
-        setUser(user)
-        // Sync Firebase token to Supabase session
-        const token = await user.getIdToken();
-        const supabase = await getSupabaseClient();
-        await supabase.auth.setSession({
-          access_token: token,
-          refresh_token: token, // or null if you don't have a refresh token
-        });
-        console.log('Supabase session set');
-        setLoading(false)
+        setUser(user);
+        console.log('User authenticated:', user);
+        setLoading(false);
       } else {
-        setLoading(false)
+        setLoading(false);
       }
-    })
-    return () => subscription.unsubscribe()
+    });
+    
+    return () => subscription.unsubscribe();
   }, [router])
 
   const onSubmit = async (data: FormData) => {

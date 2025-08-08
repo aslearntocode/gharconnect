@@ -149,8 +149,6 @@ export default function VendorDashboard() {
   ;
 
   useEffect(() => {
-    setPersistence(auth, browserLocalPersistence);
-    
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       const user = session?.user || null;
       if (user) {
@@ -267,7 +265,10 @@ export default function VendorDashboard() {
 
   const handleSaveAvailability = async () => {
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) return;
+    if (!user) {
+      toast({ title: 'Error', description: 'User not authenticated', variant: 'destructive' });
+      return;
+    }
     if (!mobileNo) {
       toast({ title: 'Error', description: 'Please enter your mobile number', variant: 'destructive' });
       return;
@@ -282,7 +283,6 @@ export default function VendorDashboard() {
     }
     setIsLoading(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
       const vendorName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email || '';
       const societiesString = selectedSocieties.length
         ? `{${selectedSocieties.map(s => `"${s}"`).join(',')}}`

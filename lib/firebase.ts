@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-// TODO: Replace Firebase auth functions: getAuth;
+import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { supabase } from '@/lib/supabase-auth'
 

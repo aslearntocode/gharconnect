@@ -222,14 +222,15 @@ export function Marketplace({ location }: { location: string }) {
   const router = useRouter()
 
   useEffect(() => {
-    const handleAuthChange = async (user: any) => {
+    const handleAuthChange = async (event: any, session: any) => {
+      const user = session?.user || null;
       setUser(user)
       fetchProducts()
     }
 
-    const unsubscribe = supabase.auth.onAuthStateChange(handleAuthChange)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(handleAuthChange)
 
-    return () => unsubscribe()
+    return () => subscription.unsubscribe()
   }, [])
 
   const fetchProducts = async () => {

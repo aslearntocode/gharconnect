@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '@/components/ui/dialog'
 import Image from 'next/image'
 import { FirstTimeLoginForm } from './FirstTimeLoginForm'
-import { signInWithGoogle } from '@/lib/supabase-auth'
+import { signInWithGoogle, supabase } from '@/lib/supabase-auth'
 
 interface LoginModalProps {
   isOpen: boolean

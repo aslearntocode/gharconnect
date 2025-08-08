@@ -9,6 +9,7 @@ import { FiHome, FiSearch, FiPlus, FiFileText } from 'react-icons/fi'
 import { FaBuilding } from 'react-icons/fa'
 import LoginModal from '@/components/LoginModal'
 import { supabase } from '@/lib/supabase-auth'
+import { User } from '@supabase/supabase-js'
 import { ProfileDropdown } from "./ProfileDropdown"
 
 export default function RentalHeader() {

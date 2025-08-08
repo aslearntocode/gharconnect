@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { ProfileEdit } from './ProfileEdit';
 
 export default function DashboardDropdown() {
-  const { auth } = useAuth();
+  const { supabase } = useAuth();
   const router = useRouter();
 
   const handleSignOut = async () => {
