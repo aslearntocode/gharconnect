@@ -98,7 +98,6 @@ export default function RentApartmentPage() {
 
   const onSubmit = async (data: ApartmentFormData) => {
     console.log('Create listing button clicked. Starting submission process...');
-    console.log('Form data:', data);
 
     if (!user) {
       toast.error('Please login to list your property');

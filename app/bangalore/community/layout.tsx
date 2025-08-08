@@ -58,7 +58,7 @@ export default function BangaloreCommunityLayout({
 }) {
   return (
     <>
-      <main>{children}</main>
+      {children}
       <Footer />
       <Analytics />
       <Toaster />

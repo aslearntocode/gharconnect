@@ -1,196 +1,194 @@
-"use client"
+'use client'
 
-import { Fragment, useEffect, useState } from 'react'
-import { Menu, Transition } from '@headlessui/react'
+import { useState, useEffect } from 'react'
 import { User } from '@supabase/supabase-js'
 import { useRouter, usePathname } from 'next/navigation'
-import Link from 'next/link'
-import Image from 'next/image'
-import { ChevronDownIcon } from '@heroicons/react/24/solid'
-import { supabase } from '@/lib/supabase-auth'
+import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { FiUser, FiLogOut, FiSettings, FiHeart, FiFileText, FiHome, FiTruck, FiTool, FiUsers, FiShoppingCart, FiBookOpen, FiAward, FiZap, FiEdit, FiShield, FiGrid, FiSearch, FiPlus, FiCircle } from 'react-icons/fi'
+import { useAuth } from '@/context/AuthContext'
+
+interface UserProfile {
+  id: string
+  full_name: string
+  avatar_url: string
+  email: string
+}
 
 interface ProfileDropdownProps {
   user: User
 }
 
-interface UserProfile {
-  society_name: string
-  building_name: string
-  apartment_number: string
-  email: string
-  phone: string | null
-}
-
 export function ProfileDropdown({ user }: ProfileDropdownProps) {
+  // All hooks must be called at the top level, in the same order every time
+  const [profile, setProfile] = useState<UserProfile | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isClient, setIsClient] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
-  const [profile, setProfile] = useState<UserProfile | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  
+  // Always call useAuth, but handle the error gracefully
+  let authContext = null
+  try {
+    authContext = useAuth()
+  } catch (error) {
+    // Auth context not available during SSR or if provider isn't ready
+    console.warn('Auth context not available in ProfileDropdown:', error)
+  }
 
-  // Extract area from pathname (e.g., /mumbai/community/connect -> mumbai/community, /bangalore/connect -> bangalore)
-  const getCurrentArea = () => {
-    const pathSegments = pathname.split('/')
-    if (pathSegments[1] === 'mumbai' && pathSegments[2] === 'community') {
+  // Extract supabase from auth context with fallback
+  const supabase = authContext?.supabase || null
+  
+  // Ensure we're on the client side
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  // Extract society from pathname
+  const getSocietyFromPath = () => {
+    const pathParts = pathname.split('/')
+    if (pathParts[1] === 'mumbai' && pathParts[2] === 'community') {
       return 'mumbai/community'
     }
-    if (pathSegments[1] === 'bangalore') {
+    if (pathParts[1] === 'bangalore') {
       return 'bangalore'
     }
-    return 'mumbai/community' // Default to mumbai/community if no area found
+    if (pathParts[1] === 'pune') {
+      return 'pune'
+    }
+    return 'mumbai/community'
   }
 
-  const currentArea = getCurrentArea()
+  const currentSociety = getSocietyFromPath()
 
   useEffect(() => {
+    if (!isClient || !supabase || !user) return
+
     const fetchProfile = async () => {
       try {
-        const { data: { user: currentUser } } = await supabase.auth.getUser();
-        if (!currentUser) return;
-
-        const { data: profileData, error: profileError } = await supabase
+        const { data, error } = await supabase
           .from('user_profiles')
           .select('*')
-          .eq('user_id', currentUser.id)
-          .single();
+          .eq('id', user.id)
+          .single()
 
-        // Only treat actual errors as errors, not missing profiles
-        if (profileError && profileError.code !== 'PGRST116') {
-          console.error('Error fetching profile:', profileError);
-          setError('Could not fetch profile.');
-          return;
+        if (error) {
+          console.error('Error fetching profile:', error)
+          return
         }
 
-        // No profile found is not an error, just set profile to null
-        setProfile(profileData || null);
+        setProfile(data)
       } catch (error) {
-        console.error('Error:', error);
-        setError('Failed to load profile information');
+        console.error('Error fetching profile:', error)
       }
-    };
+    }
 
-    fetchProfile();
-  }, []);
+    fetchProfile()
+  }, [user, supabase, isClient])
 
-  const handleSignOut = async () => {
+  const handleLogout = async () => {
+    if (!supabase) return
+    
+    setIsLoading(true)
     try {
-      // Get current pathname and pass it to logout page
-      const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/';
-      router.push(`/logout?from=${encodeURIComponent(currentPath)}`)
+      const { error } = await supabase.auth.signOut()
+      if (error) {
+        console.error('Error signing out:', error)
+      } else {
+        // Get current pathname and pass it to logout page
+        const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/'
+        router.push(`/logout?from=${encodeURIComponent(currentPath)}`)
+      }
     } catch (error) {
-      console.error('Error redirecting to logout:', error)
+      console.error('Error during logout:', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
+  // Don't render anything during SSR or if not on client
+  if (!isClient) {
+    return (
+      <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+    )
+  }
+
+  // If no supabase client available, show a simple loading state
+  if (!supabase) {
+    return (
+      <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+    )
+  }
+
+  const displayName = profile?.full_name || user.email?.split('@')[0] || 'User'
+  const initials = displayName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+
   return (
-    <Menu as="div" className="relative inline-block text-left z-[100]">
-      <Menu.Button className="flex items-center text-black">
-        {user?.user_metadata?.avatar_url ? (
-          <Image
-            src={user.user_metadata.avatar_url}
-            alt="Profile"
-            width={32}
-            height={32}
-            className="rounded-full"
-          />
-        ) : (
-          <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-            <span className="text-black">{user?.email?.[0].toUpperCase()}</span>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+          <Avatar className="h-8 w-8">
+            <AvatarImage src={profile?.avatar_url} alt={displayName} />
+            <AvatarFallback className="bg-blue-500 text-white text-xs font-medium">
+              {initials}
+            </AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuLabel className="font-normal">
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">{displayName}</p>
+            <p className="text-xs leading-none text-muted-foreground">
+              {user.email}
+            </p>
           </div>
-        )}
-        <ChevronDownIcon className="ml-1 h-4 w-4 text-black" aria-hidden="true" />
-      </Menu.Button>
-
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items className="fixed right-4 top-16 w-72 origin-top-right divide-y divide-gray-600/50 rounded-md bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-[100]">
-          <div className="px-4 py-3">
-                            <p className="text-sm text-gray-100 font-medium">{user.user_metadata?.full_name || user.user_metadata?.name || user.email}</p>
-            {error ? (
-              <p className="mt-2 text-xs text-red-400">{error}</p>
-            ) : profile ? (
-              <div className="mt-2 text-xs text-gray-300">
-                <p>{profile.society_name}</p>
-                <p>{profile.building_name}, {profile.apartment_number}</p>
-                {profile.phone && <p>{profile.phone}</p>}
-              </div>
-            ) : (
-              <p className="mt-2 text-xs text-gray-400">Profile not completed</p>
-            )}
-          </div>
-
-          <div className="px-1 py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href={`/${currentArea}/profile`}
-                  className={`${
-                    active ? 'bg-blue-500 text-white' : 'text-gray-100'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  Edit Profile
-                </Link>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href={`/${currentArea}/my-reviews`}
-                  className={`${
-                    active ? 'bg-blue-500 text-white' : 'text-gray-100'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  View All Vendor Reviews
-                </Link>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href={`/${currentArea}/my-posts`}
-                  className={`${
-                    active ? 'bg-blue-500 text-white' : 'text-gray-100'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  View All Posts
-                </Link>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  href={`/${currentArea}/my-comments`}
-                  className={`${
-                    active ? 'bg-blue-500 text-white' : 'text-gray-100'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  View All Comments
-                </Link>
-              )}
-            </Menu.Item>
-          </div>
-          <div className="px-1 py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <button
-                  onClick={handleSignOut}
-                  className={`${
-                    active ? 'bg-red-500 text-white' : 'text-gray-100'
-                  } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                >
-                  Sign Out
-                </button>
-              )}
-            </Menu.Item>
-          </div>
-        </Menu.Items>
-      </Transition>
-    </Menu>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        
+        {/* Quick Actions */}
+        <DropdownMenuItem onClick={() => router.push(`/${currentSociety}/profile`)}>
+          <FiUser className="mr-2 h-4 w-4" />
+          <span>Profile</span>
+        </DropdownMenuItem>
+        
+        <DropdownMenuItem onClick={() => router.push(`/${currentSociety}/my-reviews`)}>
+          <FiFileText className="mr-2 h-4 w-4" />
+          <span>My Reviews</span>
+        </DropdownMenuItem>
+        
+        <DropdownMenuSeparator />
+        
+        {/* Services */}
+        <DropdownMenuItem onClick={() => router.push(`/${currentSociety}/services`)}>
+          <FiTool className="mr-2 h-4 w-4" />
+          <span>Services</span>
+        </DropdownMenuItem>
+        
+        <DropdownMenuItem onClick={() => router.push(`/${currentSociety}/delivery`)}>
+          <FiTruck className="mr-2 h-4 w-4" />
+          <span>Delivery</span>
+        </DropdownMenuItem>
+        
+        <DropdownMenuItem onClick={() => router.push(`/${currentSociety}/marketplace`)}>
+          <FiShoppingCart className="mr-2 h-4 w-4" />
+          <span>Marketplace</span>
+        </DropdownMenuItem>
+        
+        <DropdownMenuSeparator />
+        
+        {/* Settings & Logout */}
+        <DropdownMenuItem onClick={() => router.push(`/${currentSociety}/profile`)}>
+          <FiSettings className="mr-2 h-4 w-4" />
+          <span>Settings</span>
+        </DropdownMenuItem>
+        
+        <DropdownMenuItem onClick={handleLogout} disabled={isLoading}>
+          <FiLogOut className="mr-2 h-4 w-4" />
+          <span>{isLoading ? 'Signing out...' : 'Sign out'}</span>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 } 

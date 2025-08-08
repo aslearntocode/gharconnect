@@ -109,7 +109,7 @@ export default function Home() {
   const [currentAdCarouselIndex, setCurrentAdCarouselIndex] = useState(0);
   const [currentPopularServicesIndex, setCurrentPopularServicesIndex] = useState(0);
   const [marketplaceProducts, setMarketplaceProducts] = useState<MarketplaceProduct[]>([]);
-  const [connectPosts, setConnectPosts] = useState<ConnectPost[]>([]);
+
   const [carouselIndex, setCarouselIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -200,14 +200,7 @@ export default function Home() {
       href: '/bangalore/community/marketplace',
       gradient: 'from-pink-500 to-yellow-500'
     },
-    {
-      id: 'connect',
-      title: 'Social',
-      description: 'Community Q&A & discussions',
-      icon: FiUsers,
-      href: '/bangalore/community/connect',
-      gradient: 'from-indigo-500 to-blue-500'
-    }
+
   ];
 
   const nextSlide = () => {
@@ -595,31 +588,7 @@ export default function Home() {
     fetchMarketplaceProducts();
   }, []);
 
-  useEffect(() => {
-    // Fetch 3 featured posts for Bangalore and its areas
-    const fetchConnectPosts = async () => {
-      const { getSupabaseClient } = await import("@/lib/supabase");
-      const supabase = await getSupabaseClient();
-      
-      // Bangalore areas
-      const bangaloreAreas = [
-        'India', 'Bangalore', 'Koramangala', 'Domlur', 'Indiranagar', 'HSR Layout', 'Bellandur', 
-        'Marathahalli', 'Whitefield', 'Electronic City', 'JP Nagar', 'Banashankari', 
-        'Jayanagar', 'Basavanagudi', 'Malleshwaram', 'Rajajinagar', 'Vijayanagar', 
-        'Hebbal', 'Yelahanka', 'Yeshwanthpur', 'Peenya', 'Mahadevapura', 'Sarjapur', 
-        'Bommanahalli', 'Dasarahalli', 'RR Nagar', 'Yelahanka', 'Byatarayanapura'
-      ];
-      
-      const { data, error } = await supabase
-        .from("posts")
-        .select("id,title,body,created_at")
-        .in("area", bangaloreAreas)
-        .order("created_at", { ascending: false })
-        .limit(3);
-      if (!error && data) setConnectPosts(data);
-    };
-    fetchConnectPosts();
-  }, []);
+
 
   // Carousel navigation handlers
   const numSlides = 2;
@@ -637,62 +606,8 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <title>Bangalore Community - Rent, Services & Local Marketplace | GharConnect</title>
-        <meta name="description" content="Join the Bangalore community platform. Find rental properties, local services, delivery options, and connect with neighbors across Bangalore. Discover marketplace items and community discussions." />
-        <meta name="keywords" content="Bangalore community, Bangalore rentals, Bangalore services, Bangalore marketplace, Bangalore neighbors, Bangalore local services, Bangalore delivery, Bangalore society, Bangalore residential, Bangalore community platform" />
-        <meta name="robots" content="index, follow" />
-        <meta property="og:title" content="Bangalore Community - Rent, Services & Local Marketplace | GharConnect" />
-        <meta property="og:description" content="Join the Bangalore community platform. Find rental properties, local services, delivery options, and connect with neighbors across Bangalore." />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://gharconnect.in/bangalore/community" />
-        <meta property="og:site_name" content="GharConnect" />
-        <meta property="og:image" content="https://gharconnect.in/GC_Logo.png" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Bangalore Community Platform" />
-        <meta property="og:locale" content="en_IN" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@gharconnect" />
-        <meta name="twitter:creator" content="@gharconnect" />
-        <meta name="twitter:title" content="Bangalore Community - Rent, Services & Local Marketplace | GharConnect" />
-        <meta name="twitter:description" content="Join the Bangalore community platform. Find rental properties, local services, delivery options, and connect with neighbors." />
-        <meta name="twitter:image" content="https://gharconnect.in/GC_Logo.png" />
-        <meta name="twitter:image:alt" content="Bangalore Community Platform" />
-        <link rel="canonical" href="https://gharconnect.in/bangalore/community" />
-        <meta name="author" content="GharConnect" />
-        <meta name="language" content="English" />
-        <meta name="geo.region" content="IN-KA" />
-        <meta name="geo.placename" content="Bangalore" />
-        <meta name="theme-color" content="#4F46E5" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "name": "GharConnect Bangalore Community",
-              "description": "Bangalore community platform for rentals, services, deliveryand community",
-              "url": "https://gharconnect.in/bangalore/community",
-              "potentialAction": {
-                "@type": "SearchAction",
-                "target": "https://gharconnect.in/bangalore/community?search={search_term_string}",
-                "query-input": "required name=search_term_string"
-              },
-              "publisher": {
-                "@type": "Organization",
-                "name": "GharConnect",
-                "logo": {
-                  "@type": "ImageObject",
-                  "url": "https://gharconnect.in/GC_Logo.png"
-                }
-              }
-            })
-          }}
-        />
-      </Head>
+      <Header isScrolled={isScrolled} />
       <main className="min-h-screen bg-white pt-12 md:pt-16">
-        <Header isScrolled={isScrolled} />
         <div className="flex flex-col items-center mb-4 md:mb-8 mt-0 md:mt-2">
           <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700 italic bg-indigo-50 px-8 md:px-16 py-2 rounded-lg w-full max-w-1xl">
             Welcome to GharConnect @Bangalore where Property Owners, Residents and Businesses Connect
@@ -1270,96 +1185,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Social Community Section */}
-        <div className="relative bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-700 text-white overflow-hidden my-0 pt-6 md:pt-8 pb-6 md:pb-8">
-          {/* Background decorative elements */}
-          <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-indigo-600/30 via-transparent to-purple-600/30"></div>
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-300/10 rounded-full blur-3xl"></div>
-          
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center mb-6 md:mb-8">
 
-              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 bg-gradient-to-r from-white to-indigo-100 bg-clip-text text-transparent">
-                Join the Conversation
-              </h3>
-              <p className="text-base md:text-lg text-indigo-100 max-w-5xl mx-auto leading-relaxed">
-                Connect with your neighbors, share updates, ask questions, and stay informed about your community.
-              </p>
-            </div>
-            
-            <div className="max-w-5xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-4 md:p-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6">
-                  {connectPosts.length === 0 ? (
-                    <div className="col-span-full text-center py-8">
-                      <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-3">
-                        <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                        </svg>
-                      </div>
-                      <h4 className="text-lg font-semibold text-white mb-2">Be the First to Post!</h4>
-                      <p className="text-indigo-100 text-sm">Start the conversation in your community</p>
-                    </div>
-                  ) : (
-                    connectPosts.slice(0, isMounted && isMobile ? 2 : 3).map((post, index) => (
-                      <div key={post.id} className="group bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-3 hover:bg-white/10 transition-all duration-300 hover:scale-105">
-                        <div className="flex items-start justify-between mb-2">
-                          <div className="flex items-center space-x-2">
-                            <div className="w-6 h-6 bg-gradient-to-br from-indigo-400 to-purple-400 rounded-full flex items-center justify-center">
-                              <span className="text-white text-xs font-semibold">
-                                {post.title.charAt(0).toUpperCase()}
-                              </span>
-                            </div>
-                            <div>
-                              <h4 className="text-xs font-semibold text-white line-clamp-1">
-                                {post.title}
-                              </h4>
-                              <p className="text-xs text-indigo-200">
-                                {new Date(post.created_at).toLocaleDateString('en-IN', { 
-                                  day: 'numeric', 
-                                  month: 'short',
-                                  year: 'numeric'
-                                })}
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-                        <p className="text-xs text-indigo-100 leading-relaxed line-clamp-3 mb-3">
-                          {post.body}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-2">
-                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                            <span className="text-xs text-indigo-200">Active discussion</span>
-                          </div>
-                          <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                            <svg className="w-2 h-2 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                          </div>
-                        </div>
-                      </div>
-                    ))
-                  )}
-                </div>
-                
-                <div className="text-center mt-6">
-                  <a 
-                    href="/bangalore/community/connect" 
-                    className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-white to-indigo-100 text-indigo-700 hover:from-indigo-100 hover:to-white font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 text-base"
-                  >
-                    <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                    </svg>
-                    Post or Comment Now
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
         {/* Numbers Since Launch Section */}
         <div className="bg-white py-12">
@@ -1390,8 +1216,7 @@ export default function Home() {
               <div className="flex flex-col items-center px-8 md:px-12">
                 <span className="text-blue-700 text-4xl font-bold mb-1">100+</span>
                 <span className="text-gray-800 text-base text-center">
-                  <span className="block md:hidden">Users Connected<br/>on Social</span>
-                  <span className="hidden md:block">Users Connected<br/>on Social</span>
+                  
                 </span>
               </div>
             </div>

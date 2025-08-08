@@ -9,16 +9,35 @@ import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { FiCreditCard, FiGift, FiDollarSign, FiDroplet, FiGlobe, FiTrendingUp, FiHome, FiBriefcase, FiAirplay, FiLayers, FiCreditCard as FiCard, FiBook, FiTruck, FiHome as FiHomeIcon, FiDollarSign as FiDollarIcon, FiBookOpen, FiAward, FiTool, FiZap, FiEdit, FiShield, FiFileText, FiGrid, FiSearch, FiPlus, FiHeart, FiCircle, FiUsers } from 'react-icons/fi'
 import { FaBuilding } from 'react-icons/fa'
-import { supabase } from '@/lib/supabase-auth'
+import { useAuth } from '@/context/AuthContext'
 
 export default function Header({ isScrolled = false }: { isScrolled?: boolean }) {
-  const [user, setUser] = useState<User | null>(null)
+  // All hooks must be called at the top level, in the same order every time
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isPropertiesDropdownOpen, setIsPropertiesDropdownOpen] = useState(false)
   const [isCreditScoreDropdownOpen, setIsCreditScoreDropdownOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
+  const [isClient, setIsClient] = useState(false)
   const router = useRouter()
   const pathname = usePathname()
+  
+  // Always call useAuth, but handle the error gracefully
+  let authContext = null
+  try {
+    authContext = useAuth()
+  } catch (error) {
+    // Auth context not available during SSR or if provider isn't ready
+    console.warn('Auth context not available:', error)
+  }
+
+  // Extract user and loading from auth context with fallbacks
+  const user = authContext?.currentUser || null
+  const loading = authContext?.loading ?? true
+  
+  // Ensure we're on the client side
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   // Extract society from pathname
   const getSocietyFromPath = () => {
@@ -38,24 +57,6 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
   }
 
   const currentSociety = getSocietyFromPath()
-
-  useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      const user = session?.user || null;
-      console.log('Header: Auth state changed, user:', user?.email || 'null');
-      setUser(user)
-      if (user?.id) {
-        try {
-          // Any future user-specific checks can be added here
-        } catch (error) {
-          // Handle unexpected errors
-          console.error('Unexpected error:', error)
-        }
-      }
-    })
-
-    return () => subscription.unsubscribe()
-  }, [])
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -99,6 +100,37 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
       router.push(`/mumbai/community/search?q=${encodeURIComponent(searchQuery.trim())}`)
       setSearchQuery("")
     }
+  }
+
+  // Show loading state while authentication is being determined
+  if (loading) {
+    return (
+      <header className={`lg:fixed lg:top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled 
+          ? 'lg:bg-gray-900/60 lg:backdrop-blur-sm shadow-lg lg:text-white' 
+          : 'bg-white shadow-md text-black'
+      }`}>
+        <nav className="max-w-7xl mx-auto px-1 sm:px-2 lg:px-2">
+          <div className="flex justify-between h-12 md:h-16 items-center w-full">
+            <div className="flex items-center">
+              <Link href={`/${currentSociety}`} className="flex items-center">
+                <Image 
+                  src="/GC_Logo.png" 
+                  alt="Brand Logo" 
+                  height={56} 
+                  width={56} 
+                  className="h-5 md:h-6 w-auto" 
+                  priority
+                />
+              </Link>
+            </div>
+            <div className="flex items-center">
+              <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
+            </div>
+          </div>
+        </nav>
+      </header>
+    )
   }
 
   return (
@@ -153,51 +185,28 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
                 </div>
 
                 {/* Services Link */}
-                <div className="relative" style={{ zIndex: 50 }}>
-                  <div className="flex items-center">
-                    <Link 
-                      href={currentSociety === 'mumbai/community' ? `/${currentSociety}/services` : `/${currentSociety}/community/services`}
-                      className={`py-2 text-base transition-colors duration-300 ${
-                        isScrolled 
-                          ? 'text-white hover:text-gray-300' 
-                          : 'text-black hover:text-gray-700'
-                      }`}
-                    >
-                      Services
-                    </Link>
-                  </div>
-                </div>
+                <Link 
+                  href={currentSociety === 'mumbai/community' ? `/${currentSociety}/services` : `/${currentSociety}/community/services`}
+                  className={`py-2 text-base transition-colors duration-300 ${
+                    isScrolled 
+                      ? 'text-white hover:text-gray-300' 
+                      : 'text-black hover:text-gray-700'
+                  }`}
+                >
+                  Services
+                </Link>
 
                 {/* Delivery Link */}
-                <div className="relative" style={{ zIndex: 50 }}>
-                  <div className="flex items-center">
-                    <Link 
-                      href={currentSociety === 'mumbai/community' ? `/${currentSociety}/delivery` : `/${currentSociety}/community/delivery`}
-                      className={`py-2 text-base transition-colors duration-300 ${
-                        isScrolled 
-                          ? 'text-white hover:text-gray-300' 
-                          : 'text-black hover:text-gray-700'
-                      }`}
-                    >
-                      Delivery
-                    </Link>
-                  </div>
-                </div>
-
-                <div className="relative" style={{ zIndex: 50 }}>
-                  <div className="flex items-center">
-                    <Link 
-                      href={`/${currentSociety.includes('/community') ? currentSociety : `${currentSociety}/community`}/connect`}
-                      className={`py-2 text-base transition-colors duration-300 ${
-                        isScrolled 
-                          ? 'text-white hover:text-gray-300' 
-                          : 'text-black hover:text-gray-700'
-                      }`}
-                    >
-                      Social
-                    </Link>
-                  </div>
-                </div>
+                <Link 
+                  href={currentSociety === 'mumbai/community' ? `/${currentSociety}/delivery` : `/${currentSociety}/community/delivery`}
+                  className={`py-2 text-base transition-colors duration-300 ${
+                    isScrolled 
+                      ? 'text-white hover:text-gray-300' 
+                      : 'text-black hover:text-gray-700'
+                  }`}
+                >
+                  Delivery
+                </Link>
 
                 {/* Search Box - Desktop */}
                 <div className="ml-6">
@@ -302,12 +311,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
             </Link>
           </div>
 
-          <div className="relative">
-            <Link href={`/${currentSociety.includes('/community') ? currentSociety : `${currentSociety}/community`}/connect`} className="flex flex-col items-center text-black hover:text-gray-700 transition-colors duration-300">
-              <FiUsers className="w-6 h-6" />
-              <span className="text-xs mt-1">Social</span>
-            </Link>
-          </div>
+
         </div>
       </div>
     </>

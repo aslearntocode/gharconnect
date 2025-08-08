@@ -58,7 +58,7 @@ export default function PuneCommunityLayout({
 }) {
   return (
     <>
-      <main>{children}</main>
+      {children}
       <Footer />
       <Analytics />
       <Toaster />

@@ -58,7 +58,7 @@ export default function SocietyLayout({
 }) {
   return (
     <>
-      <main>{children}</main>
+      {children}
       <Footer />
       <Analytics />
       <Toaster />
