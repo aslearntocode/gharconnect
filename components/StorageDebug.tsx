@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { testStorageAccess, testStorageUpload } from '@/lib/supabase'
-import { auth } from '@/lib/firebase'
+import { supabase } from '@/lib/supabase-auth'
 import { toast } from 'sonner'
 
 export default function StorageDebug() {
@@ -35,10 +35,10 @@ export default function StorageDebug() {
       }
 
       // Test 2: Upload (if user is authenticated)
-      const user = auth.currentUser
+      const { data: { user }, error: userError } = await supabase.auth.getUser()
       if (user) {
         console.log('Testing storage upload...')
-        const uploadResult = await testStorageUpload(user.uid)
+        const uploadResult = await testStorageUpload(user.id)
         setResults(prev => ({ ...prev, upload: uploadResult }))
         
         if (!uploadResult) {

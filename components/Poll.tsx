@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { auth } from '@/lib/firebase'
-import { User } from 'firebase/auth'
+import { supabase } from '@/lib/supabase-auth'
+import { User } from '@supabase/supabase-js'
 import { getSupabaseClient } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { FiCheck, FiUsers, FiBarChart } from 'react-icons/fi'
@@ -50,17 +50,18 @@ export default function Poll({ location }: PollProps) {
   const [isLoadingPoll, setIsLoadingPoll] = useState(true)
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      const user = session?.user || null;
       setUser(user)
       if (user) {
-        checkUserVote(user.uid)
+        checkUserVote(user.id)
       }
     })
 
     // Fetch poll data on component mount
     fetchPollData()
 
-    return () => unsubscribe()
+    return () => subscription.unsubscribe()
   }, [location])
 
   const fetchPollData = async () => {
@@ -207,7 +208,7 @@ export default function Poll({ location }: PollProps) {
         .from('poll_votes')
         .insert({
           poll_id: `${location}-community-poll-1`,
-          user_id: user.uid,
+          user_id: user.id,
           option_id: selectedOption,
           created_at: new Date().toISOString()
         })

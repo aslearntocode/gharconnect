@@ -1,12 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { User } from 'firebase/auth';
+import { User } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { auth } from '@/lib/firebase'
+import { supabase } from '@/lib/supabase-auth'
 import { getSupabaseClient } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -62,7 +62,8 @@ export default function SellPage() {
   })
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      const user = session?.user || null;
       if (user) {
         setUser(user)
         // Sync Firebase token to Supabase session
@@ -78,7 +79,7 @@ export default function SellPage() {
         setLoading(false)
       }
     })
-    return () => unsubscribe()
+    return () => subscription.unsubscribe()
   }, [router])
 
   const onSubmit = async (data: FormData) => {
@@ -95,7 +96,7 @@ export default function SellPage() {
       
       // Create the product listing with images set to null
       const insertPayload = {
-        user_id: user.uid,
+        user_id: user.id,
         area: 'parel',
         title: data.title,
         description: data.description,

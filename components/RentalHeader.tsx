@@ -8,8 +8,7 @@ import { Button } from '@/components/ui/button'
 import { FiHome, FiSearch, FiPlus, FiFileText } from 'react-icons/fi'
 import { FaBuilding } from 'react-icons/fa'
 import LoginModal from '@/components/LoginModal'
-import { auth } from "@/lib/firebase"
-import { User } from "firebase/auth"
+import { supabase } from '@/lib/supabase-auth'
 import { ProfileDropdown } from "./ProfileDropdown"
 
 export default function RentalHeader() {
@@ -29,10 +28,11 @@ export default function RentalHeader() {
   const currentCity = getCityFromPath()
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      const user = session?.user || null;
       console.log('RentalHeader: Auth state changed, user:', user?.email || 'null');
       setUser(user)
-      if (user?.uid) {
+      if (user?.id) {
         try {
           // Any future user-specific checks can be added here
         } catch (error) {
@@ -42,7 +42,7 @@ export default function RentalHeader() {
       }
     })
 
-    return () => unsubscribe()
+    return () => subscription.unsubscribe()
   }, [])
 
   // Scroll detection for header color change

@@ -1,3 +1,4 @@
+import { supabase } from '@/lib/supabase-auth'
 'use client';
 import React, { useState, useEffect } from 'react';
 import { getProviderById } from '@/data/home-service-providers';
@@ -6,7 +7,6 @@ import Link from 'next/link';
 import Header from '@/components/Header';
 import { FiStar, FiMapPin, FiPhone, FiMail, FiChevronLeft, FiHeart, FiShare2, FiZoomIn, FiX, FiChevronRight, FiChevronLeft as FiChevronLeftIcon, FiInstagram, FiFacebook, FiLinkedin, FiTwitter, FiYoutube, FiGlobe } from 'react-icons/fi';
 import { VendorRating } from '@/components/VendorRating';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import Footer from '@/components/Footer';
 
 const HomeServiceProviderPage = ({ params }: { params: any }) => {
@@ -19,7 +19,7 @@ const HomeServiceProviderPage = ({ params }: { params: any }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [zoomLevel, setZoomLevel] = useState(1);
-  const supabase = createClientComponentClient();
+  ;
 
   const categories = {
     'artist': 'Artist',

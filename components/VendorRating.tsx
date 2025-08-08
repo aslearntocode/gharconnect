@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { auth } from '@/lib/firebase'
+import { supabase } from '@/lib/supabase-auth'
 import { generateAnonymousId } from '@/lib/anonymousId'
 import { checkProfileCompletion } from '@/lib/profileUtils'
 import {
@@ -53,7 +52,7 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
   const [showProfileModal, setShowProfileModal] = useState(false)
   const [missingFields, setMissingFields] = useState<string[]>([])
   const [loginMessage, setLoginMessage] = useState('')
-  const supabase = createClientComponentClient()
+  
 
   const form = useForm<RatingFormValues>({
     resolver: zodResolver(ratingSchema),
@@ -107,8 +106,8 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
     setIsLoading(true)
     setError(null)
     try {
-      const currentUser = auth.currentUser
-      if (!currentUser) {
+      const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser()
+      if (userError || !currentUser) {
         setError('Please log in to rate this vendor')
         setIsLoading(false)
         return
@@ -122,7 +121,7 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
       }
 
       // Debug logging
-      console.log('Submitting rating for vendor:', { vendorId, vendorName, currentUser: currentUser.uid, vendorIdType: typeof vendorId });
+      console.log('Submitting rating for vendor:', { vendorId, vendorName, currentUser: currentUser.id, vendorIdType: typeof vendorId });
 
       // Use the same logic as VendorCard to generate a stable vendor ID
       let finalVendorId = generateVendorId(vendorId);
@@ -146,7 +145,7 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
       const { data: existingRating, error: checkError } = await supabase
         .from('reviews')
         .select('id')
-        .eq('user_id', currentUser.uid)
+        .eq('user_id', currentUser.id)
         .eq('card_id', finalVendorId)
         .maybeSingle()
 
@@ -162,11 +161,11 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
       }
 
       // Generate anonymous ID for display
-      const anonymousId = generateAnonymousId(currentUser.uid)
+      const anonymousId = generateAnonymousId(currentUser.id)
 
       // Proceed with inserting the new rating with anonymous display name
       const { error: insertError } = await supabase.from('reviews').insert({
-        user_id: currentUser.uid,
+        user_id: currentUser.id,
         user_name: anonymousId, // Store anonymous ID instead of real name
         card_id: finalVendorId,
         card_name: vendorName,
@@ -229,7 +228,8 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
   }
 
   const handleRateClick = async () => {
-    if (!auth.currentUser) {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
       setIsOpen(false)
       setLoginMessage('Login for rating the vendor')
       setShowLoginModal(true)

@@ -1,14 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { auth } from '@/lib/firebase'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogClose } from '@/components/ui/dialog'
 import Image from 'next/image'
 import { FirstTimeLoginForm } from './FirstTimeLoginForm'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { signInWithGoogle } from '@/lib/auth-utils'
+import { signInWithGoogle } from '@/lib/supabase-auth'
 
 interface LoginModalProps {
   isOpen: boolean
@@ -23,7 +21,7 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
   const [loading, setLoading] = useState(false)
   const [isFirstTimeUser, setIsFirstTimeUser] = useState(false)
   const router = useRouter()
-  const supabase = createClientComponentClient()
+  
 
   const checkIfFirstTimeUser = async (userId: string) => {
     try {
@@ -57,27 +55,39 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
   const handleGoogleLogin = async () => {
     if (loading) return; // Prevent multiple clicks
     
+    console.log('=== LOGIN MODAL DEBUG START ===');
+    console.log('Login button clicked');
+    console.log('Current loading state:', loading);
+    
     setError('')
     setLoading(true)
 
     try {
+      console.log('Calling signInWithGoogle...');
       const result = await signInWithGoogle()
+      console.log('signInWithGoogle result:', result);
       
-      if (result.success && result.user) {
-        console.log('Sign in successful:', result.user.email)
-        
-        // Check if first time user
-        const isFirstTime = await checkIfFirstTimeUser(result.user.uid)
-        setIsFirstTimeUser(isFirstTime)
-        
-        if (!isFirstTime) {
-          // Close modal and redirect
-          onClose()
-          if (onLoginSuccess) {
-            onLoginSuccess()
-          } else {
-            router.push(redirectPath)
+      if (result.success) {
+        if (result.user) {
+          console.log('Sign in successful:', result.user.email)
+          
+          // Check if first time user
+          const isFirstTime = await checkIfFirstTimeUser(result.user.id)
+          setIsFirstTimeUser(isFirstTime)
+          
+          if (!isFirstTime) {
+            // Close modal and redirect
+            onClose()
+            if (onLoginSuccess) {
+              onLoginSuccess()
+            } else {
+              router.push(redirectPath)
+            }
           }
+        } else {
+          // OAuth flow initiated successfully, user will be redirected
+          console.log('OAuth flow initiated, user will be redirected')
+          // Don't close modal yet, let the redirect happen
         }
       } else {
         // Handle authentication errors

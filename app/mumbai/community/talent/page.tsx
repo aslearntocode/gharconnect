@@ -1,10 +1,10 @@
+import { supabase } from '@/lib/supabase-auth'
 'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import { FiSearch, FiStar, FiMapPin, FiPhone, FiMail, FiUser, FiAward, FiMusic, FiCamera, FiEdit3, FiCode, FiImage, FiBookOpen, FiHeart, FiTrendingUp } from 'react-icons/fi';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Talent, TalentCategory } from '@/types/talent';
 
 export default function ParelTalentPage() {
@@ -12,7 +12,7 @@ export default function ParelTalentPage() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const supabase = createClientComponentClient();
+  ;
 
   const categories: TalentCategory[] = [
     { id: 'all', name: 'All Talents', icon: FiStar },

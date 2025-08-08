@@ -4,9 +4,8 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useEffect, useState, useRef } from "react"
-import { auth } from "@/lib/firebase"
-import { User } from "firebase/auth"
-import { initializeFirebaseAuth } from '@/lib/authUtils'
+import { supabase } from '@/lib/supabase-auth'
+import { User } from "@supabase/supabase-js"
 import { ProfileDropdown } from "@/components/ProfileDropdown"
 import Testimonials from "@/components/Testimonials"
 import Header from "@/components/Header"
@@ -279,14 +278,15 @@ export default function Home() {
   }, [])
 
   useEffect(() => {
-    const unsubscribe = initializeFirebaseAuth(async (user) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      const user = session?.user || null;
       setUser(user)
       if (user) {
-        const supabase = await getSupabaseClient()
-        const { data, error } = await supabase
+        const supabaseClient = await getSupabaseClient()
+        const { data, error } = await supabaseClient
           .from('credit_reports')
           .select('created_at, report_analysis')
-          .eq('user_id', user.uid)
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(1)
           .single()
@@ -325,7 +325,7 @@ export default function Home() {
       }
     })
 
-    return () => unsubscribe()
+    return () => subscription.unsubscribe()
   }, [])
 
   useEffect(() => {
@@ -335,7 +335,7 @@ export default function Home() {
         const { data, error } = await supabase
           .from('investment_records')
           .select('allocation')
-          .eq('user_id', user.uid)
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
           .limit(1)
           .single();
@@ -356,7 +356,7 @@ export default function Home() {
         const { data: reports } = await supabase
           .from('credit_reports')
           .select('*')
-          .eq('user_id', user.uid)  // Filter by user_id
+          .eq('user_id', user.id)  // Filter by user_id
           .order('created_at', { ascending: false })
           .limit(1);
 
@@ -392,7 +392,7 @@ export default function Home() {
       // Pre-fill form data when user is logged in
       setFormData(prev => ({
         ...prev,
-        name: user.displayName || '',
+        name: user.user_metadata?.full_name || user.user_metadata?.name || '',
         email: user.email || ''
       }))
     }
@@ -640,7 +640,7 @@ export default function Home() {
             .from("poll_votes")
             .select("id")
             .eq("poll_id", data.id)
-            .eq("user_id", user.uid)
+            .eq("user_id", user.id)
             .single();
           
           if (submission) {
@@ -740,7 +740,7 @@ export default function Home() {
         .from("poll_votes")
         .insert({
           poll_id: currentPoll.id,
-          user_id: user.uid,
+          user_id: user.id,
           option_id: selectedAnswers, // Store as JSON array
           voted_at: new Date().toISOString()
         });

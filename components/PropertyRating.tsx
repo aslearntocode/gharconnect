@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { auth } from '@/lib/firebase'
+import { supabase } from '@/lib/supabase-auth'
 import { generateAnonymousId } from '@/lib/anonymousId'
 import {
   Dialog,
@@ -48,7 +47,7 @@ export function PropertyRating({ propertyId, propertyName, onRatingAdded }: Prop
   const [hoverRating, setHoverRating] = useState<number | null>(null)
   const [showLoginModal, setShowLoginModal] = useState(false)
   const [loginMessage, setLoginMessage] = useState('')
-  const supabase = createClientComponentClient()
+  
 
   const form = useForm<RatingFormValues>({
     resolver: zodResolver(ratingSchema),
@@ -62,8 +61,8 @@ export function PropertyRating({ propertyId, propertyName, onRatingAdded }: Prop
     setIsLoading(true)
     setError(null)
     try {
-      const currentUser = auth.currentUser
-      if (!currentUser) {
+      const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser()
+      if (userError || !currentUser) {
         setError('Please log in to rate this property')
         setIsLoading(false)
         return
@@ -73,7 +72,7 @@ export function PropertyRating({ propertyId, propertyName, onRatingAdded }: Prop
       const { data: existingRating, error: checkError } = await supabase
         .from('property_reviews')
         .select('id')
-        .eq('user_id', currentUser.uid)
+        .eq('user_id', currentUser.id)
         .eq('property_id', propertyId)
         .maybeSingle()
 
@@ -89,11 +88,11 @@ export function PropertyRating({ propertyId, propertyName, onRatingAdded }: Prop
       }
 
       // Generate anonymous ID for display
-      const anonymousId = generateAnonymousId(currentUser.uid)
+      const anonymousId = generateAnonymousId(currentUser.id)
 
       // Proceed with inserting the new rating with anonymous display name
       const { error: insertError } = await supabase.from('property_reviews').insert({
-        user_id: currentUser.uid,
+        user_id: currentUser.id,
         user_name: anonymousId, // Store anonymous ID instead of real name
         property_id: propertyId,
         property_name: propertyName,
@@ -156,7 +155,7 @@ export function PropertyRating({ propertyId, propertyName, onRatingAdded }: Prop
   }
 
   const handleRateClick = () => {
-    if (!auth.currentUser) {
+    const { data: { user } } = await supabase.auth.getUser(); if (!user) {
       setIsOpen(false)
       setLoginMessage('Login to rate this property')
       setShowLoginModal(true)

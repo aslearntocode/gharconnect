@@ -1,5 +1,4 @@
 import { getSupabaseClient } from './supabase'
-import { auth } from '@/lib/firebase'
 import { Pool, PoolClient } from 'pg'
 
 interface InvestmentData {

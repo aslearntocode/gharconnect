@@ -2,13 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { auth } from '@/lib/firebase';
-import { signOut, User } from 'firebase/auth';
+import { User } from '@supabase/supabase-js';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { toast } from '@/components/ui/use-toast';
 import { CheckCircleIcon, XCircleIcon, EyeIcon } from '@heroicons/react/24/outline';
+import { supabase } from '@/lib/supabase-auth';
 
 interface Vendor {
   vendor_id: string;
@@ -29,18 +28,19 @@ export default function AdminDashboard() {
   const [vendors, setVendors] = useState<Vendor[]>([]);
   const [activeTab, setActiveTab] = useState<'permanent' | 'temporary'>('permanent');
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  ;
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      const user = session?.user || null;
       if (user) {
         setIsLoggedIn(true);
-        console.log('User logged in:', user.uid, user.email);
+        console.log('User logged in:', user.id, user.email);
         
         // Test database connection first
         await testDatabaseConnection();
         
-        await checkAdminStatus(user.uid);
+        await checkAdminStatus(user.id);
         await fetchVendors();
       } else {
         setIsLoggedIn(false);
@@ -49,7 +49,7 @@ export default function AdminDashboard() {
       setIsLoading(false);
     });
     
-    return () => unsubscribe();
+    return () => subscription.unsubscribe();
   }, []);
 
   const testDatabaseConnection = async () => {
@@ -164,7 +164,8 @@ export default function AdminDashboard() {
   };
 
   const handleVerificationToggle = async (vendor: Vendor) => {
-    if (!auth.currentUser) return;
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
 
     try {
       const newVerificationStatus = !vendor.is_verified;
@@ -174,8 +175,8 @@ export default function AdminDashboard() {
         p_vendor_id: vendor.vendor_id,
         p_table_name: vendor.table_name,
         p_is_verified: newVerificationStatus,
-        p_admin_id: auth.currentUser.uid,
-        p_admin_email: auth.currentUser.email || '',
+        p_admin_id: user.id,
+        p_admin_email: user.email || '',
         p_vendor_name: vendor.name
       });
 
@@ -206,7 +207,7 @@ export default function AdminDashboard() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await supabase.auth.signOut();
       setIsLoggedIn(false);
       setIsAdmin(false);
       toast({

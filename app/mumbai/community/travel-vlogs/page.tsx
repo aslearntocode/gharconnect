@@ -1,3 +1,4 @@
+import { supabase } from '@/lib/supabase-auth'
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -6,14 +7,13 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { properties, getPropertyLink } from '@/app/data/travel-vlogs'
 import { FiStar, FiMapPin, FiPhone, FiMail, FiGlobe, FiHeart, FiShare2, FiWifi, FiCoffee, FiTruck, FiUsers, FiZap } from 'react-icons/fi'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 function PropertyShowcase() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [sortBy, setSortBy] = useState<'rating' | 'price' | 'name'>('rating')
   const pathname = usePathname()
-  const supabase = createClientComponentClient()
+  
   const [propertyReviews, setPropertyReviews] = useState<Record<string, { rating: number; count: number }>>({})
   
   // Extract society from pathname

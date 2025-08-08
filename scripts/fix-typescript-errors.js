@@ -1,3 +1,4 @@
+import { supabase } from '@/lib/supabase-auth'
 #!/usr/bin/env node
 
 const fs = require('fs');
@@ -77,7 +78,7 @@ function fixFile(filePath) {
         }
       } else {
         // Add new import line
-        const importLine = "import { User } from 'firebase/auth';";
+        const importLine = "import { User } from '@supabase/supabase-js';";
         const lines = content.split('\n');
         let inserted = false;
         

@@ -3,11 +3,11 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { applicationSchema, ApplicationFormData } from '@/lib/application-schema';
+import { applicationSchema, ApplicationFormData } from '@/lib/application-schema'
+import { supabase } from '@/lib/supabase-auth';
 import { createRentalApplication } from '@/lib/actions';
 import { getSupabaseClient } from '@/lib/supabase';
-import { auth } from '@/lib/firebase';
-import { User } from 'firebase/auth';
+import { User } from '@supabase/supabase-js';
 import { useRouter, useParams } from 'next/navigation';
 import Header from '@/components/Header';
 import { toast, Toaster } from 'sonner';
@@ -39,16 +39,17 @@ export default function ApplyForRentPage() {
   });
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      const user = session?.user || null;
       setUser(user);
       setLoadingUser(false);
       if (user) {
-        setValue('name', user.displayName || '');
+        setValue('name', user.user_metadata?.full_name || user.user_metadata?.name || '');
         setValue('email', user.email || '');
       }
     });
 
-    return () => unsubscribe();
+    return () => subscription.unsubscribe();
   }, [setValue]);
 
   useEffect(() => {
@@ -90,12 +91,12 @@ export default function ApplyForRentPage() {
       formData: data,
       apartmentId: apartment.id,
       landlordUserId: apartment.user_id,
-      applicantUserId: user.uid
+      applicantUserId: user.id
     });
     
     setIsSubmitting(true);
     try {
-      const result = await createRentalApplication(data, apartment.id!, apartment.user_id, user.uid);
+      const result = await createRentalApplication(data, apartment.id!, apartment.user_id, user.id);
       console.log('Submission result:', result);
       
       if (result.success) {

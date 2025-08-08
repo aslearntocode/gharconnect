@@ -1,5 +1,4 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
-import { auth } from './firebase' // Import Firebase auth
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -7,37 +6,36 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 // Create a base client
 const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
-    persistSession: false,
+    persistSession: true,
+    autoRefreshToken: true,
   },
 })
 
 // Function to get an authenticated Supabase client
 export const getSupabaseClient = async (): Promise<SupabaseClient> => {
-  const token = await auth.currentUser?.getIdToken()
+  const { data: { session } } = await supabase.auth.getSession()
   
-  if (token) {
-    supabase.auth.setSession({
-      access_token: token,
-      refresh_token: token,
-    })
+  if (session) {
+    // Session is automatically handled by the client
+    return supabase
   }
   
   return supabase
 }
 
-// Function to get Supabase client with Firebase auth headers
-export const getSupabaseClientWithAuth = async (): Promise<SupabaseClient> => {
-  const token = await auth.currentUser?.getIdToken()
+// Function to get Supabase client with custom headers if needed
+export const getSupabaseClientWithHeaders = async (): Promise<SupabaseClient> => {
+  const { data: { session } } = await supabase.auth.getSession()
   
-  if (token) {
-    // Create a new client with custom headers
+  if (session) {
+    // Create a new client with custom headers if needed
     const client = createClient(supabaseUrl, supabaseAnonKey, {
       auth: {
-        persistSession: false,
+        persistSession: true,
+        autoRefreshToken: true,
       },
       global: {
         headers: {
-          'Authorization': `Bearer ${token}`,
           'X-Client-Info': 'supabase-js/2.x.x',
         },
       },
@@ -51,39 +49,14 @@ export const getSupabaseClientWithAuth = async (): Promise<SupabaseClient> => {
 
 // Function to get Supabase client for storage operations
 export const getSupabaseStorageClient = async (): Promise<SupabaseClient> => {
-  const token = await auth.currentUser?.getIdToken()
+  const { data: { session } } = await supabase.auth.getSession()
   
-  if (token) {
-    // For storage operations, we need to use the service role key or handle auth differently
-    // For now, let's use the regular client but with proper auth setup
-    const client = createClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        persistSession: false,
-      },
-    })
-    
-    // Set the session with the Firebase token
-    await client.auth.setSession({
-      access_token: token,
-      refresh_token: token,
-    })
-    
-    return client
+  if (session) {
+    // For storage operations, the session is automatically handled
+    return supabase
   }
   
   return supabase
-}
-
-// DEPRECATED: This function is part of a pattern that can cause race conditions.
-// Use getSupabaseClient instead.
-export const updateSupabaseAuth = async () => {
-  const token = await auth.currentUser?.getIdToken()
-  if (token) {
-    await supabase.auth.setSession({
-      access_token: token,
-      refresh_token: token,
-    })
-  }
 }
 
 export type Review = {

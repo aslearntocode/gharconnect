@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { auth } from '@/lib/firebase';
-import { signOut, setPersistence, browserLocalPersistence, User } from 'firebase/auth';
+import { supabase } from '@/lib/supabase-auth';
+import { User } from '@supabase/supabase-js'
+// TODO: Replace Firebase auth functions: signOut, setPersistence, browserLocalPersistence;
 import VendorHeader from '@/components/VendorHeader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -146,12 +146,13 @@ export default function VendorDashboard() {
     '24hours': false,
   });
   const router = useRouter();
-  const supabase = createClientComponentClient();
+  ;
 
   useEffect(() => {
     setPersistence(auth, browserLocalPersistence);
     
-    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      const user = session?.user || null;
       if (user) {
         setIsLoggedIn(true);
         fetchAvailability();
@@ -162,7 +163,7 @@ export default function VendorDashboard() {
       setIsLoading(false);
     });
     
-    return () => unsubscribe();
+    return () => subscription.unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -180,7 +181,7 @@ export default function VendorDashboard() {
       const { data, error } = await supabase
         .from('vendor_availability')
         .select('*')
-        .eq('vendor_id', auth.currentUser?.uid)
+        .eq('vendor_id', (await supabase.auth.getUser()).data.user?.id)
         .gte('date', new Date().toISOString())
         .order('date', { ascending: true });
 
@@ -215,7 +216,7 @@ export default function VendorDashboard() {
 
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await supabase.auth.signOut();
       setIsLoggedIn(false);
       setAvailability([]);
       toast({
@@ -265,7 +266,8 @@ export default function VendorDashboard() {
   };
 
   const handleSaveAvailability = async () => {
-    if (!auth.currentUser) return;
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
     if (!mobileNo) {
       toast({ title: 'Error', description: 'Please enter your mobile number', variant: 'destructive' });
       return;
@@ -280,7 +282,8 @@ export default function VendorDashboard() {
     }
     setIsLoading(true);
     try {
-      const vendorName = auth.currentUser?.displayName || auth.currentUser?.email || '';
+      const { data: { user } } = await supabase.auth.getUser();
+      const vendorName = user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email || '';
       const societiesString = selectedSocieties.length
         ? `{${selectedSocieties.map(s => `"${s}"`).join(',')}}`
         : '{}';
@@ -291,7 +294,7 @@ export default function VendorDashboard() {
         const { error: deleteError } = await supabase
           .from('vendor_permanent_availability')
           .delete()
-          .eq('vendor_id', auth.currentUser!.uid);
+          .eq('vendor_id', user.id);
 
         if (deleteError) {
           toast({
@@ -309,7 +312,7 @@ export default function VendorDashboard() {
           .map(([slotId]) => {
             const slot = PERMANENT_SLOTS.find(s => s.id === slotId);
             return {
-              vendor_id: auth.currentUser!.uid,
+              vendor_id: user.id,
               name: vendorName,
               mobile_no: mobileNo,
               services: selectedService,
@@ -352,7 +355,7 @@ export default function VendorDashboard() {
       const { error: deleteError } = await supabase
         .from('vendor_weekly_availability')
         .delete()
-        .eq('vendor_id', auth.currentUser!.uid);
+        .eq('vendor_id', user.id);
 
       if (deleteError) {
         toast({
@@ -367,7 +370,7 @@ export default function VendorDashboard() {
       const rows = days.map(date => {
         const dateKey = date.toISOString().slice(0, 10);
         return {
-          vendor_id: auth.currentUser!.uid,
+          vendor_id: user.id,
           name: vendorName,
           mobile_no: mobileNo,
           services: selectedService,

@@ -12,8 +12,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { auth } from '@/lib/firebase';
+import { supabase } from '@/lib/supabase-auth';
 
 const firstTimeLoginSchema = z.object({
   societyName: z.string().min(1, 'Society name is required'),
@@ -32,7 +31,7 @@ interface FirstTimeLoginFormProps {
 export function FirstTimeLoginForm({ onComplete }: FirstTimeLoginFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const supabase = createClientComponentClient();
+  ;
 
   const form = useForm<FirstTimeLoginFormValues>({
     resolver: zodResolver(firstTimeLoginSchema),
@@ -49,15 +48,15 @@ export function FirstTimeLoginForm({ onComplete }: FirstTimeLoginFormProps) {
     setIsLoading(true);
     setError(null);
     try {
-      const currentUser = auth.currentUser;
-      if (!currentUser) {
+      const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser();
+      if (userError || !currentUser) {
         throw new Error('No user found. Please try logging in again.');
       }
 
       const { error } = await supabase
         .from('user_profiles')
         .upsert({
-          user_id: currentUser.uid,
+          user_id: currentUser.id,
           society_name: data.societyName,
           building_name: data.buildingName,
           apartment_number: data.apartmentNumber,

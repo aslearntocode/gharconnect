@@ -44,6 +44,7 @@ filesToUpdate.forEach(file => {
 });
 
 console.log('\nTo update each file, you need to:');
-console.log('1. Add import: import { initializeFirebaseAuth } from \'@/lib/authUtils\'');
-console.log('2. Replace: auth.onAuthStateChanged( with: initializeFirebaseAuth(');
+console.log('1. Add import: import { initializeFirebaseAuth } from \'@/lib/authUtils\'
+import { supabase } from '@/lib/supabase-auth'');
+console.log('2. Replace: supabase.auth.onAuthStateChange( with: initializeFirebaseAuth(');
 console.log('\nThe Header.tsx, AuthContext.tsx, and mumbai/community/page.tsx have already been updated.'); 

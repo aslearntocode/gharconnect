@@ -1,46 +1,14 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { User } from 'firebase/auth';
-import { auth } from '@/lib/firebase';
-import { initializeFirebaseAuth } from '@/lib/authUtils';
+import { User } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase-auth';
 
 export type AuthContextType = {
   currentUser: User | null;
   loading: boolean;
-  auth: typeof auth;
+  supabase: typeof supabase;
 };
 
-export const AuthContext = createContext<AuthContextType>({
-  currentUser: null,
-  loading: true,
-  auth: auth,
-});
-
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const unsubscribe = initializeFirebaseAuth((user) => {
-      console.log('AuthContext: Auth state changed, user:', user?.email || 'null');
-      setCurrentUser(user);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const value = {
-    currentUser,
-    loading,
-    auth,
-  };
-
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
-}
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function useAuth() {
   const context = useContext(AuthContext);
@@ -48,4 +16,34 @@ export function useAuth() {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
+}
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      const user = session?.user || null;
+      console.log('AuthContext: Auth state changed, user:', user?.email || 'null');
+      setCurrentUser(user);
+      setLoading(false);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const value = {
+    currentUser,
+    loading,
+    supabase,
+  };
+
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
 } 

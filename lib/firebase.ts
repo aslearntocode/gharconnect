@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+// TODO: Replace Firebase auth functions: getAuth;
 import { getFirestore } from 'firebase/firestore';
+import { supabase } from '@/lib/supabase-auth'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,

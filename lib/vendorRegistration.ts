@@ -1,4 +1,4 @@
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { supabase } from '@/lib/supabase-auth'
 
 export interface VendorRegistrationData {
   name: string
@@ -37,7 +37,7 @@ export async function insertVendorWithoutAuth(
   selectedSlots: string[]
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const supabase = createClientComponentClient()
+    
 
     // Validate input
     if (!vendorData.name || !vendorData.mobile_no || !vendorData.services || !vendorData.area) {
@@ -114,7 +114,7 @@ export async function insertVendorWithoutAuth(
  */
 export async function getAllVendors(area?: string): Promise<any[]> {
   try {
-    const supabase = createClientComponentClient()
+    
     
     let query = supabase
       .from('vendor_permanent_availability')
@@ -147,7 +147,7 @@ export async function getAllVendors(area?: string): Promise<any[]> {
  */
 export async function updateVendorId(mobileNo: string, vendorId: string): Promise<{ success: boolean; error?: string }> {
   try {
-    const supabase = createClientComponentClient()
+    
 
     const { error } = await supabase
       .from('vendor_permanent_availability')
@@ -174,7 +174,7 @@ export async function updateVendorId(mobileNo: string, vendorId: string): Promis
  */
 export async function cleanupConflictingVendorSlots(): Promise<{ success: boolean; error?: string; cleanedCount?: number }> {
   try {
-    const supabase = createClientComponentClient()
+    
 
     // First, get all vendors that have 24hours slot
     const { data: vendorsWith24Hours, error: fetchError } = await supabase

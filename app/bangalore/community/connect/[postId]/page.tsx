@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { User } from 'firebase/auth';
+import { User } from '@supabase/supabase-js';
 import { useRouter, useParams } from 'next/navigation';
-import { getSupabaseClient } from '@/lib/supabase';
-import { auth } from '@/lib/firebase';
+import { getSupabaseClient } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase-auth';
 import { generateAnonymousId } from '@/lib/anonymousId';
 import { Button } from '@/components/ui/button';
 import Header from '@/components/Header';
@@ -59,9 +59,9 @@ export default function PostDetailPage() {
   });
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user: User | null) => setUser(user));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => setUser(session?.user || null));
     fetchPostAndComments();
-    return () => unsubscribe();
+    return () => subscription.unsubscribe();
   }, [postId]);
 
   useEffect(() => {
@@ -71,7 +71,7 @@ export default function PostDetailPage() {
       const { data, error } = await supabase
         .from('comment_likes')
         .select('comment_id')
-        .eq('user_id', user.uid);
+        .eq('user_id', user.id);
       if (!error && data) {
         const liked: Record<string, boolean> = {};
         data.forEach((row: { comment_id: string }) => { liked[row.comment_id] = true; });
@@ -85,13 +85,11 @@ export default function PostDetailPage() {
     if (!user) return;
     const fetchLikedPosts = async () => {
       const supabase = await getSupabaseClient();
-      const firebaseUid = user.uid;
-      const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
-      const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
+      const userId = user.id;
       const { data, error } = await supabase
         .from('post_likes')
         .select('post_id')
-        .eq('user_id', formattedUuid);
+        .eq('user_id', userId);
       if (!error && data) {
         const liked: Record<string, boolean> = {};
         data.forEach((row: { post_id: string }) => { liked[row.post_id] = true; });
@@ -127,14 +125,12 @@ export default function PostDetailPage() {
     if (!user || !post) return;
     setCommentLoading(true);
     const supabase = await getSupabaseClient();
-    const firebaseUid = user.uid;
-    const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
-    const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
+    const userId = user.id;
     const { error } = await supabase.from('comments').insert([
       {
         post_id: post.id,
         body: newComment,
-        user_id: formattedUuid,
+        user_id: userId,
         parent_comment_id: parentId || null,
       },
     ]);
@@ -156,54 +152,14 @@ export default function PostDetailPage() {
     }
     setLikesLoading(commentId);
     const supabase = await getSupabaseClient();
-    const firebaseUid = user.uid;
-    // Check if already liked
-    const { data: likeRows, error: likeError } = await supabase
-      .from('comment_likes')
-      .select('id')
-      .eq('user_id', firebaseUid)
-      .eq('comment_id', commentId);
-    if (likeRows && likeRows.length > 0) {
-      setLikesLoading(null);
-      return; // Already liked
-    }
-    // Insert like
-    const { error: insertError } = await supabase
-      .from('comment_likes')
-      .insert([{ user_id: firebaseUid, comment_id: commentId }]);
-    if (!insertError) {
-      // Increment comment likes
-      const currentComment = comments.find(c => c.id === commentId);
-      const currentLikes = currentComment?.likes || 0;
-      await supabase
-        .from('comments')
-        .update({ likes: currentLikes + 1 })
-        .eq('id', commentId);
-      setComments(prev => prev.map(c => c.id === commentId ? { ...c, likes: (c.likes || 0) + 1 } : c));
-      setUserLikedComments(prev => ({ ...prev, [commentId]: true }));
-    }
-    setLikesLoading(null);
-  }
-
-  async function handleLikePost(postId: string) {
-    if (!user) {
-      setIsLoginModalOpen(true);
-      return;
-    }
-
-    setLikesLoading(postId);
-    try {
-      const supabase = await getSupabaseClient();
-      const firebaseUid = user.uid;
-      const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
-      const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
+    const userId = user.id;
 
       // Check if user already liked the post
       const { data: existingLike } = await supabase
         .from('post_likes')
         .select('id')
         .eq('post_id', postId)
-        .eq('user_id', formattedUuid)
+        .eq('user_id', userId)
         .single();
 
       if (existingLike) {
@@ -212,7 +168,7 @@ export default function PostDetailPage() {
           .from('post_likes')
           .delete()
           .eq('post_id', postId)
-          .eq('user_id', formattedUuid);
+          .eq('user_id', userId);
 
         // Decrease likes count
         if (post) {
@@ -228,7 +184,7 @@ export default function PostDetailPage() {
         // Like the post
         await supabase
           .from('post_likes')
-          .insert([{ post_id: postId, user_id: formattedUuid }]);
+          .insert([{ post_id: postId, user_id: userId }]);
 
         // Increase likes count
         if (post) {

@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { apartmentFormSchema, ApartmentFormData } from '@/lib/apartment-schema';
+import { apartmentFormSchema, ApartmentFormData } from '@/lib/apartment-schema'
+import { supabase } from '@/lib/supabase-auth';
 import { createApartment } from '@/lib/apartment-utils';
 import { 
   APARTMENT_TYPES, 
@@ -12,8 +13,7 @@ import {
   PREFERRED_TENANT_TYPES,
   AMENITIES_OPTIONS 
 } from '@/types/apartment';
-import { auth } from '@/lib/firebase';
-import { User } from 'firebase/auth';
+import { User } from '@supabase/supabase-js';
 import { toast } from 'react-hot-toast';
 import { 
   HomeIcon, 
@@ -63,12 +63,13 @@ export default function RentApartmentPage() {
   });
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      const user = session?.user || null;
       setUser(user);
       setLoadingUser(false);
     });
 
-    return () => unsubscribe();
+    return () => subscription.unsubscribe();
   }, []);
 
   const parkingAvailable = watch('parking_available');
@@ -117,10 +118,10 @@ export default function RentApartmentPage() {
         setIsSubmitting(false);
         return;
       }
-      console.log('User found:', user.uid);
+      console.log('User found:', user.id);
 
       console.log('Saving apartment data to Supabase...');
-      const result = await createApartment(data, user.uid, location);
+      const result = await createApartment(data, user.id, location);
       
       if (result.success) {
         console.log('Apartment created successfully:', result.data);

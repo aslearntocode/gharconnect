@@ -1,10 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { User } from 'firebase/auth';
+import { User } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation'
-import { auth } from '@/lib/firebase'
-import { getSupabaseClient } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase-auth'
 import Header from '@/components/Header'
 import Link from 'next/link'
 import { generateAnonymousId } from '@/lib/anonymousId'
@@ -30,7 +29,8 @@ export default function MyComments() {
   const router = useRouter()
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      const user = session?.user || null;
       if (!user) {
         // Redirect to Parel homepage instead of login page
         router.push('/parel')
@@ -38,12 +38,8 @@ export default function MyComments() {
       }
 
       try {
-        const supabase = await getSupabaseClient()
-        
-        // Convert Firebase UID to UUID format for database query
-        const firebaseUid = user.uid
-        const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32)
-        const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`
+        // Use Supabase user ID directly for database query
+        const userId = user.id
         
         const { data, error } = await supabase
           .from('comments')
@@ -51,7 +47,7 @@ export default function MyComments() {
             *,
             post:posts(title, category)
           `)
-          .eq('user_id', formattedUuid)
+          .eq('user_id', userId)
           .order('created_at', { ascending: false })
 
         if (error) throw error
@@ -64,7 +60,7 @@ export default function MyComments() {
       }
     })
 
-    return () => unsubscribe()
+    return () => subscription.unsubscribe()
   }, [router])
 
   const timeAgo = (dateString: string) => {

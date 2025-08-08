@@ -1,3 +1,4 @@
+import { supabase } from '@/lib/supabase-auth'
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -7,7 +8,6 @@ import Disclaimer from '@/components/Disclaimer';
 import { FiSearch, FiStar, FiMapPin, FiPhone, FiMail, FiUser, FiAward, FiMusic, FiCamera, FiEdit3, FiCode, FiImage, FiBookOpen, FiHeart, FiTrendingUp } from 'react-icons/fi';
 import { Talent, TalentCategory } from '@/types/talent';
 import { getProvidersBySociety, searchProviders, getProvidersByCategory } from '@/data/home-service-providers';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export default function ParelNeighborhoodServiceProviderPage() {
   const [talents, setTalents] = useState<Talent[]>([]);
@@ -15,7 +15,7 @@ export default function ParelNeighborhoodServiceProviderPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredTalents, setFilteredTalents] = useState<Talent[]>([]);
   const [ratingsMap, setRatingsMap] = useState<Record<string, { avg: string, count: number }>>({});
-  const supabase = createClientComponentClient();
+  ;
 
   useEffect(() => {
     fetchTalents();

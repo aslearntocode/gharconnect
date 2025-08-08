@@ -20,8 +20,7 @@ import { Input } from "@/components/ui/input"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { auth } from '@/lib/firebase'
+import { supabase } from '@/lib/supabase-auth'
 import { UserProfile } from '@/lib/profileUtils'
 
 const profileSchema = z.object({
@@ -49,7 +48,7 @@ export function ProfileCompletionModal({
 }: ProfileCompletionModalProps) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const supabase = createClientComponentClient()
+  
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
@@ -65,8 +64,8 @@ export function ProfileCompletionModal({
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const currentUser = auth.currentUser;
-        if (!currentUser) {
+        const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser();
+        if (userError || !currentUser) {
           setError("No user found. Please try logging in again.");
           return;
         }
@@ -74,7 +73,7 @@ export function ProfileCompletionModal({
         const { data: profile, error } = await supabase
           .from('user_profiles')
           .select('*')
-          .eq('user_id', currentUser.uid)
+          .eq('user_id', currentUser.id)
           .single();
 
         if (error && error.code !== 'PGRST116') {
@@ -107,15 +106,15 @@ export function ProfileCompletionModal({
     setIsLoading(true);
     setError(null);
     try {
-      const currentUser = auth.currentUser;
-      if (!currentUser) {
+      const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser();
+      if (userError || !currentUser) {
         throw new Error('No user found. Please try logging in again.');
       }
 
       const { error } = await supabase
         .from('user_profiles')
         .upsert({
-          user_id: currentUser.uid,
+          user_id: currentUser.id,
           society_name: data.society_name,
           building_name: data.building_name,
           apartment_number: data.apartment_number,

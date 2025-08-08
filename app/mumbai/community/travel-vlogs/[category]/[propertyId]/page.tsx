@@ -1,3 +1,4 @@
+import { supabase } from '@/lib/supabase-auth'
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -6,7 +7,6 @@ import Link from 'next/link'
 import { useParams, usePathname } from 'next/navigation'
 import { properties } from '@/app/data/travel-vlogs'
 import { PropertyRating } from '@/components/PropertyRating'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { FiStar, FiMapPin, FiPhone, FiMail, FiGlobe, FiHeart, FiShare2, FiWifi, FiCoffee, FiTruck, FiUsers, FiZap, FiArrowLeft, FiCalendar, FiClock, FiDollarSign, FiUser, FiMessageCircle } from 'react-icons/fi'
 
 interface Review {
@@ -29,7 +29,7 @@ function PropertyDetail() {
   const [reviews, setReviews] = useState<Review[]>([])
   const [propertyRating, setPropertyRating] = useState<{ rating: number; count: number } | null>(null)
   const [isLoadingReviews, setIsLoadingReviews] = useState(false)
-  const supabase = createClientComponentClient()
+  
   
   // Extract society from pathname
   const getSocietyFromPath = () => {

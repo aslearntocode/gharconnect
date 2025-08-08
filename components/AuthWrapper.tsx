@@ -2,8 +2,7 @@
 
 import { useRouter, usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
-import { onAuthStateChanged, signOut, User } from 'firebase/auth'
-import { auth } from "@/lib/firebase"
+import { supabase } from "@/lib/supabase-auth"
 
 const TIMEOUT_DURATION = 30 * 60 * 1000 // 30 minutes in milliseconds
 
@@ -20,9 +19,9 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       // Only redirect to login if user is not authenticated and not already on login page
-      if (!user && !pathname.includes('/login') && !pathname.includes('/logout')) {
+      if (!session?.user && !pathname.includes('/login') && !pathname.includes('/logout')) {
         const society = getSocietyFromPath(pathname)
         router.push(`/${society}/login`)
       }
@@ -41,21 +40,21 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
     // Check for inactivity - DISABLED for now to prevent auto-logout issues
     // const interval = setInterval(() => {
     //   if (Date.now() - lastActivity >= TIMEOUT_DURATION) {
-    //     signOut(auth)
+    //     supabase.auth.signOut()
     //     const society = getSocietyFromPath(pathname)
     //     router.push(`/${society}/login`)
     //   }
     // }, 1000) // Check every second
 
     return () => {
-      unsubscribe()
+      subscription.unsubscribe()
       window.removeEventListener('mousemove', handleActivity)
       window.removeEventListener('keydown', handleActivity)
       window.removeEventListener('click', handleActivity)
       window.removeEventListener('scroll', handleActivity)
       // clearInterval(interval)
     }
-  }, [router, lastActivity, pathname])
+  }, [pathname, router])
 
   return <>{children}</>
 } 

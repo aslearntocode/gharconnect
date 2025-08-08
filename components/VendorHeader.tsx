@@ -1,8 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { auth } from "@/lib/firebase"
-import { User } from "firebase/auth"
+import { supabase } from '@/lib/supabase-auth'
 import { ProfileDropdown } from "./ProfileDropdown"
 import { useRouter } from "next/navigation"
 import Image from 'next/image'
@@ -13,10 +12,11 @@ export default function VendorHeader() {
   const router = useRouter()
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      const user = session?.user || null;
       setUser(user)
     })
-    return () => unsubscribe()
+    return () => subscription.unsubscribe()
   }, [])
 
   // Add style to hide mobile navigation

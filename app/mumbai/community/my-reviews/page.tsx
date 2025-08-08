@@ -1,10 +1,10 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { User } from 'firebase/auth';
+import { User } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation'
-import { auth } from '@/lib/firebase'
-import { getSupabaseClient, type Review } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase-auth'
+import { type Review } from '@/lib/supabase'
 import Header from '@/components/Header'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -16,32 +16,45 @@ export default function MyReviews() {
   const router = useRouter()
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      const user = session?.user || null;
+      console.log('Auth state change - user:', user);
       if (!user) {
-        // Redirect to Parel homepage instead of login page
-        router.push('/parel')
+        // Redirect to login page
+        router.push('/mumbai/community/login')
         return
       }
 
       try {
-        const supabase = await getSupabaseClient()
+        console.log('Fetching reviews for user:', user.id);
+        
+        // First, let's check if there are any reviews in the table at all
+        const { data: allReviews, error: allReviewsError } = await supabase
+          .from('reviews')
+          .select('*')
+          .limit(5);
+        console.log('All reviews in table (first 5):', { allReviews, allReviewsError });
+        
         const { data, error } = await supabase
           .from('reviews')
           .select('*')
-          .eq('user_id', user.uid)
+          .eq('user_id', user.id)
           .order('created_at', { ascending: false })
+
+        console.log('Reviews query result:', { data, error });
 
         if (error) throw error
 
         setReviews(data || [])
       } catch (err: any) {
+        console.error('Error fetching reviews:', err);
         setError(err.message)
       } finally {
         setLoading(false)
       }
     })
 
-    return () => unsubscribe()
+    return () => subscription.unsubscribe()
   }, [router])
 
   const getSentimentColor = (rating: number): string => {
@@ -73,12 +86,12 @@ export default function MyReviews() {
           ) : reviews.length === 0 ? (
             <div className="bg-white rounded-lg shadow-sm p-8 text-center">
               <h3 className="text-lg font-medium text-gray-900 mb-2">No reviews yet</h3>
-              <p className="text-gray-500 mb-6">You haven't reviewed any items yet.</p>
+              <p className="text-gray-500 mb-6">You haven't reviewed any vendors yet.</p>
               <Link
-                href="/mumbai/community/marketplace"
+                href="/mumbai/community"
                 className="inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                Browse Marketplace
+                Review the Vendor
               </Link>
             </div>
           ) : (

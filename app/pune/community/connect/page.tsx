@@ -1,8 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { User } from 'firebase/auth';
-import { getSupabaseClient } from '@/lib/supabase';
-import { auth } from '@/lib/firebase';
+import { User } from '@supabase/supabase-js';
+import { getSupabaseClient } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase-auth';
 import { generateAnonymousId } from '@/lib/anonymousId';
 import { checkProfileCompletion } from '@/lib/profileUtils';
 import { Button } from '@/components/ui/button';
@@ -94,196 +94,15 @@ export default function ParelConnectPage() {
   ];
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      const user = session?.user || null;
       setUser(user);
-      if (user) {
+      if (user && user.id) {
         // Fetch liked posts for this user from Supabase
         const supabase = await getSupabaseClient();
-        // Convert Firebase UID to UUID format
-        const firebaseUid = user.uid;
-        const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
-        const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
-        const { data, error } = await supabase
-          .from('post_likes')
-          .select('post_id')
-          .eq('user_id', formattedUuid);
-        if (!error && data) {
-          const liked: Record<string, boolean> = {};
-          data.forEach((row: { post_id: string }) => { liked[row.post_id] = true; });
-          setUserLikedPosts(liked);
-        }
-      }
-    });
-    fetchPosts();
-    fetchTopUsers(); // Call fetchTopUsers here
-    fetchFeaturedPosts(); // Call fetchFeaturedPosts here
-    return () => unsubscribe();
-  }, []);
-
-  // Reset imageUploadReset flag after component has been reset
-  useEffect(() => {
-    if (imageUploadReset) {
-      const timer = setTimeout(() => {
-        setImageUploadReset(false);
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [imageUploadReset]);
-
-  const fetchPosts = async () => {
-    setLoading(true);
-    const supabase = await getSupabaseClient();
-    
-    // Define Pune areas
-    const puneAreas = [
-      'India', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar',
-      'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Koregaon Park',
-      'Bund Garden', 'Yerwada', 'Kalyani Nagar', 'Vishrantwadi', 'Lohegaon', 'Dhanori',
-      'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus',
-      'Bavdhan', 'Katraj', 'Dhankawadi', 'Sahakar Nagar', 'Warje', 'Karve Nagar',
-      'Erandwane', 'Deccan Gymkhana', 'FC Road', 'JM Road', 'Law College Road',
-      'Ganeshkhind', 'University Road', 'Senapati Bapat Road', 'Sinhagad Road',
-      'Paud Road', 'Mumbai-Pune Expressway', 'Hinjewadi Phase 1', 'Hinjewadi Phase 2',
-      'Hinjewadi Phase 3', 'Rajiv Gandhi Infotech Park', 'MIDC', 'Chakan', 'Talegaon'
-    ];
-    
-    const { data, error } = await supabase
-      .from('posts')
-      .select(`
-        *,
-        comment_count:comments(count)
-      `)
-      .in('area', puneAreas)
-      .order('created_at', { ascending: false });
-    if (!error) {
-      // Transform the data to flatten the comment_count
-      const transformedData = (data || []).map(post => ({
-        ...post,
-        comment_count: post.comment_count?.[0]?.count || 0
-      }));
-      setPosts(transformedData);
-    }
-    setLoading(false);
-  };
-
-  const fetchFeaturedPosts = async () => {
-    const supabase = await getSupabaseClient();
-    
-    // Define Pune areas
-    const puneAreas = [
-      'India', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar',
-      'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Koregaon Park',
-      'Bund Garden', 'Yerwada', 'Kalyani Nagar', 'Vishrantwadi', 'Lohegaon', 'Dhanori',
-      'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus',
-      'Bavdhan', 'Katraj', 'Dhankawadi', 'Sahakar Nagar', 'Warje', 'Karve Nagar',
-      'Erandwane', 'Deccan Gymkhana', 'FC Road', 'JM Road', 'Law College Road',
-      'Ganeshkhind', 'University Road', 'Senapati Bapat Road', 'Sinhagad Road',
-      'Paud Road', 'Mumbai-Pune Expressway', 'Hinjewadi Phase 1', 'Hinjewadi Phase 2',
-      'Hinjewadi Phase 3', 'Rajiv Gandhi Infotech Park', 'MIDC', 'Chakan', 'Talegaon'
-    ];
-    
-    const { data, error } = await supabase
-      .from('posts')
-      .select(`*`)
-      .eq('featured', true)
-      .in('area', puneAreas)
-      .order('created_at', { ascending: false })
-      .limit(4); // Fetch 4 featured posts
-    if (!error && data) {
-      setFeaturedPosts(data);
-    }
-  };
-
-  const fetchTopUsers = async () => {
-    const supabase = await getSupabaseClient();
-    
-    // Define Pune areas
-    const puneAreas = [
-      'India', 'Pune', 'Hinjewadi', 'Wakad', 'Pimpri-Chinchwad', 'Kharadi', 'Viman Nagar',
-      'Koregaon Park', 'Camp', 'Deccan', 'Shivajinagar', 'Kalyani Nagar', 'Koregaon Park',
-      'Bund Garden', 'Yerwada', 'Kalyani Nagar', 'Vishrantwadi', 'Lohegaon', 'Dhanori',
-      'Wagholi', 'Hadapsar', 'Magarpatta', 'Aundh', 'Baner', 'Pashan', 'Sus',
-      'Bavdhan', 'Katraj', 'Dhankawadi', 'Sahakar Nagar', 'Warje', 'Karve Nagar',
-      'Erandwane', 'Deccan Gymkhana', 'FC Road', 'JM Road', 'Law College Road',
-      'Ganeshkhind', 'University Road', 'Senapati Bapat Road', 'Sinhagad Road',
-      'Paud Road', 'Mumbai-Pune Expressway', 'Hinjewadi Phase 1', 'Hinjewadi Phase 2',
-      'Hinjewadi Phase 3', 'Rajiv Gandhi Infotech Park', 'MIDC', 'Chakan', 'Talegaon'
-    ];
-    
-    // Get posts count by user for Pune areas only
-    const { data: postsData, error: postsError } = await supabase
-      .from('posts')
-      .select('user_id')
-      .in('area', puneAreas);
-    
-    // Get Pune area post IDs first
-    const { data: punePostIds, error: postIdsError } = await supabase
-      .from('posts')
-      .select('id')
-      .in('area', puneAreas);
-    
-    // Get comments count by user for Pune area posts only
-    const { data: commentsData, error: commentsError } = await supabase
-      .from('comments')
-      .select('user_id')
-      .in('post_id', punePostIds?.map(post => post.id) || []);
-    
-    if (!postsError && !commentsError && !postIdsError) {
-      // Count posts by user
-      const postCounts: { [userId: string]: number } = {};
-      postsData?.forEach(post => {
-        postCounts[post.user_id] = (postCounts[post.user_id] || 0) + 1;
-      });
-      
-      // Count comments by user
-      const commentCounts: { [userId: string]: number } = {};
-      commentsData?.forEach(comment => {
-        commentCounts[comment.user_id] = (commentCounts[comment.user_id] || 0) + 1;
-      });
-      
-      // Combine and calculate total activity
-      const allUserIds = new Set([
-        ...Object.keys(postCounts),
-        ...Object.keys(commentCounts)
-      ]);
-      
-      const topUsersData: TopUser[] = Array.from(allUserIds).map(userId => ({
-        user_id: userId,
-        total_posts: postCounts[userId] || 0,
-        total_comments: commentCounts[userId] || 0,
-        total_activity: (postCounts[userId] || 0) + (commentCounts[userId] || 0)
-      }));
-      
-      // Sort by total activity and take top 10
-      const sortedTopUsers = topUsersData
-        .sort((a, b) => b.total_activity - a.total_activity)
-        .slice(0, 3);
-      
-      setTopUsers(sortedTopUsers);
-    }
-  };
-
-  const checkProfileAndProceed = async () => {
-    try {
-      const { isComplete, missingFields: fields } = await checkProfileCompletion()
-      
-      if (!isComplete) {
-        setMissingFields(fields)
-        setShowProfileModal(true)
-        return false
-      }
-      
-      return true
-    } catch (error) {
-      console.error('Error checking profile completion:', error)
-      return false
-    }
-  }
-
-  const handleNewPost = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!user) {
-      console.log('No user found');
+        // Use Supabase user ID directly
+    const userId = user.id;
+    console.log('User ID:', userId);
       return;
     }
 
@@ -294,7 +113,7 @@ export default function ParelConnectPage() {
     }
 
     console.log('Submitting post:', newPost);
-    console.log('User UID:', user.uid);
+    console.log('User ID:', userId);
     setSubmitting(true);
     const supabase = await getSupabaseClient();
     
@@ -306,23 +125,11 @@ export default function ParelConnectPage() {
       .limit(1);
     console.log('Test query result:', { testData, testError });
     
-    // Convert Firebase UID to UUID format
-    // Firebase UIDs are 28 characters, we need to make it 32 characters for UUID
-    const firebaseUid = user.uid;
-    const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
-    const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
-    
-    const postData = {
-      title: newPost.title,
-      body: newPost.body,
-      user_id: formattedUuid,
-      area: newPost.area,
-      category: `gc/${newPost.area.toLowerCase()}/${newPost.category}`,
-      images: newPost.images,
-    };
-    console.log('Inserting post data:', postData);
-    console.log('Formatted UUID:', formattedUuid);
-    console.log('UUID length:', formattedUuid.length);
+    // Use Supabase user ID directly
+    const userId = user.id;
+    console.log('User ID:', userId);
+    console.log('Formatted UUID:', userId);
+    console.log('UUID length:', userId.length);
     
     const { data, error } = await supabase.from('posts').insert([postData]);
     console.log('Post insert result:', { data, error });
@@ -382,13 +189,11 @@ export default function ParelConnectPage() {
 
     setCommentLoading(true);
     const supabase = await getSupabaseClient();
-    const firebaseUid = user.uid;
-    const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
-    const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
+    const userId = user.id;
     const commentData = {
       post_id: selectedPost.id,
       body: newComment,
-      user_id: formattedUuid,
+      user_id: userId,
       parent_comment_id: parentId || null,
       area: "Parel",
     };
@@ -430,19 +235,16 @@ export default function ParelConnectPage() {
       .limit(1);
     console.log('post_likes table test:', { tableTest, tableError });
     
-    // Convert Firebase UID to UUID format
-    const firebaseUid = user.uid;
-    console.log('Firebase UID:', firebaseUid);
-    const uuidFromFirebase = firebaseUid.replace(/-/g, '').padEnd(32, '0').substring(0, 32);
-    const formattedUuid = `${uuidFromFirebase.substring(0, 8)}-${uuidFromFirebase.substring(8, 12)}-${uuidFromFirebase.substring(12, 16)}-${uuidFromFirebase.substring(16, 20)}-${uuidFromFirebase.substring(20, 32)}`;
-    console.log('Formatted UUID:', formattedUuid);
+    // Use Supabase user ID directly
+    const userId = user.id;
+    console.log('User ID:', userId);
     
     try {
       // Check if already liked in DB
       const { data: likeRows, error: likeError } = await supabase
         .from('post_likes')
         .select('id')
-        .eq('user_id', formattedUuid)
+        .eq('user_id', userId)
         .eq('post_id', postId);
       
       console.log('Check like result:', { likeRows, likeError });
@@ -457,7 +259,7 @@ export default function ParelConnectPage() {
       // Insert like
       const { error: insertError } = await supabase
         .from('post_likes')
-        .insert([{ user_id: formattedUuid, post_id: postId }]);
+        .insert([{ user_id: userId, post_id: postId }]);
       
       console.log('Insert like result:', { insertError });
       console.log('Full insert error details:', JSON.stringify(insertError, null, 2));
@@ -997,7 +799,7 @@ export default function ParelConnectPage() {
                           <ImageUpload
                             onImagesChange={(urls) => setNewPost({ ...newPost, images: urls })}
                             maxImages={5}
-                            userId={user.uid}
+                            userId={user.id}
                             disabled={submitting}
                             reset={imageUploadReset} // Pass reset prop
                           />

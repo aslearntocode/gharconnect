@@ -1,5 +1,4 @@
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { auth } from '@/lib/firebase'
+import { supabase } from '@/lib/supabase-auth'
 
 export interface UserProfile {
   user_id: string
@@ -17,7 +16,7 @@ export const checkProfileCompletion = async (): Promise<{
   missingFields: string[]
 }> => {
   try {
-    const currentUser = auth.currentUser
+    const { data: { user: currentUser } } = await supabase.auth.getUser()
     if (!currentUser) {
       return {
         isComplete: false,
@@ -26,11 +25,10 @@ export const checkProfileCompletion = async (): Promise<{
       }
     }
 
-    const supabase = createClientComponentClient()
     const { data: profile, error } = await supabase
       .from('user_profiles')
       .select('*')
-      .eq('user_id', currentUser.uid)
+      .eq('user_id', currentUser.id)
       .single()
 
     if (error) {

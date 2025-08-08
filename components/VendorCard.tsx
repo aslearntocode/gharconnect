@@ -1,9 +1,9 @@
 'use client';
 
+import { supabase } from '@/lib/supabase-auth'
 import { FiChevronDown, FiChevronUp, FiPhone, FiX, FiChevronLeft, FiChevronRight, FiGlobe } from 'react-icons/fi';
 import { VendorRating } from './VendorRating';
 import { useState, useEffect } from 'react';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter, usePathname } from 'next/navigation';
 
 interface ServiceRating {
@@ -43,7 +43,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
   const [reviews, setReviews] = useState<any[]>([]);
   const [imageError, setImageError] = useState(false);
   const [showNumber, setShowNumber] = useState(false);
-  const supabase = createClientComponentClient();
+  ;
   const router = useRouter();
   const pathname = usePathname();
 

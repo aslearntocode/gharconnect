@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { User } from 'firebase/auth';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { User } from '@supabase/supabase-js';
 import { usePathname } from 'next/navigation';
 import Header from '@/components/Header';
 import { Card } from '@/components/ui/card';
@@ -10,7 +9,7 @@ import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import { VendorRating } from './VendorRating';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
 import LoginModal from './LoginModal';
-import { auth } from '@/lib/firebase';
+import { supabase } from '@/lib/supabase-auth';
 import { useMediaQuery } from 'react-responsive';
 
 // Utility function to get current area from URL path
@@ -78,7 +77,7 @@ export default function DomesticHelpPage() {
   const [user, setUser] = useState<any>(null);
   const [selectedVendor, setSelectedVendor] = useState<any | null>(null);
   const [loading, setLoading] = useState(false);
-  const supabase = createClientComponentClient();
+  ;
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const pathname = usePathname();
   const currentArea = getCurrentArea(pathname);
@@ -108,10 +107,11 @@ export default function DomesticHelpPage() {
 
   // Track user authentication status
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user: User | null) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      const user = session?.user || null;
       setUser(user);
     });
-    return () => unsubscribe();
+    return () => subscription.unsubscribe();
   }, []);
 
   // Fetch all vendors (distinct by vendor_id) - Area filtered

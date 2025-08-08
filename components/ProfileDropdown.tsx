@@ -2,14 +2,12 @@
 
 import { Fragment, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
-import { User } from 'firebase/auth'
-import { auth } from '@/lib/firebase'
+import { User } from '@supabase/supabase-js'
 import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ChevronDownIcon } from '@heroicons/react/24/solid'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { signOut } from 'firebase/auth'
+import { supabase } from '@/lib/supabase-auth'
 
 interface ProfileDropdownProps {
   user: User
@@ -28,7 +26,6 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
   const pathname = usePathname()
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const supabase = createClientComponentClient()
 
   // Extract area from pathname (e.g., /mumbai/community/connect -> mumbai/community, /bangalore/connect -> bangalore)
   const getCurrentArea = () => {
@@ -47,13 +44,13 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const currentUser = auth.currentUser;
+        const { data: { user: currentUser } } = await supabase.auth.getUser();
         if (!currentUser) return;
 
         const { data: profileData, error: profileError } = await supabase
           .from('user_profiles')
           .select('*')
-          .eq('user_id', currentUser.uid)
+          .eq('user_id', currentUser.id)
           .single();
 
         // Only treat actual errors as errors, not missing profiles
@@ -72,7 +69,7 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
     };
 
     fetchProfile();
-  }, [supabase]);
+  }, []);
 
   const handleSignOut = async () => {
     try {
@@ -87,9 +84,9 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
   return (
     <Menu as="div" className="relative inline-block text-left z-[100]">
       <Menu.Button className="flex items-center text-black">
-        {user?.photoURL ? (
+        {user?.user_metadata?.avatar_url ? (
           <Image
-            src={user.photoURL}
+            src={user.user_metadata.avatar_url}
             alt="Profile"
             width={32}
             height={32}
@@ -114,7 +111,7 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
       >
         <Menu.Items className="fixed right-4 top-16 w-72 origin-top-right divide-y divide-gray-600/50 rounded-md bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-[100]">
           <div className="px-4 py-3">
-            <p className="text-sm text-gray-100 font-medium">{user.displayName || user.email}</p>
+                            <p className="text-sm text-gray-100 font-medium">{user.user_metadata?.full_name || user.user_metadata?.name || user.email}</p>
             {error ? (
               <p className="mt-2 text-xs text-red-400">{error}</p>
             ) : profile ? (

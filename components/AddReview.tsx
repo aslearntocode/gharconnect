@@ -4,8 +4,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { auth } from '@/lib/firebase'
+import { supabase } from '@/lib/supabase-auth'
 import { generateAnonymousId } from '@/lib/anonymousId'
 import {
   Dialog,
@@ -43,7 +42,7 @@ export function AddReview({ cardId, cardName, onReviewAdded }: AddReviewProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const supabase = createClientComponentClient()
+  
 
   const form = useForm<ReviewFormValues>({
     resolver: zodResolver(reviewSchema),
@@ -57,16 +56,16 @@ export function AddReview({ cardId, cardName, onReviewAdded }: AddReviewProps) {
     setIsLoading(true)
     setError(null)
     try {
-      const currentUser = auth.currentUser
-      if (!currentUser) {
+      const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser()
+      if (userError || !currentUser) {
         throw new Error('You must be logged in to add a review')
       }
 
       // Generate anonymous ID for display
-      const anonymousId = generateAnonymousId(currentUser.uid)
+      const anonymousId = generateAnonymousId(currentUser.id)
 
       const { error } = await supabase.from('reviews').insert({
-        user_id: currentUser.uid,
+        user_id: currentUser.id,
         user_name: anonymousId, // Store anonymous ID instead of real name
         card_id: cardId,
         card_name: cardName,

@@ -28,8 +28,7 @@ import {
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { auth } from '@/lib/firebase'
+import { supabase } from '@/lib/supabase-auth'
 
 const profileSchema = z.object({
   society_name: z.string().min(1, "Society name is required"),
@@ -41,11 +40,25 @@ const profileSchema = z.object({
 
 type ProfileFormValues = z.infer<typeof profileSchema>
 
-export function ProfileEdit() {
+interface UserProfile {
+  user_id: string;
+  society_name: string;
+  building_name: string;
+  apartment_number: string;
+  email: string;
+  phone?: string;
+  updated_at?: string;
+}
+
+interface ProfileEditProps {
+  initialProfile?: UserProfile | null;
+}
+
+export function ProfileEdit({ initialProfile }: ProfileEditProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const supabase = createClientComponentClient()
+  
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
@@ -61,8 +74,21 @@ export function ProfileEdit() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const currentUser = auth.currentUser;
-        if (!currentUser) {
+        // If initialProfile is provided, use it
+        if (initialProfile) {
+          form.reset({
+            society_name: initialProfile.society_name || "",
+            building_name: initialProfile.building_name || "",
+            apartment_number: initialProfile.apartment_number || "",
+            email: initialProfile.email || "",
+            phone: initialProfile.phone || "",
+          });
+          return;
+        }
+
+        // Otherwise fetch from database
+        const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser();
+        if (userError || !currentUser) {
           setError("No user found. Please try logging in again.");
           return;
         }
@@ -70,7 +96,7 @@ export function ProfileEdit() {
         const { data: profile, error } = await supabase
           .from('user_profiles')
           .select('*')
-          .eq('user_id', currentUser.uid)
+          .eq('user_id', currentUser.id)
           .single();
 
         if (error) {
@@ -106,21 +132,21 @@ export function ProfileEdit() {
     if (isOpen) {
       fetchProfile();
     }
-  }, [isOpen, form, supabase]);
+  }, [isOpen, form, supabase, initialProfile]);
 
   const onSubmit = async (data: ProfileFormValues) => {
     setIsLoading(true);
     setError(null);
     try {
-      const currentUser = auth.currentUser;
-      if (!currentUser) {
+      const { data: { user: currentUser }, error: userError } = await supabase.auth.getUser();
+      if (userError || !currentUser) {
         throw new Error('No user found. Please try logging in again.');
       }
 
       const { error } = await supabase
         .from('user_profiles')
         .upsert({
-          user_id: currentUser.uid,
+          user_id: currentUser.id,
           society_name: data.society_name,
           building_name: data.building_name,
           apartment_number: data.apartment_number,

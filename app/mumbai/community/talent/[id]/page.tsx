@@ -1,3 +1,4 @@
+import { supabase } from '@/lib/supabase-auth'
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -5,7 +6,6 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import { FiStar, FiMapPin, FiPhone, FiMail, FiChevronLeft, FiChevronRight, FiX, FiHeart, FiShare2, FiMessageCircle } from 'react-icons/fi';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Talent, Review } from '@/types/talent';
 
 export default function ParelTalentDetailPage() {
@@ -17,7 +17,7 @@ export default function ParelTalentDetailPage() {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('about');
-  const supabase = createClientComponentClient();
+  ;
 
   const categories = {
     music: 'Music & Arts',

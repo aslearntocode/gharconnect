@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { auth } from '@/lib/firebase'
+import { supabase } from '@/lib/supabase-auth'
 import { getSupabaseClient } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import {
@@ -227,7 +227,7 @@ export function Marketplace({ location }: { location: string }) {
       fetchProducts()
     }
 
-    const unsubscribe = auth.onAuthStateChanged(handleAuthChange)
+    const unsubscribe = supabase.auth.onAuthStateChange(handleAuthChange)
 
     return () => unsubscribe()
   }, [])
