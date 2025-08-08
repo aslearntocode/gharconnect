@@ -153,7 +153,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </noscript>
         {/* End Meta Pixel Code */}
       </head>
-      <body className="min-h-screen mobile-safari-fix">
+      <body className="min-h-screen">
         {children}
         <Analytics />
         <Toaster />

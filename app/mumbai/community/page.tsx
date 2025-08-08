@@ -57,6 +57,37 @@ interface ConnectPost {
 }
 
 export default function Home() {
+  // Add error state
+  const [hasError, setHasError] = useState(false);
+
+  // Error boundary effect
+  useEffect(() => {
+    const handleError = (error: ErrorEvent) => {
+      console.error('Global error caught:', error);
+      setHasError(true);
+    };
+
+    window.addEventListener('error', handleError);
+    return () => window.removeEventListener('error', handleError);
+  }, []);
+
+  // Show error state if there's an error
+  if (hasError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">Something went wrong</h1>
+          <p className="text-gray-600 mb-4">Please try refreshing the page</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700"
+          >
+            Refresh Page
+          </button>
+        </div>
+      </div>
+    );
+  }
   const router = useRouter()
   const [activeSection, setActiveSection] = useState('distribution') // 'distribution' or 'offer'
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0)
@@ -225,96 +256,130 @@ export default function Home() {
 
   useEffect(() => {
     setIsMounted(true)
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    
+    // Check if window is available (client-side only)
+    if (typeof window !== 'undefined') {
+      const checkMobile = () => setIsMobile(window.innerWidth < 768);
+      checkMobile();
+      window.addEventListener('resize', checkMobile);
+      return () => window.removeEventListener('resize', checkMobile);
+    }
   }, []);
 
   // Scroll detection for header color change
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      setIsScrolled(scrollTop > 50); // Change header color after 50px scroll
-    };
+    if (typeof window !== 'undefined') {
+      const handleScroll = () => {
+        const scrollTop = window.scrollY;
+        setIsScrolled(scrollTop > 50); // Change header color after 50px scroll
+      };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTestimonialIndex((current) => 
-        current === testimonials.length - 3 ? 0 : current + 1
-      )
-    }, 8000)
+    try {
+      const timer = setInterval(() => {
+        setCurrentTestimonialIndex((current) => 
+          current === testimonials.length - 3 ? 0 : current + 1
+        )
+      }, 8000)
 
-    return () => clearInterval(timer)
+      return () => clearInterval(timer)
+    } catch (error) {
+      console.error("Error setting up testimonial timer:", error)
+    }
   }, [testimonials.length])
 
   useEffect(() => {
-    const animateProTip = () => {
-      setProTipPosition((prev) => {
-        if (prev <= -100) {
-          return 100
-        }
-        return prev - 1
-      })
-    }
+    try {
+      const animateProTip = () => {
+        setProTipPosition((prev) => {
+          if (prev <= -100) {
+            return 100
+          }
+          return prev - 1
+        })
+      }
 
-    const interval = setInterval(animateProTip, 50)
-    return () => clearInterval(interval)
+      const interval = setInterval(animateProTip, 50)
+      return () => clearInterval(interval)
+    } catch (error) {
+      console.error("Error setting up pro tip animation:", error)
+    }
   }, [])
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
-      const user = session?.user || null;
-      setUser(user)
-      if (user) {
-        const supabaseClient = await getSupabaseClient()
-        const { data, error } = await supabaseClient
-          .from('credit_reports')
-          .select('created_at, report_analysis')
-          .eq('user_id', user.id)
-          .order('created_at', { ascending: false })
-          .limit(1)
-          .single()
+    try {
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+        try {
+          const user = session?.user || null;
+          setUser(user)
+          if (user) {
+            const supabaseClient = await getSupabaseClient()
+            const { data, error } = await supabaseClient
+              .from('credit_reports')
+              .select('created_at, report_analysis')
+              .eq('user_id', user.id)
+              .order('created_at', { ascending: false })
+              .limit(1)
+              .single()
 
-        if (data) {
-          try {
-            // Parse the report_analysis if it's a string
-            const reportAnalysis = typeof data.report_analysis === 'string' 
-              ? JSON.parse(data.report_analysis) 
-              : data.report_analysis
+            if (data && !error) {
+              try {
+                // Parse the report_analysis if it's a string
+                const reportAnalysis = typeof data.report_analysis === 'string' 
+                  ? JSON.parse(data.report_analysis) 
+                  : data.report_analysis
 
-            const score = reportAnalysis?.first_block?.score_value || reportAnalysis?.score_details?.score || 0
-            
-            // Fix: Properly format the date from Supabase
-            const formattedDate = new Date(data.created_at).toLocaleDateString('en-IN', {
-              day: 'numeric',
-              month: 'short',
-              year: 'numeric'
-            })
-            
-            const report = {
-              date: formattedDate, // Use the formatted date
-              type: 'Credit Analysis',
-              score: parseInt(score)
+                const score = reportAnalysis?.first_block?.score_value || reportAnalysis?.score_details?.score || 0
+                
+                // Fix: Properly format the date from Supabase with error handling
+                let formattedDate = '';
+                try {
+                  formattedDate = new Date(data.created_at).toLocaleDateString('en-IN', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                  });
+                } catch (dateError) {
+                  // Fallback date formatting for mobile browsers
+                  const date = new Date(data.created_at);
+                  const day = date.getDate();
+                  const month = date.toLocaleDateString('en-IN', { month: 'short' });
+                  const year = date.getFullYear();
+                  formattedDate = `${day} ${month} ${year}`;
+                }
+                
+                const report = {
+                  date: formattedDate, // Use the formatted date
+                  type: 'Credit Analysis',
+                  score: parseInt(score)
+                }
+                setLatestReport(report)
+              } catch (parseError) {
+                console.error("Error parsing report data:", parseError)
+                setLatestReport(null)
+              }
+            } else {
+              setLatestReport(null)
             }
-            setLatestReport(report)
-          } catch (parseError) {
-            console.error("Error parsing report data:", parseError)
+          } else {
             setLatestReport(null)
           }
-        } else {
+        } catch (authError) {
+          console.error("Error in auth state change:", authError)
+          setUser(null)
           setLatestReport(null)
         }
-      } else {
-        setLatestReport(null)
-      }
-    })
+      })
 
-    return () => subscription.unsubscribe()
+      return () => subscription.unsubscribe()
+    } catch (subscriptionError) {
+      console.error("Error setting up auth subscription:", subscriptionError)
+    }
   }, [])
 
   useEffect(() => {
