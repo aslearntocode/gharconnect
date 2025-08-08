@@ -101,8 +101,50 @@ export default function ParelConnectPage() {
         // Fetch liked posts for this user from Supabase
         const supabase = await getSupabaseClient();
         // Use Supabase user ID directly
-    const userId = user.id;
-    console.log('User ID:', userId);
+        const userId = user.id;
+        console.log('User ID:', userId);
+      }
+    });
+    
+    // Initial fetch
+    fetchPosts();
+    
+    return () => subscription.unsubscribe();
+  }, []);
+
+  const checkProfileAndProceed = async () => {
+    if (!user) {
+      setIsLoginModalOpen(true);
+      return false;
+    }
+    const { missingFields: fields } = await checkProfileCompletion();
+    if (fields.length > 0) {
+      setMissingFields(fields);
+      setShowProfileModal(true);
+      return false;
+    }
+    return true;
+  };
+
+  const fetchPosts = async () => {
+    setLoading(true);
+    const supabase = await getSupabaseClient();
+    const { data, error } = await supabase
+      .from('posts')
+      .select('*')
+      .eq('area', 'Bangalore')
+      .order('created_at', { ascending: false });
+    
+    if (!error && data) {
+      setPosts(data);
+    }
+    setLoading(false);
+  };
+
+  const handleCreatePost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) {
+      setIsLoginModalOpen(true);
       return;
     }
 
@@ -113,7 +155,6 @@ export default function ParelConnectPage() {
     }
 
     console.log('Submitting post:', newPost);
-    console.log('User ID:', userId);
     setSubmitting(true);
     const supabase = await getSupabaseClient();
     
@@ -130,6 +171,15 @@ export default function ParelConnectPage() {
     console.log('User ID:', userId);
     console.log('Formatted UUID:', userId);
     console.log('UUID length:', userId.length);
+    
+    const postData = {
+      title: newPost.title,
+      body: newPost.body,
+      category: newPost.category,
+      area: 'Bangalore',
+      user_id: userId,
+      images: newPost.images
+    };
     
     const { data, error } = await supabase.from('posts').insert([postData]);
     console.log('Post insert result:', { data, error });
@@ -706,7 +756,7 @@ export default function ParelConnectPage() {
                         </svg>
                       </button>
                     </div>
-                    <form onSubmit={handleNewPost}>
+                    <form onSubmit={handleCreatePost}>
                       <input
                         className="w-full border rounded-lg p-3 mb-3 text-sm md:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Title"
@@ -1050,7 +1100,7 @@ export default function ParelConnectPage() {
             // Re-trigger the action that was blocked
             if (newPost.title || newPost.body) {
               // If there's a post being written, allow it to proceed
-              handleNewPost(new Event('submit') as any);
+                                  handleCreatePost(new Event('submit') as any);
             } else if (newComment) {
               // If there's a comment being written, allow it to proceed
               handleNewComment(new Event('submit') as any, replyTo);

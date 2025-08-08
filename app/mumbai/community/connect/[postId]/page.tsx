@@ -145,6 +145,66 @@ export default function PostDetailPage() {
   };
 
   // Add handler to like a comment (per-user)
+  async function handleLikePost(postId: string) {
+    if (!user) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    setLikesLoading(postId);
+    try {
+      const supabase = await getSupabaseClient();
+      const userId = user.id;
+
+      // Check if user already liked the post
+      const { data: existingLike } = await supabase
+        .from('post_likes')
+        .select('id')
+        .eq('post_id', postId)
+        .eq('user_id', userId)
+        .single();
+
+      if (existingLike) {
+        // Unlike the post
+        await supabase
+          .from('post_likes')
+          .delete()
+          .eq('post_id', postId)
+          .eq('user_id', userId);
+
+        // Decrease likes count
+        if (post) {
+          await supabase
+            .from('posts')
+            .update({ likes: (post.likes || 1) - 1 })
+            .eq('id', postId);
+
+          setUserLikedPosts(prev => ({ ...prev, [postId]: false }));
+          setPost(prev => prev ? { ...prev, likes: (prev.likes || 1) - 1 } : null);
+        }
+      } else {
+        // Like the post
+        await supabase
+          .from('post_likes')
+          .insert([{ post_id: postId, user_id: userId }]);
+
+        // Increase likes count
+        if (post) {
+          await supabase
+            .from('posts')
+            .update({ likes: (post.likes || 0) + 1 })
+            .eq('id', postId);
+
+          setUserLikedPosts(prev => ({ ...prev, [postId]: true }));
+          setPost(prev => prev ? { ...prev, likes: (prev.likes || 0) + 1 } : null);
+        }
+      }
+    } catch (error) {
+      console.error('Error toggling like:', error);
+    } finally {
+      setLikesLoading(null);
+    }
+  }
+
   async function handleLikeComment(commentId: string) {
     if (!user) {
       setIsLoginModalOpen(true);
