@@ -28,7 +28,7 @@ export default function TestEnvPage() {
               <div key={key} className="flex justify-between items-center p-3 bg-gray-50 rounded">
                 <strong>{key}:</strong>
                 <span className={`${value ? 'text-green-600' : 'text-red-600'}`}>
-                  {value || 'undefined'}
+                  {value ? String(value) : 'undefined'}
                 </span>
               </div>
             ))}
