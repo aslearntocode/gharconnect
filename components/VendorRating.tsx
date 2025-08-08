@@ -114,10 +114,10 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
       }
 
       // Check profile completion before proceeding
-      const profileComplete = await checkProfileAndProceed()
+      const profileComplete = await checkProfileAndProceed();
       if (!profileComplete) {
         setIsLoading(false)
-        return
+        return;
       }
 
       // Debug logging
@@ -237,9 +237,9 @@ export function VendorRating({ vendorId, vendorName, vendorType, onRatingAdded }
     }
 
     // Check profile completion before opening rating dialog
-    const profileComplete = await checkProfileAndProceed()
+    const profileComplete = await checkProfileAndProceed();
     if (profileComplete) {
-      setIsOpen(true)
+      setIsOpen(true);
     }
   }
 

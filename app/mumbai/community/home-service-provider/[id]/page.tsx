@@ -1,5 +1,6 @@
-import { supabase } from '@/lib/supabase-auth'
 'use client';
+
+import { supabase } from '@/lib/supabase-auth'
 import React, { useState, useEffect } from 'react';
 import { getProviderById } from '@/data/home-service-providers';
 import { useRouter } from 'next/navigation';

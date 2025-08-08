@@ -1,5 +1,6 @@
-import { supabase } from '@/lib/supabase-auth'
 'use client';
+
+import { supabase } from '@/lib/supabase-auth'
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';

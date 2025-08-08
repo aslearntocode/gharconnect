@@ -107,9 +107,9 @@ export default function ParelConnectPage() {
     }
 
     // Check profile completion before proceeding
-    const profileComplete = await checkProfileAndProceed()
+    const profileComplete = await checkProfileAndProceed();
     if (!profileComplete) {
-      return
+      return;
     }
 
     console.log('Submitting post:', newPost);
@@ -182,9 +182,9 @@ export default function ParelConnectPage() {
     if (!user || !selectedPost) return;
 
     // Check profile completion before proceeding
-    const profileComplete = await checkProfileAndProceed()
+    const profileComplete = await checkProfileAndProceed();
     if (!profileComplete) {
-      return
+      return;
     }
 
     setCommentLoading(true);
