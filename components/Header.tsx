@@ -249,7 +249,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
               {user ? (
                 <ProfileDropdown user={user} />
               ) : (
-                <Link href={`/${currentSociety}/login`} className={`whitespace-nowrap transition-colors duration-300 ${
+                <Link href={`/${currentSociety}/login`} className={`whitespace-nowrap transition-colors duration-300 relative z-10 ${
                   isScrolled 
                     ? 'text-white hover:text-gray-300' 
                     : 'text-black hover:text-gray-700'
