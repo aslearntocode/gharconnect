@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { useEffect, useState, useRef } from "react"
 import { supabase } from '@/lib/supabase-auth'
+import { User } from '@supabase/supabase-js'
 import { ProfileDropdown } from "@/components/ProfileDropdown"
 import Testimonials from "@/components/Testimonials"
 import Header from "@/components/Header"
