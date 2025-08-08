@@ -13,50 +13,82 @@ const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 
 // Function to get an authenticated Supabase client
 export const getSupabaseClient = async (): Promise<SupabaseClient> => {
-  const { data: { session } } = await supabase.auth.getSession()
-  
-  if (session) {
-    // Session is automatically handled by the client
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession()
+    
+    if (error) {
+      console.error('Error getting session:', error);
+      // Return the client anyway, it will work for anonymous operations
+      return supabase;
+    }
+    
+    if (session) {
+      // Session is automatically handled by the client
+      return supabase
+    }
+    
     return supabase
+  } catch (error) {
+    console.error('Exception in getSupabaseClient:', error);
+    // Return the client anyway, it will work for anonymous operations
+    return supabase;
   }
-  
-  return supabase
 }
 
 // Function to get Supabase client with custom headers if needed
 export const getSupabaseClientWithHeaders = async (): Promise<SupabaseClient> => {
-  const { data: { session } } = await supabase.auth.getSession()
-  
-  if (session) {
-    // Create a new client with custom headers if needed
-    const client = createClient(supabaseUrl, supabaseAnonKey, {
-      auth: {
-        persistSession: true,
-        autoRefreshToken: true,
-      },
-      global: {
-        headers: {
-          'X-Client-Info': 'supabase-js/2.x.x',
-        },
-      },
-    })
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession()
     
-    return client
+    if (error) {
+      console.error('Error getting session for headers client:', error);
+      return supabase;
+    }
+    
+    if (session) {
+      // Create a new client with custom headers if needed
+      const client = createClient(supabaseUrl, supabaseAnonKey, {
+        auth: {
+          persistSession: true,
+          autoRefreshToken: true,
+        },
+        global: {
+          headers: {
+            'X-Client-Info': 'supabase-js/2.x.x',
+          },
+        },
+      })
+      
+      return client
+    }
+    
+    return supabase
+  } catch (error) {
+    console.error('Exception in getSupabaseClientWithHeaders:', error);
+    return supabase;
   }
-  
-  return supabase
 }
 
 // Function to get Supabase client for storage operations
 export const getSupabaseStorageClient = async (): Promise<SupabaseClient> => {
-  const { data: { session } } = await supabase.auth.getSession()
-  
-  if (session) {
-    // For storage operations, the session is automatically handled
+  try {
+    const { data: { session }, error } = await supabase.auth.getSession()
+    
+    if (error) {
+      console.error('Error getting session for storage client:', error);
+      return supabase;
+    }
+    
+    if (session) {
+      // For storage operations, the session is automatically handled
+      return supabase
+    }
+    
     return supabase
+  } catch (error) {
+    console.error('Exception in getSupabaseStorageClient:', error);
+    return supabase;
   }
-  
-  return supabase
 }
 
 export type Review = {

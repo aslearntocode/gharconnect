@@ -22,10 +22,20 @@ export interface AuthResult {
 // Sign in with Google OAuth
 export async function signInWithGoogle(): Promise<AuthResult> {
   try {
+    // Check if Supabase is properly initialized
+    if (!supabaseUrl || !supabaseAnonKey) {
+      console.error('Supabase not properly initialized');
+      return {
+        success: false,
+        error: 'Authentication service not available',
+        errorCode: 'auth/not-initialized',
+      };
+    }
+
     console.log('=== GOOGLE OAUTH DEBUG START ===');
     console.log('Starting Google OAuth...');
     console.log('Supabase URL:', supabaseUrl);
-    console.log('Current location:', window.location.href);
+    console.log('Current location:', typeof window !== 'undefined' ? window.location.href : 'server-side');
     
     // Extract project reference from Supabase URL
     const projectRef = supabaseUrl.split('//')[1]?.split('.')[0];

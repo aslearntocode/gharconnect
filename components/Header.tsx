@@ -58,6 +58,8 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
   }, [])
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       // Only run this handler for desktop (md and up)
@@ -69,12 +71,12 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
     };
 
     // Only add event listener for desktop
-    if (isCreditScoreDropdownOpen && typeof window !== 'undefined' && window.innerWidth >= 768) {
+    if (isCreditScoreDropdownOpen && window.innerWidth >= 768) {
       document.addEventListener('click', handleClickOutside);
     }
 
     return () => {
-      if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+      if (window.innerWidth >= 768) {
         document.removeEventListener('click', handleClickOutside);
       }
     };
@@ -83,7 +85,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
   const handleLogout = async () => {
     try {
       // Get current pathname and pass it to logout page
-      const currentPath = window.location.pathname;
+      const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/';
       router.push(`/logout?from=${encodeURIComponent(currentPath)}`)
     } catch (error) {
       console.error('Error redirecting to logout:', error)

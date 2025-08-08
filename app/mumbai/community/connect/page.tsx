@@ -208,95 +208,107 @@ export default function ParelConnectPage() {
   };
 
   const fetchFeaturedPosts = async () => {
-    const supabase = await getSupabaseClient();
-    
-    // Define Mumbai areas
-    const mumbaiAreas = [
-      'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
-      'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur',
-      'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba',
-      'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon',
-      'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar',
-      'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli',
-      'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'
-    ];
-    
-    const { data, error } = await supabase
-      .from('posts')
-      .select(`*`)
-      .eq('featured', true)
-      .in('area', mumbaiAreas)
-      .order('created_at', { ascending: false })
-      .limit(4); // Fetch 4 featured posts
-    if (!error && data) {
-      setFeaturedPosts(data);
+    try {
+      const supabase = await getSupabaseClient();
+      
+      // Define Mumbai areas
+      const mumbaiAreas = [
+        'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
+        'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur',
+        'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba',
+        'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon',
+        'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar',
+        'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli',
+        'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'
+      ];
+      
+      const { data, error } = await supabase
+        .from('posts')
+        .select(`*`)
+        .eq('featured', true)
+        .in('area', mumbaiAreas)
+        .order('created_at', { ascending: false })
+        .limit(4); // Fetch 4 featured posts
+      if (!error && data) {
+        setFeaturedPosts(data);
+      } else if (error) {
+        console.error('Error fetching featured posts:', error);
+      }
+    } catch (error) {
+      console.error('Exception in fetchFeaturedPosts:', error);
     }
   };
 
   const fetchTopUsers = async () => {
-    const supabase = await getSupabaseClient();
-    
-    // Define Mumbai areas
-    const mumbaiAreas = [
-      'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
-      'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur',
-      'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba',
-      'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon',
-      'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar',
-      'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli',
-      'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'
-    ];
-    
-    // Get posts count by user for Mumbai areas only
-    const { data: postsData, error: postsError } = await supabase
-      .from('posts')
-      .select('user_id')
-      .in('area', mumbaiAreas);
-    
-    // Get Mumbai area post IDs first
-    const { data: mumbaiPostIds, error: postIdsError } = await supabase
-      .from('posts')
-      .select('id')
-      .in('area', mumbaiAreas);
-    
-    // Get comments count by user for Mumbai area posts only
-    const { data: commentsData, error: commentsError } = await supabase
-      .from('comments')
-      .select('user_id')
-      .in('post_id', mumbaiPostIds?.map(post => post.id) || []);
-    
-    if (!postsError && !commentsError && !postIdsError) {
-      // Count posts by user
-      const postCounts: { [userId: string]: number } = {};
-      postsData?.forEach(post => {
-        postCounts[post.user_id] = (postCounts[post.user_id] || 0) + 1;
-      });
+    try {
+      const supabase = await getSupabaseClient();
       
-      // Count comments by user
-      const commentCounts: { [userId: string]: number } = {};
-      commentsData?.forEach(comment => {
-        commentCounts[comment.user_id] = (commentCounts[comment.user_id] || 0) + 1;
-      });
+      // Define Mumbai areas
+      const mumbaiAreas = [
+        'India', 'Mumbai', 'Parel', 'Worli', 'Lower Parel', 'Dadar', 'Mahalakshmi', 'Prabhadevi',
+        'Bandra', 'Andheri', 'Juhu', 'Vile Parle', 'Santacruz', 'Khar', 'Chembur',
+        'Powai', 'Kanjurmarg', 'Wadala', 'Sewri', 'Byculla', 'Mazgaon', 'Colaba',
+        'Nariman Point', 'Churchgate', 'Marine Lines', 'Grant Road', 'Girgaon',
+        'Gamdevi', 'Tardeo', 'Nana Chowk', 'Matunga', 'Sion', 'Kurla', 'Ghatkopar',
+        'Vikhroli', 'Bhandup', 'Mulund', 'Thane', 'Navi Mumbai', 'Airoli', 'Ghansoli',
+        'Kopar Khairane', 'Vashi', 'Nerul', 'Belapur', 'Kharghar', 'Panvel'
+      ];
       
-      // Combine and calculate total activity
-      const allUserIds = new Set([
-        ...Object.keys(postCounts),
-        ...Object.keys(commentCounts)
-      ]);
+      // Get posts count by user for Mumbai areas only
+      const { data: postsData, error: postsError } = await supabase
+        .from('posts')
+        .select('user_id')
+        .in('area', mumbaiAreas);
       
-      const topUsersData: TopUser[] = Array.from(allUserIds).map(userId => ({
-        user_id: userId,
-        total_posts: postCounts[userId] || 0,
-        total_comments: commentCounts[userId] || 0,
-        total_activity: (postCounts[userId] || 0) + (commentCounts[userId] || 0)
-      }));
+      // Get Mumbai area post IDs first
+      const { data: mumbaiPostIds, error: postIdsError } = await supabase
+        .from('posts')
+        .select('id')
+        .in('area', mumbaiAreas);
       
-      // Sort by total activity and take top 10
-      const sortedTopUsers = topUsersData
-        .sort((a, b) => b.total_activity - a.total_activity)
-        .slice(0, 3);
+      // Get comments count by user for Mumbai area posts only
+      const { data: commentsData, error: commentsError } = await supabase
+        .from('comments')
+        .select('user_id')
+        .in('post_id', mumbaiPostIds?.map(post => post.id) || []);
       
-      setTopUsers(sortedTopUsers);
+      if (!postsError && !commentsError && !postIdsError) {
+        // Count posts by user
+        const postCounts: { [userId: string]: number } = {};
+        postsData?.forEach(post => {
+          postCounts[post.user_id] = (postCounts[post.user_id] || 0) + 1;
+        });
+        
+        // Count comments by user
+        const commentCounts: { [userId: string]: number } = {};
+        commentsData?.forEach(comment => {
+          commentCounts[comment.user_id] = (commentCounts[comment.user_id] || 0) + 1;
+        });
+        
+        // Combine and calculate total activity
+        const allUserIds = new Set([
+          ...Object.keys(postCounts),
+          ...Object.keys(commentCounts)
+        ]);
+        
+        const topUsersData: TopUser[] = Array.from(allUserIds).map(userId => ({
+          user_id: userId,
+          total_posts: postCounts[userId] || 0,
+          total_comments: commentCounts[userId] || 0,
+          total_activity: (postCounts[userId] || 0) + (commentCounts[userId] || 0)
+        }));
+        
+        // Sort by total activity and take top 10
+        const sortedTopUsers = topUsersData
+          .sort((a, b) => b.total_activity - a.total_activity)
+          .slice(0, 3);
+        
+        setTopUsers(sortedTopUsers);
+      } else {
+        console.error('Error fetching top users:', { postsError, commentsError, postIdsError });
+      }
+    } catch (error) {
+      console.error('Exception in fetchTopUsers:', error);
     }
   };
 

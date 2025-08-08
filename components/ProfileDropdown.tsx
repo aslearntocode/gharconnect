@@ -74,7 +74,7 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
   const handleSignOut = async () => {
     try {
       // Get current pathname and pass it to logout page
-      const currentPath = window.location.pathname;
+      const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/';
       router.push(`/logout?from=${encodeURIComponent(currentPath)}`)
     } catch (error) {
       console.error('Error redirecting to logout:', error)
