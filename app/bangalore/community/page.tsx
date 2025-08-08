@@ -229,7 +229,8 @@ export default function Home() {
   useEffect(() => {
     setIsMounted(true)
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
+    // Delay the initial check to avoid hydration mismatch
+    setTimeout(checkMobile, 0);
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
@@ -1302,7 +1303,7 @@ export default function Home() {
                       <p className="text-indigo-100 text-sm">Start the conversation in your community</p>
                     </div>
                   ) : (
-                    connectPosts.slice(0, isMobile ? 2 : 3).map((post, index) => (
+                    connectPosts.slice(0, isMounted && isMobile ? 2 : 3).map((post, index) => (
                       <div key={post.id} className="group bg-white/5 backdrop-blur-sm rounded-xl border border-white/10 p-3 hover:bg-white/10 transition-all duration-300 hover:scale-105">
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex items-center space-x-2">
