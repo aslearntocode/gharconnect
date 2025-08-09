@@ -30,17 +30,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Get initial session
+    const getInitialSession = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        const user = session?.user || null;
+        setCurrentUser(user);
+        setLoading(false);
+      } catch (error) {
+        console.error('AuthContext: Error getting initial session:', error);
+        setLoading(false);
+      }
+    };
+
+    getInitialSession();
+
+    // Set a timeout to prevent loading state from getting stuck
+    const timeout = setTimeout(() => {
+      if (loading) {
+        setLoading(false);
+      }
+    }, 5000); // 5 seconds timeout
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       const user = session?.user || null;
-      console.log('AuthContext: Auth state changed, user:', user?.email || 'null');
       setCurrentUser(user);
       setLoading(false);
     });
 
     return () => {
+      clearTimeout(timeout);
       subscription.unsubscribe();
     };
-  }, []);
+  }, [loading]);
 
   const value = {
     currentUser,

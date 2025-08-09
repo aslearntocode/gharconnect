@@ -609,14 +609,8 @@ export default function Home() {
     <>
       <Header isScrolled={isScrolled} />
       <main className="min-h-screen bg-white pt-12 md:pt-16">
-        <div className="flex flex-col items-center mb-4 md:mb-8 mt-0 md:mt-2">
-          <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700 italic bg-indigo-50 px-8 md:px-16 py-2 rounded-lg w-full max-w-1xl">
-            Welcome to GharConnect @Pune where Property Owners, Residents and Businesses Connect
-          </div>
-        </div>
-        
         {/* Back to All Cities Button */}
-        <div className="absolute top-4 md:top-32 left-4 z-10">
+        <div className="px-4 mb-4">
           <Link 
             href="/" 
             className="inline-flex items-center px-3 py-1.5 bg-white border border-gray-300 text-gray-700 text-xs font-medium rounded-lg hover:bg-gray-50 hover:border-gray-400 transition-colors duration-200 shadow-sm"
@@ -626,6 +620,12 @@ export default function Home() {
             </svg>
             Back to All Cities
           </Link>
+        </div>
+
+        <div className="flex flex-col items-center mb-4 md:mb-8 mt-0 md:mt-2">
+          <div className="text-sm md:text-3xl font-bold md:font-medium text-center text-indigo-700 italic bg-indigo-50 px-8 md:px-16 py-2 rounded-lg w-full max-w-1xl">
+            Welcome to GharConnect @Pune where Property Owners, Residents and Businesses Connect
+          </div>
         </div>
 
         {/* Popular Service Banner - Commented out for now, can be re-enabled later */}

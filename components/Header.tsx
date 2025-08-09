@@ -18,17 +18,12 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
   const [isCreditScoreDropdownOpen, setIsCreditScoreDropdownOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [isClient, setIsClient] = useState(false)
+  const [authStateKey, setAuthStateKey] = useState(0)
   const router = useRouter()
   const pathname = usePathname()
   
-  // Always call useAuth, but handle the error gracefully
-  let authContext = null
-  try {
-    authContext = useAuth()
-  } catch (error) {
-    // Auth context not available during SSR or if provider isn't ready
-    console.warn('Auth context not available:', error)
-  }
+  // Always call useAuth at the top level
+  const authContext = useAuth()
 
   // Extract user and loading from auth context with fallbacks
   const user = authContext?.currentUser || null
@@ -38,6 +33,14 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
   useEffect(() => {
     setIsClient(true)
   }, [])
+
+  // Debug auth state changes and force re-render
+  useEffect(() => {
+    // Force a re-render when auth state changes
+    if (user && !loading) {
+      setAuthStateKey(prev => prev + 1)
+    }
+  }, [user, loading])
 
   // Extract society from pathname
   const getSocietyFromPath = () => {
@@ -104,6 +107,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
 
   // Show loading state while authentication is being determined
   if (loading) {
+    console.log('Header: Showing loading state - user:', user?.email || 'null', 'loading:', loading)
     return (
       <header className={`lg:fixed lg:top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
@@ -256,7 +260,7 @@ export default function Header({ isScrolled = false }: { isScrolled?: boolean })
               </div>
 
               {user ? (
-                <ProfileDropdown user={user} />
+                <ProfileDropdown key={`${user.id}-${authStateKey}`} user={user} />
               ) : (
                 <Link href={`/${currentSociety}/login`} className={`whitespace-nowrap transition-colors duration-300 relative z-10 ${
                   isScrolled 

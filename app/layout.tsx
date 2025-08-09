@@ -244,47 +244,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             fbq('track', 'PageView');
           `}
         </Script>
-        
-        {/* WhatsApp Business API */}
-        <Script id="whatsapp-widget" strategy="afterInteractive">
-          {`
-            var url = "https://wati-integration-prod-service.clare.ai/v2/watiWidget.js?00000";
-            var s = document.createElement("script");
-            s.type = "text/javascript";
-            s.async = true;
-            s.src = url;
-            var options = {
-              "enabled":true,
-              "chatButtonSetting":{
-                "backgroundColor":"#4F46E5",
-                "ctaText":"Chat with us",
-                "borderRadius":"25",
-                "marginLeft": "0",
-                "marginRight": "20",
-                "marginBottom": "20",
-                "ctaIconWATI": false,
-                "position":"right"
-              },
-              "brandSetting":{
-                "brandName":"GharConnect",
-                "brandSubTitle":"Community Platform",
-                "brandImg":"https://gharconnect.in/GC_Logo.png",
-                "welcomeText":"Hi there! How can I help you?",
-                "messageText":"Hello, I have a question about {{page_link}}",
-                "backgroundColor":"#4F46E5",
-                "ctaText":"Chat with us",
-                "borderRadius":"25",
-                "autoShow":false,
-                "phoneNumber":"919321314553"
-              }
-            };
-            s.onload = function() {
-              CreateWhatsappChatWidget(options);
-            };
-            var x = document.getElementsByTagName("script")[0];
-            x.parentNode.insertBefore(s, x);
-          `}
-        </Script>
+
       </body>
     </html>
   )

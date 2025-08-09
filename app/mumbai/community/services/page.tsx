@@ -23,10 +23,10 @@ import {
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen bg-gray-50 lg:pt-16">
+    <div className="min-h-screen bg-gray-50">
       <Header />
       {/* Blue Banner */}
-      <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
+      <div className="w-full h-32 bg-indigo-600 flex items-center justify-center mt-12 md:mt-16">
         <h1 className="text-xl md:text-4xl font-bold text-white text-center px-4">Service Providers Rated by Community</h1>
       </div>
       <main className="pt-8 pb-12 px-4 sm:px-6 lg:px-8">

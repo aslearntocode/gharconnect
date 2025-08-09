@@ -28,14 +28,8 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
   const router = useRouter()
   const pathname = usePathname()
   
-  // Always call useAuth, but handle the error gracefully
-  let authContext = null
-  try {
-    authContext = useAuth()
-  } catch (error) {
-    // Auth context not available during SSR or if provider isn't ready
-    console.warn('Auth context not available in ProfileDropdown:', error)
-  }
+  // Always call useAuth at the top level
+  const authContext = useAuth()
 
   // Extract supabase from auth context with fallback
   const supabase = authContext?.supabase || null

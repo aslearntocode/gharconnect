@@ -23,10 +23,10 @@ export default function MassagePage() {
   });
 
   return (
-    <div className="min-h-screen bg-gray-50 lg:pt-16">
+    <div className="min-h-screen bg-gray-50">
       <Header />
       {/* Blue Banner */}
-      <div className="relative">
+      <div className="relative mt-12 md:mt-16">
         <div className="w-full h-32 bg-indigo-600 flex items-center justify-center">
           <h1 className="text-3xl md:text-4xl font-bold text-white">Massage Services</h1>
         </div>
