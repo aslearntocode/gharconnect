@@ -20,10 +20,16 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      // Only redirect to login if user is not authenticated and not already on login page
-      if (!session?.user && !pathname.includes('/login') && !pathname.includes('/logout')) {
+      // Only redirect to login if user is not authenticated and not already on login/logout page
+      // Also don't redirect if this is a sign out event (user intentionally logged out)
+      if (!session?.user && 
+          !pathname.includes('/login') && 
+          !pathname.includes('/logout') &&
+          event !== 'SIGNED_OUT') {
         const society = getSocietyFromPath(pathname)
-        router.push(`/${society}/login`)
+        // Pass the current path as redirect parameter so user returns to where they were
+        const redirectParam = encodeURIComponent(pathname)
+        router.push(`/${society}/login?redirect=${redirectParam}`)
       }
     })
 

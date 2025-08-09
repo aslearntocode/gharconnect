@@ -20,7 +20,7 @@ export interface AuthResult {
 }
 
 // Sign in with Google OAuth
-export async function signInWithGoogle(): Promise<AuthResult> {
+export async function signInWithGoogle(returnUrl: string = '/'): Promise<AuthResult> {
   try {
     // Check if Supabase is properly initialized
     if (!supabaseUrl || !supabaseAnonKey) {
@@ -45,9 +45,15 @@ export async function signInWithGoogle(): Promise<AuthResult> {
     
     console.log('About to call supabase.auth.signInWithOAuth...');
     
-    // Use Supabase's default OAuth flow (no custom redirect)
+    // Use Supabase's OAuth flow with account selection
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
+      options: {
+        queryParams: {
+          prompt: 'select_account'
+        },
+        redirectTo: `${typeof window !== 'undefined' ? window.location.origin : 'https://gharconnect.in'}/auth/callback?returnUrl=${encodeURIComponent(returnUrl)}`
+      }
     })
     
     console.log('OAuth call completed');

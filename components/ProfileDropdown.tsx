@@ -82,23 +82,9 @@ export function ProfileDropdown({ user }: ProfileDropdownProps) {
   }, [user, supabase, isClient])
 
   const handleLogout = async () => {
-    if (!supabase) return
-    
-    setIsLoading(true)
-    try {
-      const { error } = await supabase.auth.signOut()
-      if (error) {
-        console.error('Error signing out:', error)
-      } else {
-        // Get current pathname and pass it to logout page
-        const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/'
-        router.push(`/logout?from=${encodeURIComponent(currentPath)}`)
-      }
-    } catch (error) {
-      console.error('Error during logout:', error)
-    } finally {
-      setIsLoading(false)
-    }
+    // Get current pathname and navigate to logout page (which will handle the actual signout)
+    const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/'
+    router.push(`/logout?from=${encodeURIComponent(currentPath)}`)
   }
 
   // Don't render anything during SSR or if not on client

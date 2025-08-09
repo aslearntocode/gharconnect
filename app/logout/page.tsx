@@ -14,13 +14,18 @@ function LogoutContent() {
         await signOutUser()
         console.log('Successfully signed out')
         
-        // Redirect to the specified page or default to home
-        const returnUrl = searchParams.get('from') || '/'
-        router.push(returnUrl)
+        // Wait a bit to ensure auth state has propagated
+        setTimeout(() => {
+          // Redirect to the specified page or default to home
+          const returnUrl = searchParams.get('from') || '/'
+          router.push(returnUrl)
+        }, 1000)
       } catch (error) {
         console.error('Error during logout:', error)
-        // Even if there's an error, redirect to home
-        router.push('/')
+        // Even if there's an error, redirect to home after a delay
+        setTimeout(() => {
+          router.push('/')
+        }, 1000)
       }
     }
 

@@ -64,7 +64,7 @@ export default function LoginModal({ isOpen, onClose, redirectPath = '/', onLogi
 
     try {
       console.log('Calling signInWithGoogle...');
-      const result = await signInWithGoogle()
+      const result = await signInWithGoogle(redirectPath)
       console.log('signInWithGoogle result:', result);
       
       if (result.success) {
