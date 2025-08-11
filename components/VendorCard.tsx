@@ -442,6 +442,14 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
           <p className="text-sm text-gray-600 mb-2">
             {getTotalItemCount()} {itemType} available
           </p>
+          
+          {/* Enhanced product count badge */}
+          <div className="mb-3">
+            <div className="inline-flex items-center gap-2 bg-indigo-50 text-indigo-700 px-3 py-1.5 rounded-full text-sm font-medium">
+              <span className="w-2 h-2 bg-indigo-500 rounded-full"></span>
+              {getTotalItemCount()} {itemType.charAt(0).toUpperCase() + itemType.slice(1)} Available
+            </div>
+          </div>
           {!showNumber ? (
             <button
               onClick={handleShowNumber}
@@ -556,7 +564,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
           <div className="flex flex-col gap-2">
             <button
               onClick={toggleVendor}
-              className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+              className="flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 text-gray-700 hover:text-indigo-700 transition-all duration-200"
             >
               {expandedVendor ? (
                 <>
@@ -573,7 +581,7 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
             {vendorRatings && vendorRatings.count > 0 && (
               <button
                 onClick={toggleReviews}
-                className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+                className="flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg border border-gray-200 hover:border-gray-300 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition-all duration-200"
               >
                 {showReviews ? (
                   <>
@@ -591,37 +599,122 @@ export function VendorCard({ vendor, type }: VendorCardProps) {
           </div>
         </div>
         {expandedVendor && (
-          <div className="border-t border-gray-100 p-4 bg-gray-50">
-            <div className="space-y-4">
+          <div className="border-t border-gray-100 p-6 bg-gradient-to-br from-gray-50 to-white">
+            <div className="mb-4">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                <span className="text-indigo-600">📦</span>
+                Available {itemType.charAt(0).toUpperCase() + itemType.slice(1)}
+              </h3>
+              {/* <p className="text-sm text-gray-600">Click on any product to see details</p> */}
+            </div>
+            
+            <div className="grid grid-cols-1 gap-4">
               {items.map((item, index) => (
-                <div key={index} className="border-b border-gray-200 pb-3 last:border-0 last:pb-0">
-                  <h3 className="text-sm font-medium text-gray-900 mb-2">{item.name}</h3>
-                  <div className="space-y-1">
+                <div key={index} className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-all duration-200 hover:border-indigo-300">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <h4 className="text-base font-semibold text-gray-900 mb-1 flex items-center gap-2">
+                        <span className="text-indigo-500">
+                          {item.name.includes('Milk') ? '🥛' : 
+                           item.name.includes('Paneer') ? '🧀' : 
+                           item.name.includes('Cream') ? '🍦' : 
+                           item.name.includes('Butter') ? '🧈' : 
+                           item.name.includes('Ghee') ? '🫕' : 
+                           item.name.includes('Curd') ? '🥣' : 
+                           item.name.includes('Yogurt') ? '🍶' : 
+                           item.name.includes('Srikhand') ? '🍯' : '📦'}
+                        </span>
+                        {item.name}
+                      </h4>
+                      <p className="text-sm text-gray-600 mb-3">{item.description}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
                     {item.services ? (
+                      // Services structure
                       item.services.map((service: any, idx: number) => (
-                        <div key={idx} className="flex justify-between items-center text-sm">
-                          <span className="text-gray-600">{service.type}</span>
-                          <span className="text-gray-900 font-medium">{formatPrice(service.price, service.unit)}</span>
+                        <div key={idx} className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+                          <div className="flex justify-between items-center">
+                            <span className="text-sm font-medium text-gray-700">{service.type}</span>
+                            <span className="text-sm font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-full">
+                              {formatPrice(service.price, service.unit)}
+                            </span>
+                          </div>
                         </div>
                       ))
                     ) : item.varieties ? (
-                      // New structure with varieties
+                      // New structure with varieties - Enhanced display
                       item.varieties.map((variety: any, idx: number) => (
-                        <div key={idx} className="flex justify-between items-center text-sm">
-                          <span className="text-gray-600">{variety.name}</span>
-                          <span className="text-gray-900 font-medium">{formatPrice(variety.price, variety.unit)}</span>
+                        <div key={idx} className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-3 border border-blue-100 hover:border-blue-200 transition-colors">
+                          <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-2">
+                              <span className="text-blue-600 text-lg">
+                                {variety.name.includes('Full Fat') ? '🔴' : 
+                                 variety.name.includes('Low Fat') ? '🟡' : 
+                                 variety.name.includes('No Fat') ? '🟢' : 
+                                 variety.name.includes('Classic') ? '⭐' : 
+                                 variety.name.includes('Masala') ? '🌶️' : 
+                                 variety.name.includes('Kesar') ? '🌺' : 
+                                 variety.name.includes('Mango') ? '🥭' : 
+                                 variety.name.includes('Dryfruit') ? '🥜' : 
+                                 variety.name.includes('Elaichi') ? '🌿' : 
+                                 variety.name.includes('Cow') ? '🐄' : 
+                                 variety.name.includes('Buffalo') ? '🐃' : 
+                                 variety.name.includes('A2') ? '🏆' : '✨'}
+                              </span>
+                              <span className="text-sm font-medium text-gray-800">{variety.name}</span>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-lg font-bold text-indigo-700">
+                                {typeof variety.price === 'string' && variety.price.startsWith('₹') 
+                                  ? variety.price 
+                                  : `₹${variety.price}`}
+                              </div>
+                              <div className="text-xs text-gray-500 font-medium">{variety.unit}</div>
+                            </div>
+                          </div>
                         </div>
                       ))
                     ) : (
-                      // Old structure (fallback)
-                      <div className="flex justify-between items-center text-sm gap-4">
-                        <span className="text-gray-600">{item.description}</span>
-                        <span className="text-gray-900 font-medium">{formatPrice(item.price, item.unit)}</span>
+                      // Old structure (fallback) - Enhanced
+                      <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-lg p-3 border border-green-100">
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm font-medium text-gray-700">{item.description}</span>
+                          <div className="text-right">
+                            <div className="text-lg font-bold text-emerald-600">
+                              {formatPrice(item.price, item.unit)}
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     )}
                   </div>
+                  
+                  {/* Product highlights or additional info */}
+                  
+                  {item.name.includes('Ghee') && (
+                    <div className="mt-3 pt-3 border-t border-gray-100">
+                      <div className="flex items-center gap-2 text-xs text-gray-600">
+                        <span className="text-amber-500">✓</span>
+                        <span>Pure desi ghee</span>
+                        <span className="text-amber-500">✓</span>
+                        <span>Traditional method</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               ))}
+            </div>
+            
+            {/* Summary section */}
+            <div className="mt-6 pt-4 border-t border-gray-200">
+              <div className="flex items-center justify-between text-sm text-gray-600">
+                <span>Total {itemType}: {items.length}</span>
+                <span className="text-indigo-600 font-medium">
+                  {itemType === 'products' ? 'Fresh daily delivery available' : 'Professional service guaranteed'}
+                </span>
+              </div>
             </div>
           </div>
         )}

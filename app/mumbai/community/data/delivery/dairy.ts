@@ -23,34 +23,34 @@ export interface Vendor {
 }
 
 export const vendors: Vendor[] = [
-  {
-    name: 'Agarwal Dairy',
-    products: [{
-      name: 'Cow Milk',
-      description: 'Fresh cow milk delivered daily',
-      varieties: [
-        {
-          name: 'Full Fat',
-          price: 'Call for price',
-          unit: 'litre'
-        },
-        {
-          name: 'Low Fat',
-          price: 'Call for price',
-          unit: 'litre'
-        }
-      ]
-    }],
-    mobile: '+91 98201 80456 / +91 99304 94032',
-    areaServed: ['Parel'],
-    buildingServed: ['All']
-  },
+  // {
+  //   name: 'Agarwal Dairy',
+  //   products: [{
+  //     name: 'Cow Milk',
+  //     description: 'Fresh cow milk delivered daily',
+  //     varieties: [
+  //       {
+  //         name: 'Full Fat',
+  //         price: 'Call for price',
+  //         unit: 'litre'
+  //       },
+  //       {
+  //         name: 'Low Fat',
+  //         price: 'Call for price',
+  //         unit: 'litre'
+  //       }
+  //     ]
+  //   }],
+  //   mobile: '+91 98201 80456 / +91 99304 94032',
+  //   areaServed: ['Parel'],
+  //   buildingServed: ['All']
+  // },
   {
     name: 'Parsi Dairy in collaboration with GharConnect',
     products: [
       {
         name: 'Cow Milk',
-        description: 'Fresh cow milk delivered daily',
+        description: 'Fresh cow milk',
         varieties: [
           {
             name: 'Full Fat',
@@ -61,7 +61,7 @@ export const vendors: Vendor[] = [
       },
       {
         name: 'Buffalo Milk',
-        description: 'Fresh buffalo milk delivered daily',
+        description: 'Fresh buffalo milk',
         varieties: [
           {
             name: 'Full Fat',
@@ -82,7 +82,7 @@ export const vendors: Vendor[] = [
       },
       {
         name: 'Paneer',
-        description: 'Fresh paneer delivered daily',
+        description: 'Fresh paneer',
         varieties: [
           {
             name: 'Classic',
@@ -98,7 +98,7 @@ export const vendors: Vendor[] = [
       },
       {
         name: 'Cream',
-        description: 'Fresh cream delivered daily',
+        description: 'Fresh cream',
         varieties: [
           {
             name: 'Full Fat',
@@ -109,7 +109,7 @@ export const vendors: Vendor[] = [
       },
       {
         name: 'Butter',
-        description: 'Fresh butter delivered daily',
+        description: 'Fresh butter',
         varieties: [
           {
             name: 'Unsalted White Butter',
@@ -125,7 +125,7 @@ export const vendors: Vendor[] = [
       },
       {
         name: 'Pure Desi Ghee',
-        description: 'Fresh pure desi ghee delivered daily',
+        description: 'Pure desi ghee',
         varieties: [
           {
             name: 'Cow Ghee',
@@ -146,7 +146,7 @@ export const vendors: Vendor[] = [
       },
       {
         name: 'Curd',
-        description: 'Fresh curd delivered daily',
+        description: 'Fresh curd',
         varieties: [
           {
             name: 'Classic Curd',
@@ -157,7 +157,7 @@ export const vendors: Vendor[] = [
       },
       {
         name: 'Yogurt',
-        description: 'Fresh yogurt delivered daily',
+        description: 'Fresh yogurt',
         varieties: [
           {
             name: 'Classic Yogurt',
@@ -183,7 +183,7 @@ export const vendors: Vendor[] = [
       },
       {
         name: 'Srikhand',
-        description: 'Fresh srikhand delivered daily',
+        description: 'Fresh srikhand',
         varieties: [
           {
             name: 'Kesar Srikhand',
