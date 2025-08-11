@@ -140,7 +140,7 @@ export const vendors: Vendor[] = [
           {
             name: 'A2 Cow Ghee',
             price: '₹2295',
-            unit: '1000ml'
+            unit: '500ml'
           }
         ]
       },
