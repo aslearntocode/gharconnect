@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: 'GharConnect - Community Platform for No Brokerage Rentals & Local Services',
   description: 'Find brokerage-free apartments for rent in Mumbai, Bangalore, and Pune. Connect with neighbors, discover local services, and join your community marketplace. No hidden charges, transparent pricing.',
   keywords: 'rental apartments, no brokerage, community platform, local services, society management, Mumbai rentals, Bangalore rentals, Pune rentals, domestic help, driver services, marketplace, neighborhood connect, society amenities, community discussions',
+  verification: {
+    google: 'uEzrj-Ws5FC1Ozyu-UnMGSFAD4HmzEEqQ9q7jHNxg0k',
+  },
   openGraph: {
     title: 'GharConnect - Community Platform for No Brokerage Rentals & Local Services',
     description: 'Find brokerage-free apartments for rent in Mumbai, Bangalore, and Pune. Connect with neighbors, discover local services, and join your community marketplace.',
