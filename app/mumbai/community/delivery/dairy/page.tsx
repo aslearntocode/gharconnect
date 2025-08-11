@@ -64,7 +64,7 @@ export default function DairyPage() {
       <main className="pt-16 pb-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Info Section */}
-          <div className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+          <div className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 hidden md:block">
             <div className="text-center">
               <h2 className="text-2xl font-bold text-gray-900 mb-3 flex items-center justify-center gap-2">
                 <span className="text-3xl">🥛</span>
@@ -88,32 +88,34 @@ export default function DairyPage() {
 
           {/* Area Selector */}
           <div className="mb-8 flex justify-center">
-            <div className="bg-white rounded-xl shadow-lg p-2 inline-flex flex-wrap gap-2 border border-gray-100">
-              {['Parel', 'Worli', 'Bandra', 'Mahalaxmi', 'Juhu', 'Powai', 'Malad', 'Andheri', 'Goregaon', 'Thane'].map(area => (
-                <button
-                  key={area}
-                  onClick={() => setSelectedArea(area)}
-                  className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
-                    selectedArea === area
-                      ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-lg transform scale-105'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50 hover:shadow-md'
-                  }`}
-                >
-                  <span className="text-lg">
-                    {area === 'Parel' ? '🏢' : 
-                     area === 'Worli' ? '🌉' : 
-                     area === 'Bandra' ? '🌊' : 
-                     area === 'Mahalaxmi' ? '🏛️' : 
-                     area === 'Juhu' ? '🏖️' : 
-                     area === 'Powai' ? '🏞️' : 
-                     area === 'Malad' ? '🏘️' : 
-                     area === 'Andheri' ? '🏪' : 
-                     area === 'Goregaon' ? '🌳' : 
-                     area === 'Thane' ? '🌆' : '📍'}
-                  </span>
-                  {area}
-                </button>
-              ))}
+            <div className="bg-white rounded-xl shadow-lg p-2 border border-gray-100">
+              <div className="grid grid-cols-5 md:flex md:flex-wrap gap-1 md:gap-2">
+                {['Parel', 'Worli', 'Bandra', 'Mahalaxmi', 'Juhu', 'Powai', 'Malad', 'Andheri', 'Goregaon', 'Thane'].map(area => (
+                  <button
+                    key={area}
+                    onClick={() => setSelectedArea(area)}
+                    className={`px-2 md:px-4 py-2 md:py-2.5 rounded-lg text-xs md:text-sm font-medium transition-all duration-200 flex items-center justify-center gap-1 md:gap-2 ${
+                      selectedArea === area
+                        ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-lg transform scale-105'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50 hover:shadow-md'
+                    }`}
+                  >
+                    <span className="text-lg hidden md:inline">
+                      {area === 'Parel' ? '🏢' : 
+                       area === 'Worli' ? '🌉' : 
+                       area === 'Bandra' ? '🌊' : 
+                       area === 'Mahalaxmi' ? '🏛️' : 
+                       area === 'Juhu' ? '🏖️' : 
+                       area === 'Powai' ? '🏞️' : 
+                       area === 'Mahalaxmi' ? '🏘️' : 
+                       area === 'Andheri' ? '🏪' : 
+                       area === 'Goregaon' ? '🌳' : 
+                       area === 'Thane' ? '🌆' : '📍'}
+                    </span>
+                    <span className="text-center leading-tight">{area}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
           
