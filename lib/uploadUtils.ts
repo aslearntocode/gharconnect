@@ -30,7 +30,7 @@ export async function uploadImageToConnectBucket(
     const { data, error } = await supabase.storage
       .from('connect')
       .upload(fileName, file, {
-        cacheControl: '3600',
+        cacheControl: '0', // No cache for dynamic data
         upsert: false
       });
 

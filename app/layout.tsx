@@ -4,7 +4,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { Toaster } from '@/components/ui/toaster';
 import Script from 'next/script';
 import SEOScript from '@/components/SEOScript';
-import PWAInstaller from '@/components/PWAInstaller';
+
 import { AuthProvider } from '@/context/AuthContext';
 
 export const metadata: Metadata = {
@@ -46,28 +46,9 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  manifest: '/manifest.json',
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'black',
-    title: 'GharConnect',
-    startupImage: [
-      {
-        url: '/GC_Logo.png',
-        media: '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)',
-      },
-      {
-        url: '/GC_Logo.png',
-        media: '(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)',
-      },
-      {
-        url: '/GC_Logo.png',
-        media: '(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)',
-      },
-    ],
-  },
+
+
   icons: {
-    apple: '/GC_Logo.png',
     icon: '/GC_Logo.png',
     shortcut: '/GC_Logo.png',
   },
@@ -94,6 +75,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         {/* Viewport meta tag for mobile Safari */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+        
+
         
         {/* SEO Component for canonical URLs and meta tags */}
         <SEOScript canonicalUrl="https://gharconnect.in" />
@@ -168,18 +151,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
         
-        {/* PWA Manifest */}
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#4F46E5" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        <meta name="apple-mobile-web-app-title" content="GharConnect" />
-        <link rel="apple-touch-icon" href="/GC_Logo.png" />
+
         
         {/* Favicon */}
-        <link rel="icon" type="image/png" sizes="32x32" href="/GC_Logo.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/GC_Logo.png" />
-        <link rel="shortcut icon" href="/GC_Logo.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/GC_Logo.png?v=2" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/GC_Logo.png?v=2" />
+        <link rel="shortcut icon" href="/GC_Logo.png?v=2" />
         
         {/* Preconnect to external domains for performance */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -199,7 +176,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </AuthProvider>
         <Analytics />
         <Toaster />
-        <PWAInstaller />
+
         
         {/* Google Analytics */}
         <Script

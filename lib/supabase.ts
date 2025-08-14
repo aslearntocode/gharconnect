@@ -169,7 +169,7 @@ export async function testStorageUpload(userId: string) {
     const { data, error } = await supabase.storage
       .from('product-images')
       .upload(fileName, testFile, {
-        cacheControl: '3600',
+        cacheControl: '0', // No cache for dynamic data
         upsert: false
       })
 
